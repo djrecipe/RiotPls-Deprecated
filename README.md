@@ -11,6 +11,7 @@ INSTRUCTIONS
 * Open "RiotAPI.cs" and Find this line of code:
      private static string _APIKey = "api_key="; // EXAMPLE w/ invalid API key: "api_key=b19b3ed7-3c43-427d-9bba-228d4d4fd623"
 * Add your API key string to the end of "api_key="
+* Compile & Run
 
 USAGE
 ==========================================================================
