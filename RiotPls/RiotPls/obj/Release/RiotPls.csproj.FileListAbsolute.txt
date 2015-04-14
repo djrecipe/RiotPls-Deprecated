@@ -2,10 +2,12 @@ D:\space\vcsharp\RiotPls\RiotPls\bin\Release\Rating.bmp
 D:\space\vcsharp\RiotPls\RiotPls\bin\Release\RiotPls.exe.config
 D:\space\vcsharp\RiotPls\RiotPls\bin\Release\RiotPls.exe
 D:\space\vcsharp\RiotPls\RiotPls\bin\Release\RiotPls.pdb
+D:\space\vcsharp\RiotPls\RiotPls\bin\Release\Cyotek.Windows.Forms.ImageBox.dll
 D:\space\vcsharp\RiotPls\RiotPls\bin\Release\Newtonsoft.Json.dll
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formChampions.resources
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formItems.resources
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formMaps.resources
+D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formStatSheet.resources
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formTemplate.resources
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formTooltipStats.resources
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formTooltipTemplate.resources
@@ -15,5 +17,4 @@ D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.Properties.Resources.resour
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.csproj.GenerateResource.Cache
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.exe
 D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.pdb
-D:\space\vcsharp\RiotPls\RiotPls\bin\Release\Cyotek.Windows.Forms.ImageBox.dll
-D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formStatSheet.resources
+D:\space\vcsharp\RiotPls\RiotPls\obj\Release\RiotPls.formMenu.resources

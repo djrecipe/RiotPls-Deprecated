@@ -619,9 +619,6 @@ namespace RiotPls
             this.fTooltip.Location = new Point(this.Right + 10, this.Top);
             this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
                 this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
-            this.BeginInvoke((MethodInvoker)delegate { (new formItems()).Show(this); });
-            this.BeginInvoke((MethodInvoker)delegate { (new formMaps()).Show(this); });
-            this.BeginInvoke((MethodInvoker)delegate { (new formStatSheet()).Show(this); });
             return;
         }
         private void formChampions_LocationChanged(object sender, EventArgs e)

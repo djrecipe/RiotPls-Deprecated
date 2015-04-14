@@ -40,7 +40,7 @@ namespace RiotPls
             {
                 target_info = e.Data.GetData(typeof(ChampionInfo)) as ChampionInfo;
             }
-            catch (Exception ex)
+            catch
             {
                 target_info = null;
             }
@@ -59,7 +59,7 @@ namespace RiotPls
             {
                 this.picChampion.BackgroundImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
             }
-            catch (Exception ex)
+            catch
             {
             }
             return;

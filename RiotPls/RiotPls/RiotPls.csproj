@@ -60,6 +60,9 @@
     <Compile Include="formMaps.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="formMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="formStatSheet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formMaps.resx">
       <DependentUpon>formMaps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formMenu.resx">
+      <DependentUpon>formMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formStatSheet.resx">
       <DependentUpon>formStatSheet.cs</DependentUpon>

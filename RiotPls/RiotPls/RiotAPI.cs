@@ -1680,6 +1680,7 @@ namespace RiotPls
         private const string BASE_URL = "https://na.api.pvp.net/";
         private const string APIURL_LIVE = "api/lol/";
         private const string APIURL_STATIC = "api/lol/static-data/";
+        private const string FILE_APIKEY = "key.txt";
         private const string FILE_CHAMPIONINFO = "ChampionInfo.json";
         private const string FILE_ITEMINFO = "ItemInfo.json";
         private const string FILE_MAPINFO = "MapInfo.json";
@@ -1692,7 +1693,7 @@ namespace RiotPls
         private static string version_string = "v1.2";
         #endregion
         #region Static Properties
-        private static string _APIKey = "api_key="; // EXAMPLE w/ invalid API key: "api_key=b19b3ed7-3c43-427d-9bba-228d4d4fd623"
+        private static string _APIKey = "api_key=0";
         public static string APIKey
         {
             get
@@ -2010,6 +2011,21 @@ namespace RiotPls
             }
             stream_reader.Close();
             return json_string;
+        }
+        public static bool LoadKey()
+        {
+            RiotAPI.APIKey = "api_key=0";
+            if (!File.Exists(RiotAPI.FILE_APIKEY))
+                return false;
+            try
+            {
+                RiotAPI.APIKey = "api_key=" + File.ReadAllText(RiotAPI.FILE_APIKEY);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
         private static void UpdateLiveChampionInfo()
         {
