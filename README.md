@@ -8,9 +8,8 @@ INSTRUCTIONS
 ==========================================================================
 * Sign-up at https://developer.riotgames.com/ (this is free and instant)
 * Retrieve your Riot API Key
-* Open "RiotAPI.cs" and Find this line of code:
-     private static string _APIKey = "api_key="; // EXAMPLE w/ invalid API key: "api_key=b19b3ed7-3c43-427d-9bba-228d4d4fd623"
-* Add your API key string to the end of "api_key="
+* Open "key.txt"
+* Paste your API key string into the file
 * Compile & Run
 
 USAGE
