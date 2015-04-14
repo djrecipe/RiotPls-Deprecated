@@ -1,4 +1,4 @@
-CoinPost
+RitoPls
 ========
 * brkfstmnchr@gmail.com
 * League of Legends theory-crafting assistant
