@@ -8,7 +8,7 @@ INSTRUCTIONS
 ==========================================================================
 * Sign-up at https://developer.riotgames.com/ (this is free and instant)
 * Retrieve your Riot API Key
-* Open "key.txt"
+* Open "bin/Release/key.txt"
 * Paste your API key string into the file
 * Compile & Run
 
