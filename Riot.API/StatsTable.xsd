@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="StatsTable" targetNamespace="StatsTable" xmlns:mstns="StatsTable" xmlns="StatsTable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="StatsTable" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="StatsTable" msprop:Generator_UserDSName="StatsTable">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Stats" msprop:Generator_TableClassName="StatsDataTable" msprop:Generator_TableVarName="tableStats" msprop:Generator_TablePropName="Stats" msprop:Generator_RowDeletingName="StatsRowDeleting" msprop:Generator_RowChangingName="StatsRowChanging" msprop:Generator_RowEvHandlerName="StatsRowChangeEventHandler" msprop:Generator_RowDeletedName="StatsRowDeleted" msprop:Generator_UserTableName="Stats" msprop:Generator_RowChangedName="StatsRowChanged" msprop:Generator_RowEvArgName="StatsRowChangeEvent" msprop:Generator_RowClassName="StatsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Armor" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Armor" msprop:Generator_ColumnVarNameInTable="columnArmor" msprop:Generator_ColumnPropNameInTable="ArmorColumn" msprop:Generator_UserColumnName="Armor" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="AttackDamage" msdata:Caption="Attack Damage" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="AttackDamage" msprop:Generator_ColumnVarNameInTable="columnAttackDamage" msprop:Generator_ColumnPropNameInTable="AttackDamageColumn" msprop:Generator_UserColumnName="AttackDamage" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="AttackRange" msdata:Caption="Attack Range" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="AttackRange" msprop:Generator_ColumnVarNameInTable="columnAttackRange" msprop:Generator_ColumnPropNameInTable="AttackRangeColumn" msprop:Generator_UserColumnName="AttackRange" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="AttackSpeed" msdata:Caption="Attack Speed" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="AttackSpeed" msprop:Generator_ColumnVarNameInTable="columnAttackSpeed" msprop:Generator_ColumnPropNameInTable="AttackSpeedColumn" msprop:Generator_UserColumnName="AttackSpeed" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="CriticalStrike" msdata:Caption="Critical Strike" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="CriticalStrike" msprop:Generator_ColumnVarNameInTable="columnCriticalStrike" msprop:Generator_ColumnPropNameInTable="CriticalStrikeColumn" msprop:Generator_UserColumnName="CriticalStrike" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="Health" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Health" msprop:Generator_ColumnVarNameInTable="columnHealth" msprop:Generator_ColumnPropNameInTable="HealthColumn" msprop:Generator_UserColumnName="Health" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="HealthRegen" msdata:Caption="Health Regen" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="HealthRegen" msprop:Generator_ColumnVarNameInTable="columnHealthRegen" msprop:Generator_ColumnPropNameInTable="HealthRegenColumn" msprop:Generator_UserColumnName="HealthRegen" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="MovementSpeed" msdata:Caption="Movement Speed" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="MovementSpeed" msprop:Generator_ColumnVarNameInTable="columnMovementSpeed" msprop:Generator_ColumnPropNameInTable="MovementSpeedColumn" msprop:Generator_UserColumnName="MovementSpeed" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="Resource" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Resource" msprop:Generator_ColumnVarNameInTable="columnResource" msprop:Generator_ColumnPropNameInTable="ResourceColumn" msprop:Generator_UserColumnName="Resource" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="ResourceRegen" msdata:Caption="Resource Regen" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="ResourceRegen" msprop:Generator_ColumnVarNameInTable="columnResourceRegen" msprop:Generator_ColumnPropNameInTable="ResourceRegenColumn" msprop:Generator_UserColumnName="ResourceRegen" type="xs:double" default="0" minOccurs="0" />
+              <xs:element name="MagicResist" msdata:Caption="Magic Resist" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="MagicResist" msprop:Generator_ColumnVarNameInTable="columnMagicResist" msprop:Generator_ColumnPropNameInTable="MagicResistColumn" msprop:Generator_UserColumnName="MagicResist" type="xs:double" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

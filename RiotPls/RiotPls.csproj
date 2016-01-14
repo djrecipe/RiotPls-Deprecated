@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{97DFE8C1-9B73-43DC-B1BE-DE790F5095E0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RiotPls</RootNamespace>
+    <AssemblyName>RiotPls</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Compiled\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Compiled\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cyotek.Windows.Forms.ImageBox">
+      <HintPath>.\Cyotek.Windows.Forms.ImageBox.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="formChampions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formMaps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formStatSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formStatSheet.Designer.cs">
+      <DependentUpon>formStatSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formTemplate.Designer.cs">
+      <DependentUpon>formTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="formTooltipStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formTooltipTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formTooltip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Grid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SortableBindingList.cs" />
+    <EmbeddedResource Include="formChampions.resx">
+      <DependentUpon>formChampions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formItems.resx">
+      <DependentUpon>formItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formMaps.resx">
+      <DependentUpon>formMaps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formMenu.resx">
+      <DependentUpon>formMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formStatSheet.resx">
+      <DependentUpon>formStatSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formTemplate.resx">
+      <DependentUpon>formTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formTooltipStats.resx">
+      <DependentUpon>formTooltipStats.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formTooltipTemplate.resx">
+      <DependentUpon>formTooltipTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formTooltip.resx">
+      <DependentUpon>formTooltip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Grid.resx">
+      <DependentUpon>Grid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Rating.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Riot.API\RiotPls.API.csproj">
+      <Project>{17767b03-90d4-442f-82a8-46c9be1df02c}</Project>
+      <Name>RiotPls.API</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
