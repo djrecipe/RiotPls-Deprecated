@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Serialization;
 
-namespace RiotPls
+namespace RiotPls.Forms
 {
     public class formMaps : formTemplate
     {

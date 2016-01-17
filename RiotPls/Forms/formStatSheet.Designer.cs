@@ -1,4 +1,4 @@
-﻿namespace RiotPls
+﻿namespace RiotPls.Forms
 {
     partial class formStatSheet
     {

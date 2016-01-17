@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RiotPls
+namespace RiotPls.Forms
 {
     public class formMenu : formTemplate
     {
@@ -19,10 +12,10 @@ namespace RiotPls
         private Button btnItems;
         private Button btnMaps;
         private Button btnBuilder;
-        private formStatSheet fStatSheet = new formStatSheet();
-        private formChampions fChampions = new formChampions();
-        private formItems fItems = new formItems();
-        private formMaps fMaps = new formMaps();
+        private formStatSheet fStatSheet = null;
+        private formChampions fChampions = null;
+        private formItems fItems = null;
+        private formMaps fMaps = null;
         private LinkLabel lblVersion;
         private System.ComponentModel.IContainer components = null;
         #endregion
@@ -142,34 +135,50 @@ namespace RiotPls
         #region Button Events
         private void btnBuilder_Click(object sender, EventArgs e)
         {
-            if (this.fStatSheet.Visible)
+            if (this.fStatSheet?.Visible ?? false)
                 this.fStatSheet.Activate();
             else
+            {
+                if(this.fStatSheet == null || this.fStatSheet.IsDisposed)
+                    this.fStatSheet = new formStatSheet();
                 this.fStatSheet.Show(this);
+            }
             return;
         }
         private void btnChampions_Click(object sender, EventArgs e)
         {
-            if (this.fChampions.Visible)    
+            if (this.fChampions?.Visible ?? false)
                 this.fChampions.Activate();
             else
+            {
+                if (this.fChampions == null || this.fChampions.IsDisposed)
+                    this.fChampions = new formChampions();
                 this.fChampions.Show(this);
+            }
             return;
         }
         private void btnItems_Click(object sender, EventArgs e)
         {
-            if (this.fItems.Visible)
+            if (this.fItems?.Visible ?? false)
                 this.fItems.Activate();
             else
+            {
+                if (this.fItems == null || this.fItems.IsDisposed)
+                    this.fItems = new formItems();
                 this.fItems.Show(this);
+            }
             return;
         }
         private void btnMaps_Click(object sender, EventArgs e)
         {
-            if (this.fMaps.Visible)
+            if (this.fMaps?.Visible ?? false)
                 this.fMaps.Activate();
             else
+            {
+                if (this.fMaps == null || this.fMaps.IsDisposed)
+                    this.fMaps = new formMaps();
                 this.fMaps.Show(this);
+            }
             return;
         }
         #endregion

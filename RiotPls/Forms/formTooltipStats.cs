@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 using Champion = RiotPls.API.Serialization.Champion;
 
-namespace RiotPls
+namespace RiotPls.Forms
 {
     public class formTooltipStats : formTooltipTemplate
     {
