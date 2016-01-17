@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -171,53 +172,39 @@ namespace RiotPls.API.Serialization
         }
         private void InitializeImage(string path, ref Bitmap image)
         {
-            if (this.Group == null)
+            if (this.Group == null || ImageInfo.ignore.Contains(path))
                 return;
             if (path == null)
                 image = null;
             else if (image == null || image.Tag.ToString() != path)
             {
                 ImageInfo.Initialize();
-                if (!File.Exists(path) && !ImageInfo.ignore.Contains(path))
+                try
                 {
-                    using (WebClient client = new WebClient())
+                    if (!File.Exists(path))
                     {
-                        bool error_occurred = false;
-                        try
+                        using (WebClient client = new WebClient())
                         {
                             client.DownloadFile(Engine.IMGURL + this.Group + "/" + path, path);
                         }
-                        catch
+                    }
+                    if (File.Exists(path))
+                    {
+                        image = new Bitmap(path)
                         {
-                            error_occurred = true;
-                        }
-                        if (error_occurred)
-                        {
-                            if (File.Exists(path))
-                            {
-                                try
-                                {
-                                    File.Delete(path);
-                                }
-                                catch
-                                {
-                                }
-                            }
-                            ImageInfo.ignore.Add(path);
-                            try
-                            {
-                                File.AppendAllText(ImageInfo.PATH, path + "\n");
-                            }
-                            catch
-                            {
-                            }
-                        }
+                            Tag = path
+                        };
                     }
                 }
-                if (File.Exists(path))
+                catch
                 {
-                    image = new Bitmap(path);
-                    image.Tag = path;
+                    if (File.Exists(path))
+                        File.Delete(path);
+                    if (!ImageInfo.ignore.Contains(path))
+                    {
+                        ImageInfo.ignore.Add(path);
+                        File.AppendAllText(ImageInfo.PATH, path + "\n");
+                    }
                 }
             }
             return;

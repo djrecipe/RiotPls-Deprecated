@@ -618,7 +618,6 @@ namespace RiotPls.Forms
         }
         private void formChampions_Load(object sender, EventArgs e)
         {
-            this.UpdateData();
             return;
         }
         private void formChampions_LocationChanged(object sender, EventArgs e)

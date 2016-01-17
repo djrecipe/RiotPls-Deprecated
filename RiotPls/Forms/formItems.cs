@@ -181,11 +181,11 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
-        private void ConstructFilter()
+        private BindingList<ItemInfo> ConstructFilter()
         {
             if (this.source == null)
-                return;
-            BindingList<ItemInfo> new_binding = new BindingList<ItemInfo>(this.source.Where(info => info.RequiredChampion == null || info.RequiredChampion == "").ToList<ItemInfo>());
+                return null;
+            BindingList<ItemInfo> new_binding = new BindingList<ItemInfo>(this.source.Where(info => string.IsNullOrWhiteSpace(info.RequiredChampion)).ToList<ItemInfo>());
             if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Consumables")))
             {
                 new_binding = new BindingList<ItemInfo>(new_binding.Where(info => !info.Consumable).ToList<ItemInfo>());
@@ -203,8 +203,7 @@ namespace RiotPls.Forms
             if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Twisted Treeline")))
             {
             }
-            this.gridMain.DataSource = new_binding;
-            return;
+            return new_binding;
         }
         private void LoadRegistrySettings()
         {
@@ -265,7 +264,9 @@ namespace RiotPls.Forms
         private void chkdlistFilter_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if(this.IsHandleCreated && this.Visible)
-                this.BeginInvoke((MethodInvoker)delegate { this.ConstructFilter(); });
+            {
+                this.UpdateData();
+            }
             return;
         }
         private void formItems_FormClosing(object sender, FormClosingEventArgs e)
@@ -277,6 +278,7 @@ namespace RiotPls.Forms
         {
             return;
         }
+        #region Override Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -289,13 +291,18 @@ namespace RiotPls.Forms
         {
             this.items = Engine.GetItemInfo();
             this.source = new SortableBindingList<ItemInfo>(this.items.Values.OrderBy(item => item.Name).ToList());
+            e.Result = this.ConstructFilter();
             return;
         }
         protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.ConstructFilter();
+            BindingList<ItemInfo> new_binding = e.Result as BindingList<ItemInfo>;
+            if (new_binding != null)
+                this.gridMain.DataSource = new_binding;
             this.gridMain.Focus();
+            return;
         }
+        #endregion
 
     }
 }

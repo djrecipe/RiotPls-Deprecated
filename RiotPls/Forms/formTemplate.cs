@@ -9,23 +9,14 @@ namespace RiotPls.Forms
         protected Point last_mouse = Point.Empty;
         #endregion
         #region Instance Properties    
-        public bool NeedsUpdate
-        {
-            get;
-            set;
-        } = true;
         #endregion
         #region Instance Methods
         public formTemplate()
         {
             this.InitializeComponent();
-            this.NeedsUpdate = true;
         }
         public void UpdateData()
         {
-            if (!this.NeedsUpdate)
-                return;
-            this.NeedsUpdate = false;
             this.workerUpdateData.RunWorkerAsync();
             return;
         }
@@ -63,5 +54,9 @@ namespace RiotPls.Forms
         }
         #endregion
 
+        private void formTemplate_Load(object sender, System.EventArgs e)
+        {
+            this.UpdateData();
+        }
     }
 }

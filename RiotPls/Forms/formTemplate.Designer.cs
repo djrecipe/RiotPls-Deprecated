@@ -68,6 +68,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "formTemplate";
             this.Text = "formTemplate";
+            this.Load += new System.EventHandler(this.formTemplate_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.formTemplate_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formTemplate_MouseMove);
             this.ResumeLayout(false);
