@@ -8,10 +8,26 @@ namespace RiotPls.Forms
         #region Instance Members
         protected Point last_mouse = Point.Empty;
         #endregion
+        #region Instance Properties    
+        public bool NeedsUpdate
+        {
+            get;
+            set;
+        } = true;
+        #endregion
         #region Instance Methods
         public formTemplate()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.NeedsUpdate = true;
+        }
+        public void UpdateData()
+        {
+            if (!this.NeedsUpdate)
+                return;
+            this.NeedsUpdate = false;
+            this.workerUpdateData.RunWorkerAsync();
+            return;
         }
         #endregion
         #region Event Methods
@@ -37,8 +53,15 @@ namespace RiotPls.Forms
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(46, 46, 46), 6.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(120, 120, 120), 2.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
         }
-        #endregion
+        protected virtual void workerUpdateData_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
 
+        }
+        protected virtual void workerUpdateData_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+
+        }
+        #endregion
 
     }
 }

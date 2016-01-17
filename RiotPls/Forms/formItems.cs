@@ -183,6 +183,8 @@ namespace RiotPls.Forms
         }
         private void ConstructFilter()
         {
+            if (this.source == null)
+                return;
             BindingList<ItemInfo> new_binding = new BindingList<ItemInfo>(this.source.Where(info => info.RequiredChampion == null || info.RequiredChampion == "").ToList<ItemInfo>());
             if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Consumables")))
             {
@@ -273,9 +275,6 @@ namespace RiotPls.Forms
         }
         private void formItems_Load(object sender, EventArgs e)
         {
-            this.items = Engine.GetItemInfo();
-            this.source = new SortableBindingList<ItemInfo>(this.items.Values.OrderBy(item => item.Name).ToList());
-            this.ConstructFilter();
             return;
         }
         protected override void Dispose(bool disposing)
@@ -285,6 +284,17 @@ namespace RiotPls.Forms
                 components.Dispose();
             }
             base.Dispose(disposing);
+        }
+        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.items = Engine.GetItemInfo();
+            this.source = new SortableBindingList<ItemInfo>(this.items.Values.OrderBy(item => item.Name).ToList());
+            return;
+        }
+        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.ConstructFilter();
+            this.gridMain.Focus();
         }
 
     }

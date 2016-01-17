@@ -46,15 +46,9 @@ namespace RiotPls.Forms
         private DataGridViewImageColumn colW;
         private DataGridViewImageColumn colE;
         private DataGridViewImageColumn colR;
-        protected BackgroundWorker workerUpdateData;
         private Dictionary<string, formTooltipStats> stat_windows = new Dictionary<string, formTooltipStats>();
         #endregion
         #region Static Properties
-        public bool NeedsUpdate
-        {
-            get;
-            set;
-        } = true;
         #endregion
         #region Instance Methods
         public formChampions()
@@ -62,7 +56,6 @@ namespace RiotPls.Forms
             this.InitializeComponent();
             this.LoadRegistrySettings();
             this.gridMain.AutoGenerateColumns = false;
-            this.NeedsUpdate = true;
             return;
         }
         private void InitializeComponent()
@@ -102,7 +95,6 @@ namespace RiotPls.Forms
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.comboFilter = new System.Windows.Forms.ComboBox();
-            this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.cmenMain.SuspendLayout();
             this.SuspendLayout();
@@ -422,12 +414,6 @@ namespace RiotPls.Forms
             this.comboFilter.TabIndex = 5;
             this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
             // 
-            // workerUpdateData
-            // 
-            this.workerUpdateData.WorkerSupportsCancellation = true;
-            this.workerUpdateData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerUpdateData_DoWork);
-            this.workerUpdateData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerUpdateData_RunWorkerCompleted);
-            // 
             // formChampions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -589,14 +575,6 @@ namespace RiotPls.Forms
                         break;
                 }
             }
-            return;
-        }
-        public void UpdateData()
-        {
-            if (!this.NeedsUpdate)
-                return;
-            this.NeedsUpdate = false;
-            this.workerUpdateData.RunWorkerAsync();
             return;
         }
         #endregion
@@ -769,13 +747,13 @@ namespace RiotPls.Forms
             return;
         }
         #region Worker Events
-        private void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
+        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
         {
             this.champions = Engine.GetChampionInfo();
             this.source = new SortableBindingList<Champion.Info>(this.champions.Values.OrderBy(champ => champ.Name).ToList());
             return;
         }
-        private void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.gridMain.DataSource = this.source;
             this.comboFilter.DataSource = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(col => !(col is DataGridViewImageColumn)).Select(col => col.HeaderText)

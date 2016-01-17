@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.btnClose = new System.Windows.Forms.Button();
+            this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // btnClose
@@ -49,6 +50,11 @@
             this.btnClose.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
+            // 
+            // workerUpdateData
+            // 
+            this.workerUpdateData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerUpdateData_DoWork);
+            this.workerUpdateData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerUpdateData_RunWorkerCompleted);
             // 
             // formTemplate
             // 
@@ -71,6 +77,6 @@
         #endregion
 
         protected System.Windows.Forms.Button btnClose;
-
+        protected System.ComponentModel.BackgroundWorker workerUpdateData;
     }
 }
