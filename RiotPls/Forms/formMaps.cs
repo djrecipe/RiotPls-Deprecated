@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -81,12 +82,12 @@ namespace RiotPls.Forms
         }
         private void formMaps_Load(object sender, EventArgs e)
         {
-            this.source = Engine.GetMapInfo();
-            this.comboMaps.SelectedIndex = this.comboMaps.Items.IndexOf("Summoner's Rift");
             return;
         }
         private void UpdateImage()
         {
+            if (this.source == null)
+                return;
             this.imgboxMap.Image = this.comboMaps.SelectedIndex < 0 ? null : this.source.Values.FirstOrDefault(m => m.Name == this.comboMaps.Items[this.comboMaps.SelectedIndex].ToString()).Image;
             this.imgboxMap.ZoomToFit();
             this.original_zoom = this.imgboxMap.Zoom;
@@ -98,6 +99,12 @@ namespace RiotPls.Forms
             this.UpdateImage();
             return;
         }
+
+        private void imgboxMap_ZoomChanged(object sender, EventArgs e)
+        {
+            this.imgboxMap.Zoom = Math.Max(this.original_zoom, this.imgboxMap.Zoom);
+        }
+        #region Override Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -106,11 +113,16 @@ namespace RiotPls.Forms
             }
             base.Dispose(disposing);
         }
-
-        private void imgboxMap_ZoomChanged(object sender, EventArgs e)
+        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.imgboxMap.Zoom = Math.Max(this.original_zoom, this.imgboxMap.Zoom);
+            this.source = Engine.GetMapInfo();
+            return;
         }
-
+        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.comboMaps.SelectedIndex = this.comboMaps.Items.IndexOf("Summoner's Rift");
+            return;
+        }
+        #endregion
     }
 }
