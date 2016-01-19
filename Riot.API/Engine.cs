@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -29,24 +30,15 @@ namespace RiotPls.API
         private const string PARAM_ALLITEMDATA = "itemListData=all";
         private const string PARAM_ALLCHAMPDATA = "champData=all";
         public const string IMGURL = "http://ddragon.leagueoflegends.com/cdn/5.1.1/img/";
+        private const string STR_APIKEY = "api_key=";
         #endregion
         private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();
         private static string region_string = "na";
         private static string version_string = "v1.2";
         #endregion
         #region Static Properties
-        private static string _APIKey = "api_key=0";
-        public static string APIKey
-        {
-            get
-            {
-                return Engine._APIKey;
-            }
-            set
-            {
-                Engine._APIKey = value;
-            }
-        }
+        private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
+        private static string APIKeyRaw { get; set;}
         private static Dictionary<string, Serialization.Champion.Info> _ChampionInfos = new Dictionary<string, Serialization.Champion.Info>();
         public static Dictionary<string, Serialization.Champion.Info> ChampionInfos
         {
@@ -356,18 +348,33 @@ namespace RiotPls.API
         }
         public static bool LoadKey()
         {
-            Engine.APIKey = "api_key=0";
+            Engine.APIKeyRaw = "0";
             if (!File.Exists(Engine.FILE_APIKEY))
                 return false;
             try
             {
-                Engine.APIKey = "api_key=" + File.ReadAllText(Engine.FILE_APIKEY);
+                Engine.APIKeyRaw = File.ReadAllText(Engine.FILE_APIKEY);
             }
-            catch
+            catch(Exception e)
             {
+                // TODO: 01/18/16 implement exception handling
                 return false;
             }
             return true;
+        }
+        public static bool SaveKey(string key)
+        {
+            try
+            {
+                Engine.APIKeyRaw = key;
+                File.WriteAllText(Engine.FILE_APIKEY, Engine.APIKeyRaw);
+                return true;
+            }
+            catch (Exception e)
+            {
+                // TODO: 01/18/16 implement exception handling
+            }
+            return false;
         }
         private static void UpdateLiveChampionInfo()
         {

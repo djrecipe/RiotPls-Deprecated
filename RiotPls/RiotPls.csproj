@@ -66,9 +66,6 @@
     <Compile Include="Forms\formSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\formSettings.Designer.cs">
-      <DependentUpon>formSettings.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\formStatSheet.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -16,6 +16,7 @@ namespace RiotPls.Forms
         private formChampions fChampions = null;
         private formItems fItems = null;
         private formMaps fMaps = null;
+        private formSettings fSettings = null;
         private LinkLabel lblVersion;
         private Button btnSettings;
         private System.ComponentModel.IContainer components = null;
@@ -198,7 +199,15 @@ namespace RiotPls.Forms
         }
         private void btnSettings_Click(object sender, EventArgs e)
         {
-
+            if (this.fSettings?.Visible ?? false)
+                this.fSettings.Activate();
+            else
+            {
+                if (this.fSettings == null || this.fSettings.IsDisposed)
+                    this.fSettings = new formSettings();
+                this.fSettings.Show(this);
+            }
+            return;
         }
         #endregion
         #region Form Events
