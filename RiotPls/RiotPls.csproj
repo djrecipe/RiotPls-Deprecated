@@ -63,6 +63,12 @@
     <Compile Include="Forms\formMenu.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\formSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\formSettings.Designer.cs">
+      <DependentUpon>formSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\formStatSheet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formMenu.resx">
       <DependentUpon>formMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\formSettings.resx">
+      <DependentUpon>formSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formStatSheet.resx">
       <DependentUpon>formStatSheet.cs</DependentUpon>

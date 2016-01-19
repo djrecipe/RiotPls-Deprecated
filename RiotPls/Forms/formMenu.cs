@@ -17,6 +17,7 @@ namespace RiotPls.Forms
         private formItems fItems = null;
         private formMaps fMaps = null;
         private LinkLabel lblVersion;
+        private Button btnSettings;
         private System.ComponentModel.IContainer components = null;
         #endregion
         #region Instance Methods
@@ -32,6 +33,7 @@ namespace RiotPls.Forms
             this.btnMaps = new System.Windows.Forms.Button();
             this.btnBuilder = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.LinkLabel();
+            this.btnSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnClose
@@ -100,11 +102,23 @@ namespace RiotPls.Forms
             this.lblVersion.Text = "v0.00";
             this.lblVersion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVersion_LinkClicked);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Location = new System.Drawing.Point(10, 10);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(16, 16);
+            this.btnSettings.TabIndex = 8;
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
             // formMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(148, 258);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.btnBuilder);
             this.Controls.Add(this.btnMaps);
@@ -121,6 +135,7 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.btnMaps, 0);
             this.Controls.SetChildIndex(this.btnBuilder, 0);
             this.Controls.SetChildIndex(this.lblVersion, 0);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,6 +195,10 @@ namespace RiotPls.Forms
                 this.fMaps.Show(this);
             }
             return;
+        }
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
         #region Form Events
