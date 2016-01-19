@@ -105,6 +105,9 @@ namespace RiotPls.Forms
             // 
             // btnSettings
             // 
+            this.btnSettings.BackgroundImage = global::RiotPls.Properties.Resources.Gears;
+            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Location = new System.Drawing.Point(10, 10);
             this.btnSettings.Margin = new System.Windows.Forms.Padding(1);

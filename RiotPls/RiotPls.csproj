@@ -153,6 +153,7 @@
     <Content Include="Rating.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Gears.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Riot.API\RiotPls.API.csproj">
