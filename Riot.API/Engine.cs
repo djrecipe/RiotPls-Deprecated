@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using RiotPls.API.Serialization;
+
+[assembly: InternalsVisibleTo("RiotPls.Test")]
 
 namespace RiotPls.API
 {
@@ -38,7 +41,7 @@ namespace RiotPls.API
         #endregion
         #region Static Properties
         private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
-        private static string APIKeyRaw { get; set;}
+        internal static string APIKeyRaw { get; set;}
         private static Dictionary<string, Serialization.Champion.Info> _ChampionInfos = new Dictionary<string, Serialization.Champion.Info>();
         public static Dictionary<string, Serialization.Champion.Info> ChampionInfos
         {
@@ -346,33 +349,34 @@ namespace RiotPls.API
             stream_reader.Close();
             return json_string;
         }
-        public static bool LoadKey()
+        public static bool LoadKey(string path = null)
         {
             Engine.APIKeyRaw = "0";
-            if (!File.Exists(Engine.FILE_APIKEY))
+            string desired_path = path ?? Engine.FILE_APIKEY;
+            if (!File.Exists(desired_path))
                 return false;
             try
             {
-                Engine.APIKeyRaw = File.ReadAllText(Engine.FILE_APIKEY);
+                Engine.APIKeyRaw = File.ReadAllText(desired_path);
+                return true;
             }
             catch(Exception e)
             {
-                // TODO: 01/18/16 implement exception handling
-                return false;
+                Console.WriteLine("Error While Loading Key:\n'{0}'", e.Message);
             }
-            return true;
+            return false;
         }
-        public static bool SaveKey(string key)
+        public static bool SaveKey(string key, string path = null)
         {
             try
             {
                 Engine.APIKeyRaw = key;
-                File.WriteAllText(Engine.FILE_APIKEY, Engine.APIKeyRaw);
+                File.WriteAllText(path ?? Engine.FILE_APIKEY, key);
                 return true;
             }
             catch (Exception e)
             {
-                // TODO: 01/18/16 implement exception handling
+                Console.WriteLine("Error While Saving Key:\n'{0}'", e.Message);
             }
             return false;
         }

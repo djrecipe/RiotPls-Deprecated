@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotPls", "RiotPls\RiotPls.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotPls.API", "Riot.API\RiotPls.API.csproj", "{17767B03-90D4-442F-82A8-46C9BE1DF02C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotPls.Test", "RiotPls.Test\RiotPls.Test.csproj", "{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{17767B03-90D4-442F-82A8-46C9BE1DF02C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17767B03-90D4-442F-82A8-46C9BE1DF02C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17767B03-90D4-442F-82A8-46C9BE1DF02C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
