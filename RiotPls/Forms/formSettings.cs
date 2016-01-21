@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace RiotPls.Forms
@@ -39,13 +40,13 @@ namespace RiotPls.Forms
             // btnClose
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(290, 9);
+            this.btnClose.Location = new System.Drawing.Point(413, 9);
             // 
             // lblAPIStepOneInstructions
             // 
             this.lblAPIStepOneInstructions.LinkColor = System.Drawing.Color.PaleTurquoise;
-            this.lblAPIStepOneInstructions.Location = new System.Drawing.Point(83, 37);
-            this.lblAPIStepOneInstructions.Margin = new System.Windows.Forms.Padding(5, 20, 20, 5);
+            this.lblAPIStepOneInstructions.Location = new System.Drawing.Point(150, 37);
+            this.lblAPIStepOneInstructions.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
             this.lblAPIStepOneInstructions.Name = "lblAPIStepOneInstructions";
             this.lblAPIStepOneInstructions.Size = new System.Drawing.Size(155, 13);
             this.lblAPIStepOneInstructions.TabIndex = 3;
@@ -65,8 +66,9 @@ namespace RiotPls.Forms
             this.txtAPIKey.Location = new System.Drawing.Point(43, 117);
             this.txtAPIKey.Margin = new System.Windows.Forms.Padding(40, 10, 40, 20);
             this.txtAPIKey.Name = "txtAPIKey";
-            this.txtAPIKey.Size = new System.Drawing.Size(175, 24);
+            this.txtAPIKey.Size = new System.Drawing.Size(298, 24);
             this.txtAPIKey.TabIndex = 4;
+            this.txtAPIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupAPI
             // 
@@ -85,7 +87,7 @@ namespace RiotPls.Forms
             this.groupAPI.Location = new System.Drawing.Point(29, 29);
             this.groupAPI.Margin = new System.Windows.Forms.Padding(20);
             this.groupAPI.Name = "groupAPI";
-            this.groupAPI.Size = new System.Drawing.Size(261, 160);
+            this.groupAPI.Size = new System.Drawing.Size(384, 160);
             this.groupAPI.TabIndex = 5;
             this.groupAPI.TabStop = false;
             this.groupAPI.Text = "API Key";
@@ -93,8 +95,8 @@ namespace RiotPls.Forms
             // lblStepThreeInstructions
             // 
             this.lblStepThreeInstructions.ForeColor = System.Drawing.Color.PaleTurquoise;
-            this.lblStepThreeInstructions.Location = new System.Drawing.Point(83, 86);
-            this.lblStepThreeInstructions.Margin = new System.Windows.Forms.Padding(5, 5, 20, 5);
+            this.lblStepThreeInstructions.Location = new System.Drawing.Point(150, 86);
+            this.lblStepThreeInstructions.Margin = new System.Windows.Forms.Padding(10, 5, 20, 5);
             this.lblStepThreeInstructions.Name = "lblStepThreeInstructions";
             this.lblStepThreeInstructions.Size = new System.Drawing.Size(155, 15);
             this.lblStepThreeInstructions.TabIndex = 10;
@@ -103,8 +105,8 @@ namespace RiotPls.Forms
             // 
             // lblAPIStepThree
             // 
-            this.lblAPIStepThree.Location = new System.Drawing.Point(23, 86);
-            this.lblAPIStepThree.Margin = new System.Windows.Forms.Padding(20, 5, 5, 5);
+            this.lblAPIStepThree.Location = new System.Drawing.Point(80, 86);
+            this.lblAPIStepThree.Margin = new System.Windows.Forms.Padding(20, 5, 10, 5);
             this.lblAPIStepThree.Name = "lblAPIStepThree";
             this.lblAPIStepThree.Size = new System.Drawing.Size(50, 15);
             this.lblAPIStepThree.TabIndex = 9;
@@ -114,8 +116,8 @@ namespace RiotPls.Forms
             // lblAPIStepTwoInstructions
             // 
             this.lblAPIStepTwoInstructions.LinkColor = System.Drawing.Color.PaleTurquoise;
-            this.lblAPIStepTwoInstructions.Location = new System.Drawing.Point(83, 60);
-            this.lblAPIStepTwoInstructions.Margin = new System.Windows.Forms.Padding(5, 5, 20, 5);
+            this.lblAPIStepTwoInstructions.Location = new System.Drawing.Point(150, 62);
+            this.lblAPIStepTwoInstructions.Margin = new System.Windows.Forms.Padding(10, 5, 20, 5);
             this.lblAPIStepTwoInstructions.Name = "lblAPIStepTwoInstructions";
             this.lblAPIStepTwoInstructions.Size = new System.Drawing.Size(155, 13);
             this.lblAPIStepTwoInstructions.TabIndex = 8;
@@ -126,8 +128,8 @@ namespace RiotPls.Forms
             // 
             // lblAPIStepTwo
             // 
-            this.lblAPIStepTwo.Location = new System.Drawing.Point(23, 61);
-            this.lblAPIStepTwo.Margin = new System.Windows.Forms.Padding(20, 5, 5, 5);
+            this.lblAPIStepTwo.Location = new System.Drawing.Point(80, 61);
+            this.lblAPIStepTwo.Margin = new System.Windows.Forms.Padding(20, 5, 10, 5);
             this.lblAPIStepTwo.Name = "lblAPIStepTwo";
             this.lblAPIStepTwo.Size = new System.Drawing.Size(50, 15);
             this.lblAPIStepTwo.TabIndex = 7;
@@ -136,8 +138,8 @@ namespace RiotPls.Forms
             // 
             // lblAPIStepOne
             // 
-            this.lblAPIStepOne.Location = new System.Drawing.Point(23, 36);
-            this.lblAPIStepOne.Margin = new System.Windows.Forms.Padding(20, 20, 5, 5);
+            this.lblAPIStepOne.Location = new System.Drawing.Point(80, 36);
+            this.lblAPIStepOne.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
             this.lblAPIStepOne.Name = "lblAPIStepOne";
             this.lblAPIStepOne.Size = new System.Drawing.Size(50, 15);
             this.lblAPIStepOne.TabIndex = 6;
@@ -148,7 +150,7 @@ namespace RiotPls.Forms
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOK.Location = new System.Drawing.Point(200, 219);
+            this.btnOK.Location = new System.Drawing.Point(323, 219);
             this.btnOK.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(90, 30);
@@ -174,12 +176,13 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(319, 268);
+            this.ClientSize = new System.Drawing.Size(442, 268);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupAPI);
             this.Name = "formSettings";
-            this.Text = "formSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "+";
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.groupAPI, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
@@ -196,7 +199,15 @@ namespace RiotPls.Forms
         }
         private void btnOK_Click(object sender, System.EventArgs e)
         {
-            API.Engine.SaveKey(this.txtAPIKey.Text);
+            try
+            {
+                API.Engine.SaveKey(this.txtAPIKey.Text);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error While Saving Key:\n{0}", ex.Message));
+            }
             return;
         }
         private void lblAPIStepOneInstructions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -215,6 +226,27 @@ namespace RiotPls.Forms
             }
             base.Dispose(disposing);
         }
+        protected override void workerUpdateData_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            try
+            {
+                API.Engine.LoadKey();
+                e.Result = API.Engine.APIKeyRaw;
+            }
+            catch(Exception ex)
+            {
 
+            }
+        }
+        protected override void workerUpdateData_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            try
+            {
+                this.txtAPIKey.Text = e.Result as string;
+            }
+            catch (Exception ex)
+            {
+            }
+        }
     }
 }

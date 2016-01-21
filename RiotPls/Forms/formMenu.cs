@@ -107,6 +107,7 @@ namespace RiotPls.Forms
             // 
             this.btnSettings.BackgroundImage = global::RiotPls.Properties.Resources.Gears;
             this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSettings.Location = new System.Drawing.Point(10, 10);
@@ -208,7 +209,7 @@ namespace RiotPls.Forms
             {
                 if (this.fSettings == null || this.fSettings.IsDisposed)
                     this.fSettings = new formSettings();
-                this.fSettings.Show(this);
+                this.fSettings.ShowDialog(this);
             }
             return;
         }

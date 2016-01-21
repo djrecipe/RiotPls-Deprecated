@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
-
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -41,7 +41,7 @@ namespace RiotPls.API
         #endregion
         #region Static Properties
         private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
-        internal static string APIKeyRaw { get; set;}
+        public static string APIKeyRaw { get; private set;} = null;
         private static Dictionary<string, Serialization.Champion.Info> _ChampionInfos = new Dictionary<string, Serialization.Champion.Info>();
         public static Dictionary<string, Serialization.Champion.Info> ChampionInfos
         {
@@ -357,7 +357,8 @@ namespace RiotPls.API
                 return false;
             try
             {
-                Engine.APIKeyRaw = File.ReadAllText(desired_path);
+                string text = File.ReadAllText(desired_path);
+                Engine.APIKeyRaw = Engine.SanitizeKey(text);
                 return true;
             }
             catch(Exception e)
@@ -366,12 +367,28 @@ namespace RiotPls.API
             }
             return false;
         }
+        public static string SanitizeKey(string text)
+        {
+            try
+            {
+                string clean = text.Replace("-", "").Trim();
+                Assert.IsFalse(clean.ToCharArray().Any(c => !char.IsLetterOrDigit(c)), "Invalid Character");
+                Assert.IsTrue(clean.Length == 32, "Invalid Length");
+            }
+            catch(Exception e)
+            {
+                text = null;
+                throw e;
+            }
+            return text;
+        }
         public static bool SaveKey(string key, string path = null)
         {
             try
             {
+                key = API.Engine.SanitizeKey(key);
                 Engine.APIKeyRaw = key;
-                File.WriteAllText(path ?? Engine.FILE_APIKEY, key);
+                File.WriteAllText(path ?? Engine.FILE_APIKEY, key ?? "");
                 return true;
             }
             catch (Exception e)
