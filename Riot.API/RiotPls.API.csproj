@@ -61,6 +61,7 @@
     <Compile Include="Serialization\Champion\SpellInfo.cs" />
     <Compile Include="Serialization\Champion\StatsInfo.cs" />
     <Compile Include="Serialization\ImageInfo.cs" />
+    <Compile Include="Serialization\CachedImage.cs" />
     <Compile Include="Serialization\ItemInfo.cs" />
     <Compile Include="Serialization\LiveChampionInfo.cs" />
     <Compile Include="Serialization\MapInfo.cs" />

@@ -32,7 +32,6 @@ namespace RiotPls.API
         private const string FILE_MAPINFO = "MapInfo.json";
         private const string PARAM_ALLITEMDATA = "itemListData=all";
         private const string PARAM_ALLCHAMPDATA = "champData=all";
-        public const string IMGURL = "http://ddragon.leagueoflegends.com/cdn/5.1.1/img/";
         private const string STR_APIKEY = "api_key=";
         #endregion
         private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();

@@ -10,31 +10,6 @@ namespace RiotPls.API.Serialization
     [JsonObject(MemberSerialization.OptIn)]
     public class ImageInfo
     {
-        private const string PATH = "IgnoreImages.csv";
-        private static bool initialized = false;
-        private static List<string> ignore = new List<string>();
-        private static void Initialize()
-        {
-            if (ImageInfo.initialized)
-                return;
-            if (File.Exists(ImageInfo.PATH))
-            {
-                ImageInfo.ignore.Clear();
-                string text = null;
-                try
-                {
-                    text = File.ReadAllText(ImageInfo.PATH);
-                }
-                catch
-                {
-                    text = null;
-                }
-                if (text != null)
-                    ImageInfo.ignore.AddRange(text.Split('\n'));
-            }
-            ImageInfo.initialized = true;
-            return;
-        }
         private string _Group = null;
         [JsonProperty("group")]
         private string Group
@@ -46,8 +21,7 @@ namespace RiotPls.API.Serialization
             set
             {
                 this._Group = value;
-                this.InitializeImage(this.ImagePath, ref this._Image);
-                //this.InitializeImage(this.SpritePath, this.Sprite);
+                this.Image.UpdateImage(this.Group, this.ImagePath);
                 return;
             }
         }
@@ -64,8 +38,8 @@ namespace RiotPls.API.Serialization
                 this._ID = value;
             }
         }
-        private Bitmap _Image = null;
-        public Bitmap Image
+        private CachedImage _Image = new CachedImage();
+        public CachedImage Image
         {
             get
             {
@@ -83,7 +57,7 @@ namespace RiotPls.API.Serialization
             private set
             {
                 this._ImagePath = value;
-                this.InitializeImage(this.ImagePath, ref this._Image);
+                this.Image.UpdateImage(this.Group, this.ImagePath);
                 return;
             }
         }
@@ -108,8 +82,8 @@ namespace RiotPls.API.Serialization
                 return this._Rect;
             }
         }
-        private Bitmap _Sprite = null;
-        public Bitmap Sprite
+        private CachedImage _Sprite = new CachedImage();
+        public CachedImage Sprite
         {
             get
             {
@@ -127,7 +101,7 @@ namespace RiotPls.API.Serialization
             private set
             {
                 this._SpritePath = value;
-                //this.InitializeImage(this.SpritePath, this.Sprite);
+                //this.Image.UpdateImage(this.SpritePath, this.Group);
                 return;
             }
         }
@@ -169,45 +143,6 @@ namespace RiotPls.API.Serialization
                 this._Rect.Y = value;
                 return;
             }
-        }
-        private void InitializeImage(string path, ref Bitmap image)
-        {
-            if (this.Group == null || ImageInfo.ignore.Contains(path))
-                return;
-            if (path == null)
-                image = null;
-            else if (image == null || image.Tag.ToString() != path)
-            {
-                ImageInfo.Initialize();
-                try
-                {
-                    if (!File.Exists(path))
-                    {
-                        using (WebClient client = new WebClient())
-                        {
-                            client.DownloadFile(Engine.IMGURL + this.Group + "/" + path, path);
-                        }
-                    }
-                    if (File.Exists(path))
-                    {
-                        image = new Bitmap(path)
-                        {
-                            Tag = path
-                        };
-                    }
-                }
-                catch
-                {
-                    if (File.Exists(path))
-                        File.Delete(path);
-                    if (!ImageInfo.ignore.Contains(path))
-                    {
-                        ImageInfo.ignore.Add(path);
-                        File.AppendAllText(ImageInfo.PATH, path + "\n");
-                    }
-                }
-            }
-            return;
         }
     }
 }
