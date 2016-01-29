@@ -13,8 +13,8 @@ namespace RiotPls.Forms
         private Button btnMaps;
         private Button btnBuilder;
         private formStatSheet fStatSheet = null;
-        private formChampions fChampions = null;
-        private formItems fItems = null;
+        private formChampions fChampions = new formChampions();
+        private formItems fItems = new formItems();
         private formMaps fMaps = null;
         private formSettings fSettings = null;
         private LinkLabel lblVersion;
@@ -35,6 +35,7 @@ namespace RiotPls.Forms
             this.btnBuilder = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.LinkLabel();
             this.btnSettings = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -134,6 +135,7 @@ namespace RiotPls.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "formMenu";
             this.Load += new System.EventHandler(this.formMenu_Load);
+            this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.btnChampions, 0);
             this.Controls.SetChildIndex(this.btnItems, 0);
@@ -141,6 +143,7 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.btnBuilder, 0);
             this.Controls.SetChildIndex(this.lblVersion, 0);
             this.Controls.SetChildIndex(this.btnSettings, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,6 +177,8 @@ namespace RiotPls.Forms
                 if (this.fChampions == null || this.fChampions.IsDisposed)
                     this.fChampions = new formChampions();
                 this.fChampions.Show(this);
+                if(this.Left >= this.fChampions.Left - 20 && this.Right < this.fChampions.Right + 20)
+                    this.Left = this.fChampions.Left - this.Width - 10;
             }
             return;
         }
@@ -186,6 +191,8 @@ namespace RiotPls.Forms
                 if (this.fItems == null || this.fItems.IsDisposed)
                     this.fItems = new formItems();
                 this.fItems.Show(this);
+                if (this.Left >= this.fItems.Left - 20 && this.Right < this.fItems.Right + 20)
+                    this.Left = this.fItems.Left - this.Width - 10;
             }
             return;
         }

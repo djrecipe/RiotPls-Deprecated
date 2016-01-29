@@ -45,6 +45,7 @@ namespace RiotPls.Forms
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chkdlistFilter = new System.Windows.Forms.CheckedListBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,6 +53,10 @@ namespace RiotPls.Forms
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1166, 9);
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(533, 349);
             // 
             // gridMain
             // 
@@ -166,17 +171,21 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(1195, 827);
             this.Controls.Add(this.chkdlistFilter);
             this.Controls.Add(this.gridMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Name = "formItems";
+            this.ShowLoading = true;
             this.Text = "formItems";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formItems_FormClosing);
             this.Load += new System.EventHandler(this.formItems_Load);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.chkdlistFilter, 0);
+            this.Controls.SetChildIndex(this.picLoading, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 
@@ -299,6 +308,7 @@ namespace RiotPls.Forms
             BindingList<ItemInfo> new_binding = e.Result as BindingList<ItemInfo>;
             if (new_binding != null)
                 this.gridMain.DataSource = new_binding;
+            this.picLoading.Visible = false;
             this.gridMain.Focus();
             return;
         }

@@ -72,6 +72,7 @@ namespace RiotPls.Forms
         }
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -84,7 +85,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.gridMain = new Grid();
+            this.gridMain = new RiotPls.Grid();
             this.colMovementSpeed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,6 +95,7 @@ namespace RiotPls.Forms
             this.colMagicResist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHealth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -147,7 +149,9 @@ namespace RiotPls.Forms
             this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.gridMain.Location = new System.Drawing.Point(19, 54);
             this.gridMain.Margin = new System.Windows.Forms.Padding(10);
+            this.gridMain.MultiSelect = false;
             this.gridMain.Name = "gridMain";
+            this.gridMain.ReadOnly = true;
             this.gridMain.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
@@ -282,15 +286,18 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(420, 190);
             this.Controls.Add(this.gridMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Name = "formTooltipStats";
             this.Activated += new System.EventHandler(this.formTooltipStats_Activated);
+            this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.lblTitle, 0);
             this.Controls.SetChildIndex(this.lblSubTitle, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 

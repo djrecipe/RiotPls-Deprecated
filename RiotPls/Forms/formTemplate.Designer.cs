@@ -30,6 +30,8 @@
         {
             this.btnClose = new System.Windows.Forms.Button();
             this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
+            this.picLoading = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -56,12 +58,26 @@
             this.workerUpdateData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerUpdateData_DoWork);
             this.workerUpdateData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerUpdateData_RunWorkerCompleted);
             // 
+            // picLoading
+            // 
+            this.picLoading.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picLoading.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.picLoading.Image = global::RiotPls.Properties.Resources.Loading;
+            this.picLoading.InitialImage = null;
+            this.picLoading.Location = new System.Drawing.Point(101, 77);
+            this.picLoading.Name = "picLoading";
+            this.picLoading.Size = new System.Drawing.Size(128, 128);
+            this.picLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picLoading.TabIndex = 7;
+            this.picLoading.TabStop = false;
+            // 
             // formTemplate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(331, 282);
+            this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
@@ -71,6 +87,7 @@
             this.Load += new System.EventHandler(this.formTemplate_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.formTemplate_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formTemplate_MouseMove);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -79,5 +96,6 @@
 
         protected System.Windows.Forms.Button btnClose;
         protected System.ComponentModel.BackgroundWorker workerUpdateData;
+        protected System.Windows.Forms.PictureBox picLoading;
     }
 }

@@ -8,7 +8,17 @@ namespace RiotPls.Forms
         #region Instance Members
         protected Point last_mouse = Point.Empty;
         #endregion
-        #region Instance Properties    
+        #region Instance Properties  
+        public bool ChildWindow
+        {
+            get;
+            set;
+        } = false;  
+        public bool ShowLoading
+        {
+            get;
+            set;
+        } = false;
         #endregion
         #region Instance Methods
         public formTemplate()
@@ -17,6 +27,8 @@ namespace RiotPls.Forms
         }
         public void UpdateData()
         {
+            this.picLoading.Visible = this.ShowLoading;
+            this.picLoading.BringToFront();
             this.workerUpdateData.RunWorkerAsync();
             return;
         }
@@ -24,7 +36,10 @@ namespace RiotPls.Forms
         #region Event Methods
         protected virtual void btnClose_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Close();
+            if(this.ChildWindow)
+                this.Hide();
+            else
+                this.Close();
         }
         protected void formTemplate_MouseMove(object sender, MouseEventArgs e)
         {

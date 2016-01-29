@@ -46,6 +46,7 @@ namespace RiotPls.Forms
         {
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblSubTitle = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -86,6 +87,7 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(420, 190);
             this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.lblTitle);
@@ -93,9 +95,11 @@ namespace RiotPls.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "formTooltip";
+            this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.lblTitle, 0);
             this.Controls.SetChildIndex(this.lblSubTitle, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
 
         }

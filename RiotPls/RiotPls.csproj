@@ -154,6 +154,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Gears.png" />
+    <Content Include="Resources\Loading.gif" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Riot.API\RiotPls.API.csproj">

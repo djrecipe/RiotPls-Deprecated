@@ -20,7 +20,7 @@ namespace RiotPls.Forms
         #region Controls
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
-        private formTooltip fTooltip = new formTooltip();
+        private formTooltip fTooltip = null;
         private TextBox txtSearch;
         private Label lblSearch;
         private ComboBox comboFilter;
@@ -62,18 +62,18 @@ namespace RiotPls.Forms
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridMain = new RiotPls.Grid();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -95,6 +95,7 @@ namespace RiotPls.Forms
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.comboFilter = new System.Windows.Forms.ComboBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.cmenMain.SuspendLayout();
             this.SuspendLayout();
@@ -103,6 +104,10 @@ namespace RiotPls.Forms
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1166, 9);
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(533, 349);
             // 
             // gridMain
             // 
@@ -141,14 +146,14 @@ namespace RiotPls.Forms
             this.colE,
             this.colR});
             this.gridMain.ContextMenuStrip = this.cmenMain;
-            dataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            dataGridViewCellStyle32.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            dataGridViewCellStyle32.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle32.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.gridMain.DefaultCellStyle = dataGridViewCellStyle32;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridMain.DefaultCellStyle = dataGridViewCellStyle11;
             this.gridMain.EnableHeadersVisualStyles = false;
             this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.gridMain.Location = new System.Drawing.Point(34, 53);
@@ -156,14 +161,14 @@ namespace RiotPls.Forms
             this.gridMain.MultiSelect = false;
             this.gridMain.Name = "gridMain";
             this.gridMain.ReadOnly = true;
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            dataGridViewCellStyle33.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            dataGridViewCellStyle33.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle33.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle33;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.gridMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.gridMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridMain.ShowCellErrors = false;
@@ -178,11 +183,11 @@ namespace RiotPls.Forms
             // 
             this.colImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colImage.DataPropertyName = "Image";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            dataGridViewCellStyle11.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle11.NullValue")));
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.Black;
-            this.colImage.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            dataGridViewCellStyle2.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle2.NullValue")));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+            this.colImage.DefaultCellStyle = dataGridViewCellStyle2;
             this.colImage.HeaderText = "Image";
             this.colImage.Name = "colImage";
             this.colImage.ReadOnly = true;
@@ -193,9 +198,9 @@ namespace RiotPls.Forms
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colName.DataPropertyName = "Name";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Padding = new System.Windows.Forms.Padding(5);
-            this.colName.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5);
+            this.colName.DefaultCellStyle = dataGridViewCellStyle3;
             this.colName.HeaderText = "Name";
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
@@ -206,10 +211,10 @@ namespace RiotPls.Forms
             // 
             this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTitle.DataPropertyName = "Title";
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.Padding = new System.Windows.Forms.Padding(5);
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colTitle.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colTitle.DefaultCellStyle = dataGridViewCellStyle4;
             this.colTitle.HeaderText = "Title";
             this.colTitle.Name = "colTitle";
             this.colTitle.ReadOnly = true;
@@ -229,9 +234,9 @@ namespace RiotPls.Forms
             // 
             this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colTags.DataPropertyName = "TagList";
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.colTags.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.colTags.DefaultCellStyle = dataGridViewCellStyle5;
             this.colTags.HeaderText = "Tags";
             this.colTags.Name = "colTags";
             this.colTags.ReadOnly = true;
@@ -285,10 +290,10 @@ namespace RiotPls.Forms
             // 
             this.colPassive.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colPassive.DataPropertyName = "PassiveImage";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.NullValue = null;
-            dataGridViewCellStyle27.Padding = new System.Windows.Forms.Padding(5);
-            this.colPassive.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.NullValue = null;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(5);
+            this.colPassive.DefaultCellStyle = dataGridViewCellStyle6;
             this.colPassive.HeaderText = "Passive";
             this.colPassive.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
             this.colPassive.Name = "colPassive";
@@ -300,10 +305,10 @@ namespace RiotPls.Forms
             // 
             this.colQ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colQ.DataPropertyName = "SpellImageQ";
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle28.NullValue = null;
-            dataGridViewCellStyle28.Padding = new System.Windows.Forms.Padding(5);
-            this.colQ.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.NullValue = null;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(5);
+            this.colQ.DefaultCellStyle = dataGridViewCellStyle7;
             this.colQ.HeaderText = "Q";
             this.colQ.Name = "colQ";
             this.colQ.ReadOnly = true;
@@ -313,10 +318,10 @@ namespace RiotPls.Forms
             // 
             this.colW.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colW.DataPropertyName = "SpellImageW";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle29.NullValue = null;
-            dataGridViewCellStyle29.Padding = new System.Windows.Forms.Padding(5);
-            this.colW.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.NullValue = null;
+            dataGridViewCellStyle8.Padding = new System.Windows.Forms.Padding(5);
+            this.colW.DefaultCellStyle = dataGridViewCellStyle8;
             this.colW.HeaderText = "W";
             this.colW.Name = "colW";
             this.colW.ReadOnly = true;
@@ -326,10 +331,10 @@ namespace RiotPls.Forms
             // 
             this.colE.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colE.DataPropertyName = "SpellImageE";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle30.NullValue = null;
-            dataGridViewCellStyle30.Padding = new System.Windows.Forms.Padding(5);
-            this.colE.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.NullValue = null;
+            dataGridViewCellStyle9.Padding = new System.Windows.Forms.Padding(5);
+            this.colE.DefaultCellStyle = dataGridViewCellStyle9;
             this.colE.HeaderText = "E";
             this.colE.Name = "colE";
             this.colE.ReadOnly = true;
@@ -339,10 +344,10 @@ namespace RiotPls.Forms
             // 
             this.colR.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colR.DataPropertyName = "SpellImageR";
-            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle31.NullValue = null;
-            dataGridViewCellStyle31.Padding = new System.Windows.Forms.Padding(5);
-            this.colR.DefaultCellStyle = dataGridViewCellStyle31;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.NullValue = null;
+            dataGridViewCellStyle10.Padding = new System.Windows.Forms.Padding(5);
+            this.colR.DefaultCellStyle = dataGridViewCellStyle10;
             this.colR.HeaderText = "R";
             this.colR.Name = "colR";
             this.colR.ReadOnly = true;
@@ -419,6 +424,7 @@ namespace RiotPls.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(1195, 827);
             this.ControlBox = false;
             this.Controls.Add(this.comboFilter);
@@ -430,6 +436,7 @@ namespace RiotPls.Forms
             this.KeyPreview = true;
             this.Name = "formChampions";
             this.ShowIcon = false;
+            this.ShowLoading = true;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Champions";
@@ -437,11 +444,14 @@ namespace RiotPls.Forms
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formChampions_FormClosing);
             this.Load += new System.EventHandler(this.formChampions_Load);
             this.LocationChanged += new System.EventHandler(this.formChampions_LocationChanged);
+            this.VisibleChanged += new System.EventHandler(this.formChampions_VisibleChanged);
             this.Controls.SetChildIndex(this.gridMain, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.txtSearch, 0);
             this.Controls.SetChildIndex(this.lblSearch, 0);
             this.Controls.SetChildIndex(this.comboFilter, 0);
+            this.Controls.SetChildIndex(this.btnClose, 0);
+            this.Controls.SetChildIndex(this.picLoading, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.cmenMain.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -474,7 +484,7 @@ namespace RiotPls.Forms
         }
         private void ShowTooltip(int row_index, int column_index)
         {
-            if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount || (this.fTooltip.Visible && this.itmLockTooltip.Checked))
+            if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount || (this.fTooltip != null && this.fTooltip.Visible && this.itmLockTooltip.Checked))
                 return;
             string champion_name = this.gridMain.Rows[row_index].Cells["colName"].Value.ToString();
             this.last_champ_name = Engine.CleanseChampionName(this.champions, champion_name);
@@ -539,7 +549,8 @@ namespace RiotPls.Forms
                     subtitle_out = "Lore Summary";
                     break;
             }
-            this.fTooltip.ShowTooltip(info.Name, subtitle_out, value_out, this);
+            if(this.fTooltip != null)
+                this.fTooltip.ShowTooltip(info.Name, subtitle_out, value_out, this);
         }
         private void UpdateFilter()
         {
@@ -617,18 +628,30 @@ namespace RiotPls.Forms
             return;
         }
         private void formChampions_Load(object sender, EventArgs e)
-        {
+        {                                          
             return;
         }
         private void formChampions_LocationChanged(object sender, EventArgs e)
         {
             if (this.last_location != Point.Empty)
             {
-                this.fTooltip.Location = new Point(this.fTooltip.Left + (this.Left - this.last_location.X), this.fTooltip.Top + (this.Top - this.last_location.Y));
+                if(this.fTooltip != null)
+                    this.fTooltip.Location = new Point(this.fTooltip.Left + (this.Left - this.last_location.X), this.fTooltip.Top + (this.Top - this.last_location.Y));
                 foreach (formTooltipStats form in this.stat_windows.Values)
                     form.Location = new Point(form.Left + (this.Left - this.last_location.X), form.Top + (this.Top - this.last_location.Y)); 
             }
             this.last_location = this.Location;
+            return;
+        }
+        private void formChampions_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                this.fTooltip = new formTooltip();
+                this.fTooltip.Location = new Point(this.Right + 10, this.Top);
+                this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
+                    this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
+            }
             return;
         }
         private void fStats_FormClosed(object sender, FormClosedEventArgs e)
@@ -757,9 +780,7 @@ namespace RiotPls.Forms
             this.gridMain.DataSource = this.source;
             this.comboFilter.DataSource = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(col => !(col is DataGridViewImageColumn)).Select(col => col.HeaderText)
                 .OrderBy(text => text).ToList<string>();
-            this.fTooltip.Location = new Point(this.Right + 10, this.Top);
-            this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
-                this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
+            this.picLoading.Visible = false;
             this.gridMain.Focus();
         }
         #endregion
@@ -767,11 +788,12 @@ namespace RiotPls.Forms
         #region Override Methods
         protected override void btnClose_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!this.fTooltip.IsDisposed)
+            if (this.fTooltip != null && !this.fTooltip.IsDisposed)
             {
                 if(this.fTooltip.Visible)
                     this.fTooltip.Close();
                 this.fTooltip.Dispose();
+                this.fTooltip = null;
             }
             List<formTooltipStats> forms = this.stat_windows.Values.ToList();
             // while (1)
@@ -787,6 +809,7 @@ namespace RiotPls.Forms
                     form.Dispose();
                 }
             }
+            this.stat_windows.Clear();
             base.btnClose_MouseDown(sender, e);
         }
         protected override void Dispose(bool disposing)
