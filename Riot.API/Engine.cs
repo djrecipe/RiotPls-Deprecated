@@ -308,9 +308,11 @@ namespace RiotPls.API
                     File.WriteAllText(Engine.FILE_MAPINFO, json_string);
                 //
                 JToken result = data.SelectToken("data");
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.ObjectCreationHandling = ObjectCreationHandling.Reuse;
-                settings.MissingMemberHandling = MissingMemberHandling.Ignore;
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    ObjectCreationHandling = ObjectCreationHandling.Reuse,
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
                 Engine._MapInfos = JsonConvert.DeserializeObject<Dictionary<string, MapInfo>>(result.ToString(), settings);
             }
             //
