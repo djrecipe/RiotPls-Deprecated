@@ -18,7 +18,6 @@ namespace RiotPls.Forms
         private formMaps fMaps = null;
         private formSettings fSettings = null;
         private LinkLabel lblVersion;
-        private Button btnSettings;
         private System.ComponentModel.IContainer components = null;
         #endregion
         #region Instance Methods
@@ -34,7 +33,6 @@ namespace RiotPls.Forms
             this.btnMaps = new System.Windows.Forms.Button();
             this.btnBuilder = new System.Windows.Forms.Button();
             this.lblVersion = new System.Windows.Forms.LinkLabel();
-            this.btnSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,27 +102,11 @@ namespace RiotPls.Forms
             this.lblVersion.Text = "v0.00";
             this.lblVersion.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblVersion_LinkClicked);
             // 
-            // btnSettings
-            // 
-            this.btnSettings.BackgroundImage = global::RiotPls.Properties.Resources.Gears;
-            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Location = new System.Drawing.Point(10, 10);
-            this.btnSettings.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(16, 16);
-            this.btnSettings.TabIndex = 8;
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
             // formMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(148, 258);
-            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.btnBuilder);
             this.Controls.Add(this.btnMaps);
@@ -133,7 +115,7 @@ namespace RiotPls.Forms
             this.Name = "formMenu";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "formMenu";
+            this.Text = "RiotPls-Menu";
             this.Load += new System.EventHandler(this.formMenu_Load);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
@@ -142,7 +124,6 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.btnMaps, 0);
             this.Controls.SetChildIndex(this.btnBuilder, 0);
             this.Controls.SetChildIndex(this.lblVersion, 0);
-            this.Controls.SetChildIndex(this.btnSettings, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -176,7 +157,7 @@ namespace RiotPls.Forms
             {
                 if (this.fChampions == null || this.fChampions.IsDisposed)
                     this.fChampions = new formChampions();
-                this.fChampions.Show(this);
+                this.fChampions.Show();
                 if(this.Left >= this.fChampions.Left - 20 && this.Right < this.fChampions.Right + 20)
                     this.Left = this.fChampions.Left - this.Width - 10;
             }
@@ -190,7 +171,7 @@ namespace RiotPls.Forms
             {
                 if (this.fItems == null || this.fItems.IsDisposed)
                     this.fItems = new formItems();
-                this.fItems.Show(this);
+                this.fItems.Show();
                 if (this.Left >= this.fItems.Left - 20 && this.Right < this.fItems.Right + 20)
                     this.Left = this.fItems.Left - this.Width - 10;
             }
@@ -204,19 +185,9 @@ namespace RiotPls.Forms
             {
                 if (this.fMaps == null || this.fMaps.IsDisposed)
                     this.fMaps = new formMaps();
-                this.fMaps.Show(this);
-            }
-            return;
-        }
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            if (this.fSettings?.Visible ?? false)
-                this.fSettings.Activate();
-            else
-            {
-                if (this.fSettings == null || this.fSettings.IsDisposed)
-                    this.fSettings = new formSettings();
-                this.fSettings.ShowDialog(this);
+                this.fMaps.Show();
+                if (this.Left >= this.fMaps.Left - 20 && this.Right < this.fMaps.Right + 20)
+                    this.Left = this.fMaps.Left - this.Width - 10;
             }
             return;
         }
@@ -244,6 +215,18 @@ namespace RiotPls.Forms
                 components.Dispose();
             }
             base.Dispose(disposing);
+            return;
+        }
+        protected override void btnSettings_Click(object sender, EventArgs e)
+        {
+            if (this.fSettings?.Visible ?? false)
+                this.fSettings.Activate();
+            else
+            {
+                if (this.fSettings == null || this.fSettings.IsDisposed)
+                    this.fSettings = new formSettings();
+                this.fSettings.ShowDialog(this);
+            }
             return;
         }
         #endregion

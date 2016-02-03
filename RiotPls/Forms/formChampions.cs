@@ -109,6 +109,10 @@ namespace RiotPls.Forms
             // 
             this.picLoading.Location = new System.Drawing.Point(533, 349);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            // 
             // gridMain
             // 
             this.gridMain.AllowUserToAddRows = false;
@@ -439,12 +443,13 @@ namespace RiotPls.Forms
             this.ShowLoading = true;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Champions";
+            this.Text = "RiotPls-Champions";
             this.Activated += new System.EventHandler(this.formChampions_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formChampions_FormClosing);
             this.Load += new System.EventHandler(this.formChampions_Load);
             this.LocationChanged += new System.EventHandler(this.formChampions_LocationChanged);
             this.VisibleChanged += new System.EventHandler(this.formChampions_VisibleChanged);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.txtSearch, 0);
             this.Controls.SetChildIndex(this.lblSearch, 0);

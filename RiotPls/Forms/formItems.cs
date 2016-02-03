@@ -58,6 +58,10 @@ namespace RiotPls.Forms
             // 
             this.picLoading.Location = new System.Drawing.Point(533, 349);
             // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            // 
             // gridMain
             // 
             this.gridMain.AllowUserToAddRows = false;
@@ -178,9 +182,10 @@ namespace RiotPls.Forms
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Name = "formItems";
             this.ShowLoading = true;
-            this.Text = "formItems";
+            this.Text = "RiotPls-Items";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formItems_FormClosing);
             this.Load += new System.EventHandler(this.formItems_Load);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.chkdlistFilter, 0);

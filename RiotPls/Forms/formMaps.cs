@@ -24,12 +24,17 @@ namespace RiotPls.Forms
         {
             this.comboMaps = new System.Windows.Forms.ComboBox();
             this.imgboxMap = new Cyotek.Windows.Forms.ImageBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1166, 9);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
             // 
             // comboMaps
             // 
@@ -72,11 +77,14 @@ namespace RiotPls.Forms
             this.Controls.Add(this.imgboxMap);
             this.Controls.Add(this.comboMaps);
             this.Name = "formMaps";
-            this.Text = "formMaps";
+            this.Text = "RiotPls-Maps";
             this.Load += new System.EventHandler(this.formMaps_Load);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
+            this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.comboMaps, 0);
             this.Controls.SetChildIndex(this.imgboxMap, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
 
         }

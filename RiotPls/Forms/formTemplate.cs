@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RiotPls.Forms
@@ -72,6 +73,10 @@ namespace RiotPls.Forms
         private void formTemplate_Load(object sender, System.EventArgs e)
         {
             this.UpdateData();
+        }
+
+        protected virtual void btnSettings_Click(object sender, EventArgs e)
+        {
         }
     }
 }

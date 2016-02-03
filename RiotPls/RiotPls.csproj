@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\RiotPls.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cyotek.Windows.Forms.ImageBox">
       <HintPath>.\Cyotek.Windows.Forms.ImageBox.dll</HintPath>
@@ -155,6 +158,7 @@
     </Content>
     <Content Include="Resources\Gears.png" />
     <Content Include="Resources\Loading.gif" />
+    <Content Include="Resources\RiotPls.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Riot.API\RiotPls.API.csproj">

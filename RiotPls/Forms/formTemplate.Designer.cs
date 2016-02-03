@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formTemplate));
             this.btnClose = new System.Windows.Forms.Button();
             this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
+            this.btnSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,17 +73,34 @@
             this.picLoading.TabIndex = 7;
             this.picLoading.TabStop = false;
             // 
+            // btnSettings
+            // 
+            this.btnSettings.BackgroundImage = global::RiotPls.Properties.Resources.Gears;
+            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSettings.Location = new System.Drawing.Point(10, 10);
+            this.btnSettings.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(16, 16);
+            this.btnSettings.TabIndex = 9;
+            this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
             // formTemplate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(331, 282);
+            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.picLoading);
             this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formTemplate";
             this.Text = "formTemplate";
             this.Load += new System.EventHandler(this.formTemplate_Load);
@@ -97,5 +116,6 @@
         protected System.Windows.Forms.Button btnClose;
         protected System.ComponentModel.BackgroundWorker workerUpdateData;
         protected System.Windows.Forms.PictureBox picLoading;
+        protected System.Windows.Forms.Button btnSettings;
     }
 }
