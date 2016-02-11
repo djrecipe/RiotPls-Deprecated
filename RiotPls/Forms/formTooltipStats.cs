@@ -24,7 +24,7 @@ namespace RiotPls.Forms
         private DataGridViewTextBoxColumn colHealth;
         private DataGridViewTextBoxColumn colResource;
         #endregion
-        private Champion.Info champ_info = null;
+        private Champion.ChampionInfo champChampionInfo = null;
         public event EventHandler<List<Point>> GridSelectionChanged = null;
         public event EventHandler<int> GridScrolled = null;
         private bool changing_selection = false;
@@ -302,12 +302,12 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
-        public void ShowTooltip(string title, string sub_title, Champion.Info info, IWin32Window owner = null)
+        public void ShowTooltip(string title, string sub_title, Champion.ChampionInfo champion_info, IWin32Window owner = null)
         {
             this.changing_selection = true;
             base.ShowTooltip(title, sub_title, owner);
-            this.champ_info = info;
-            this.gridMain.DataSource = this.champ_info.Stats.Table;
+            this.champChampionInfo = champion_info;
+            this.gridMain.DataSource = this.champChampionInfo.Stats.Table;
             this.changing_selection = false;
             return;
         }

@@ -41,8 +41,8 @@ namespace RiotPls.API
         #region Static Properties
         private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
         public static string APIKeyRaw { get; private set;} = null;
-        private static Dictionary<string, Serialization.Champion.Info> _ChampionInfos = new Dictionary<string, Serialization.Champion.Info>();
-        public static Dictionary<string, Serialization.Champion.Info> ChampionInfos
+        private static Dictionary<string, Serialization.Champion.ChampionInfo> _ChampionInfos = new Dictionary<string, Serialization.Champion.ChampionInfo>();
+        public static Dictionary<string, Serialization.Champion.ChampionInfo> ChampionInfos
         {
             get
             {
@@ -116,12 +116,16 @@ namespace RiotPls.API
         }
         #endregion
         #region Static Methods
-        public static string CleanseChampionName(Dictionary<string, Serialization.Champion.Info> info, string name)
+        public static string CleanseChampionName(Dictionary<string, Serialization.Champion.ChampionInfo> info, string name)
         {
-            KeyValuePair<string, Serialization.Champion.Info> pair = info.FirstOrDefault(i => i.Value.Name == name);
-            return pair.Equals(default(KeyValuePair<string, Serialization.Champion.Info>)) ? null : pair.Key;
+            KeyValuePair<string, Serialization.Champion.ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
+            return pair.Equals(default(KeyValuePair<string, Serialization.Champion.ChampionInfo>)) ? null : pair.Key;
         }
-        public static Dictionary<string, Serialization.Champion.Info> GetChampionInfo()
+        public static Serialization.Champion.ChampionInfo GetChampion(string name)
+        {
+            return Engine.ChampionInfos.ContainsKey(name) ? Engine.ChampionInfos[name] : null;
+        }
+        public static Dictionary<string, Serialization.Champion.ChampionInfo> GetChampionInfo()
         {
             //
             bool attempt_download = !File.Exists(Engine.FILE_CHAMPIONINFO);
@@ -159,7 +163,7 @@ namespace RiotPls.API
                 JsonSerializerSettings settings = new JsonSerializerSettings();
                 settings.ObjectCreationHandling = ObjectCreationHandling.Reuse;
                 settings.MissingMemberHandling = MissingMemberHandling.Ignore;
-                Engine._ChampionInfos = JsonConvert.DeserializeObject<Dictionary<string, Serialization.Champion.Info>>(result.ToString(), settings);
+                Engine._ChampionInfos = JsonConvert.DeserializeObject<Dictionary<string, Serialization.Champion.ChampionInfo>>(result.ToString(), settings);
                 //
                 Engine.UpdateLiveChampionInfo();
             }
@@ -409,8 +413,8 @@ namespace RiotPls.API
             Engine.live_champion_info = JsonConvert.DeserializeObject<List<LiveChampionInfo>>(result.ToString());
             foreach(string s in Engine.ChampionInfos.Keys)
             {
-                Serialization.Champion.Info current_info = Engine.ChampionInfos[s];
-                current_info.LiveInfo = Engine.live_champion_info.FirstOrDefault(info => info.ID == current_info.ID);
+                Serialization.Champion.ChampionInfo current_champion_info = Engine.ChampionInfos[s];
+                current_champion_info.LiveInfo = Engine.live_champion_info.FirstOrDefault(info => info.ID == current_champion_info.ID);
             }
             return;
         }

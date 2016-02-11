@@ -15,7 +15,6 @@ namespace RiotPls.Forms
         private System.ComponentModel.IContainer components = null;
         private Cyotek.Windows.Forms.ImageBox imgboxMap;
         private Dictionary<string, MapInfo> source = new Dictionary<string, MapInfo>();
-        private int original_zoom = -1;
         public formMaps()
         {
             InitializeComponent();
@@ -45,7 +44,6 @@ namespace RiotPls.Forms
             this.comboMaps.FormattingEnabled = true;
             this.comboMaps.Items.AddRange(new object[] {
             "Howling Abyss",
-            "Old Summoner\'s Rift",
             "Summoner\'s Rift",
             "Twisted Treeline"});
             this.comboMaps.Location = new System.Drawing.Point(29, 29);
@@ -94,11 +92,10 @@ namespace RiotPls.Forms
         }
         private void UpdateImage()
         {
-            if (this.source == null)
+            if (this.source == null || this.source.Values.Count < 1)
                 return;
             this.imgboxMap.Image = this.comboMaps.SelectedIndex < 0 ? null : this.source.Values.FirstOrDefault(m => m.Name == this.comboMaps.Items[this.comboMaps.SelectedIndex].ToString()).Image;
             this.imgboxMap.ZoomToFit();
-            this.original_zoom = this.imgboxMap.Zoom;
             this.imgboxMap.Focus();
             return;
         }
@@ -110,7 +107,7 @@ namespace RiotPls.Forms
 
         private void imgboxMap_ZoomChanged(object sender, EventArgs e)
         {
-            this.imgboxMap.Zoom = Math.Max(this.original_zoom, this.imgboxMap.Zoom);
+            this.imgboxMap.Zoom = Math.Max(0, this.imgboxMap.Zoom);
         }
         #region Override Methods
         protected override void Dispose(bool disposing)

@@ -10,7 +10,8 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 using RiotPls.API;
-using Champion = RiotPls.API.Serialization.Champion;
+using RiotPls.Builder;
+using RiotPls.API.Serialization.Champion;
 
 namespace RiotPls.Forms
 {
@@ -26,10 +27,11 @@ namespace RiotPls.Forms
         private ComboBox comboFilter;
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem itmShowStats;
+        private ToolStripMenuItem itmSelectedForBuilder;
         #endregion
         private string last_champ_name = null;
-        private Dictionary<string, API.Serialization.Champion.Info> champions = new Dictionary<string, Champion.Info>();
-        private BindingList<Champion.Info> source = null;
+        private Dictionary<string, API.Serialization.Champion.ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
+        private BindingList<ChampionInfo> source = null;
         private Point last_location = Point.Empty;
         private ToolStripMenuItem itmLockTooltip;
         private DataGridViewImageColumn colImage;
@@ -92,6 +94,7 @@ namespace RiotPls.Forms
             this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itmShowStats = new System.Windows.Forms.ToolStripMenuItem();
             this.itmLockTooltip = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.lblSearch = new System.Windows.Forms.Label();
             this.comboFilter = new System.Windows.Forms.ComboBox();
@@ -361,9 +364,10 @@ namespace RiotPls.Forms
             // 
             this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itmShowStats,
-            this.itmLockTooltip});
+            this.itmLockTooltip,
+            this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(167, 48);
+            this.cmenMain.Size = new System.Drawing.Size(177, 92);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmShowStats
@@ -371,7 +375,7 @@ namespace RiotPls.Forms
             this.itmShowStats.CheckOnClick = true;
             this.itmShowStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmShowStats.Name = "itmShowStats";
-            this.itmShowStats.Size = new System.Drawing.Size(166, 22);
+            this.itmShowStats.Size = new System.Drawing.Size(176, 22);
             this.itmShowStats.Text = "Show Stats";
             this.itmShowStats.CheckedChanged += new System.EventHandler(this.itmShowStats_CheckedChanged);
             // 
@@ -380,8 +384,16 @@ namespace RiotPls.Forms
             this.itmLockTooltip.CheckOnClick = true;
             this.itmLockTooltip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmLockTooltip.Name = "itmLockTooltip";
-            this.itmLockTooltip.Size = new System.Drawing.Size(166, 22);
+            this.itmLockTooltip.Size = new System.Drawing.Size(176, 22);
             this.itmLockTooltip.Text = "Lock Tooltip Data";
+            // 
+            // itmSelectedForBuilder
+            // 
+            this.itmSelectedForBuilder.CheckOnClick = true;
+            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
+            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
+            this.itmSelectedForBuilder.Text = "Selected for Builder";
+            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
             // 
             // txtSearch
             // 
@@ -463,6 +475,7 @@ namespace RiotPls.Forms
             this.PerformLayout();
 
         }
+
         private void LoadRegistrySettings()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey("Software/RiotPls");
@@ -493,7 +506,7 @@ namespace RiotPls.Forms
                 return;
             string champion_name = this.gridMain.Rows[row_index].Cells["colName"].Value.ToString();
             this.last_champ_name = Engine.CleanseChampionName(this.champions, champion_name);
-            Champion.Info info = this.champions[this.last_champ_name];
+            ChampionInfo champion_info = this.champions[this.last_champ_name];
             string column_name = this.gridMain.Columns[column_index].HeaderText;
             string value_out = "???";
             string subtitle_out = column_name;
@@ -501,61 +514,61 @@ namespace RiotPls.Forms
             {
 
                 case "Attack":
-                    value_out = info.RatingInfo.Attack.ToString() + " / 10";
+                    value_out = champion_info.RatingInfo.Attack.ToString() + " / 10";
                     break;
                 case "Defense":
-                    value_out = info.RatingInfo.Defense.ToString() + " / 10";
+                    value_out = champion_info.RatingInfo.Defense.ToString() + " / 10";
                     break;
                 case "Difficulty":
-                    value_out = info.RatingInfo.Difficulty.ToString() + " / 10";
+                    value_out = champion_info.RatingInfo.Difficulty.ToString() + " / 10";
                     break;
                 case "Magic":
-                    value_out = info.RatingInfo.Magic.ToString() + " / 10";
+                    value_out = champion_info.RatingInfo.Magic.ToString() + " / 10";
                     break;
                 case "Passive":
-                    value_out = "     " + info.PassiveDescription;  
-                    subtitle_out = info.PassiveName + " (Passive)";
+                    value_out = "     " + champion_info.PassiveDescription;  
+                    subtitle_out = champion_info.PassiveName + " (Passive)";
                     break;
                 //
                 case "Q":
-                    value_out = "     " + info.SpellDescriptionQ;
-                    subtitle_out = info.SpellNameQ + " (Q)";
+                    value_out = "     " + champion_info.SpellDescriptionQ;
+                    subtitle_out = champion_info.SpellNameQ + " (Q)";
                     break;
                 case "W":
-                    value_out = "     " + info.SpellDescriptionW; 
-                    subtitle_out = info.SpellNameW + " (W)";
+                    value_out = "     " + champion_info.SpellDescriptionW; 
+                    subtitle_out = champion_info.SpellNameW + " (W)";
                     break;
                 case "E":
-                    value_out = "     " + info.SpellDescriptionE;
-                    subtitle_out = info.SpellNameE + " (E)";
+                    value_out = "     " + champion_info.SpellDescriptionE;
+                    subtitle_out = champion_info.SpellNameE + " (E)";
                     break;
                 case "R":
-                    value_out = "     " + info.SpellDescriptionR;
-                    subtitle_out = info.SpellNameR + " (R)";
+                    value_out = "     " + champion_info.SpellDescriptionR;
+                    subtitle_out = champion_info.SpellNameR + " (R)";
                     break;
                 //
                 case "Image":
-                    value_out = info.SkinList;
+                    value_out = champion_info.SkinList;
                     subtitle_out = "Skins";
                     break;
                 case "Free":
-                    value_out = info.FreeToPlay.ToString();
+                    value_out = champion_info.FreeToPlay.ToString();
                     subtitle_out = "Free to Play?";
                     break;
                 case "Name":
-                    value_out = info.LoreSummary;
+                    value_out = champion_info.LoreSummary;
                     subtitle_out = "Lore Summary";
                     break;
                 case "Tags":
-                    value_out = info.TagList;
+                    value_out = champion_info.TagList;
                     break;
                 case "Title":
-                    value_out = info.LoreSummary;
+                    value_out = champion_info.LoreSummary;
                     subtitle_out = "Lore Summary";
                     break;
             }
             if(this.fTooltip != null)
-                this.fTooltip.ShowTooltip(info.Name, subtitle_out, value_out, this);
+                this.fTooltip.ShowTooltip(champion_info.Name, subtitle_out, value_out, this);
         }
         private void UpdateFilter()
         {
@@ -573,21 +586,21 @@ namespace RiotPls.Forms
                         else
                         {
                             bool free_to_play = this.txtSearch.Text == "Free";
-                            this.gridMain.DataSource = new BindingList<Champion.Info>(this.source.Where(info =>
-                                info.FreeToPlay == free_to_play).ToList<Champion.Info>());
+                            this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
+                                info.FreeToPlay == free_to_play).ToList<ChampionInfo>());
                         }
                         break;
                     case "Name":
-                        this.gridMain.DataSource = new BindingList<Champion.Info>(this.source.Where(info =>
-                            info.Name.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<Champion.Info>());
+                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
+                            info.Name.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
                         break;
                     case "Tags":
-                        this.gridMain.DataSource = new BindingList<Champion.Info>(this.source.Where(info =>
-                            info.TagList.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<Champion.Info>());
+                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
+                            info.TagList.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
                         break;
                     case "Title":
-                        this.gridMain.DataSource = new BindingList<Champion.Info>(this.source.Where(info =>
-                            info.Title.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<Champion.Info>());
+                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
+                            info.Title.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
                         break;
                 }
             }
@@ -600,7 +613,10 @@ namespace RiotPls.Forms
             if (this.last_champ_name == null)
                 e.Cancel = true;
             else
+            {
                 this.itmShowStats.Checked = this.stat_windows.ContainsKey(this.last_champ_name);
+                this.itmSelectedForBuilder.Checked = BuildManager.GetChampion(0)?.Name == this.last_champ_name;
+            }
             return;
         }
         private void comboFilter_SelectionChangeCommitted(object sender, EventArgs e)
@@ -682,9 +698,11 @@ namespace RiotPls.Forms
         {
             if (e.Button != MouseButtons.Left || this.champions == null)
                 return;
-            Bitmap bitmap = this.champions[this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString()].Image;
+            string name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            Bitmap bitmap = this.champions[name].Image;
             if (bitmap != null)
             {
+                bitmap.Tag = name;
                 this.BeginInvoke((MethodInvoker) delegate
                 { this.gridMain.DoDragDrop(bitmap, DragDropEffects.Copy); });
             }
@@ -742,6 +760,12 @@ namespace RiotPls.Forms
             }
             return;
         }
+        private void itmSelectedForBuilder_CheckedChanged(object sender, EventArgs e)
+        {
+            if(this.itmSelectedForBuilder.Checked)
+                BuildManager.SetChampion(0, this.last_champ_name);
+            return;
+        }
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (this.comboFilter.SelectedItem != null && this.comboFilter.SelectedItem.ToString() == "Free")
@@ -777,7 +801,7 @@ namespace RiotPls.Forms
         protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
         {
             this.champions = Engine.GetChampionInfo();
-            this.source = new SortableBindingList<Champion.Info>(this.champions.Values.OrderBy(champ => champ.Name).ToList());
+            this.source = new SortableBindingList<ChampionInfo>(this.champions.Values.OrderBy(champ => champ.Name).ToList());
             return;
         }
         protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -827,6 +851,5 @@ namespace RiotPls.Forms
         }
 
         #endregion
-
     }
 }

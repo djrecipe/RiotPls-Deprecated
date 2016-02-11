@@ -6,36 +6,12 @@ using Newtonsoft.Json;
 namespace RiotPls.API.Serialization.Champion
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class Info
+    public class ChampionInfo
     {
-        public Bitmap AttackBitmap
-        {
-            get
-            {
-                return this.RatingInfo.AttackBitmap;
-            }
-        }
-        public Bitmap DefenseBitmap
-        {
-            get
-            {
-                return this.RatingInfo.DefenseBitmap;
-            }
-        }
-        public Bitmap DifficultyBitmap
-        {
-            get
-            {
-                return this.RatingInfo.DifficultyBitmap;
-            }
-        }
-        public bool FreeToPlay
-        {
-            get
-            {
-                return this.LiveInfo.FreeToPlay;
-            }
-        }
+        public Bitmap AttackBitmap => this.RatingInfo.AttackBitmap;
+        public Bitmap DefenseBitmap => this.RatingInfo.DefenseBitmap;
+        public Bitmap DifficultyBitmap => this.RatingInfo.DifficultyBitmap;
+        public bool FreeToPlay => this.LiveInfo.FreeToPlay;
         private int _ID = -1;
         [JsonProperty("id")]
         public int ID
