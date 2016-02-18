@@ -42,6 +42,11 @@ namespace RiotPls.Forms
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Visible = false;
+            // 
             // lblText
             // 
             this.lblText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -63,10 +68,10 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(420, 190);
             this.Controls.Add(this.lblText);
             this.Name = "formTooltip";
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.lblTitle, 0);
             this.Controls.SetChildIndex(this.lblSubTitle, 0);

@@ -103,6 +103,11 @@ namespace RiotPls.Forms
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Visible = false;
+            // 
             // gridMain
             // 
             this.gridMain.AllowUserToAddRows = false;
@@ -286,12 +291,12 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(420, 190);
             this.Controls.Add(this.gridMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Name = "formTooltipStats";
             this.Activated += new System.EventHandler(this.formTooltipStats_Activated);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.lblTitle, 0);

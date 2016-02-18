@@ -9,81 +9,47 @@ using System.Threading.Tasks;
 
 namespace RiotPls.API.Serialization
 {
-    public class CachedImage
+    public class CachedImage : Resources.Resource
     {
-        private const string VERSION = "6.1.1";
-        private const string URL = "http://ddragon.leagueoflegends.com/cdn/";
-        private const string DIRECTORY = "Images";
-        private const string FILENAME_IGNORE = "IgnoreImages.csv";
-        private static List<string> ignore = new List<string>();
-        private static string IgnorePath => Path.Combine(CachedImage.DIRECTORY, CachedImage.FILENAME_IGNORE);
         public Bitmap Image
         {
             get;
             private set;
         }
-        static CachedImage()
+        public CachedImage(string group, string file_name) : base(group, file_name)
         {
-            if (File.Exists(CachedImage.IgnorePath))
-            {
-                CachedImage.ignore.Clear();
-                string text = null;
-                try
-                {
-                    text = File.ReadAllText(CachedImage.IgnorePath);
-                }
-                catch
-                {
-                    text = null;
-                }
-                if (text != null)
-                    CachedImage.ignore.AddRange(text.Split(new string[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries));
-            }
-            return;
-        }
-        public void UpdateImage(string group, string filename)
-        {
-            if (filename == null || group == null)
+            if (group == null)
+                throw new ArgumentNullException("group", "Cannot be null");
+            if (file_name == null)
+                throw new ArgumentNullException("file_name", "Cannot be null");
+            if (this.Ignored)
             {
                 this.Image = null;
                 return;
             }
-            string image_sub_path = Path.Combine(CachedImage.VERSION, group, filename);
-            if (CachedImage.ignore.Contains(image_sub_path))
-            {
-                this.Image = null;
-                return;
-            }
-            string path_local = Path.Combine(CachedImage.DIRECTORY, image_sub_path);
-            if (this.Image == null || this.Image.Tag.ToString() != path_local)
+            if (this.Image == null || this.Image.Tag.ToString() != this.FullLocalPath)
             {
                 try
                 {
-                    if (!File.Exists(path_local))
+                    if (!File.Exists(this.FullLocalPath))
                     {
-                        string directory = Path.GetDirectoryName(Path.GetFullPath(path_local));
+                        string directory = Path.GetDirectoryName(Path.GetFullPath(this.FullLocalPath));
                         if (!Directory.Exists(directory))
                             Directory.CreateDirectory(directory);
                         using (WebClient client = new WebClient())
                         {
-                            client.DownloadFile(CachedImage.URL + VERSION + "/img/" + group + "/" + filename, path_local);
+                            client.DownloadFile(CachedImage.URL + VERSION + "/img/" + this.Group + "/" + this.FileName, this.FullLocalPath);
                         }
                     }
                     // don't use else here
-                    if (File.Exists(path_local))
+                    if (File.Exists(this.FullLocalPath))
                     {
-                        this.Image = new Bitmap(path_local) { Tag = path_local };
+                        this.Image = new Bitmap(this.FullLocalPath) { Tag = this.FullLocalPath };
                     }
                 }
                 catch
                 {
-                    if (File.Exists(path_local))
-                        File.Delete(path_local);
-                    if (!CachedImage.ignore.Contains(path_local))
-                    {
-                        CachedImage.ignore.Add(path_local);
-                        File.AppendAllText(CachedImage.IgnorePath, path_local + "\r\n");
-                    }
+                    this.Ignore();
                 }
             }
             return;

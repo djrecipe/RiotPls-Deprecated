@@ -115,6 +115,7 @@ namespace RiotPls.Forms
             // btnSettings
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Visible = false;
             // 
             // gridMain
             // 
@@ -367,7 +368,7 @@ namespace RiotPls.Forms
             this.itmLockTooltip,
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 92);
+            this.cmenMain.Size = new System.Drawing.Size(177, 70);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmShowStats
@@ -841,6 +842,7 @@ namespace RiotPls.Forms
             this.stat_windows.Clear();
             base.btnClose_MouseDown(sender, e);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))

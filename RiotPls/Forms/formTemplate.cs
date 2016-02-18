@@ -35,6 +35,14 @@ namespace RiotPls.Forms
         }
         #endregion
         #region Event Methods
+        private void formTemplate_Load(object sender, System.EventArgs e)
+        {
+            this.UpdateData();
+        }
+
+        protected virtual void btnSettings_Click(object sender, EventArgs e)
+        {
+        }
         protected virtual void btnClose_MouseDown(object sender, MouseEventArgs e)
         {
             if(this.ChildWindow)
@@ -70,13 +78,6 @@ namespace RiotPls.Forms
         }
         #endregion
 
-        private void formTemplate_Load(object sender, System.EventArgs e)
-        {
-            this.UpdateData();
-        }
 
-        protected virtual void btnSettings_Click(object sender, EventArgs e)
-        {
-        }
     }
 }

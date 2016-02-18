@@ -21,7 +21,8 @@ namespace RiotPls.API.Serialization
             set
             {
                 this._Group = value;
-                this.Image.UpdateImage(this.Group, this.ImagePath);
+                if(this.Group != null && this.ImagePath != null)
+                    this._Image = new CachedImage(this.Group, this.ImagePath);
                 return;
             }
         }
@@ -38,7 +39,7 @@ namespace RiotPls.API.Serialization
                 this._ID = value;
             }
         }
-        private CachedImage _Image = new CachedImage();
+        private CachedImage _Image = null;
         public CachedImage Image
         {
             get
@@ -57,7 +58,8 @@ namespace RiotPls.API.Serialization
             private set
             {
                 this._ImagePath = value;
-                this.Image.UpdateImage(this.Group, this.ImagePath);
+                if (this.Group != null && this.ImagePath != null)
+                    this._Image = new CachedImage(this.Group, this.ImagePath);
                 return;
             }
         }
@@ -82,7 +84,7 @@ namespace RiotPls.API.Serialization
                 return this._Rect;
             }
         }
-        private CachedImage _Sprite = new CachedImage();
+        private CachedImage _Sprite = null;
         public CachedImage Sprite
         {
             get

@@ -54,6 +54,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Engine.cs" />
+    <Compile Include="Resources\Resource.cs" />
     <Compile Include="Serialization\Champion\ChampionInfo.cs" />
     <Compile Include="Serialization\Champion\PassiveInfo.cs" />
     <Compile Include="Serialization\Champion\RatingInfo.cs" />

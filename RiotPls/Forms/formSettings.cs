@@ -16,6 +16,9 @@ namespace RiotPls.Forms
         private System.Windows.Forms.Label lblAPIStepOne;
         private Label lblAPIStepThree;
         private Label lblStepThreeInstructions;
+        private GroupBox groupResources;
+        private Label lblIgnoredCount;
+        private LinkLabel lblIgnoreCountValue;
         private System.Windows.Forms.LinkLabel lblAPIStepTwoInstructions;
         public formSettings()
         {
@@ -34,13 +37,27 @@ namespace RiotPls.Forms
             this.lblAPIStepOne = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.groupResources = new System.Windows.Forms.GroupBox();
+            this.lblIgnoredCount = new System.Windows.Forms.Label();
+            this.lblIgnoreCountValue = new System.Windows.Forms.LinkLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.groupAPI.SuspendLayout();
+            this.groupResources.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(413, 9);
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(101, 183);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Visible = false;
             // 
             // lblAPIStepOneInstructions
             // 
@@ -72,8 +89,7 @@ namespace RiotPls.Forms
             // 
             // groupAPI
             // 
-            this.groupAPI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupAPI.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupAPI.BackColor = System.Drawing.Color.Transparent;
             this.groupAPI.Controls.Add(this.lblStepThreeInstructions);
@@ -150,7 +166,7 @@ namespace RiotPls.Forms
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOK.Location = new System.Drawing.Point(323, 219);
+            this.btnOK.Location = new System.Drawing.Point(323, 431);
             this.btnOK.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(90, 30);
@@ -163,7 +179,7 @@ namespace RiotPls.Forms
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancel.Location = new System.Drawing.Point(29, 219);
+            this.btnCancel.Location = new System.Drawing.Point(29, 431);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(90, 30);
@@ -172,23 +188,70 @@ namespace RiotPls.Forms
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // groupResources
+            // 
+            this.groupResources.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupResources.BackColor = System.Drawing.Color.Transparent;
+            this.groupResources.Controls.Add(this.lblIgnoredCount);
+            this.groupResources.Controls.Add(this.lblIgnoreCountValue);
+            this.groupResources.ForeColor = System.Drawing.Color.Gainsboro;
+            this.groupResources.Location = new System.Drawing.Point(29, 229);
+            this.groupResources.Margin = new System.Windows.Forms.Padding(20);
+            this.groupResources.Name = "groupResources";
+            this.groupResources.Size = new System.Drawing.Size(384, 160);
+            this.groupResources.TabIndex = 11;
+            this.groupResources.TabStop = false;
+            this.groupResources.Text = "Resources";
+            // 
+            // lblIgnoredCount
+            // 
+            this.lblIgnoredCount.Location = new System.Drawing.Point(107, 73);
+            this.lblIgnoredCount.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
+            this.lblIgnoredCount.Name = "lblIgnoredCount";
+            this.lblIgnoredCount.Size = new System.Drawing.Size(100, 15);
+            this.lblIgnoredCount.TabIndex = 6;
+            this.lblIgnoredCount.Text = "Ignore Count:";
+            this.lblIgnoredCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblIgnoreCountValue
+            // 
+            this.lblIgnoreCountValue.LinkColor = System.Drawing.Color.PaleTurquoise;
+            this.lblIgnoreCountValue.Location = new System.Drawing.Point(227, 73);
+            this.lblIgnoreCountValue.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
+            this.lblIgnoreCountValue.Name = "lblIgnoreCountValue";
+            this.lblIgnoreCountValue.Size = new System.Drawing.Size(50, 13);
+            this.lblIgnoreCountValue.TabIndex = 3;
+            this.lblIgnoreCountValue.TabStop = true;
+            this.lblIgnoreCountValue.Text = "1";
+            this.lblIgnoreCountValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblIgnoreCountValue.VisitedLinkColor = System.Drawing.Color.Violet;
+            this.lblIgnoreCountValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblIgnoreCountValue_LinkClicked);
+            // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(442, 268);
+            this.ClientSize = new System.Drawing.Size(442, 480);
+            this.Controls.Add(this.groupResources);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupAPI);
             this.Name = "formSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "+";
+            this.Load += new System.EventHandler(this.formSettings_Load);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
+            this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.groupAPI, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);
+            this.Controls.SetChildIndex(this.groupResources, 0);
+            ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.groupAPI.ResumeLayout(false);
             this.groupAPI.PerformLayout();
+            this.groupResources.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -218,6 +281,16 @@ namespace RiotPls.Forms
         {
             Process.Start("https://developer.riotgames.com/");
         }
+        private void lblIgnoreCountValue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(API.Resources.Resource.IgnoreListFilePath);
+        }
+        private void formSettings_Load(object sender, EventArgs e)
+        {
+            if(!this.workerUpdateData.IsBusy)
+                this.workerUpdateData.RunWorkerAsync();
+            return;
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -243,10 +316,12 @@ namespace RiotPls.Forms
             try
             {
                 this.txtAPIKey.Text = e.Result as string;
+                this.lblIgnoreCountValue.Text = API.Resources.Resource.IgnoreCount.ToString();
             }
             catch (Exception ex)
             {
             }
         }
+
     }
 }

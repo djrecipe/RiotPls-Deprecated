@@ -37,6 +37,7 @@ namespace RiotPls.Forms
             // btnSettings
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Visible = false;
             // 
             // picChampion
             // 
