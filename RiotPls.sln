@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotPls.API", "Riot.API\Rio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiotPls.Test", "RiotPls.Test\RiotPls.Test.csproj", "{BD3D911A-95A8-4CC0-9D6D-7A65C629E2E7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1B4252AA-AEB5-4B4B-A1A5-6AD7551CF564}"
+	ProjectSection(SolutionItems) = preProject
+		RIOT.TXT = RIOT.TXT
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
