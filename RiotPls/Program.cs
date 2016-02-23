@@ -13,10 +13,6 @@ namespace RiotPls
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!API.Engine.LoadKey())
-            {
-                MessageBox.Show("Unable to load API key.", "API Key");
-            }
             Application.Run(new Forms.formMenu());
         }
     }

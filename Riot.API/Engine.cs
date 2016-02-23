@@ -23,23 +23,20 @@ namespace RiotPls.API
         private const string BASE_URL = "https://na.api.pvp.net/";
         private const string APIURL_LIVE = "api/lol/";
         private const string APIURL_STATIC = "api/lol/static-data/";
-        private const string FILE_APIKEY = "key.txt";
         private const string FILE_CHAMPIONINFO = "ChampionInfo.json";
         private const string FILE_LIVECHAMPIONINFO = "LiveChampionInfo.json";
         private const string FILE_ITEMINFO = "ItemInfo.json";
         private const string FILE_MAPINFO = "MapInfo.json";
         private const string PARAM_ALLITEMDATA = "itemListData=all";
         private const string PARAM_ALLCHAMPDATA = "champData=all";
-        private const string STR_APIKEY = "api_key=";
         #endregion
         private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();
         private static string region_string = "na";
         #endregion
         #region Static Properties
-        private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
-        public static string APIKeyRaw { get; private set;} = null;
         public static string APIVersion { get; set; } = "1.2";
         public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
+        public static APIKey Key { get; private set; } = new APIKey("key.txt");
         private static Dictionary<string, Serialization.Champion.ChampionInfo> _ChampionInfos = new Dictionary<string, Serialization.Champion.ChampionInfo>();
         public static Dictionary<string, Serialization.Champion.ChampionInfo> ChampionInfos
         {
@@ -62,7 +59,7 @@ namespace RiotPls.API
         {
             get
             {
-                return Engine.BASE_URL + Engine.APIURL_LIVE + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.APIKey;
+                return Engine.BASE_URL + Engine.APIURL_LIVE + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.Key.ToString();
             }
         }
         private static Dictionary<string, MapInfo> _MapInfos = new Dictionary<string, MapInfo>();
@@ -94,27 +91,15 @@ namespace RiotPls.API
                 return;
             }
         }
-        private static string StaticChampionDataURL
-        {
-            get
-            {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + "&" + Engine.APIKey;
-            }
-        }
-        private static string StaticItemDataURL
-        {
-            get
-            {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + "&" + Engine.APIKey;
-            }
-        }
-        private static string StaticMapDataURL
-        {
-            get
-            {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?&" + Engine.APIKey;
-            }
-        }
+        private static string StaticChampionDataURL =>
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + "&" + Engine.Key.ToString(true);
+
+        private static string StaticItemDataURL =>
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + "&" + Engine.Key.ToString(true);
+
+        private static string StaticMapDataURL =>
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?&" + Engine.Key.ToString(true);
+
         #endregion
         #region Static Methods
         static Engine()
@@ -128,6 +113,7 @@ namespace RiotPls.API
             { 
                 // ignored
             }
+            Engine.Key.Load();
             return;
         }
         public static string CleanseChampionName(Dictionary<string, Serialization.Champion.ChampionInfo> info, string name)
@@ -163,54 +149,6 @@ namespace RiotPls.API
                 Engine.StaticMapDataURL, Engine.FILE_MAPINFO, "data");
             Engine._MapInfos = payload.Get();
             return Engine.MapInfos;
-        }
-        public static bool LoadKey(string path = null)
-        {
-            Engine.APIKeyRaw = "0";
-            string desired_path = path ?? Engine.FILE_APIKEY;
-            if (!File.Exists(desired_path))
-                return false;
-            try
-            {
-                string text = File.ReadAllText(desired_path);
-                Engine.APIKeyRaw = Engine.SanitizeKey(text);
-                return true;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine("Error While Loading Key:\n'{0}'", e.Message);
-            }
-            return false;
-        }
-        public static string SanitizeKey(string text)
-        {
-            try
-            {
-                string clean = text.Replace("-", "").Trim();
-                Assert.IsFalse(clean.ToCharArray().Any(c => !char.IsLetterOrDigit(c)), "Invalid Character");
-                Assert.IsTrue(clean.Length == 32, "Invalid Length");
-            }
-            catch(Exception e)
-            {
-                text = null;
-                throw e;
-            }
-            return text;
-        }
-        public static bool SaveKey(string key, string path = null)
-        {
-            try
-            {
-                key = API.Engine.SanitizeKey(key);
-                Engine.APIKeyRaw = key;
-                File.WriteAllText(path ?? Engine.FILE_APIKEY, key ?? "");
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error While Saving Key:\n'{0}'", e.Message);
-            }
-            return false;
         }
         private static void UpdateLiveChampionInfo()
         {

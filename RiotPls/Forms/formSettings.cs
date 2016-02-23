@@ -264,7 +264,7 @@ namespace RiotPls.Forms
         {
             try
             {
-                API.Engine.SaveKey(this.txtAPIKey.Text);
+                API.Engine.Key.Save(this.txtAPIKey.Text);
                 this.Close();
             }
             catch (Exception ex)
@@ -303,8 +303,8 @@ namespace RiotPls.Forms
         {
             try
             {
-                API.Engine.LoadKey();
-                e.Result = API.Engine.APIKeyRaw;
+                API.Engine.Key.Load();
+                e.Result = API.Engine.Key.ToString();
             }
             catch(Exception ex)
             {
