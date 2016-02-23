@@ -11,9 +11,9 @@ namespace RiotPls.Test
         public void SaveAndLoad()
         {
             API.APIKey key = new API.APIKey(APIKey.Path);
-            Assert.IsTrue(API.Engine.Key.Save(APIKey.Key), "Failed to Save API Key");
-            Assert.IsTrue(API.Engine.Key.Load(), "Failed to Load API Key");
-            Assert.IsTrue(API.Engine.Key.ToString() == APIKey.Key, "Key Does Not Match Expected Value");
+            Assert.IsTrue(key.Save(APIKey.Key), "Failed to Save API Key");
+            Assert.IsTrue(key.Load(), "Failed to Load API Key");
+            Assert.IsTrue(key.ToString() == APIKey.Key, "Key Does Not Match Expected Value");
         }
     }
 }

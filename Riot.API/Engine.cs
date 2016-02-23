@@ -92,13 +92,13 @@ namespace RiotPls.API
             }
         }
         private static string StaticChampionDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + "&" + Engine.Key.ToString(true);
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + Engine.Key.ToString(true);
 
         private static string StaticItemDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + "&" + Engine.Key.ToString(true);
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + Engine.Key.ToString(true);
 
         private static string StaticMapDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?&" + Engine.Key.ToString(true);
+            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?" + Engine.Key.ToString(true);
 
         #endregion
         #region Static Methods

@@ -9,7 +9,7 @@ namespace RiotPls.API
 {
     public class APIKey
     {
-        private const string URL_STR = "api_key=";
+        private const string URL_STR = "&api_key=";
         public readonly string FilePath = null;
         public string RawKey { get; private set; } = null;
 
