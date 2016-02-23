@@ -5,6 +5,7 @@ using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization;
+using RiotPls.API.Serialization.General;
 
 namespace RiotPls.Test.Serialization
 {

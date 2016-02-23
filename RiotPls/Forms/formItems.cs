@@ -8,6 +8,7 @@ using Microsoft.Win32;
 
 using RiotPls.API;
 using RiotPls.API.Serialization;
+using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.Forms
 {
@@ -185,8 +186,6 @@ namespace RiotPls.Forms
             this.Name = "formItems";
             this.ShowLoading = true;
             this.Text = "RiotPls-Items";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formItems_FormClosing);
-            this.Load += new System.EventHandler(this.formItems_Load);
             this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
@@ -228,16 +227,6 @@ namespace RiotPls.Forms
             {
                 this.UpdateData();
             }
-            return;
-        }
-        private void formItems_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.SaveWindowSettings();
-            return;
-        }
-        private void formItems_Load(object sender, EventArgs e)
-        {
-            this.LoadWindowSettings();
             return;
         }
         #region Override Methods

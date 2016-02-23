@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-using RiotPls.API.Serialization.Champion;
+using RiotPls.API.Serialization.Champions;
 using RiotPls.Builder;
 
 namespace RiotPls.Forms

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.General;
 
-namespace RiotPls.API.Serialization
+namespace RiotPls.API.Serialization.Maps
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class MapInfo

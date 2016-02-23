@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RiotPls.API.Serialization.Champion;
+using RiotPls.API.Serialization.Champions;
 
 namespace RiotPls.Builder
 {

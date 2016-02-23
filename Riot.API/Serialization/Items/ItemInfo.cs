@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Linq;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.General;
 
-namespace RiotPls.API.Serialization
+namespace RiotPls.API.Serialization.Items
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class ItemInfo

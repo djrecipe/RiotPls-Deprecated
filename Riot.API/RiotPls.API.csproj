@@ -30,7 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\External Dependencies\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -67,17 +66,17 @@
     </Compile>
     <Compile Include="Engine.cs" />
     <Compile Include="Resources\Resource.cs" />
-    <Compile Include="Serialization\Champion\ChampionInfo.cs" />
-    <Compile Include="Serialization\Champion\PassiveInfo.cs" />
-    <Compile Include="Serialization\Champion\RatingInfo.cs" />
-    <Compile Include="Serialization\Champion\SkinInfo.cs" />
-    <Compile Include="Serialization\Champion\SpellInfo.cs" />
-    <Compile Include="Serialization\Champion\StatsInfo.cs" />
-    <Compile Include="Serialization\ImageInfo.cs" />
-    <Compile Include="Serialization\CachedImage.cs" />
-    <Compile Include="Serialization\ItemInfo.cs" />
-    <Compile Include="Serialization\LiveChampionInfo.cs" />
-    <Compile Include="Serialization\MapInfo.cs" />
+    <Compile Include="Serialization\Champions\ChampionInfo.cs" />
+    <Compile Include="Serialization\Champions\PassiveInfo.cs" />
+    <Compile Include="Serialization\Champions\RatingInfo.cs" />
+    <Compile Include="Serialization\Champions\SkinInfo.cs" />
+    <Compile Include="Serialization\Champions\SpellInfo.cs" />
+    <Compile Include="Serialization\Champions\StatsInfo.cs" />
+    <Compile Include="Serialization\General\ImageInfo.cs" />
+    <Compile Include="Serialization\Transport\CachedImage.cs" />
+    <Compile Include="Serialization\Items\ItemInfo.cs" />
+    <Compile Include="Serialization\Champions\LiveChampionInfo.cs" />
+    <Compile Include="Serialization\Maps\MapInfo.cs" />
     <Compile Include="Serialization\Transport\JsonPayload.cs" />
     <Compile Include="StatsTable.Designer.cs">
       <DependentUpon>StatsTable.xsd</DependentUpon>

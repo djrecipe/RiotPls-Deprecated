@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiotPls.API.Serialization
+namespace RiotPls.API.Serialization.Transport
 {
     public class CachedImage : Resources.Resource
     {

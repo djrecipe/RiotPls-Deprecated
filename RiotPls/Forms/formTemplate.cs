@@ -81,6 +81,14 @@ namespace RiotPls.Forms
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(46, 46, 46), 6.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(120, 120, 120), 2.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
         }
+        private void formTemplate_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+                Tools.GeneralSettings.LoadWindowSettings(this);
+            else
+                Tools.GeneralSettings.SaveWindowSettings(this);
+            return;
+        }
         protected virtual void workerUpdateData_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
 

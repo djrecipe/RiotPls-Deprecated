@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-using Champion = RiotPls.API.Serialization.Champion;
+using Champion = RiotPls.API.Serialization.Champions;
 
 namespace RiotPls.Forms
 {

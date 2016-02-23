@@ -1,7 +1,8 @@
 ﻿using System.Drawing;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.General;
 
-namespace RiotPls.API.Serialization.Champion
+namespace RiotPls.API.Serialization.Champions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class SpellInfo

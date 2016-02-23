@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RiotPls.API;
-using RiotPls.API.Serialization;
+using RiotPls.API.Serialization.Maps;
 
 namespace RiotPls.Forms
 {
@@ -79,8 +79,6 @@ namespace RiotPls.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formMaps";
             this.Text = "RiotPls-Maps";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMaps_FormClosing);
-            this.Load += new System.EventHandler(this.formMaps_Load);
             this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
@@ -108,16 +106,6 @@ namespace RiotPls.Forms
         private void imgboxMap_ZoomChanged(object sender, EventArgs e)
         {
             this.imgboxMap.Zoom = Math.Max(0, this.imgboxMap.Zoom);
-            return;
-        }
-        private void formMaps_Load(object sender, EventArgs e)
-        {
-            this.LoadWindowSettings();
-            return;
-        }
-        private void formMaps_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.SaveWindowSettings();
             return;
         }
         #endregion

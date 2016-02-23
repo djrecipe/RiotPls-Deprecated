@@ -237,14 +237,12 @@ namespace RiotPls.Forms
         #region Form Events          
         private void formMenu_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Tools.GeneralSettings.SaveWindowSettings(this);
             Tools.GeneralSettings.Save();
             APISettings.Save();
             return;
         }
         private void formMenu_Load(object sender, EventArgs e)
         {
-            Tools.GeneralSettings.LoadWindowSettings(this);
             this.UpdateVersionLabel();
             return;
         }

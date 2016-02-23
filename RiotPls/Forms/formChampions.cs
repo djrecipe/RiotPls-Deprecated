@@ -11,7 +11,7 @@ using Microsoft.Win32;
 
 using RiotPls.API;
 using RiotPls.Builder;
-using RiotPls.API.Serialization.Champion;
+using RiotPls.API.Serialization.Champions;
 
 namespace RiotPls.Forms
 {
@@ -30,7 +30,7 @@ namespace RiotPls.Forms
         private ToolStripMenuItem itmSelectedForBuilder;
         #endregion
         private string last_champ_name = null;
-        private Dictionary<string, API.Serialization.Champion.ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
+        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
         private BindingList<ChampionInfo> source = null;
         private Point last_location = Point.Empty;
         private ToolStripMenuItem itmLockTooltip;
@@ -458,8 +458,6 @@ namespace RiotPls.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "RiotPls-Champions";
             this.Activated += new System.EventHandler(this.formChampions_Activated);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formChampions_FormClosing);
-            this.Load += new System.EventHandler(this.formChampions_Load);
             this.LocationChanged += new System.EventHandler(this.formChampions_LocationChanged);
             this.VisibleChanged += new System.EventHandler(this.formChampions_VisibleChanged);
             this.Controls.SetChildIndex(this.btnSettings, 0);
@@ -619,16 +617,6 @@ namespace RiotPls.Forms
             this.gridMain.Focus();
             return;
         }
-        private void formChampions_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.SaveWindowSettings();
-            return;
-        }
-        private void formChampions_Load(object sender, EventArgs e)
-        {
-            this.LoadWindowSettings();                                 
-            return;
-        }
         private void formChampions_LocationChanged(object sender, EventArgs e)
         {
             if (this.last_location != Point.Empty)
@@ -645,6 +633,7 @@ namespace RiotPls.Forms
         {
             if (this.Visible)
             {
+                this.LoadWindowSettings();
                 this.fTooltip = new formTooltip();
                 this.fTooltip.Location = new Point(this.Right + 10, this.Top);
                 this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,

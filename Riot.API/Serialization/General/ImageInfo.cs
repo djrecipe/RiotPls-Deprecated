@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Net;
+﻿using System.Drawing;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.Transport;
 
-namespace RiotPls.API.Serialization
+namespace RiotPls.API.Serialization.General
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class ImageInfo

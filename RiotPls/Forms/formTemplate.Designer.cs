@@ -104,6 +104,7 @@
             this.Name = "formTemplate";
             this.Text = "formTemplate";
             this.Load += new System.EventHandler(this.formTemplate_Load);
+            this.VisibleChanged += new System.EventHandler(this.formTemplate_VisibleChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.formTemplate_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formTemplate_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();

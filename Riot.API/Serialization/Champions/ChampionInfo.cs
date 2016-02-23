@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.General;
 
-namespace RiotPls.API.Serialization.Champion
+namespace RiotPls.API.Serialization.Champions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class ChampionInfo
@@ -138,9 +139,9 @@ namespace RiotPls.API.Serialization.Champion
                 return this.PassiveInfo.Name;
             }
         }
-        private Champion.RatingInfo _RatingInfo = new Champion.RatingInfo();
+        private RatingInfo _RatingInfo = new RatingInfo();
         [JsonProperty("info", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public Champion.RatingInfo RatingInfo
+        public RatingInfo RatingInfo
         {
             get
             {
@@ -161,9 +162,9 @@ namespace RiotPls.API.Serialization.Champion
                 return value;
             }
         }
-        private List<Champion.SkinInfo> _Skins = new List<Champion.SkinInfo>();
+        private List<SkinInfo> _Skins = new List<SkinInfo>();
         [JsonProperty("skins", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public List<Champion.SkinInfo> Skins
+        public List<SkinInfo> Skins
         {
             get
             {
@@ -258,9 +259,9 @@ namespace RiotPls.API.Serialization.Champion
                 return this.Spells.Count > 3 ? this.Spells[3].Name : null;
             }
         }
-        private List<Champion.SpellInfo> _Spells = new List<Champion.SpellInfo>();
+        private List<SpellInfo> _Spells = new List<SpellInfo>();
         [JsonProperty("spells", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public List<Champion.SpellInfo> Spells
+        public List<SpellInfo> Spells
         {
             get
             {

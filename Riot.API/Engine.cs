@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using RiotPls.API.Serialization;
+using RiotPls.API.Serialization.Champions;
+using RiotPls.API.Serialization.Items;
+using RiotPls.API.Serialization.Maps;
 using RiotPls.API.Serialization.Transport;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
@@ -37,8 +36,8 @@ namespace RiotPls.API
         public static string APIVersion { get; set; } = "1.2";
         public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
         public static APIKey Key { get; private set; } = new APIKey("key.txt");
-        private static Dictionary<string, Serialization.Champion.ChampionInfo> _ChampionInfos = new Dictionary<string, Serialization.Champion.ChampionInfo>();
-        public static Dictionary<string, Serialization.Champion.ChampionInfo> ChampionInfos
+        private static Dictionary<string, ChampionInfo> _ChampionInfos = new Dictionary<string, ChampionInfo>();
+        public static Dictionary<string, ChampionInfo> ChampionInfos
         {
             get
             {
@@ -116,19 +115,19 @@ namespace RiotPls.API
             Engine.Key.Load();
             return;
         }
-        public static string CleanseChampionName(Dictionary<string, Serialization.Champion.ChampionInfo> info, string name)
+        public static string CleanseChampionName(Dictionary<string, ChampionInfo> info, string name)
         {
-            KeyValuePair<string, Serialization.Champion.ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
-            return pair.Equals(default(KeyValuePair<string, Serialization.Champion.ChampionInfo>)) ? null : pair.Key;
+            KeyValuePair<string, ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
+            return pair.Equals(default(KeyValuePair<string, ChampionInfo>)) ? null : pair.Key;
         }
-        public static Serialization.Champion.ChampionInfo GetChampion(string name)
+        public static ChampionInfo GetChampion(string name)
         {
             return Engine.ChampionInfos.ContainsKey(name) ? Engine.ChampionInfos[name] : null;
         }
-        public static Dictionary<string, Serialization.Champion.ChampionInfo> GetChampionInfo()
+        public static Dictionary<string, ChampionInfo> GetChampionInfo()
         {
             //
-            JsonPayload<Dictionary<string, Serialization.Champion.ChampionInfo>> payload = new JsonPayload<Dictionary<string, Serialization.Champion.ChampionInfo>>(Engine.StaticChampionDataURL, Engine.FILE_CHAMPIONINFO, "data");
+            JsonPayload<Dictionary<string, ChampionInfo>> payload = new JsonPayload<Dictionary<string, ChampionInfo>>(Engine.StaticChampionDataURL, Engine.FILE_CHAMPIONINFO, "data");
             Engine._ChampionInfos = payload.Get();
 
             Engine.UpdateLiveChampionInfo();
@@ -156,7 +155,7 @@ namespace RiotPls.API
             Engine.live_champion_info = payload.Get();
             foreach(string s in Engine.ChampionInfos.Keys)
             {
-                Serialization.Champion.ChampionInfo current_champion_info = Engine.ChampionInfos[s];
+                ChampionInfo current_champion_info = Engine.ChampionInfos[s];
                 current_champion_info.LiveInfo = Engine.live_champion_info.FirstOrDefault(info => info.ID == current_champion_info.ID);
             }
             return;

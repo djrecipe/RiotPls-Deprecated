@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace RiotPls.API.Serialization
+namespace RiotPls.API.Serialization.Champions
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class LiveChampionInfo
