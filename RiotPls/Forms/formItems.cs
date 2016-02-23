@@ -30,7 +30,6 @@ namespace RiotPls.Forms
         {
             this.InitializeComponent();
             this.gridMain.AutoGenerateColumns = false;
-            this.LoadRegistrySettings();
             return;
         }
         private void InitializeComponent()
@@ -222,61 +221,6 @@ namespace RiotPls.Forms
             }
             return new_binding;
         }
-        private void LoadRegistrySettings()
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\RiotPls\\Items");
-            if (key != null)
-            {
-                int? x = (int?)key.GetValue("X");
-                int? y = (int?)key.GetValue("Y");
-                if (x.HasValue && y.HasValue)
-                    this.Location = new Point(x.Value, y.Value);
-                string value = (string)key.GetValue("Chkbox_Consumables");
-                bool temp = false;
-                if (bool.TryParse(value, out temp))
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Consumables"), temp);
-                else
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Consumables"), false);
-                value = (string)key.GetValue("Chkbox_HowlyingAbyss");
-                if (bool.TryParse(value, out temp))
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Howling Abyss"), temp);
-                else
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Howling Abyss"), false);
-                value = (string)key.GetValue("Chkbox_NonConsumables");
-                if (bool.TryParse(value, out temp))
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Non-Consumables"), temp);
-                else
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Non-Consumables"), true);
-                value = (string)key.GetValue("Chkbox_SummonersRift");
-                if (bool.TryParse(value, out temp))
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Summoner's Rift"), temp);
-                else
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Summoner's Rift"), true);
-                value = (string)key.GetValue("Chkbox_TwistedTreeline");
-                if (bool.TryParse(value, out temp))
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Twisted Treeline"), temp);
-                else
-                    this.chkdlistFilter.SetItemChecked(this.chkdlistFilter.Items.IndexOf("Twisted Treeline"), false);
-                key.Close();
-            }
-            return;
-        }
-        private void SaveRegistrySettings()
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey("Software\\RiotPls\\Items");
-            if (key != null)
-            {
-                key.SetValue("X", this.Left);
-                key.SetValue("Y", this.Top);
-                key.SetValue("Chkbox_Consumables", this.chkdlistFilter.SelectedItems.Contains("Consumables"));
-                key.SetValue("Chkbox_HowlingAbyss", this.chkdlistFilter.SelectedItems.Contains("Howling Abyss"));
-                key.SetValue("Chkbox_NonConsumables", this.chkdlistFilter.SelectedItems.Contains("Non-Consumables"));
-                key.SetValue("Chkbox_SummonersRift", this.chkdlistFilter.SelectedItems.Contains("Summoner's Rift"));
-                key.SetValue("Chkbox_TwistedTreeline", this.chkdlistFilter.SelectedItems.Contains("Twisted Treeline"));
-                key.Close();
-            }
-            return;
-        }
         #endregion
         private void chkdlistFilter_ItemCheck(object sender, ItemCheckEventArgs e)
         {
@@ -288,11 +232,12 @@ namespace RiotPls.Forms
         }
         private void formItems_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.SaveRegistrySettings();
+            this.SaveWindowSettings();
             return;
         }
         private void formItems_Load(object sender, EventArgs e)
         {
+            this.LoadWindowSettings();
             return;
         }
         #region Override Methods

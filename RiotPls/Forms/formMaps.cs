@@ -79,6 +79,7 @@ namespace RiotPls.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formMaps";
             this.Text = "RiotPls-Maps";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMaps_FormClosing);
             this.Load += new System.EventHandler(this.formMaps_Load);
             this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
@@ -89,10 +90,6 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
-        private void formMaps_Load(object sender, EventArgs e)
-        {
-            return;
-        }
         private void UpdateImage()
         {
             if (this.source == null || this.source.Values.Count < 1)
@@ -102,16 +99,28 @@ namespace RiotPls.Forms
             this.imgboxMap.Focus();
             return;
         }
+        #region Event Methods
         private void comboMaps_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.UpdateImage();
             return;
         }
-
         private void imgboxMap_ZoomChanged(object sender, EventArgs e)
         {
             this.imgboxMap.Zoom = Math.Max(0, this.imgboxMap.Zoom);
+            return;
         }
+        private void formMaps_Load(object sender, EventArgs e)
+        {
+            this.LoadWindowSettings();
+            return;
+        }
+        private void formMaps_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.SaveWindowSettings();
+            return;
+        }
+        #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
         {
@@ -132,5 +141,6 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
+
     }
 }

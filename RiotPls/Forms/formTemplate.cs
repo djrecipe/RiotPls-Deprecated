@@ -26,6 +26,18 @@ namespace RiotPls.Forms
         {
             this.InitializeComponent();
         }
+
+        protected void LoadWindowSettings()
+        {
+            Tools.GeneralSettings.LoadWindowSettings(this);
+            return;
+        }
+        protected void SaveWindowSettings()
+        {
+            Tools.GeneralSettings.SaveWindowSettings(this);
+            return;
+        }
+
         public void UpdateData()
         {
             this.picLoading.Visible = this.ShowLoading;
@@ -33,6 +45,7 @@ namespace RiotPls.Forms
             this.workerUpdateData.RunWorkerAsync();
             return;
         }
+
         #endregion
         #region Event Methods
         private void formTemplate_Load(object sender, System.EventArgs e)
@@ -77,7 +90,5 @@ namespace RiotPls.Forms
 
         }
         #endregion
-
-
     }
 }

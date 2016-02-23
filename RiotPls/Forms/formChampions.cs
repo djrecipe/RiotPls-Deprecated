@@ -56,7 +56,6 @@ namespace RiotPls.Forms
         public formChampions()
         {
             this.InitializeComponent();
-            this.LoadRegistrySettings();
             this.gridMain.AutoGenerateColumns = false;
             return;
         }
@@ -477,31 +476,6 @@ namespace RiotPls.Forms
             this.PerformLayout();
 
         }
-
-        private void LoadRegistrySettings()
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey("Software/RiotPls");
-            if (key != null)
-            {
-                int? x = (int?)key.GetValue("X");
-                int? y = (int?)key.GetValue("Y");
-                key.Close();
-                if (x.HasValue && y.HasValue)
-                    this.Location = new Point(x.Value, y.Value);
-            }
-            return;
-        }
-        private void SaveRegistrySettings()
-        {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey("Software/RiotPls");
-            if (key != null)
-            {
-                key.SetValue("X", this.Left);
-                key.SetValue("Y", this.Top);
-                key.Close();
-            }
-            return;
-        }
         private void ShowTooltip(int row_index, int column_index)
         {
             if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount || (this.fTooltip != null && this.fTooltip.Visible && this.itmLockTooltip.Checked))
@@ -647,11 +621,12 @@ namespace RiotPls.Forms
         }
         private void formChampions_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.SaveRegistrySettings();
+            this.SaveWindowSettings();
             return;
         }
         private void formChampions_Load(object sender, EventArgs e)
-        {                                          
+        {
+            this.LoadWindowSettings();                                 
             return;
         }
         private void formChampions_LocationChanged(object sender, EventArgs e)

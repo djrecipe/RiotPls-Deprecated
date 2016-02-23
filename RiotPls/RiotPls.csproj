@@ -173,6 +173,10 @@
       <Name>RiotPls.API</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\RiotPls.Tools\RiotPls.Tools.csproj">
+      <Project>{8d726254-2f07-4a36-9205-73e65dedbd6a}</Project>
+      <Name>RiotPls.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

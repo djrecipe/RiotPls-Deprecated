@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="GeneralSettings" targetNamespace="http://tempuri.org/GeneralSettings.xsd" xmlns:mstns="http://tempuri.org/GeneralSettings.xsd" xmlns="http://tempuri.org/GeneralSettings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="GeneralSettings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="GeneralSettings" msprop:Generator_UserDSName="GeneralSettings">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Windows" msprop:Generator_TableClassName="WindowsDataTable" msprop:Generator_TableVarName="tableWindows" msprop:Generator_TablePropName="Windows" msprop:Generator_RowDeletingName="WindowsRowDeleting" msprop:Generator_RowChangingName="WindowsRowChanging" msprop:Generator_RowEvHandlerName="WindowsRowChangeEventHandler" msprop:Generator_RowDeletedName="WindowsRowDeleted" msprop:Generator_UserTableName="Windows" msprop:Generator_RowChangedName="WindowsRowChanged" msprop:Generator_RowEvArgName="WindowsRowChangeEvent" msprop:Generator_RowClassName="WindowsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" />
+              <xs:element name="Left" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Left" msprop:Generator_ColumnVarNameInTable="columnLeft" msprop:Generator_ColumnPropNameInTable="LeftColumn" msprop:Generator_UserColumnName="Left" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Top" msdata:Caption="Left" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Top" msprop:Generator_ColumnVarNameInTable="columnTop" msprop:Generator_ColumnPropNameInTable="TopColumn" msprop:Generator_UserColumnName="Top" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Width" msdata:Caption="Left" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Width" msprop:Generator_ColumnVarNameInTable="columnWidth" msprop:Generator_ColumnPropNameInTable="WidthColumn" msprop:Generator_UserColumnName="Width" type="xs:int" default="0" minOccurs="0" />
+              <xs:element name="Height" msdata:Caption="Left" msprop:nullValue="0" msprop:Generator_ColumnPropNameInRow="Height" msprop:Generator_ColumnVarNameInTable="columnHeight" msprop:Generator_ColumnPropNameInTable="HeightColumn" msprop:Generator_UserColumnName="Height" type="xs:int" default="0" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint11" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Windows" />
+      <xs:field xpath="mstns:Name" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

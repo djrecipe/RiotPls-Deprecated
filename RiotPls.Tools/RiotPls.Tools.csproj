@@ -32,6 +32,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,8 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeneralSettings.cs">
+      <DependentUpon>GeneralSettings.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneralSettings.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GeneralSettings.xsc">
+      <DependentUpon>GeneralSettings.xsd</DependentUpon>
+    </None>
+    <None Include="GeneralSettings.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GeneralSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="GeneralSettings.xss">
+      <DependentUpon>GeneralSettings.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
