@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
+using RiotPls.API;
 
 namespace RiotPls.Forms
 {
@@ -40,6 +41,10 @@ namespace RiotPls.Forms
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(119, 9);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.FlatAppearance.BorderSize = 0;
             // 
             // btnChampions
             // 
@@ -116,7 +121,9 @@ namespace RiotPls.Forms
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RiotPls-Menu";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMenu_FormClosing);
             this.Load += new System.EventHandler(this.formMenu_Load);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.btnChampions, 0);
@@ -186,7 +193,12 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
-        #region Form Events
+        #region Form Events          
+        private void formMenu_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            APISettings.Save();
+            return;
+        }
         private void formMenu_Load(object sender, EventArgs e)
         {
             this.UpdateVersionLabel();

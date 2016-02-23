@@ -12,7 +12,6 @@ namespace RiotPls.API.Resources
         protected const string URL = "http://ddragon.leagueoflegends.com/cdn/";
         protected const string DIRECTORY = "Resources";
         protected const string FILENAME_IGNORE = "Ignore.csv";
-        protected const string VERSION = "6.1.1";
         protected static List<string> ignore = new List<string>();
         public static int IgnoreCount => Resource.ignore.Count;
         public static string IgnoreListFilePath => Path.Combine(Resource.DIRECTORY, Resource.FILENAME_IGNORE);
@@ -50,23 +49,24 @@ namespace RiotPls.API.Resources
             }
             return;
         }
-        public string FileName
-        {
-            get;
-            set;
-        }
+
+        public readonly string FileName = null;
         public string FullLocalPath => Path.Combine(Resource.DIRECTORY, this.SubPath);
-        public string Group
-        {
-            get;
-            set;
-        }
+        public readonly string Group = null;
         public bool Ignored => Resource.ignore.Contains(this.SubPath);
-        protected string SubPath => Path.Combine(Resource.VERSION, this.Group, this.FileName);
-        public Resource(string group, string file_name)
+        protected string SubPath => Path.Combine(this.Version, this.Group, this.FileName);
+        public readonly string Version = null;
+        public Resource(string group, string file_name, string version)
         {
+            if(string.IsNullOrWhiteSpace(group))
+                throw new ArgumentException("Cannot be a null or empty string", "Group");
             this.Group = group;
+            if (string.IsNullOrWhiteSpace(file_name))
+                throw new ArgumentException("Cannot be a null or empty string", "FileName");
             this.FileName = file_name;
+            if (string.IsNullOrWhiteSpace(version))
+                throw new ArgumentException("Cannot be a null or empty string", "Version");
+            this.Version = version;
             return;
         }
         protected void Ignore()

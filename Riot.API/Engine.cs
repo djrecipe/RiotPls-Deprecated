@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 using RiotPls.API.Serialization;
 using RiotPls.API.Serialization.Transport;
@@ -38,11 +34,12 @@ namespace RiotPls.API
         #endregion
         private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();
         private static string region_string = "na";
-        private static string version_string = "v1.2";
         #endregion
         #region Static Properties
         private static string APIKey => Engine.STR_APIKEY + Engine.APIKeyRaw;
         public static string APIKeyRaw { get; private set;} = null;
+        public static string APIVersion { get; set; } = "1.2";
+        public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
         private static Dictionary<string, Serialization.Champion.ChampionInfo> _ChampionInfos = new Dictionary<string, Serialization.Champion.ChampionInfo>();
         public static Dictionary<string, Serialization.Champion.ChampionInfo> ChampionInfos
         {
@@ -51,6 +48,8 @@ namespace RiotPls.API
                 return Engine._ChampionInfos;
             }
         }
+
+        public static string ContentVersion { get; set; } = "6.3.1";
         private static Dictionary<string, ItemInfo> _ItemInfos = new Dictionary<string, ItemInfo>();
         public static Dictionary<string, ItemInfo> ItemInfos
         {
@@ -63,7 +62,7 @@ namespace RiotPls.API
         {
             get
             {
-                return Engine.BASE_URL + Engine.APIURL_LIVE + Engine.region_string + "/" + Engine.version_string + "/champion?" + Engine.APIKey;
+                return Engine.BASE_URL + Engine.APIURL_LIVE + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.APIKey;
             }
         }
         private static Dictionary<string, MapInfo> _MapInfos = new Dictionary<string, MapInfo>();
@@ -99,25 +98,38 @@ namespace RiotPls.API
         {
             get
             {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.version_string + "/champion?" + Engine.PARAM_ALLCHAMPDATA + "&" + Engine.APIKey;
+                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + "&" + Engine.APIKey;
             }
         }
         private static string StaticItemDataURL
         {
             get
             {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.version_string + "/item?" + Engine.PARAM_ALLITEMDATA + "&" + Engine.APIKey;
+                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + "&" + Engine.APIKey;
             }
         }
         private static string StaticMapDataURL
         {
             get
             {
-                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.version_string + "/map?&" + Engine.APIKey;
+                return Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?&" + Engine.APIKey;
             }
         }
         #endregion
         #region Static Methods
+        static Engine()
+        {
+            try
+            {
+                Engine.APIVersion = APISettings.APIVersion;
+                Engine.ContentVersion = APISettings.ContentVersion;
+            }
+            catch
+            { 
+                // ignored
+            }
+            return;
+        }
         public static string CleanseChampionName(Dictionary<string, Serialization.Champion.ChampionInfo> info, string name)
         {
             KeyValuePair<string, Serialization.Champion.ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
@@ -138,18 +150,18 @@ namespace RiotPls.API
         }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
-            //
-            JsonPayload<Dictionary<string, ItemInfo>> payload = new JsonPayload<Dictionary<string, ItemInfo>>(Engine.StaticItemDataURL, Engine.FILE_ITEMINFO, "data");
+            // retrieve & deserialize json
+            JsonPayload<Dictionary<string, ItemInfo>> payload = new JsonPayload<Dictionary<string, ItemInfo>>(
+                Engine.StaticItemDataURL, Engine.FILE_ITEMINFO, "data");
             Engine._ItemInfos = payload.Get();
-            //
             return Engine.ItemInfos;
         }
         public static Dictionary<string, MapInfo> GetMapInfo()
         {
-            //
-            JsonPayload<Dictionary<string, MapInfo>> payload = new JsonPayload<Dictionary<string, MapInfo>>(Engine.StaticMapDataURL, Engine.FILE_MAPINFO, "data");
+            // retrieve & deserialize json
+            JsonPayload<Dictionary<string, MapInfo>> payload = new JsonPayload<Dictionary<string, MapInfo>>(
+                Engine.StaticMapDataURL, Engine.FILE_MAPINFO, "data");
             Engine._MapInfos = payload.Get();
-            //
             return Engine.MapInfos;
         }
         public static bool LoadKey(string path = null)

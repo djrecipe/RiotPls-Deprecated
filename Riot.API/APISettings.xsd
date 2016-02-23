@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="APISettings" targetNamespace="http://tempuri.org/APISettings.xsd" xmlns:mstns="http://tempuri.org/APISettings.xsd" xmlns="http://tempuri.org/APISettings.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="APISettings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="APISettings" msprop:Generator_UserDSName="APISettings">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Versions" msprop:Generator_TableClassName="VersionsDataTable" msprop:Generator_TableVarName="tableVersions" msprop:Generator_TablePropName="Versions" msprop:Generator_RowDeletingName="VersionsRowDeleting" msprop:Generator_RowChangingName="VersionsRowChanging" msprop:Generator_RowEvHandlerName="VersionsRowChangeEventHandler" msprop:Generator_RowDeletedName="VersionsRowDeleted" msprop:Generator_UserTableName="Versions" msprop:Generator_RowChangedName="VersionsRowChanged" msprop:Generator_RowEvArgName="VersionsRowChangeEvent" msprop:Generator_RowClassName="VersionsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="APIVersion" msprop:nullValue="1.2" msprop:Generator_ColumnPropNameInRow="APIVersion" msprop:Generator_ColumnVarNameInTable="columnAPIVersion" msprop:Generator_ColumnPropNameInTable="APIVersionColumn" msprop:Generator_UserColumnName="APIVersion" type="xs:string" default="1.2" minOccurs="0" />
+              <xs:element name="ContentVersion" msprop:nullValue="6.3.1" msprop:Generator_ColumnPropNameInRow="ContentVersion" msprop:Generator_ColumnVarNameInTable="columnContentVersion" msprop:Generator_ColumnPropNameInTable="ContentVersionColumn" msprop:Generator_UserColumnName="ContentVersion" type="xs:string" default="6.3.1" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

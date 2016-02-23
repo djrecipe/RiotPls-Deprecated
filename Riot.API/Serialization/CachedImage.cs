@@ -16,7 +16,7 @@ namespace RiotPls.API.Serialization
             get;
             private set;
         }
-        public CachedImage(string group, string file_name) : base(group, file_name)
+        public CachedImage(string group, string file_name, string version) : base(group, file_name, version)
         {
             if (group == null)
                 throw new ArgumentNullException("group", "Cannot be null");
@@ -38,7 +38,7 @@ namespace RiotPls.API.Serialization
                             Directory.CreateDirectory(directory);
                         using (WebClient client = new WebClient())
                         {
-                            client.DownloadFile(CachedImage.URL + VERSION + "/img/" + this.Group + "/" + this.FileName, this.FullLocalPath);
+                            client.DownloadFile(CachedImage.URL + this.Version + "/img/" + this.Group + "/" + this.FileName, this.FullLocalPath);
                         }
                     }
                     // don't use else here
