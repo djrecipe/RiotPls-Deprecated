@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using RiotPls.API.Serialization;
+using RiotPls.API.Serialization.Transport;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 
@@ -28,6 +29,7 @@ namespace RiotPls.API
         private const string APIURL_STATIC = "api/lol/static-data/";
         private const string FILE_APIKEY = "key.txt";
         private const string FILE_CHAMPIONINFO = "ChampionInfo.json";
+        private const string FILE_LIVECHAMPIONINFO = "LiveChampionInfo.json";
         private const string FILE_ITEMINFO = "ItemInfo.json";
         private const string FILE_MAPINFO = "MapInfo.json";
         private const string PARAM_ALLITEMDATA = "itemListData=all";
@@ -128,79 +130,11 @@ namespace RiotPls.API
         public static Dictionary<string, Serialization.Champion.ChampionInfo> GetChampionInfo()
         {
             //
-            bool attempt_download = !File.Exists(Engine.FILE_CHAMPIONINFO);
-            string json_string = attempt_download ? Engine.GetChampionInfo_Download() : File.ReadAllText(Engine.FILE_CHAMPIONINFO);
-            bool parsing_error = false;
-            JObject data = null;
-            try
-            {
-                data = JObject.Parse(json_string);
-            }
-            catch
-            {
-                parsing_error = true;
-            }    
-            if (!attempt_download && parsing_error)
-            {
-                attempt_download = true;
-                parsing_error = false;
-                json_string = Engine.GetChampionInfo_Download();
-                try
-                {
-                    data = JObject.Parse(json_string);
-                }
-                catch
-                {
-                    parsing_error = true;
-                }  
-            }
-            if (!parsing_error)
-            {                          
-                if(attempt_download)
-                    File.WriteAllText(Engine.FILE_CHAMPIONINFO, json_string);
-                //
-                JToken result = data.SelectToken("data");
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.ObjectCreationHandling = ObjectCreationHandling.Reuse;
-                settings.MissingMemberHandling = MissingMemberHandling.Ignore;
-                Engine._ChampionInfos = JsonConvert.DeserializeObject<Dictionary<string, Serialization.Champion.ChampionInfo>>(result.ToString(), settings);
-                //
-                Engine.UpdateLiveChampionInfo();
-            }
-            //
+            JsonPayload<Dictionary<string, Serialization.Champion.ChampionInfo>> payload = new JsonPayload<Dictionary<string, Serialization.Champion.ChampionInfo>>(Engine.StaticChampionDataURL, Engine.FILE_CHAMPIONINFO, "data");
+            Engine._ChampionInfos = payload.Get();
+
+            Engine.UpdateLiveChampionInfo();
             return Engine.ChampionInfos;
-        }
-        private static string GetChampionInfo_Download()
-        {
-            string json_string = null;
-            HttpWebRequest request = null;
-            try
-            {
-                request = HttpWebRequest.Create(Engine.StaticChampionDataURL) as HttpWebRequest;
-            }
-            catch
-            {
-                return null;
-            }
-            StreamReader stream_reader = null;
-            try
-            {
-                stream_reader = new StreamReader(request.GetResponse().GetResponseStream(), Encoding.UTF8);
-            }
-            catch
-            {
-                return null;
-            }
-            try
-            {
-                json_string = stream_reader.ReadToEnd();
-            }
-            catch
-            {
-                json_string = null;
-            }
-            stream_reader.Close();
-            return json_string;
         }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
@@ -404,13 +338,8 @@ namespace RiotPls.API
         }
         private static void UpdateLiveChampionInfo()
         {
-            HttpWebRequest request = HttpWebRequest.Create(Engine.LiveChampionDataURL) as HttpWebRequest;
-            StreamReader stream_reader = new StreamReader(request.GetResponse().GetResponseStream(), Encoding.UTF8);
-            JObject data = JObject.Parse(stream_reader.ReadToEnd());
-            stream_reader.Close();
-            //
-            JToken result = data.SelectToken("champions");
-            Engine.live_champion_info = JsonConvert.DeserializeObject<List<LiveChampionInfo>>(result.ToString());
+            JsonPayload<List<LiveChampionInfo>> payload = new JsonPayload<List<LiveChampionInfo>>(Engine.LiveChampionDataURL, Engine.FILE_LIVECHAMPIONINFO, "champions");
+            Engine.live_champion_info = payload.Get();
             foreach(string s in Engine.ChampionInfos.Keys)
             {
                 Serialization.Champion.ChampionInfo current_champion_info = Engine.ChampionInfos[s];

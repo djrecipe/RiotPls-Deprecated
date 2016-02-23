@@ -699,11 +699,11 @@ namespace RiotPls.Forms
         {
             if (e.Button != MouseButtons.Left || this.champions == null)
                 return;
-            string name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
-            Bitmap bitmap = this.champions[name].Image;
+            ChampionInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ChampionInfo;
+            Bitmap bitmap = info?.Image;
             if (bitmap != null)
             {
-                bitmap.Tag = name;
+                bitmap.Tag = info.Name;
                 this.BeginInvoke((MethodInvoker) delegate
                 { this.gridMain.DoDragDrop(bitmap, DragDropEffects.Copy); });
             }

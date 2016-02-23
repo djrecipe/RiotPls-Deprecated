@@ -145,7 +145,7 @@ namespace RiotPls.Forms
             {
                 if(this.fStatSheet == null || this.fStatSheet.IsDisposed)
                     this.fStatSheet = new formStatSheet();
-                this.fStatSheet.Show(this);
+                this.fStatSheet.Show();
             }
             return;
         }
@@ -158,8 +158,6 @@ namespace RiotPls.Forms
                 if (this.fChampions == null || this.fChampions.IsDisposed)
                     this.fChampions = new formChampions();
                 this.fChampions.Show();
-                if(this.Left >= this.fChampions.Left - 20 && this.Right < this.fChampions.Right + 20)
-                    this.Left = this.fChampions.Left - this.Width - 10;
             }
             return;
         }
@@ -172,8 +170,6 @@ namespace RiotPls.Forms
                 if (this.fItems == null || this.fItems.IsDisposed)
                     this.fItems = new formItems();
                 this.fItems.Show();
-                if (this.Left >= this.fItems.Left - 20 && this.Right < this.fItems.Right + 20)
-                    this.Left = this.fItems.Left - this.Width - 10;
             }
             return;
         }
@@ -186,8 +182,6 @@ namespace RiotPls.Forms
                 if (this.fMaps == null || this.fMaps.IsDisposed)
                     this.fMaps = new formMaps();
                 this.fMaps.Show();
-                if (this.Left >= this.fMaps.Left - 20 && this.Right < this.fMaps.Right + 20)
-                    this.Left = this.fMaps.Left - this.Width - 10;
             }
             return;
         }

@@ -66,6 +66,7 @@
     <Compile Include="Serialization\ItemInfo.cs" />
     <Compile Include="Serialization\LiveChampionInfo.cs" />
     <Compile Include="Serialization\MapInfo.cs" />
+    <Compile Include="Serialization\Transport\JsonPayload.cs" />
     <Compile Include="StatsTable.Designer.cs">
       <DependentUpon>StatsTable.xsd</DependentUpon>
       <AutoGen>True</AutoGen>

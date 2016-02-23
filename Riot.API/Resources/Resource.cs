@@ -10,8 +10,8 @@ namespace RiotPls.API.Resources
     public class Resource
     {
         protected const string URL = "http://ddragon.leagueoflegends.com/cdn/";
-        protected const string DIRECTORY = "Images";
-        protected const string FILENAME_IGNORE = "IgnoreImages.csv";
+        protected const string DIRECTORY = "Resources";
+        protected const string FILENAME_IGNORE = "Ignore.csv";
         protected const string VERSION = "6.1.1";
         protected static List<string> ignore = new List<string>();
         public static int IgnoreCount => Resource.ignore.Count;
@@ -83,7 +83,7 @@ namespace RiotPls.API.Resources
             if (!Resource.ignore.Contains(this.SubPath))
             {
                 Resource.ignore.Add(this.SubPath);
-                File.AppendAllText(Resource.IgnoreListFilePath, this.FullLocalPath + "\r\n");
+                File.AppendAllText(Resource.IgnoreListFilePath, this.SubPath + "\r\n");
             }
             return;
         }
