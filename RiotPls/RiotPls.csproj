@@ -155,8 +155,16 @@
     <Content Include="Rating.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\BuilderIcon.ico" />
+    <Content Include="Resources\BuilderIcon.png" />
+    <Content Include="Resources\ChampionIcon.ico" />
+    <Content Include="Resources\ChampionIcon.png" />
     <Content Include="Resources\Gears.png" />
+    <Content Include="Resources\ItemsIcon.ico" />
+    <Content Include="Resources\ItemsIcon.png" />
     <Content Include="Resources\Loading.gif" />
+    <Content Include="Resources\MapsIcon.ico" />
+    <Content Include="Resources\MapsIcon.png" />
     <Content Include="Resources\RiotPls.ico" />
   </ItemGroup>
   <ItemGroup>

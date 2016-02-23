@@ -40,7 +40,11 @@ namespace RiotPls.Forms
             // btnClose
             // 
             this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(119, 9);
+            this.btnClose.Location = new System.Drawing.Point(131, 9);
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(107, 77);
             // 
             // btnSettings
             // 
@@ -49,48 +53,60 @@ namespace RiotPls.Forms
             // btnChampions
             // 
             this.btnChampions.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnChampions.Image = global::RiotPls.Properties.Resources.ChampionIcon;
+            this.btnChampions.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnChampions.Location = new System.Drawing.Point(29, 39);
             this.btnChampions.Margin = new System.Windows.Forms.Padding(20, 30, 20, 10);
             this.btnChampions.Name = "btnChampions";
-            this.btnChampions.Size = new System.Drawing.Size(90, 30);
+            this.btnChampions.Size = new System.Drawing.Size(100, 30);
             this.btnChampions.TabIndex = 3;
             this.btnChampions.Text = "Champions";
+            this.btnChampions.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnChampions.UseVisualStyleBackColor = true;
             this.btnChampions.Click += new System.EventHandler(this.btnChampions_Click);
             // 
             // btnItems
             // 
             this.btnItems.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnItems.Image = global::RiotPls.Properties.Resources.ItemsIcon;
+            this.btnItems.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnItems.Location = new System.Drawing.Point(29, 89);
             this.btnItems.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.btnItems.Name = "btnItems";
-            this.btnItems.Size = new System.Drawing.Size(90, 30);
+            this.btnItems.Size = new System.Drawing.Size(100, 30);
             this.btnItems.TabIndex = 4;
             this.btnItems.Text = "Items";
+            this.btnItems.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnItems.UseVisualStyleBackColor = true;
             this.btnItems.Click += new System.EventHandler(this.btnItems_Click);
             // 
             // btnMaps
             // 
             this.btnMaps.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMaps.Image = global::RiotPls.Properties.Resources.MapsIcon;
+            this.btnMaps.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnMaps.Location = new System.Drawing.Point(29, 139);
             this.btnMaps.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
             this.btnMaps.Name = "btnMaps";
-            this.btnMaps.Size = new System.Drawing.Size(90, 30);
+            this.btnMaps.Size = new System.Drawing.Size(100, 30);
             this.btnMaps.TabIndex = 5;
             this.btnMaps.Text = "Maps";
+            this.btnMaps.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnMaps.UseVisualStyleBackColor = true;
             this.btnMaps.Click += new System.EventHandler(this.btnMaps_Click);
             // 
             // btnBuilder
             // 
             this.btnBuilder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBuilder.Image = global::RiotPls.Properties.Resources.BuilderIcon;
+            this.btnBuilder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBuilder.Location = new System.Drawing.Point(29, 189);
             this.btnBuilder.Margin = new System.Windows.Forms.Padding(20, 10, 20, 30);
             this.btnBuilder.Name = "btnBuilder";
-            this.btnBuilder.Size = new System.Drawing.Size(90, 30);
+            this.btnBuilder.Size = new System.Drawing.Size(100, 30);
             this.btnBuilder.TabIndex = 6;
             this.btnBuilder.Text = "Builder";
+            this.btnBuilder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnBuilder.UseVisualStyleBackColor = true;
             this.btnBuilder.Click += new System.EventHandler(this.btnBuilder_Click);
             // 
@@ -111,7 +127,7 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(148, 258);
+            this.ClientSize = new System.Drawing.Size(160, 258);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.btnBuilder);
             this.Controls.Add(this.btnMaps);

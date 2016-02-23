@@ -23,6 +23,7 @@ namespace RiotPls.Forms
         }
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formStatSheet));
             this.picChampion = new System.Windows.Forms.PictureBox();
             this.lblChampion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
@@ -72,6 +73,7 @@ namespace RiotPls.Forms
             this.Controls.Add(this.lblChampion);
             this.Controls.Add(this.picChampion);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formStatSheet";
             this.Text = "formStatSheet";
             this.Load += new System.EventHandler(this.formStatSheet_Load);

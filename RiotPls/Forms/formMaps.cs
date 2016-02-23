@@ -21,6 +21,7 @@ namespace RiotPls.Forms
         }
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMaps));
             this.comboMaps = new System.Windows.Forms.ComboBox();
             this.imgboxMap = new Cyotek.Windows.Forms.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
@@ -75,6 +76,7 @@ namespace RiotPls.Forms
             this.ClientSize = new System.Drawing.Size(1195, 827);
             this.Controls.Add(this.imgboxMap);
             this.Controls.Add(this.comboMaps);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formMaps";
             this.Text = "RiotPls-Maps";
             this.Load += new System.EventHandler(this.formMaps_Load);

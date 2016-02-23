@@ -450,6 +450,7 @@ namespace RiotPls.Forms
             this.Controls.Add(this.gridMain);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "formChampions";
             this.ShowIcon = false;
