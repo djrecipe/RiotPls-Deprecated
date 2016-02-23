@@ -139,154 +139,18 @@ namespace RiotPls.API
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
             //
-            bool attempt_download = !File.Exists(Engine.FILE_ITEMINFO);
-            string json_string = attempt_download ? Engine.GetItemInfo_Download() : File.ReadAllText(Engine.FILE_ITEMINFO);
-            bool parsing_error = false;
-            JObject data = null;
-            try
-            {
-                data = JObject.Parse(json_string);
-            }
-            catch
-            {
-                parsing_error = true;
-            }
-            if (!attempt_download && parsing_error)
-            {
-                attempt_download = true;
-                parsing_error = false;
-                json_string = Engine.GetItemInfo_Download();
-                try
-                {
-                    data = JObject.Parse(json_string);
-                }
-                catch
-                {
-                    parsing_error = true;
-                }
-            }
-            if (!parsing_error)
-            {
-                if (attempt_download)
-                    File.WriteAllText(Engine.FILE_ITEMINFO, json_string);
-                //
-                JToken result = data.SelectToken("data");
-                JsonSerializerSettings settings = new JsonSerializerSettings();
-                settings.ObjectCreationHandling = ObjectCreationHandling.Reuse;
-                settings.MissingMemberHandling = MissingMemberHandling.Ignore;
-                Engine._ItemInfos = JsonConvert.DeserializeObject<Dictionary<string, ItemInfo>>(result.ToString(), settings);
-            }
+            JsonPayload<Dictionary<string, ItemInfo>> payload = new JsonPayload<Dictionary<string, ItemInfo>>(Engine.StaticItemDataURL, Engine.FILE_ITEMINFO, "data");
+            Engine._ItemInfos = payload.Get();
             //
             return Engine.ItemInfos;
-        }
-        private static string GetItemInfo_Download()
-        {
-            string json_string = null;
-            HttpWebRequest request = null;
-            try
-            {
-                request = HttpWebRequest.Create(Engine.StaticItemDataURL) as HttpWebRequest;
-            }
-            catch
-            {
-                return null;
-            }
-            StreamReader stream_reader = null;
-            try
-            {
-                stream_reader = new StreamReader(request.GetResponse().GetResponseStream(), Encoding.UTF8);
-            }
-            catch
-            {
-                return null;
-            }
-            try
-            {
-                json_string = stream_reader.ReadToEnd();
-            }
-            catch
-            {
-                json_string = null;
-            }
-            stream_reader.Close();
-            return json_string;
         }
         public static Dictionary<string, MapInfo> GetMapInfo()
         {
             //
-            bool attempt_download = !File.Exists(Engine.FILE_MAPINFO);
-            string json_string = attempt_download ? Engine.GetMapInfo_Download() : File.ReadAllText(Engine.FILE_MAPINFO);
-            bool parsing_error = false;
-            JObject data = null;
-            try
-            {
-                data = JObject.Parse(json_string);
-            }
-            catch
-            {
-                parsing_error = true;
-            }
-            if (!attempt_download && parsing_error)
-            {
-                attempt_download = true;
-                parsing_error = false;
-                json_string = Engine.GetMapInfo_Download();
-                try
-                {
-                    data = JObject.Parse(json_string);
-                }
-                catch
-                {
-                    parsing_error = true;
-                }
-            }
-            if (!parsing_error)
-            {
-                if (attempt_download)
-                    File.WriteAllText(Engine.FILE_MAPINFO, json_string);
-                //
-                JToken result = data.SelectToken("data");
-                JsonSerializerSettings settings = new JsonSerializerSettings
-                {
-                    ObjectCreationHandling = ObjectCreationHandling.Reuse,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                Engine._MapInfos = JsonConvert.DeserializeObject<Dictionary<string, MapInfo>>(result.ToString(), settings);
-            }
+            JsonPayload<Dictionary<string, MapInfo>> payload = new JsonPayload<Dictionary<string, MapInfo>>(Engine.StaticMapDataURL, Engine.FILE_MAPINFO, "data");
+            Engine._MapInfos = payload.Get();
             //
             return Engine.MapInfos;
-        }
-        private static string GetMapInfo_Download()
-        {
-            string json_string = null;
-            HttpWebRequest request = null;
-            try
-            {
-                request = HttpWebRequest.Create(Engine.StaticMapDataURL) as HttpWebRequest;
-            }
-            catch
-            {
-                return null;
-            }
-            StreamReader stream_reader = null;
-            try
-            {
-                stream_reader = new StreamReader(request.GetResponse().GetResponseStream(), Encoding.UTF8);
-            }
-            catch
-            {
-                return null;
-            }
-            try
-            {
-                json_string = stream_reader.ReadToEnd();
-            }
-            catch
-            {
-                json_string = null;
-            }
-            stream_reader.Close();
-            return json_string;
         }
         public static bool LoadKey(string path = null)
         {
