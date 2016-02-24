@@ -28,31 +28,7 @@ namespace RiotPls.API
         public static string APIVersion { get; set; } = "1.2";
         public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
         public static APIKey Key { get; private set; } = new APIKey("key.txt");
-        private static Dictionary<string, ChampionInfo> _ChampionInfos = new Dictionary<string, ChampionInfo>();
-        public static Dictionary<string, ChampionInfo> ChampionInfos
-        {
-            get
-            {
-                return Engine._ChampionInfos;
-            }
-        }
-
-        private static Dictionary<string, ItemInfo> _ItemInfos = new Dictionary<string, ItemInfo>();
-        public static Dictionary<string, ItemInfo> ItemInfos
-        {
-            get
-            {
-                return Engine._ItemInfos;
-            }
-        }
-        private static Dictionary<string, MapInfo> _MapInfos = new Dictionary<string, MapInfo>();
-        public static Dictionary<string, MapInfo> MapInfos
-        {
-            get
-            {
-                return Engine._MapInfos;
-            }
-        }
+        private static Dictionary<string, ChampionInfo> ChampionInfos { get; set; }
         private static Regions _Region = Regions.NorthAmerica;
         public static Regions Region
         {
@@ -103,21 +79,19 @@ namespace RiotPls.API
         public static Dictionary<string, ChampionInfo> GetChampionInfo()
         {
             ChampionInfoSet data = new ChampionInfoSet();
-            Engine._ChampionInfos = data.Get();
+            Engine.ChampionInfos = data.Get();
             Engine.UpdateLiveChampionInfo();
             return Engine.ChampionInfos;
         }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
             ItemInfoSet data = new ItemInfoSet();
-            Engine._ItemInfos = data.Get();
-            return Engine.ItemInfos;
+            return data.Get();
         }
         public static Dictionary<string, MapInfo> GetMapInfo()
         {
             MapInfoSet data = new MapInfoSet();
-            Engine._MapInfos = data.Get();
-            return Engine.MapInfos;
+            return data.Get();
         }
         private static void UpdateLiveChampionInfo()
         {
