@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.API.Serialization.Champions
 {
@@ -319,5 +320,6 @@ namespace RiotPls.API.Serialization.Champions
                 this._Title = value;
             }
         }
+
     }
 }

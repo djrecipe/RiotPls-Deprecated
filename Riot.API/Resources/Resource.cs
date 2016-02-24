@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RiotPls.API.Serialization.General;
 
 namespace RiotPls.API.Resources
 {
@@ -35,6 +36,12 @@ namespace RiotPls.API.Resources
             }
             return;
         }
+
+        public static void UpdateVersions(RealmInfo info)
+        {
+            
+        }
+
         public static void ClearIgnored()
         {
             Resource.ignore.Clear();

@@ -67,17 +67,26 @@
     <Compile Include="Engine.cs" />
     <Compile Include="Resources\Resource.cs" />
     <Compile Include="Serialization\Champions\ChampionInfo.cs" />
+    <Compile Include="Serialization\Champions\LiveChampionInfoSet.cs" />
+    <Compile Include="Serialization\Champions\ChampionInfoSet.cs" />
     <Compile Include="Serialization\Champions\PassiveInfo.cs" />
     <Compile Include="Serialization\Champions\RatingInfo.cs" />
     <Compile Include="Serialization\Champions\SkinInfo.cs" />
     <Compile Include="Serialization\Champions\SpellInfo.cs" />
     <Compile Include="Serialization\Champions\StatsInfo.cs" />
+    <Compile Include="Serialization\General\RealmInfoSet.cs" />
+    <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />
+    <Compile Include="Serialization\General\RiotSerializable.cs" />
+    <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
+    <Compile Include="Serialization\Items\ItemInfoSet.cs" />
+    <Compile Include="Serialization\Maps\MapInfoSet.cs" />
     <Compile Include="Serialization\Transport\CachedImage.cs" />
     <Compile Include="Serialization\Items\ItemInfo.cs" />
     <Compile Include="Serialization\Champions\LiveChampionInfo.cs" />
     <Compile Include="Serialization\Maps\MapInfo.cs" />
     <Compile Include="Serialization\Transport\JsonPayload.cs" />
+    <Compile Include="Serialization\Transport\RiotURL.cs" />
     <Compile Include="StatsTable.Designer.cs">
       <DependentUpon>StatsTable.xsd</DependentUpon>
       <AutoGen>True</AutoGen>

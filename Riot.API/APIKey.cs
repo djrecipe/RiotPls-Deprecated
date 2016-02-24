@@ -11,6 +11,7 @@ namespace RiotPls.API
     {
         private const string URL_STR = "&api_key=";
         public readonly string FilePath = null;
+        public event EventHandler Loaded;
         public string RawKey { get; private set; } = null;
 
         public APIKey(string file_path)
@@ -27,6 +28,8 @@ namespace RiotPls.API
             {
                 string text = File.ReadAllText(desired_path);
                 this.RawKey = this.Sanitize(text);
+                if(this.Loaded != null)
+                    this.Loaded(this, EventArgs.Empty);
                 return true;
             }
             catch (Exception e)

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 
 using RiotPls.API.Serialization.Champions;
+using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
 using RiotPls.API.Serialization.Maps;
 using RiotPls.API.Serialization.Transport;
@@ -19,15 +20,6 @@ namespace RiotPls.API
         #region Static Members
         #region Constants
         private const string REGION_NA = "na";
-        private const string BASE_URL = "https://na.api.pvp.net/";
-        private const string APIURL_LIVE = "api/lol/";
-        private const string APIURL_STATIC = "api/lol/static-data/";
-        private const string FILE_CHAMPIONINFO = "ChampionInfo.json";
-        private const string FILE_LIVECHAMPIONINFO = "LiveChampionInfo.json";
-        private const string FILE_ITEMINFO = "ItemInfo.json";
-        private const string FILE_MAPINFO = "MapInfo.json";
-        private const string PARAM_ALLITEMDATA = "itemListData=all";
-        private const string PARAM_ALLCHAMPDATA = "champData=all";
         #endregion
         private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();
         private static string region_string = "na";
@@ -54,19 +46,20 @@ namespace RiotPls.API
                 return Engine._ItemInfos;
             }
         }
-        private static string LiveChampionDataURL
-        {
-            get
-            {
-                return Engine.BASE_URL + Engine.APIURL_LIVE + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.Key.ToString();
-            }
-        }
         private static Dictionary<string, MapInfo> _MapInfos = new Dictionary<string, MapInfo>();
         public static Dictionary<string, MapInfo> MapInfos
         {
             get
             {
                 return Engine._MapInfos;
+            }
+        }
+        private static RealmInfo _RealmInfo = new RealmInfo();
+        public static RealmInfo RealmInfo
+        {
+            get
+            {
+                return Engine._RealmInfo;
             }
         }
         private static Regions _Region = Regions.NorthAmerica;
@@ -81,28 +74,20 @@ namespace RiotPls.API
                 Engine._Region = value;
                 switch (Engine.Region)
                 {
+                    default:
                     case Regions.NorthAmerica:
                         Engine.region_string = Engine.REGION_NA;
-                        break;
-                    default:
                         break;
                 }
                 return;
             }
         }
-        private static string StaticChampionDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/champion?" + Engine.PARAM_ALLCHAMPDATA + Engine.Key.ToString(true);
-
-        private static string StaticItemDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/item?" + Engine.PARAM_ALLITEMDATA + Engine.Key.ToString(true);
-
-        private static string StaticMapDataURL =>
-            Engine.BASE_URL + Engine.APIURL_STATIC + Engine.region_string + "/" + Engine.APIVersionString + "/map?" + Engine.Key.ToString(true);
 
         #endregion
         #region Static Methods
         static Engine()
         {
+            Engine.Key.Loaded += Engine.APIKey_Loaded;
             try
             {
                 Engine.APIVersion = APISettings.APIVersion;
@@ -115,6 +100,7 @@ namespace RiotPls.API
             Engine.Key.Load();
             return;
         }
+
         public static string CleanseChampionName(Dictionary<string, ChampionInfo> info, string name)
         {
             KeyValuePair<string, ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
@@ -126,38 +112,46 @@ namespace RiotPls.API
         }
         public static Dictionary<string, ChampionInfo> GetChampionInfo()
         {
-            //
-            JsonPayload<Dictionary<string, ChampionInfo>> payload = new JsonPayload<Dictionary<string, ChampionInfo>>(Engine.StaticChampionDataURL, Engine.FILE_CHAMPIONINFO, "data");
-            Engine._ChampionInfos = payload.Get();
+            ChampionInfoSet data = new ChampionInfoSet();
+            Engine._ChampionInfos = data.Get();
 
             Engine.UpdateLiveChampionInfo();
             return Engine.ChampionInfos;
         }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
-            // retrieve & deserialize json
-            JsonPayload<Dictionary<string, ItemInfo>> payload = new JsonPayload<Dictionary<string, ItemInfo>>(
-                Engine.StaticItemDataURL, Engine.FILE_ITEMINFO, "data");
-            Engine._ItemInfos = payload.Get();
+            ItemInfoSet data = new ItemInfoSet();
+            Engine._ItemInfos = data.Get();
             return Engine.ItemInfos;
         }
         public static Dictionary<string, MapInfo> GetMapInfo()
         {
-            // retrieve & deserialize json
-            JsonPayload<Dictionary<string, MapInfo>> payload = new JsonPayload<Dictionary<string, MapInfo>>(
-                Engine.StaticMapDataURL, Engine.FILE_MAPINFO, "data");
-            Engine._MapInfos = payload.Get();
+            MapInfoSet data = new MapInfoSet();
+            Engine._MapInfos = data.Get();
             return Engine.MapInfos;
         }
         private static void UpdateLiveChampionInfo()
         {
-            JsonPayload<List<LiveChampionInfo>> payload = new JsonPayload<List<LiveChampionInfo>>(Engine.LiveChampionDataURL, Engine.FILE_LIVECHAMPIONINFO, "champions");
-            Engine.live_champion_info = payload.Get();
+            LiveChampionInfoSet data = new LiveChampionInfoSet();
+            Engine.live_champion_info = data.Get();
             foreach(string s in Engine.ChampionInfos.Keys)
             {
                 ChampionInfo current_champion_info = Engine.ChampionInfos[s];
                 current_champion_info.LiveInfo = Engine.live_champion_info.FirstOrDefault(info => info.ID == current_champion_info.ID);
             }
+            return;
+        }
+
+        private static void UpdateRealmsInfo()
+        {
+            RealmInfoSet data = new RealmInfoSet();
+            Engine._RealmInfo = data.Get();
+        }
+        #endregion
+        #region Static Event Methods
+        private static void APIKey_Loaded(object sender, System.EventArgs e)
+        {
+            Engine.UpdateRealmsInfo();
             return;
         }
         #endregion
