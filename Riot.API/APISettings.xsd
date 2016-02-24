@@ -12,11 +12,10 @@
   <xs:element name="APISettings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="APISettings" msprop:Generator_UserDSName="APISettings">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Versions" msprop:Generator_TableClassName="VersionsDataTable" msprop:Generator_TableVarName="tableVersions" msprop:Generator_TablePropName="Versions" msprop:Generator_RowDeletingName="VersionsRowDeleting" msprop:Generator_RowChangingName="VersionsRowChanging" msprop:Generator_RowEvHandlerName="VersionsRowChangeEventHandler" msprop:Generator_RowDeletedName="VersionsRowDeleted" msprop:Generator_UserTableName="Versions" msprop:Generator_RowChangedName="VersionsRowChanged" msprop:Generator_RowEvArgName="VersionsRowChangeEvent" msprop:Generator_RowClassName="VersionsRow">
+        <xs:element name="Versions" msprop:Generator_TableClassName="VersionsDataTable" msprop:Generator_TableVarName="tableVersions" msprop:Generator_RowChangedName="VersionsRowChanged" msprop:Generator_TablePropName="Versions" msprop:Generator_RowDeletingName="VersionsRowDeleting" msprop:Generator_RowChangingName="VersionsRowChanging" msprop:Generator_RowEvHandlerName="VersionsRowChangeEventHandler" msprop:Generator_RowDeletedName="VersionsRowDeleted" msprop:Generator_RowClassName="VersionsRow" msprop:Generator_UserTableName="Versions" msprop:Generator_RowEvArgName="VersionsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="APIVersion" msprop:nullValue="1.2" msprop:Generator_ColumnPropNameInRow="APIVersion" msprop:Generator_ColumnVarNameInTable="columnAPIVersion" msprop:Generator_ColumnPropNameInTable="APIVersionColumn" msprop:Generator_UserColumnName="APIVersion" type="xs:string" default="1.2" minOccurs="0" />
-              <xs:element name="ContentVersion" msprop:nullValue="6.3.1" msprop:Generator_ColumnPropNameInRow="ContentVersion" msprop:Generator_ColumnVarNameInTable="columnContentVersion" msprop:Generator_ColumnPropNameInTable="ContentVersionColumn" msprop:Generator_UserColumnName="ContentVersion" type="xs:string" default="6.3.1" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

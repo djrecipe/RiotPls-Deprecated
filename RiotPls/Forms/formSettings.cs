@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RiotPls.Forms
@@ -19,6 +20,8 @@ namespace RiotPls.Forms
         private GroupBox groupResources;
         private Label lblIgnoredCount;
         private LinkLabel lblIgnoreCountValue;
+        private LinkLabel lblContentVersionValue;
+        private Label lblContentVersion;
         private System.Windows.Forms.LinkLabel lblAPIStepTwoInstructions;
         public formSettings()
         {
@@ -40,6 +43,8 @@ namespace RiotPls.Forms
             this.groupResources = new System.Windows.Forms.GroupBox();
             this.lblIgnoredCount = new System.Windows.Forms.Label();
             this.lblIgnoreCountValue = new System.Windows.Forms.LinkLabel();
+            this.lblContentVersion = new System.Windows.Forms.Label();
+            this.lblContentVersionValue = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.groupAPI.SuspendLayout();
             this.groupResources.SuspendLayout();
@@ -78,12 +83,12 @@ namespace RiotPls.Forms
             this.txtAPIKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAPIKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAPIKey.Font = new System.Drawing.Font("Source Code Pro", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAPIKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAPIKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.txtAPIKey.Location = new System.Drawing.Point(43, 117);
             this.txtAPIKey.Margin = new System.Windows.Forms.Padding(40, 10, 40, 20);
             this.txtAPIKey.Name = "txtAPIKey";
-            this.txtAPIKey.Size = new System.Drawing.Size(298, 24);
+            this.txtAPIKey.Size = new System.Drawing.Size(298, 22);
             this.txtAPIKey.TabIndex = 4;
             this.txtAPIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -193,6 +198,8 @@ namespace RiotPls.Forms
             this.groupResources.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupResources.BackColor = System.Drawing.Color.Transparent;
+            this.groupResources.Controls.Add(this.lblContentVersionValue);
+            this.groupResources.Controls.Add(this.lblContentVersion);
             this.groupResources.Controls.Add(this.lblIgnoredCount);
             this.groupResources.Controls.Add(this.lblIgnoreCountValue);
             this.groupResources.ForeColor = System.Drawing.Color.Gainsboro;
@@ -206,7 +213,7 @@ namespace RiotPls.Forms
             // 
             // lblIgnoredCount
             // 
-            this.lblIgnoredCount.Location = new System.Drawing.Point(107, 73);
+            this.lblIgnoredCount.Location = new System.Drawing.Point(107, 53);
             this.lblIgnoredCount.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
             this.lblIgnoredCount.Name = "lblIgnoredCount";
             this.lblIgnoredCount.Size = new System.Drawing.Size(100, 15);
@@ -217,7 +224,7 @@ namespace RiotPls.Forms
             // lblIgnoreCountValue
             // 
             this.lblIgnoreCountValue.LinkColor = System.Drawing.Color.PaleTurquoise;
-            this.lblIgnoreCountValue.Location = new System.Drawing.Point(227, 73);
+            this.lblIgnoreCountValue.Location = new System.Drawing.Point(227, 53);
             this.lblIgnoreCountValue.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
             this.lblIgnoreCountValue.Name = "lblIgnoreCountValue";
             this.lblIgnoreCountValue.Size = new System.Drawing.Size(50, 13);
@@ -227,6 +234,30 @@ namespace RiotPls.Forms
             this.lblIgnoreCountValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblIgnoreCountValue.VisitedLinkColor = System.Drawing.Color.Violet;
             this.lblIgnoreCountValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblIgnoreCountValue_LinkClicked);
+            // 
+            // lblContentVersion
+            // 
+            this.lblContentVersion.Location = new System.Drawing.Point(107, 93);
+            this.lblContentVersion.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
+            this.lblContentVersion.Name = "lblContentVersion";
+            this.lblContentVersion.Size = new System.Drawing.Size(100, 15);
+            this.lblContentVersion.TabIndex = 7;
+            this.lblContentVersion.Text = "Content Version:";
+            this.lblContentVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblContentVersionValue
+            // 
+            this.lblContentVersionValue.LinkColor = System.Drawing.Color.PaleTurquoise;
+            this.lblContentVersionValue.Location = new System.Drawing.Point(227, 94);
+            this.lblContentVersionValue.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
+            this.lblContentVersionValue.Name = "lblContentVersionValue";
+            this.lblContentVersionValue.Size = new System.Drawing.Size(50, 13);
+            this.lblContentVersionValue.TabIndex = 8;
+            this.lblContentVersionValue.TabStop = true;
+            this.lblContentVersionValue.Text = "6.3.1";
+            this.lblContentVersionValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblContentVersionValue.VisitedLinkColor = System.Drawing.Color.Violet;
+            this.lblContentVersionValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblContentVersionValue_LinkClicked);
             // 
             // formSettings
             // 
@@ -281,9 +312,31 @@ namespace RiotPls.Forms
         {
             Process.Start("https://developer.riotgames.com/");
         }
+        private void lblContentVersionValue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (Directory.Exists(API.Resources.Resource.ContentDirectory))
+                    Process.Start(API.Resources.Resource.ContentDirectory);
+            }
+            catch
+            {
+                // ignored
+            }
+            return;
+        }
         private void lblIgnoreCountValue_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start(API.Resources.Resource.IgnoreListFilePath);
+            try
+            {
+                if (File.Exists(API.Resources.Resource.IgnoreListFilePath))
+                    Process.Start(API.Resources.Resource.IgnoreListFilePath);
+            }
+            catch
+            {
+                // ignored
+            }
+            return;
         }
         private void formSettings_Load(object sender, EventArgs e)
         {
@@ -317,6 +370,7 @@ namespace RiotPls.Forms
             {
                 this.txtAPIKey.Text = e.Result as string;
                 this.lblIgnoreCountValue.Text = API.Resources.Resource.IgnoreCount.ToString();
+                this.lblContentVersionValue.Text = API.Resources.Resource.ContentVersion.ToString();
             }
             catch (Exception ex)
             {

@@ -15,10 +15,11 @@ namespace RiotPls.API.Resources
         protected const string DIRECTORY = "Resources";
         protected const string FILENAME_IGNORE = "Ignore.csv";
         protected static List<string> ignore = new List<string>();
-        protected static string ContentURL = Resource.DEFAULT_CONTENT_URL;
-        protected static string ContentVersion = Resource.DEFAULT_CONTENT_VERSION;
+        public static string ContentDirectory => Path.Combine(Path.GetFullPath(Resource.DIRECTORY), Resource.ContentVersion);
+        public static string ContentURL { get; private set; } = Resource.DEFAULT_CONTENT_URL;
+        public static string ContentVersion { get; private set; } = Resource.DEFAULT_CONTENT_VERSION;
         public static int IgnoreCount => Resource.ignore.Count;
-        public static string IgnoreListFilePath => Path.Combine(Resource.DIRECTORY, Resource.FILENAME_IGNORE);
+        public static string IgnoreListFilePath => Path.Combine(Resource.ContentDirectory, Resource.FILENAME_IGNORE);
 
         static Resource()
         {
@@ -36,6 +37,20 @@ namespace RiotPls.API.Resources
                 }
                 if (text != null)
                     Resource.ignore.AddRange(text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries));
+            }
+            else
+            {
+                try
+                {
+                    using (FileStream stream = File.Create(Resource.IgnoreListFilePath))
+                    {
+                        stream.Close();
+                    }
+                }
+                catch
+                {
+                    // ignored
+                }
             }
             return;
         }
@@ -73,10 +88,10 @@ namespace RiotPls.API.Resources
         }
 
         public readonly string FileName = null;
-        public string FullLocalPath => Path.Combine(Resource.DIRECTORY, this.SubPath);
+        public string FullLocalPath => Path.Combine(Resource.ContentDirectory, this.SubPath);
         public readonly string Group = null;
         public bool Ignored => Resource.ignore.Contains(this.SubPath);
-        protected string SubPath => Path.Combine(Resource.ContentVersion, this.Group, this.FileName);
+        protected string SubPath => Path.Combine(this.Group, this.FileName);
         public Resource(string group, string file_name)
         {
             if(string.IsNullOrWhiteSpace(group))

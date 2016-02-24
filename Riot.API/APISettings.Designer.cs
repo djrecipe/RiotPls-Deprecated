@@ -281,8 +281,6 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnAPIVersion;
             
-            private global::System.Data.DataColumn columnContentVersion;
-            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public VersionsDataTable() {
@@ -326,14 +324,6 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ContentVersionColumn {
-                get {
-                    return this.columnContentVersion;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -369,11 +359,10 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public VersionsRow AddVersionsRow(string APIVersion, string ContentVersion) {
+            public VersionsRow AddVersionsRow(string APIVersion) {
                 VersionsRow rowVersionsRow = ((VersionsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        APIVersion,
-                        ContentVersion};
+                        APIVersion};
                 rowVersionsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowVersionsRow);
                 return rowVersionsRow;
@@ -397,7 +386,6 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnAPIVersion = base.Columns["APIVersion"];
-                this.columnContentVersion = base.Columns["ContentVersion"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -405,10 +393,7 @@ namespace RiotPls.API {
             private void InitClass() {
                 this.columnAPIVersion = new global::System.Data.DataColumn("APIVersion", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAPIVersion);
-                this.columnContentVersion = new global::System.Data.DataColumn("ContentVersion", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnContentVersion);
                 this.columnAPIVersion.DefaultValue = ((string)("1.2"));
-                this.columnContentVersion.DefaultValue = ((string)("6.3.1"));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -567,22 +552,6 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ContentVersion {
-                get {
-                    if (this.IsContentVersionNull()) {
-                        return "6.3.1";
-                    }
-                    else {
-                        return ((string)(this[this.tableVersions.ContentVersionColumn]));
-                    }
-                }
-                set {
-                    this[this.tableVersions.ContentVersionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsAPIVersionNull() {
                 return this.IsNull(this.tableVersions.APIVersionColumn);
             }
@@ -591,18 +560,6 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAPIVersionNull() {
                 this[this.tableVersions.APIVersionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsContentVersionNull() {
-                return this.IsNull(this.tableVersions.ContentVersionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetContentVersionNull() {
-                this[this.tableVersions.ContentVersionColumn] = global::System.Convert.DBNull;
             }
         }
         
