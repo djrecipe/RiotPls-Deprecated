@@ -37,7 +37,6 @@ namespace RiotPls.API
             }
         }
 
-        public static string ContentVersion { get; set; } = "6.3.1";
         private static Dictionary<string, ItemInfo> _ItemInfos = new Dictionary<string, ItemInfo>();
         public static Dictionary<string, ItemInfo> ItemInfos
         {
@@ -52,14 +51,6 @@ namespace RiotPls.API
             get
             {
                 return Engine._MapInfos;
-            }
-        }
-        private static RealmInfo _RealmInfo = new RealmInfo();
-        public static RealmInfo RealmInfo
-        {
-            get
-            {
-                return Engine._RealmInfo;
             }
         }
         private static Regions _Region = Regions.NorthAmerica;
@@ -91,7 +82,6 @@ namespace RiotPls.API
             try
             {
                 Engine.APIVersion = APISettings.APIVersion;
-                Engine.ContentVersion = APISettings.ContentVersion;
             }
             catch
             { 
@@ -114,7 +104,6 @@ namespace RiotPls.API
         {
             ChampionInfoSet data = new ChampionInfoSet();
             Engine._ChampionInfos = data.Get();
-
             Engine.UpdateLiveChampionInfo();
             return Engine.ChampionInfos;
         }
@@ -141,11 +130,11 @@ namespace RiotPls.API
             }
             return;
         }
-
         private static void UpdateRealmsInfo()
         {
             RealmInfoSet data = new RealmInfoSet();
-            Engine._RealmInfo = data.Get();
+            Resources.Resource.UpdateVersions(data.Get());
+            return;
         }
         #endregion
         #region Static Event Methods

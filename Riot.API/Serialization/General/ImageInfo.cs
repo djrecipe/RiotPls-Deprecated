@@ -19,7 +19,7 @@ namespace RiotPls.API.Serialization.General
             {
                 this._Group = value;
                 if(this.Group != null && this.ImagePath != null)
-                    this._Image = new CachedImage(this.Group, this.ImagePath, Engine.ContentVersion);
+                    this._Image = new CachedImage(this.Group, this.ImagePath);
                 return;
             }
         }
@@ -56,7 +56,7 @@ namespace RiotPls.API.Serialization.General
             {
                 this._ImagePath = value;
                 if (this.Group != null && this.ImagePath != null)
-                    this._Image = new CachedImage(this.Group, this.ImagePath, Engine.ContentVersion);
+                    this._Image = new CachedImage(this.Group, this.ImagePath);
                 return;
             }
         }

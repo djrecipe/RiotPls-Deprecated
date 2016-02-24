@@ -51,7 +51,7 @@ namespace RiotPls.API.Serialization.Transport
         public T Get()
         {
             JObject obj = this.RetrieveDynamic();
-            string result = this.Token == null ? obj.ToString() : obj.SelectToken(this.Token).ToString();
+            string result = string.IsNullOrWhiteSpace(this.Token) ? obj.ToString() : obj.SelectToken(this.Token).ToString();
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 ObjectCreationHandling = ObjectCreationHandling.Reuse,

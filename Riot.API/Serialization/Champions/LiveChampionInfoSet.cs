@@ -12,6 +12,6 @@ namespace RiotPls.API.Serialization.Champions
     {
         public override string LocalFileName => "LiveChampionInfo.json";
         public override string RootToken => "champions";
-        public override RiotURL URL => new RiotURL(true, "champion?");
+        public override RiotURL URL => new RiotURL(false, "champion?");
     }
 }

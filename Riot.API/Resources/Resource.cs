@@ -10,10 +10,13 @@ namespace RiotPls.API.Resources
 {
     public class Resource
     {
-        protected const string URL = "http://ddragon.leagueoflegends.com/cdn/";
+        private const string DEFAULT_CONTENT_URL = "http://ddragon.leagueoflegends.com/cdn/";
+        private const string DEFAULT_CONTENT_VERSION = "6.3.1";
         protected const string DIRECTORY = "Resources";
         protected const string FILENAME_IGNORE = "Ignore.csv";
         protected static List<string> ignore = new List<string>();
+        protected static string ContentURL = Resource.DEFAULT_CONTENT_URL;
+        protected static string ContentVersion = Resource.DEFAULT_CONTENT_VERSION;
         public static int IgnoreCount => Resource.ignore.Count;
         public static string IgnoreListFilePath => Path.Combine(Resource.DIRECTORY, Resource.FILENAME_IGNORE);
 
@@ -39,7 +42,10 @@ namespace RiotPls.API.Resources
 
         public static void UpdateVersions(RealmInfo info)
         {
-            
+            Resource.ContentURL = info.BaseURL;
+            Resource.ContentVersion = info.ContentVersion;
+            Resource.Validate();
+            return;
         }
 
         public static void ClearIgnored()
@@ -57,13 +63,21 @@ namespace RiotPls.API.Resources
             return;
         }
 
+        private static void Validate()
+        {
+            if (!Resource.ContentURL.EndsWith("/"))
+                Resource.ContentURL += "/";
+            if (Resource.ContentVersion.Split('.').Length != 3)
+                Resource.ContentVersion = Resource.DEFAULT_CONTENT_VERSION;
+            return;
+        }
+
         public readonly string FileName = null;
         public string FullLocalPath => Path.Combine(Resource.DIRECTORY, this.SubPath);
         public readonly string Group = null;
         public bool Ignored => Resource.ignore.Contains(this.SubPath);
-        protected string SubPath => Path.Combine(this.Version, this.Group, this.FileName);
-        public readonly string Version = null;
-        public Resource(string group, string file_name, string version)
+        protected string SubPath => Path.Combine(Resource.ContentVersion, this.Group, this.FileName);
+        public Resource(string group, string file_name)
         {
             if(string.IsNullOrWhiteSpace(group))
                 throw new ArgumentException("Cannot be a null or empty string", "Group");
@@ -71,9 +85,6 @@ namespace RiotPls.API.Resources
             if (string.IsNullOrWhiteSpace(file_name))
                 throw new ArgumentException("Cannot be a null or empty string", "FileName");
             this.FileName = file_name;
-            if (string.IsNullOrWhiteSpace(version))
-                throw new ArgumentException("Cannot be a null or empty string", "Version");
-            this.Version = version;
             return;
         }
         protected void Ignore()

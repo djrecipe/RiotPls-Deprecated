@@ -10,8 +10,8 @@ namespace RiotPls.API.Serialization.General
 {
     class RealmInfoSet : RiotSerializable<RealmInfo>
     {
-        public override string LocalFileName => "LiveChampionInfo.json";
-        public override string RootToken => "champions";
+        public override string LocalFileName => "RealmInfo.json";
+        public override string RootToken => null;
         public override RiotURL URL => new RiotURL(true, "realm?");
     }
 }
