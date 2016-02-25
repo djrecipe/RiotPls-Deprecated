@@ -57,7 +57,7 @@ namespace RiotPls.Forms
             this.btnChampions.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnChampions.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnChampions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnChampions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.btnChampions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(230)))));
             this.btnChampions.Image = global::RiotPls.Properties.Resources.ChampionIcon;
             this.btnChampions.Location = new System.Drawing.Point(29, 39);
             this.btnChampions.Margin = new System.Windows.Forms.Padding(20, 30, 20, 10);
@@ -78,7 +78,7 @@ namespace RiotPls.Forms
             this.btnItems.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnItems.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnItems.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnItems.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.btnItems.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(230)))));
             this.btnItems.Image = global::RiotPls.Properties.Resources.ItemsIcon;
             this.btnItems.Location = new System.Drawing.Point(161, 39);
             this.btnItems.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
@@ -99,7 +99,7 @@ namespace RiotPls.Forms
             this.btnMaps.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnMaps.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnMaps.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.btnMaps.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(230)))));
             this.btnMaps.Image = global::RiotPls.Properties.Resources.MapsIcon;
             this.btnMaps.Location = new System.Drawing.Point(29, 109);
             this.btnMaps.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
@@ -120,7 +120,7 @@ namespace RiotPls.Forms
             this.btnBuilder.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnBuilder.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.btnBuilder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuilder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
+            this.btnBuilder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(230)))));
             this.btnBuilder.Image = global::RiotPls.Properties.Resources.BuilderIcon;
             this.btnBuilder.Location = new System.Drawing.Point(161, 109);
             this.btnBuilder.Margin = new System.Windows.Forms.Padding(20, 10, 20, 30);
