@@ -58,7 +58,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Builder\Build.cs" />
-    <Compile Include="Builder\Manager.cs" />
     <Compile Include="Forms\formChampions.cs">
       <SubType>Form</SubType>
     </Compile>

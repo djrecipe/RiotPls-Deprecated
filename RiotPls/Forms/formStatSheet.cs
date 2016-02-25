@@ -12,13 +12,14 @@ namespace RiotPls.Forms
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.PictureBox picChampion;
         private System.Windows.Forms.Label lblChampion;
+        private Build build = null;
         public formStatSheet()
         {
             this.InitializeComponent();
             this.picChampion.AllowDrop = true;
             this.picChampion.DragEnter += this.picChampion_DragEnter;
             this.picChampion.DragDrop += this.picChampion_DragDrop;
-            BuildManager.BuildChanged += this.BuildManager_BuildChanged;
+            Build.BuildChanged += this.BuildManager_BuildChanged;
             return;
         }
         private void InitializeComponent()
@@ -90,7 +91,7 @@ namespace RiotPls.Forms
         }
         private void UpdateBuild()
         {
-            ChampionInfo info = BuildManager.GetChampion(0);
+            ChampionInfo info = this.build.GetChampion();
             if (info != null)
             {
                 this.picChampion.BackgroundImage = info.Image;
@@ -99,7 +100,7 @@ namespace RiotPls.Forms
         }
         private void BuildManager_BuildChanged(int index)
         {
-            if(index == 0 && this.Visible)
+            if(this.Visible)
                 this.UpdateBuild();
             return;
         }
@@ -122,8 +123,12 @@ namespace RiotPls.Forms
                 if (bitmap != null)
                 {
                     string name = bitmap.Tag as string;
-                    if(BuildManager.SetChampion(0, name))
+                    ChampionInfo champion = API.Engine.GetChampion(name);
+                    if (champion != null)
+                    {
+                        this.build.SetChampion(champion);
                         this.UpdateBuild();
+                    }
                 }
             }
             catch

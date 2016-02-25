@@ -28,11 +28,6 @@ namespace RiotPls.Forms
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem itmShowStats;
         private ToolStripMenuItem itmSelectedForBuilder;
-        #endregion
-        private string last_champ_name = null;
-        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
-        private BindingList<ChampionInfo> source = null;
-        private Point last_location = Point.Empty;
         private ToolStripMenuItem itmLockTooltip;
         private DataGridViewImageColumn colR;
         private DataGridViewImageColumn colE;
@@ -48,7 +43,13 @@ namespace RiotPls.Forms
         private DataGridViewTextBoxColumn colTitle;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewImageColumn colImage;
+        #endregion
+        private string last_champ_name = null;
+        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
+        private BindingList<ChampionInfo> source = null;
+        private Point last_location = Point.Empty;
         private Dictionary<string, formTooltipStats> stat_windows = new Dictionary<string, formTooltipStats>();
+        private Build build = null;
         #endregion     
         #region Instance Methods
         public formChampions()
@@ -600,7 +601,7 @@ namespace RiotPls.Forms
             else
             {
                 this.itmShowStats.Checked = this.stat_windows.ContainsKey(this.last_champ_name);
-                this.itmSelectedForBuilder.Checked = BuildManager.GetChampion(0)?.Name == this.last_champ_name;
+                this.itmSelectedForBuilder.Checked = this.build.GetChampion()?.Name == this.last_champ_name;
             }
             return;
         }
@@ -645,6 +646,7 @@ namespace RiotPls.Forms
             if (this.Visible)
             {
                 this.LoadWindowSettings();
+                this.build = Build.GetBuild(0);
                 this.fTooltip = new formTooltip();
                 this.fTooltip.Location = new Point(this.Right + 10, this.Top);
                 this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
@@ -739,8 +741,11 @@ namespace RiotPls.Forms
         }
         private void itmSelectedForBuilder_CheckedChanged(object sender, EventArgs e)
         {
-            if(this.itmSelectedForBuilder.Checked)
-                BuildManager.SetChampion(0, this.last_champ_name);
+            if (this.itmSelectedForBuilder.Checked)
+            {
+                ChampionInfo champion = Engine.GetChampion(this.last_champ_name);
+                this.build.SetChampion(champion);
+            }
             return;
         }
         private void txtSearch_Enter(object sender, EventArgs e)
