@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 
 using RiotPls.API;
-using RiotPls.Builder;
+using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
 
 namespace RiotPls.Forms

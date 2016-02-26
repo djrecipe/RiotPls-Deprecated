@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace RiotPls.API.Serialization.General
 {
-    public abstract class GeneralStatsInfo
+    public class GeneralStatsInfo
     {
         #region Static Methods
         public static GeneralStatsInfo operator +(GeneralStatsInfo x, GeneralStatsInfo y)
@@ -341,7 +341,7 @@ namespace RiotPls.API.Serialization.General
         public StatsTable Table { get; private set; } = new StatsTable();
         #endregion
         #region Instance Methods
-        protected GeneralStatsInfo()
+        internal GeneralStatsInfo()
         {
             for (int i = 0; i < 19; i++)
                 this.Stats.AddStatsRow(this.Stats.NewStatsRow());

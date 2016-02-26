@@ -2,21 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using RiotPls.API.Serialization.Champions;
+using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
 
-namespace RiotPls.Builder
+namespace RiotPls.API.Builder
 {
     public class Build
     {
         public delegate void BuildChangedDelegate(int index);
         public static BuildChangedDelegate BuildChanged;
         private static List<Build> builds = new List<Build>(); 
-        private static void FireUpdate(int index)
-        {
-            if (Build.BuildChanged != null)
-                Build.BuildChanged(index);
-            return;
-        }
 
         public static Build GetBuild(int index)
         {
@@ -39,6 +34,7 @@ namespace RiotPls.Builder
 
         private ItemInfo[] items = new ItemInfo[6];
         private ChampionInfo champion = new ChampionInfo();
+        private GeneralStatsInfo stats = new GeneralStatsInfo();
         public int Index
         {
             get;
@@ -47,6 +43,19 @@ namespace RiotPls.Builder
         private Build(int index)
         {
             this.Index = index;
+        }
+
+        private void FireUpdate(int index)
+        {
+            this.stats = new GeneralStatsInfo();
+            this.stats += this.champion.Stats;
+            foreach (ItemInfo item in this.items.Where(i => i != null))
+            {
+                this.stats += item.Stats;
+            }
+            if (Build.BuildChanged != null)
+                Build.BuildChanged(index);
+            return;
         }
 
         public ChampionInfo GetChampion()
@@ -78,7 +87,7 @@ namespace RiotPls.Builder
             if (this.champion != champion_in)
             {
                 this.champion = champion_in;
-                Build.FireUpdate(this.Index);
+                this.FireUpdate(this.Index);
             }
             return;
         }
@@ -88,7 +97,7 @@ namespace RiotPls.Builder
             if(index < 0 || index >=6)
                 throw new ArgumentOutOfRangeException("Item index must be 0 or greater and less than six", "index");
             this.items[index] = item;
-            Build.FireUpdate(this.Index);
+            this.FireUpdate(this.Index);
             return;
         }
     }
