@@ -29,6 +29,7 @@ namespace RiotPls.API
         public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
         public static APIKey Key { get; private set; } = new APIKey("key.txt");
         private static Dictionary<string, ChampionInfo> ChampionInfos { get; set; }
+        private static Dictionary<string, ItemInfo> ItemInfos { get; set; } 
         private static Regions _Region = Regions.NorthAmerica;
         public static Regions Region
         {
@@ -83,10 +84,16 @@ namespace RiotPls.API
             Engine.UpdateLiveChampionInfo();
             return Engine.ChampionInfos;
         }
+
+        public static ItemInfo GetItem(string name)
+        {
+            return Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
+        }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {
             ItemInfoSet data = new ItemInfoSet();
-            return data.Get();
+            Engine.ItemInfos = data.Get();
+            return Engine.ItemInfos;
         }
         public static Dictionary<string, MapInfo> GetMapInfo()
         {

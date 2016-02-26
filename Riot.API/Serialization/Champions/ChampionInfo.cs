@@ -27,13 +27,7 @@ namespace RiotPls.API.Serialization.Champions
                 this._ID = value;
             }
         }
-        public Bitmap Image
-        {
-            get
-            {
-                return this.ImageData.Image;
-            }
-        }
+        public Bitmap Image => this.ImageData?.Image;
         private ImageInfo _ImageData = null;
         [JsonProperty("image", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public ImageInfo ImageData

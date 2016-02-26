@@ -57,7 +57,7 @@ namespace RiotPls.API.Serialization.Transport
         }
         public static implicit operator Bitmap(CachedImage cached_image)
         {
-            return cached_image.Image;
+            return cached_image?.Image;
         }
     }
 }

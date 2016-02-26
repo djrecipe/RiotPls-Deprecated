@@ -20,7 +20,13 @@ namespace RiotPls.Builder
 
         public static Build GetBuild(int index)
         {
-            return Build.builds.FirstOrDefault(b => b.Index == index) ?? new Build(index);
+            Build build = Build.builds.FirstOrDefault(b => b.Index == index);
+            if (build == null)
+            {
+                build = new Build(index);
+                Build.builds.Add(build);
+            }
+            return build;
         }
 
         public static void RemoveBuild(int index)
@@ -31,7 +37,7 @@ namespace RiotPls.Builder
             return;
         }
 
-        private List<ItemInfo> items = new List<ItemInfo>();
+        private ItemInfo[] items = new ItemInfo[6];
         private ChampionInfo champion = new ChampionInfo();
         public int Index
         {
@@ -42,34 +48,27 @@ namespace RiotPls.Builder
         {
             this.Index = index;
         }
-        public void AddItem(ItemInfo item)
-        {
-            if (!this.items.Contains(item))
-            {
-                this.items.Add(item);
-                Build.FireUpdate(this.Index);
-            }
-            return;
-        }
 
         public ChampionInfo GetChampion()
         {
             return this.champion;
         }
 
-        public ItemInfo GetItem(string name)
+        public int GetItemIndex(string name)
         {
-            return this.items.FirstOrDefault(i => i.Name == name);
+            if(string.IsNullOrWhiteSpace(name))
+                throw new ArgumentNullException("Item name must be valid", "name");
+            for (int i = 0; i < this.items.Length; i++)
+            {
+                if (this.items[i]?.Name == name)
+                    return i;
+            }
+            return -1;
         }
 
-        public void RemoveItem(ItemInfo item)
+        public List<ItemInfo> GetItems()
         {
-            if (this.items.Contains(item))
-            {
-                this.items.Remove(item);
-                Build.FireUpdate(this.Index);
-            }
-            return;
+            return this.items.ToList();
         }
 
         public void SetChampion(ChampionInfo champion_in)
@@ -81,6 +80,15 @@ namespace RiotPls.Builder
                 this.champion = champion_in;
                 Build.FireUpdate(this.Index);
             }
+            return;
+        }
+
+        public void SetItem(int index, ItemInfo item)
+        {
+            if(index < 0 || index >=6)
+                throw new ArgumentOutOfRangeException("Item index must be 0 or greater and less than six", "index");
+            this.items[index] = item;
+            Build.FireUpdate(this.Index);
             return;
         }
     }

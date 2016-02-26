@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using RiotPls.API;
 using RiotPls.API.Serialization;
 using RiotPls.API.Serialization.Items;
+using RiotPls.Builder;
 
 namespace RiotPls.Forms
 {
@@ -19,17 +20,32 @@ namespace RiotPls.Forms
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
         private System.Windows.Forms.CheckedListBox chkdlistFilter;
-        #endregion
-        private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
         private DataGridViewTextBoxColumn colDescription;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewImageColumn colImage;
+        private ContextMenuStrip cmenMain;
+        private ToolStripMenuItem itmShowStats;
+        private ToolStripMenuItem itmLockTooltip;
+        private ToolStripMenuItem itmSelectedForBuilder;
+        private ToolStripMenuItem itmSetAsItem1;
+        private ToolStripMenuItem itmSetAsItem2;
+        private ToolStripMenuItem itmSetAsItem3;
+        private ToolStripMenuItem itmSetAsItem4;
+        private ToolStripMenuItem itmSetAsItem5;
+        private ToolStripMenuItem itmSetAsItem6;
+        private ToolStripMenuItem[] menuItems = null;
+        #endregion
+        private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
         private BindingList<ItemInfo> source = null;
+        private string last_item_name = null;
+        private Build build = null;
+        private bool listeningToCheckboxes = false;
         #endregion
         #region Instance Methods
         public formItems()
         {
             this.InitializeComponent();
+            this.menuItems = new ToolStripMenuItem[] { this.itmSetAsItem1, this.itmSetAsItem2, this.itmSetAsItem3, this.itmSetAsItem4, this.itmSetAsItem5, this.itmSetAsItem6};
             this.gridMain.AutoGenerateColumns = false;
             return;
         }
@@ -43,12 +59,23 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formItems));
             this.gridMain = new RiotPls.Grid();
-            this.chkdlistFilter = new System.Windows.Forms.CheckedListBox();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.itmShowStats = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmLockTooltip = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.itmSetAsItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkdlistFilter = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
+            this.cmenMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClose
@@ -71,10 +98,10 @@ namespace RiotPls.Forms
             this.gridMain.AllowUserToDeleteRows = false;
             this.gridMain.AllowUserToResizeColumns = false;
             this.gridMain.AllowUserToResizeRows = false;
-            this.gridMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
             this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.gridMain.BackgroundColor = System.Drawing.Color.Black;
             this.gridMain.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -90,6 +117,7 @@ namespace RiotPls.Forms
             this.colImage,
             this.colName,
             this.colDescription});
+            this.gridMain.ContextMenuStrip = this.cmenMain;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -124,29 +152,8 @@ namespace RiotPls.Forms
             this.gridMain.ShowRowErrors = false;
             this.gridMain.Size = new System.Drawing.Size(1137, 689);
             this.gridMain.TabIndex = 3;
-            // 
-            // chkdlistFilter
-            // 
-            this.chkdlistFilter.BackColor = System.Drawing.Color.Black;
-            this.chkdlistFilter.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.chkdlistFilter.CheckOnClick = true;
-            this.chkdlistFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.chkdlistFilter.FormattingEnabled = true;
-            this.chkdlistFilter.Items.AddRange(new object[] {
-            "Consumables",
-            "Howling Abyss",
-            "Non-Consumables",
-            "Summoner\'s Rift",
-            "Twisted Treeline"});
-            this.chkdlistFilter.Location = new System.Drawing.Point(49, 29);
-            this.chkdlistFilter.Margin = new System.Windows.Forms.Padding(40, 20, 10, 10);
-            this.chkdlistFilter.MultiColumn = true;
-            this.chkdlistFilter.Name = "chkdlistFilter";
-            this.chkdlistFilter.Size = new System.Drawing.Size(248, 60);
-            this.chkdlistFilter.Sorted = true;
-            this.chkdlistFilter.TabIndex = 4;
-            this.chkdlistFilter.ThreeDCheckBoxes = true;
-            this.chkdlistFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkdlistFilter_ItemCheck);
+            this.gridMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridMain_CellMouseDown);
+            this.gridMain.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellMouseEnter);
             // 
             // colImage
             // 
@@ -180,6 +187,118 @@ namespace RiotPls.Forms
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
             // 
+            // cmenMain
+            // 
+            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itmShowStats,
+            this.itmLockTooltip,
+            this.itmSelectedForBuilder});
+            this.cmenMain.Name = "cmenMain";
+            this.cmenMain.Size = new System.Drawing.Size(177, 70);
+            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
+            // 
+            // itmShowStats
+            // 
+            this.itmShowStats.CheckOnClick = true;
+            this.itmShowStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.itmShowStats.Name = "itmShowStats";
+            this.itmShowStats.Size = new System.Drawing.Size(176, 22);
+            this.itmShowStats.Text = "Show Stats";
+            // 
+            // itmLockTooltip
+            // 
+            this.itmLockTooltip.CheckOnClick = true;
+            this.itmLockTooltip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.itmLockTooltip.Name = "itmLockTooltip";
+            this.itmLockTooltip.Size = new System.Drawing.Size(176, 22);
+            this.itmLockTooltip.Text = "Lock Tooltip Data";
+            // 
+            // itmSelectedForBuilder
+            // 
+            this.itmSelectedForBuilder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itmSetAsItem1,
+            this.itmSetAsItem2,
+            this.itmSetAsItem3,
+            this.itmSetAsItem4,
+            this.itmSetAsItem5,
+            this.itmSetAsItem6});
+            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
+            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
+            this.itmSelectedForBuilder.Text = "Selected for Builder";
+            this.itmSelectedForBuilder.DropDownClosed += new System.EventHandler(this.itmSelectedForBuilder_DropDownClosed);
+            this.itmSelectedForBuilder.DropDownOpening += new System.EventHandler(this.itmSelectedForBuilder_DropDownOpening);
+            // 
+            // itmSetAsItem1
+            // 
+            this.itmSetAsItem1.CheckOnClick = true;
+            this.itmSetAsItem1.Name = "itmSetAsItem1";
+            this.itmSetAsItem1.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem1.Text = "Set as Item 1";
+            this.itmSetAsItem1.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // itmSetAsItem2
+            // 
+            this.itmSetAsItem2.CheckOnClick = true;
+            this.itmSetAsItem2.Name = "itmSetAsItem2";
+            this.itmSetAsItem2.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem2.Text = "Set as Item 2";
+            this.itmSetAsItem2.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // itmSetAsItem3
+            // 
+            this.itmSetAsItem3.CheckOnClick = true;
+            this.itmSetAsItem3.Name = "itmSetAsItem3";
+            this.itmSetAsItem3.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem3.Text = "Set as Item 3";
+            this.itmSetAsItem3.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // itmSetAsItem4
+            // 
+            this.itmSetAsItem4.CheckOnClick = true;
+            this.itmSetAsItem4.Name = "itmSetAsItem4";
+            this.itmSetAsItem4.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem4.Text = "Set as Item 4";
+            this.itmSetAsItem4.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // itmSetAsItem5
+            // 
+            this.itmSetAsItem5.CheckOnClick = true;
+            this.itmSetAsItem5.Name = "itmSetAsItem5";
+            this.itmSetAsItem5.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem5.Text = "Set as Item 5";
+            this.itmSetAsItem5.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // itmSetAsItem6
+            // 
+            this.itmSetAsItem6.CheckOnClick = true;
+            this.itmSetAsItem6.Name = "itmSetAsItem6";
+            this.itmSetAsItem6.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem6.Text = "Set as Item 6";
+            this.itmSetAsItem6.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
+            // 
+            // chkdlistFilter
+            // 
+            this.chkdlistFilter.BackColor = System.Drawing.Color.Black;
+            this.chkdlistFilter.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.chkdlistFilter.CheckOnClick = true;
+            this.chkdlistFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.chkdlistFilter.FormattingEnabled = true;
+            this.chkdlistFilter.Items.AddRange(new object[] {
+            "Consumables",
+            "Howling Abyss",
+            "Non-Consumables",
+            "Summoner\'s Rift",
+            "Twisted Treeline"});
+            this.chkdlistFilter.Location = new System.Drawing.Point(49, 29);
+            this.chkdlistFilter.Margin = new System.Windows.Forms.Padding(40, 20, 10, 10);
+            this.chkdlistFilter.MultiColumn = true;
+            this.chkdlistFilter.Name = "chkdlistFilter";
+            this.chkdlistFilter.Size = new System.Drawing.Size(248, 60);
+            this.chkdlistFilter.Sorted = true;
+            this.chkdlistFilter.TabIndex = 4;
+            this.chkdlistFilter.ThreeDCheckBoxes = true;
+            this.chkdlistFilter.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkdlistFilter_ItemCheck);
+            // 
             // formItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -193,6 +312,7 @@ namespace RiotPls.Forms
             this.Name = "formItems";
             this.ShowLoading = true;
             this.Text = "RiotPls-Items";
+            this.VisibleChanged += new System.EventHandler(this.formItems_VisibleChanged);
             this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
@@ -200,6 +320,7 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.picLoading, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
+            this.cmenMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -228,6 +349,7 @@ namespace RiotPls.Forms
             return new_binding;
         }
         #endregion
+        #region Event Methods
         private void chkdlistFilter_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             if(this.IsHandleCreated && this.Visible)
@@ -236,6 +358,78 @@ namespace RiotPls.Forms
             }
             return;
         }
+        private void cmenMain_Opening(object sender, CancelEventArgs e)
+        {
+            if (this.last_item_name == null)
+                e.Cancel = true;
+            else
+            {
+                int index = this.build.GetItemIndex(this.last_item_name);
+                this.itmSelectedForBuilder.Checked = index > -1;
+            }
+            return;
+        }
+        private void formItems_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                this.build = Build.GetBuild(0);
+            }
+            return;
+        }
+        private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || this.items == null)
+                return;
+            ItemInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ItemInfo;
+            Bitmap bitmap = info?.Image;
+            if (bitmap != null)
+            {
+                bitmap.Tag = info.Name;
+                this.BeginInvoke((MethodInvoker)delegate
+                { this.gridMain.DoDragDrop(bitmap, DragDropEffects.Copy); });
+            }
+            return;
+        }
+        private void gridMain_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
+                return;
+            this.last_item_name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            return;
+        }
+        private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!this.listeningToCheckboxes)
+                return;
+            ToolStripMenuItem menu_item = sender as ToolStripMenuItem;
+            int index = this.menuItems.ToList().IndexOf(menu_item);
+            ItemInfo item = Engine.GetItem(this.last_item_name);
+            if (menu_item.Checked)
+            {
+                this.build.SetItem(index, item);
+            }
+            else
+            {
+                this.build.SetItem(index, null);
+            }
+            return;
+        }
+        private void itmSelectedForBuilder_DropDownClosed(object sender, EventArgs e)
+        {
+        }
+        private void itmSelectedForBuilder_DropDownOpening(object sender, EventArgs e)
+        {
+            this.listeningToCheckboxes = false;
+            int index = this.build.GetItemIndex(this.last_item_name);
+            for (int i = 0; i < this.menuItems.Length; i++)
+            {
+                this.menuItems[i].Checked = i == index;
+            }
+            this.listeningToCheckboxes = true;
+            return;
+        }
+        #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
         {
