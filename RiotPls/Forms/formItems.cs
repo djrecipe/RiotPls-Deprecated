@@ -382,12 +382,10 @@ namespace RiotPls.Forms
             if (e.Button != MouseButtons.Left || this.items == null)
                 return;
             ItemInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ItemInfo;
-            Bitmap bitmap = info?.Image;
-            if (bitmap != null)
+            if (info != null)
             {
-                bitmap.Tag = info.Name;
                 this.BeginInvoke((MethodInvoker)delegate
-                { this.gridMain.DoDragDrop(bitmap, DragDropEffects.Copy); });
+                { this.gridMain.DoDragDrop(info, DragDropEffects.Copy); });
             }
             return;
         }

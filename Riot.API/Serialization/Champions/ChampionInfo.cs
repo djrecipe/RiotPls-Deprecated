@@ -4,6 +4,7 @@ using System.Drawing;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Interfaces;
+using RiotPls.Tools;
 
 namespace RiotPls.API.Serialization.Champions
 {

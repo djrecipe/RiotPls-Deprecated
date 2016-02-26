@@ -678,12 +678,10 @@ namespace RiotPls.Forms
             if (e.Button != MouseButtons.Left || this.champions == null)
                 return;
             ChampionInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ChampionInfo;
-            Bitmap bitmap = info?.Image;
-            if (bitmap != null)
+            if (info != null)
             {
-                bitmap.Tag = info.Name;
                 this.BeginInvoke((MethodInvoker) delegate
-                { this.gridMain.DoDragDrop(bitmap, DragDropEffects.Copy); });
+                { this.gridMain.DoDragDrop(info, DragDropEffects.Copy); });
             }
             return;                                                          
         }

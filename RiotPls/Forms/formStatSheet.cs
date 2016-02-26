@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.Items;
 using RiotPls.Builder;
+using RiotPls.Tools;
 
 namespace RiotPls.Forms
 {
@@ -315,88 +315,63 @@ namespace RiotPls.Forms
         }
         private void UpdateBuild()
         {
+            if (!this.Visible)
+                return;
             this.build = Build.GetBuild(0);
+            // update champion
             ChampionInfo champion = this.build.GetChampion();
             if (champion != null)
             {
                 this.picChampion.BackgroundImage = champion.Image;
                 this.lblChampion.Text = champion.Name;
             }
-            List<ItemInfo> items = this.build.GetItems();
+            // update items
+            List<ItemInfo> new_items = this.build.GetItems();
             for (int i = 0; i < 6; i++)
             {
-                this.itemLabels[i].Text = items[i]?.Name ?? string.Format("Item {0}", i + 1);
-                this.itemPictures[i].BackgroundImage = items[i]?.Image;
+                this.items[i] = new_items[i];
+                this.itemLabels[i].Text = this.items[i]?.Name ?? string.Format("Item {0}", i + 1);
+                this.itemPictures[i].BackgroundImage = this.items[i]?.Image;
             }
             return;
         }
         private void BuildManager_BuildChanged(int index)
         {
-            if(this.Visible)
-                this.UpdateBuild();
+            this.UpdateBuild();
             return;
         }
         private void formStatSheet_VisibleChanged(object sender, System.EventArgs e)
         {
-            if (this.Visible)
-            {
-                this.UpdateBuild();
-            }
+            this.UpdateBuild();
+            return;
         }
         private void picChampion_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.Bitmap))
+            if (e.Data.GetDataPresent(typeof(ChampionInfo)))
                 e.Effect = DragDropEffects.Copy;
             return;
         }
         private void picChampion_DragDrop(object sender, DragEventArgs e)
         {
-            try
-            {
-                Bitmap bitmap = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
-                if (bitmap != null)
-                {
-                    string name = bitmap.Tag as string;
-                    ChampionInfo champion = API.Engine.GetChampion(name);
-                    if (champion != null)
-                    {
-                        this.build.SetChampion(champion);
-                        this.UpdateBuild();
-                    }
-                }
-            }
-            catch
-            {
-            }
+            if (!e.Data.GetDataPresent(typeof(ChampionInfo)))
+                return;
+            ChampionInfo champion = (ChampionInfo)e.Data.GetData(typeof (ChampionInfo));
+            this.build.SetChampion(champion);
             return;
         }
         private void picItem_DragDrop(object sender, DragEventArgs e)
         {
             PictureBox pic_box = sender as PictureBox;
             int index = this.itemPictures.ToList().IndexOf(pic_box);
-            try
-            {
-                Bitmap bitmap = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
-                if (bitmap != null)
-                {
-                    string name = bitmap.Tag as string;
-                    ItemInfo item = API.Engine.GetItem(name);
-                    if (item != null)
-                    {
-                        this.build.SetItem(index, item);
-                        this.items[index] = item;
-                        this.UpdateBuild();
-                    }
-                }
-            }
-            catch
-            {
-            }
+            if (!e.Data.GetDataPresent(typeof(ItemInfo)))
+                return;
+            ItemInfo item = (ItemInfo)e.Data.GetData(typeof(ItemInfo));
+            this.build.SetItem(index, item);
             return;
         }
         private void picItem_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.Bitmap))
+            if (e.Data.GetDataPresent(typeof(ItemInfo)))
                 e.Effect = DragDropEffects.Copy;
             return;
         }
