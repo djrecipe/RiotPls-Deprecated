@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/RiotPls.Tools/obj/Debug
+/RiotPls.Tools/bin/Debug
+/RiotPls.Test/obj
+/RiotPls/obj
+/Riot.API/obj
+/Compiled
