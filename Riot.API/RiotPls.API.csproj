@@ -73,12 +73,14 @@
     <Compile Include="Serialization\Champions\RatingInfo.cs" />
     <Compile Include="Serialization\Champions\SkinInfo.cs" />
     <Compile Include="Serialization\Champions\SpellInfo.cs" />
-    <Compile Include="Serialization\Champions\StatsInfo.cs" />
+    <Compile Include="Serialization\Champions\ChampionStatsInfo.cs" />
+    <Compile Include="Serialization\General\GeneralStatsInfo.cs" />
     <Compile Include="Serialization\General\RealmInfoSet.cs" />
     <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />
     <Compile Include="Serialization\General\RiotSerializable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
+    <Compile Include="Serialization\Items\ItemStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemInfoSet.cs" />
     <Compile Include="Serialization\Maps\MapInfoSet.cs" />
     <Compile Include="Serialization\Transport\CachedImage.cs" />
@@ -134,9 +136,7 @@
       <Name>RiotPls.Tools</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DragDrop\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

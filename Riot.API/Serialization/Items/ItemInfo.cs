@@ -143,48 +143,14 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
-        private Dictionary<string, bool> _Maps = new Dictionary<string, bool>();
         [JsonProperty("maps", ItemIsReference = true)]
-        public Dictionary<string, bool> Maps
-        {
-            get
-            {
-                return this._Maps;
-            }
-            private set
-            {
-                this._Maps = value;
-                return;
-            }
-        }
-        private string _Name = null;
+        public Dictionary<string, bool> Maps { get; private set; } = new Dictionary<string, bool>();
         [JsonProperty("name")]
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-            private set
-            {
-                this._Name = value;
-                return;
-            }
-        }
-        private string _RequiredChampion = null;
+        public string Name { get; private set; } = null;
         [JsonProperty("requiredChampion")]
-        public string RequiredChampion
-        {
-            get
-            {
-                return this._RequiredChampion;
-            }
-            private set
-            {
-                this._RequiredChampion = value;
-                return;
-            }
-        }
+        public string RequiredChampion { get; private set; } = null;
+        [JsonProperty("stats", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public ItemStatsInfo Stats { get; private set; } = new ItemStatsInfo();
         public ItemInfo()
         {
             ItemInfo.UpdateConsumableStatus(this);

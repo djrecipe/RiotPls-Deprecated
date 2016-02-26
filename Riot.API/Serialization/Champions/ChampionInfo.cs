@@ -268,9 +268,9 @@ namespace RiotPls.API.Serialization.Champions
                 this._Spells = value;
             }
         }
-        private StatsInfo _Stats = new StatsInfo();
+        private ChampionStatsInfo _Stats = new ChampionStatsInfo();
         [JsonProperty("stats", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public StatsInfo Stats
+        public ChampionStatsInfo Stats
         {
             get
             {
