@@ -16,7 +16,7 @@ UninstallDisplayName=RitoPls
 
 [Files]
 ; Program Files ;
-Source: "Compiled\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "*.bmp, *.pdb, *.Test.dll, *.txt, *.xml, *.vshost.*"
+Source: "Compiled\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "*.pdb, *.Test.dll, *.txt, *.xml, *.vshost.*"
 ; Resources ;
 Source: "Compiled\json\*"; DestDir: "{app}\json"; Flags: ignoreversion createallsubdirs recursesubdirs; Components: Resources
 Source: "Compiled\Resources\*"; DestDir: "{app}\Resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Components: Resources

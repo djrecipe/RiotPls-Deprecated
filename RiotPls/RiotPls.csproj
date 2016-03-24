@@ -150,9 +150,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Rating.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\BuilderIcon.ico" />
     <Content Include="Resources\BuilderIcon.png" />
     <Content Include="Resources\ChampionIcon.ico" />

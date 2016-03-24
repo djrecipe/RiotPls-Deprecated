@@ -117,17 +117,14 @@ namespace RiotPls.API.Serialization.Champions
         }
         private Bitmap CreateBitmap(int value, Color color)
         {
-            Bitmap bitmap = null;
-            Image image = Image.FromFile("Rating.bmp");
+            Bitmap image = new Bitmap(50, 100);
             double ratio = (double)value / 10.0;
             int fill_bottom = (int)(ratio * (double)image.Height);
             Graphics g = Graphics.FromImage(image);
             g.FillRectangle(new SolidBrush(Color.FromArgb(46, 46, 46)), 0, 0, image.Width, image.Height);
             g.FillRectangle(new SolidBrush(color), new Rectangle(0, image.Height - fill_bottom, image.Width, fill_bottom));
             g.DrawRectangle(new Pen(Brushes.Black, 3.0f), new Rectangle(0, 0, image.Width - 1, image.Height - 1));
-            bitmap = new Bitmap(image);
-            image.Dispose();
-            return bitmap;
+            return image;
         }
     }
 }
