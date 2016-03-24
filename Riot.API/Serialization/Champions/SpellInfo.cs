@@ -4,69 +4,37 @@ using RiotPls.API.Serialization.General;
 
 namespace RiotPls.API.Serialization.Champions
 {
+    /// <summary>
+    /// Champion spell information
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class SpellInfo
     {
-        public Bitmap Image
-        {
-            get
-            {
-                return this.ImageData.Image;
-            }
-        }
-        private ImageInfo _ImageData = null;
+        /// <summary>
+        /// Spell toolbar image
+        /// </summary>
+        public Bitmap Image => this.ImageData.Image;
+        /// <summary>
+        /// Serializable image information
+        /// </summary>
         [JsonProperty("image", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public ImageInfo ImageData
-        {
-            get
-            {
-                return this._ImageData;
-            }
-            private set
-            {
-                this._ImageData = value;
-                return;
-            }
-        }
-        private string _Description = null;
+        private ImageInfo ImageData { get; set; }
+        /// <summary>
+        /// Spell description
+        /// </summary>
+        /// <remarks>Pre-sanitized</remarks>
         [JsonProperty("sanitizedDescription")]
-        public string Description
-        {
-            get
-            {
-                return this._Description;
-            }
-            private set
-            {
-                this._Description = value;
-            }
-        }
-        private string _Name = null;
+        public string Description { get; private set; } = null;
+        /// <summary>
+        /// Spell name
+        /// </summary>
         [JsonProperty("name")]
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-            private set
-            {
-                this._Name = value;
-            }
-        }
-        private string _StyledDescription = null;
+        public string Name { get; private set; } = null;
+        /// <summary>
+        /// Spell description, with text styles
+        /// </summary>
         [JsonProperty("description")]
-        public string StyledDescription
-        {
-            get
-            {
-                return this._StyledDescription;
-            }
-            private set
-            {
-                this._StyledDescription = value;
-            }
-        }
+        public string StyledDescription { get; private set; } = null;
 
     }
 }
