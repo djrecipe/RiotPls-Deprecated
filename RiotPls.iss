@@ -25,7 +25,7 @@ Source: "Compiled\json\*"; DestDir: "{app}\json"; Flags: ignoreversion createall
 Source: "Compiled\Resources\*"; DestDir: "{app}\Resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Components: Resources
 
 [Icons]
-Name: "{userdesktop}\RiotPls"; Filename: "RiotPls.exe"; WorkingDir: "{app}"
+Name: "{userdesktop}\RiotPls"; Filename: "{app}\RiotPls.exe"; WorkingDir: "{app}"; IconFilename: "{app}\RiotPls.exe"; IconIndex: 0
 
 [Components]
 Name: "Resources"; Description: "Resource Pack v{#RESOURCE_VERSION}"; Types: Custom

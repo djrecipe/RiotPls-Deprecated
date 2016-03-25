@@ -131,6 +131,8 @@ namespace RiotPls.Forms
 
         protected void UpdateData()
         {
+            if (this.workerUpdateData.IsBusy)
+                return;
             this.picLoading.Visible = this.ShowLoading;
             this.picLoading.BringToFront();
             this.workerUpdateData.RunWorkerAsync();

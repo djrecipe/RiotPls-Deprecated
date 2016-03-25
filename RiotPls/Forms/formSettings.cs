@@ -271,7 +271,6 @@ namespace RiotPls.Forms
             this.Name = "formSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "+";
-            this.Load += new System.EventHandler(this.formSettings_Load);
             this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
@@ -336,12 +335,6 @@ namespace RiotPls.Forms
             {
                 // ignored
             }
-            return;
-        }
-        private void formSettings_Load(object sender, EventArgs e)
-        {
-            if(!this.workerUpdateData.IsBusy)
-                this.workerUpdateData.RunWorkerAsync();
             return;
         }
         protected override void Dispose(bool disposing)
