@@ -9,10 +9,12 @@
 [Setup]
 AppName=RitoPls
 AppVersion={#VERSION}
-DefaultDirName={pf}\RitoPls
-ShowLanguageDialog=auto
+DefaultDirName={pf}\RitoPls   
 DisableProgramGroupPage=auto
-UninstallDisplayName=RitoPls
+OutputDir=Compiled
+OutputBaseFilename=RitoPls Installer v{#VERSION}       
+ShowLanguageDialog=auto  
+UninstallDisplayName=RitoPls    
 
 [Files]
 ; Program Files ;
