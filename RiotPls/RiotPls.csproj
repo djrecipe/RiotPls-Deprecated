@@ -188,7 +188,7 @@
       PostBuildMacros;
     </PostBuildEventDependsOn>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
-      "C:\Inno Setup 5\iscc" /dVERSION=@(VersionNumber) /dRESOURCE_VERSION=6.6.1 "$(SolutionDir)RitoPls.iss"
+      "C:\Inno Setup 5\iscc" /dVERSION=@(VersionNumber) /dRESOURCE_VERSION=6.6.1 "$(SolutionDir)RiotPls.iss"
 )
 </PostBuildEvent>
   </PropertyGroup>

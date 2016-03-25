@@ -7,18 +7,19 @@
 #endif
 
 [Setup]
-AppName=RitoPls
+AppName=RiotPls
 AppVersion={#VERSION}
-DefaultDirName={pf}\RitoPls   
+DefaultDirName={pf}\RiotPls   
 DisableProgramGroupPage=auto
 OutputDir=Compiled
-OutputBaseFilename=RitoPls Installer v{#VERSION}       
+OutputBaseFilename=RiotPls Installer v{#VERSION}       
 ShowLanguageDialog=auto  
-UninstallDisplayName=RitoPls    
+UninstallDisplayName=RiotPls    
 
 [Files]
-; Program Files ;
-Source: "Compiled\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "*.pdb, *.Test.dll, *.txt, *.xml, *.vshost.*"
+; Program Files ;      
+Source: "Compiled\RiotPls.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Compiled\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "*.exe, *.pdb, *.Test.dll, *.txt, *.xml, *.vshost.*"
 ; Resources ;
 Source: "Compiled\json\*"; DestDir: "{app}\json"; Flags: ignoreversion createallsubdirs recursesubdirs; Components: Resources
 Source: "Compiled\Resources\*"; DestDir: "{app}\Resources"; Flags: ignoreversion createallsubdirs recursesubdirs; Components: Resources
