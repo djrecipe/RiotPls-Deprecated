@@ -254,7 +254,7 @@ namespace RiotPls.Forms
             this.lblContentVersionValue.Size = new System.Drawing.Size(50, 13);
             this.lblContentVersionValue.TabIndex = 8;
             this.lblContentVersionValue.TabStop = true;
-            this.lblContentVersionValue.Text = "6.3.1";
+            this.lblContentVersionValue.Text = "6.6.1";
             this.lblContentVersionValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblContentVersionValue.VisitedLinkColor = System.Drawing.Color.Violet;
             this.lblContentVersionValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblContentVersionValue_LinkClicked);

@@ -56,6 +56,7 @@ namespace RiotPls.Forms
         {
             this.InitializeComponent();
             this.gridMain.AutoGenerateColumns = false;
+            this.gridMain.DataError += this.gridMain_DataError;
             return;
         }
         private void InitializeComponent()
@@ -689,6 +690,9 @@ namespace RiotPls.Forms
         {
             this.ShowTooltip(e.RowIndex, e.ColumnIndex);
             return;
+        }
+        private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
         }
         private void itmShowStats_CheckedChanged(object sender, EventArgs e)
         {

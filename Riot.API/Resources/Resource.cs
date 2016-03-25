@@ -11,7 +11,7 @@ namespace RiotPls.API.Resources
     public class Resource
     {
         private const string DEFAULT_CONTENT_URL = "http://ddragon.leagueoflegends.com/cdn/";
-        private const string DEFAULT_CONTENT_VERSION = "6.3.1";
+        private const string DEFAULT_CONTENT_VERSION = "6.6.1";
         protected const string DIRECTORY = "Resources";
         protected const string FILENAME_IGNORE = "Ignore.csv";
         protected static List<string> ignore = new List<string>();

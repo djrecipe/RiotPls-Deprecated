@@ -17,7 +17,7 @@ ShowLanguageDialog=auto
 UninstallDisplayName=RiotPls    
 
 [Files]
-; Program Files ;      
+; Program Files ;
 Source: "Compiled\RiotPls.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Compiled\*"; DestDir: "{app}"; Flags: ignoreversion; Excludes: "*.exe, *.pdb, *.Test.dll, *.txt, *.xml, *.vshost.*"
 ; Resources ;

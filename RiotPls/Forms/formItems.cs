@@ -44,6 +44,7 @@ namespace RiotPls.Forms
             this.InitializeComponent();
             this.menuItems = new ToolStripMenuItem[] { this.itmSetAsItem1, this.itmSetAsItem2, this.itmSetAsItem3, this.itmSetAsItem4, this.itmSetAsItem5, this.itmSetAsItem6};
             this.gridMain.AutoGenerateColumns = false;
+            this.gridMain.DataError += this.gridMain_DataError;
             return;
         }
         private void InitializeComponent()
@@ -391,6 +392,10 @@ namespace RiotPls.Forms
             if (e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
             this.last_item_name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            return;
+        }
+        private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
             return;
         }
         private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)
