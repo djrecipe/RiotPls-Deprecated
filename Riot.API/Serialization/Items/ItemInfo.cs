@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.API.Serialization.Items
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class ItemInfo
+    public class ItemInfo : IRiotDroppable
     {
         private static List<ItemInfo> consumables = new List<ItemInfo>();
         private static List<ItemInfo> non_consumables = new List<ItemInfo>();
@@ -37,20 +40,8 @@ namespace RiotPls.API.Serialization.Items
             }
             return;
         }
-        private string _ColloquialName = null;
         [JsonProperty("colloq")]
-        public string ColloquialName
-        {
-            get
-            {
-                return this._ColloquialName;
-            }
-            private set
-            {
-                this._ColloquialName = value;
-                return;
-            }
-        }
+        public string ColloquialName { get; private set; }
         private bool _Consumable = false;
         [JsonProperty("consumed")]
         public bool Consumable
@@ -66,83 +57,18 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
-        private string _Description = null;
+        public DataType Type => DataType.Item;
         [JsonProperty("sanitizedDescription")]
-        public string Description
-        {
-            get
-            {
-                return this._Description;
-            }
-            private set
-            {
-                this._Description = value;
-                return;
-            }
-        }
-        private bool _HideFromAll = false;
+        public string Description { get; private set; } = null;
         [JsonProperty("hideFromAll")]
-        public bool HideFromAll
-        {
-            get
-            {
-                return this._HideFromAll;
-            }
-            private set
-            {
-                this._HideFromAll = value;
-                return;
-            }
-        }
-        private int _ID = -1;
+        public bool HideFromAll { get; private set; } = false;
         [JsonProperty("id")]
-        public int ID
-        {
-            get
-            {
-                return this._ID;
-            }
-            set
-            {
-                this._ID = value;
-                return;
-            }
-        }
-        public Bitmap Image
-        {
-            get
-            {
-                return this.ImageData.Image;
-            }
-        }
-        private ImageInfo _ImageData = null;
+        public int ID { get; private set; }
+        public Bitmap Image => this.ImageData?.Image;
         [JsonProperty("image", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public ImageInfo ImageData
-        {
-            get
-            {
-                return this._ImageData;
-            }
-            private set
-            {
-                this._ImageData = value;
-                return;
-            }
-        }
-        private bool _IsInStore = false;
+        public ImageInfo ImageData { get; private set; } = null;
         [JsonProperty("inStore")]
-        public bool IsInStore
-        {
-            get
-            {
-                return this._IsInStore;
-            }
-            private set
-            {
-                this._IsInStore = value;
-                return;
-            }
-        }
+        public bool IsInStore { get; private set; } = false;
         [JsonProperty("maps", ItemIsReference = true)]
         public Dictionary<string, bool> Maps { get; private set; } = new Dictionary<string, bool>();
         [JsonProperty("name")]

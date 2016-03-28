@@ -11,8 +11,6 @@ namespace RiotPls.Forms
     {
         #region Controls
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.PictureBox picChampion;
-        private System.Windows.Forms.Label lblChampion;
         private Label lblItem1;
         private PictureBox picItem1;
         private Label lblItem2;
@@ -29,6 +27,7 @@ namespace RiotPls.Forms
         private PictureBox[] itemPictures = null;
         #endregion
         private Build build = null;
+        private Controls.DropSlot dropChampion;
         private ItemInfo[] items = new ItemInfo[6];
         public formBuilder()
         {
@@ -40,8 +39,6 @@ namespace RiotPls.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formBuilder));
-            this.picChampion = new System.Windows.Forms.PictureBox();
-            this.lblChampion = new System.Windows.Forms.Label();
             this.lblItem1 = new System.Windows.Forms.Label();
             this.picItem1 = new System.Windows.Forms.PictureBox();
             this.lblItem2 = new System.Windows.Forms.Label();
@@ -54,8 +51,8 @@ namespace RiotPls.Forms
             this.picItem5 = new System.Windows.Forms.PictureBox();
             this.lblItem6 = new System.Windows.Forms.Label();
             this.picItem6 = new System.Windows.Forms.PictureBox();
+            this.dropChampion = new RiotPls.Controls.DropSlot();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picChampion)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem3)).BeginInit();
@@ -69,38 +66,14 @@ namespace RiotPls.Forms
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(646, 9);
             // 
-            // picLoading
-            // 
-            this.picLoading.Location = new System.Drawing.Point(273, 186);
-            // 
             // btnSettings
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.Visible = false;
             // 
-            // picChampion
+            // picLoading
             // 
-            this.picChampion.BackColor = System.Drawing.Color.Transparent;
-            this.picChampion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.picChampion.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picChampion.Location = new System.Drawing.Point(35, 29);
-            this.picChampion.Margin = new System.Windows.Forms.Padding(20, 20, 20, 5);
-            this.picChampion.Name = "picChampion";
-            this.picChampion.Size = new System.Drawing.Size(100, 100);
-            this.picChampion.TabIndex = 3;
-            this.picChampion.TabStop = false;
-            this.picChampion.DragDrop += new System.Windows.Forms.DragEventHandler(this.picChampion_DragDrop);
-            this.picChampion.DragEnter += new System.Windows.Forms.DragEventHandler(this.picChampion_DragEnter);
-            // 
-            // lblChampion
-            // 
-            this.lblChampion.Location = new System.Drawing.Point(35, 139);
-            this.lblChampion.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
-            this.lblChampion.Name = "lblChampion";
-            this.lblChampion.Size = new System.Drawing.Size(100, 14);
-            this.lblChampion.TabIndex = 4;
-            this.lblChampion.Text = "Champion";
-            this.lblChampion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.picLoading.Location = new System.Drawing.Point(273, 186);
             // 
             // lblItem1
             // 
@@ -246,12 +219,27 @@ namespace RiotPls.Forms
             this.picItem6.DragDrop += new System.Windows.Forms.DragEventHandler(this.picItem_DragDrop);
             this.picItem6.DragEnter += new System.Windows.Forms.DragEventHandler(this.picItem_DragEnter);
             // 
-            // formStatSheet
+            // dropChampion
+            // 
+            this.dropChampion.AllowDrop = true;
+            this.dropChampion.BackColor = System.Drawing.Color.Transparent;
+            this.dropChampion.DataType = RiotPls.API.Serialization.Interfaces.DataType.Champion;
+            this.dropChampion.Location = new System.Drawing.Point(29, 29);
+            this.dropChampion.Margin = new System.Windows.Forms.Padding(20);
+            this.dropChampion.MinimumSize = new System.Drawing.Size(80, 110);
+            this.dropChampion.Name = "dropChampion";
+            this.dropChampion.NullText = "Champion";
+            this.dropChampion.Size = new System.Drawing.Size(124, 151);
+            this.dropChampion.TabIndex = 22;
+            this.dropChampion.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropChampion_DropOccurred);
+            // 
+            // formBuilder
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 500);
+            this.Controls.Add(this.dropChampion);
             this.Controls.Add(this.lblItem6);
             this.Controls.Add(this.picItem6);
             this.Controls.Add(this.lblItem5);
@@ -264,18 +252,11 @@ namespace RiotPls.Forms
             this.Controls.Add(this.picItem2);
             this.Controls.Add(this.lblItem1);
             this.Controls.Add(this.picItem1);
-            this.Controls.Add(this.lblChampion);
-            this.Controls.Add(this.picChampion);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "formStatSheet";
+            this.Name = "formBuilder";
             this.Text = "formStatSheet";
             this.VisibleChanged += new System.EventHandler(this.formStatSheet_VisibleChanged);
-            this.Controls.SetChildIndex(this.btnSettings, 0);
-            this.Controls.SetChildIndex(this.picLoading, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
-            this.Controls.SetChildIndex(this.picChampion, 0);
-            this.Controls.SetChildIndex(this.lblChampion, 0);
             this.Controls.SetChildIndex(this.picItem1, 0);
             this.Controls.SetChildIndex(this.lblItem1, 0);
             this.Controls.SetChildIndex(this.picItem2, 0);
@@ -288,8 +269,11 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.lblItem5, 0);
             this.Controls.SetChildIndex(this.picItem6, 0);
             this.Controls.SetChildIndex(this.lblItem6, 0);
+            this.Controls.SetChildIndex(this.dropChampion, 0);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
+            this.Controls.SetChildIndex(this.picLoading, 0);
+            this.Controls.SetChildIndex(this.btnClose, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picChampion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picItem3)).EndInit();
@@ -305,7 +289,6 @@ namespace RiotPls.Forms
 
             this.itemLabels = new Label[] { this.lblItem1, this.lblItem2, this.lblItem3, this.lblItem4, this.lblItem5, this.lblItem6 };
             this.itemPictures = new PictureBox[] { this.picItem1, this.picItem2, this.picItem3, this.picItem4, this.picItem5, this.picItem6 };
-            this.picChampion.AllowDrop = true;
             foreach (PictureBox picbox in this.itemPictures)
                 picbox.AllowDrop = true;
             return;
@@ -317,11 +300,7 @@ namespace RiotPls.Forms
             this.build = Build.GetBuild(0);
             // update champion
             ChampionInfo champion = this.build.GetChampion();
-            if (champion != null)
-            {
-                this.picChampion.BackgroundImage = champion.Image;
-                this.lblChampion.Text = champion.Name;
-            }
+            this.dropChampion.Set(champion);
             // update items
             List<ItemInfo> new_items = this.build.GetItems();
             for (int i = 0; i < 6; i++)
@@ -381,5 +360,10 @@ namespace RiotPls.Forms
             base.Dispose(disposing);
         }
 
+        private void dropChampion_DropOccurred(API.Serialization.Interfaces.IRiotDroppable drop)
+        {
+            ChampionInfo champ = drop as ChampionInfo;
+            this.build.SetChampion(champ);
+        }
     }
 }

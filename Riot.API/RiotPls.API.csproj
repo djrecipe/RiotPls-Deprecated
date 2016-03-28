@@ -80,6 +80,7 @@
     <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />
     <Compile Include="Serialization\General\RiotSerializable.cs" />
+    <Compile Include="Serialization\Interfaces\IRiotDroppable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
     <Compile Include="Serialization\Items\ItemStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemInfoSet.cs" />

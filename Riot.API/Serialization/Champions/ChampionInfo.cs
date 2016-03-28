@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Interfaces;
@@ -9,9 +10,10 @@ using RiotPls.Tools;
 namespace RiotPls.API.Serialization.Champions
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class ChampionInfo
+    public class ChampionInfo : IRiotDroppable
     {
         public Bitmap AttackBitmap => this.RatingInfo.AttackBitmap;
+        public DataType Type => DataType.Item;
         public Bitmap DefenseBitmap => this.RatingInfo.DefenseBitmap;
         public Bitmap DifficultyBitmap => this.RatingInfo.DifficultyBitmap;
         public bool FreeToPlay => this.LiveInfo.FreeToPlay;
@@ -315,6 +317,5 @@ namespace RiotPls.API.Serialization.Champions
                 this._Title = value;
             }
         }
-
     }
 }
