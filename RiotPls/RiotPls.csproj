@@ -57,6 +57,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Controls\Grid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StatGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\formChampions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,7 +78,7 @@
     <Compile Include="Forms\formSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\formStatSheet.cs">
+    <Compile Include="Forms\formBuilder.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\formTemplate.cs">
@@ -87,12 +93,15 @@
     <Compile Include="Forms\formTooltip.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Grid.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SortableBindingList.cs" />
+    <EmbeddedResource Include="Controls\Grid.resx">
+      <DependentUpon>Grid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StatGrid.resx">
+      <DependentUpon>StatGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\formChampions.resx">
       <DependentUpon>formChampions.cs</DependentUpon>
     </EmbeddedResource>
@@ -108,8 +117,8 @@
     <EmbeddedResource Include="Forms\formSettings.resx">
       <DependentUpon>formSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\formStatSheet.resx">
-      <DependentUpon>formStatSheet.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\formBuilder.resx">
+      <DependentUpon>formBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formTemplate.resx">
       <DependentUpon>formTemplate.cs</DependentUpon>
@@ -122,9 +131,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formTooltip.resx">
       <DependentUpon>formTooltip.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Grid.resx">
-      <DependentUpon>Grid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

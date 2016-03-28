@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Items;
+using RiotPls.Controls;
 
 namespace RiotPls.Forms
 {
@@ -56,7 +57,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formItems));
-            this.gridMain = new RiotPls.Grid();
+            this.gridMain = new Grid();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();

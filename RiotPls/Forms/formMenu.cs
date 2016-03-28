@@ -13,7 +13,7 @@ namespace RiotPls.Forms
         private Button btnItems;
         private Button btnMaps;
         private Button btnBuilder;
-        private formStatSheet fStatSheet = null;
+        private formBuilder fStatSheet = null;
         private formChampions fChampions = new formChampions();
         private formItems fItems = new formItems();
         private formMaps fMaps = null;
@@ -192,7 +192,7 @@ namespace RiotPls.Forms
             else
             {
                 if(this.fStatSheet == null || this.fStatSheet.IsDisposed)
-                    this.fStatSheet = new formStatSheet();
+                    this.fStatSheet = new formBuilder();
                 this.fStatSheet.Show();
             }
             return;

@@ -7,7 +7,7 @@ using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.Forms
 {
-    public class formStatSheet : formTemplate
+    public class formBuilder : formTemplate
     {
         #region Controls
         private System.ComponentModel.IContainer components = null;
@@ -30,7 +30,7 @@ namespace RiotPls.Forms
         #endregion
         private Build build = null;
         private ItemInfo[] items = new ItemInfo[6];
-        public formStatSheet()
+        public formBuilder()
         {
             this.InitializeComponent();
             this.InitializeDragDrop();
@@ -39,7 +39,7 @@ namespace RiotPls.Forms
         }
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formStatSheet));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formBuilder));
             this.picChampion = new System.Windows.Forms.PictureBox();
             this.lblChampion = new System.Windows.Forms.Label();
             this.lblItem1 = new System.Windows.Forms.Label();

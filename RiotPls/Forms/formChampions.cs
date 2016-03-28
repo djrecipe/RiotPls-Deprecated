@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
+using RiotPls.Controls;
 
 namespace RiotPls.Forms
 {
@@ -75,7 +76,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
-            this.gridMain = new RiotPls.Grid();
+            this.gridMain = new Grid();
             this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.itmShowStats = new System.Windows.Forms.ToolStripMenuItem();
             this.itmLockTooltip = new System.Windows.Forms.ToolStripMenuItem();
