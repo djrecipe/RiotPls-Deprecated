@@ -13,7 +13,7 @@ namespace RiotPls.Controls
     public class DropSlot : UserControl
     {
         #region Types
-        public delegate void delDropOccurred(IRiotDroppable drop);
+        public delegate void delDropOccurred(DropSlot slot, IRiotDroppable drop);
         #endregion
         #region Instance Members
         #region Controls
@@ -99,13 +99,17 @@ namespace RiotPls.Controls
         private void FireDropOccurredEvent(IRiotDroppable drop)
         {
             if (this.DropOccurred != null)
-                this.DropOccurred(drop);
+                this.DropOccurred(this, drop);
             return;
         }
-        public void Set(IRiotDroppable drop)
+        public void Set(IRiotDroppable new_drop)
         {
-            this.drop = drop;
-            this.UpdateData();
+            if (this.drop != new_drop)
+            {
+                this.drop = new_drop;
+                this.UpdateData();
+            }
+            return;
         }
         private void UpdateData()
         {

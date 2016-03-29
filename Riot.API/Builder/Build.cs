@@ -75,6 +75,11 @@ namespace RiotPls.API.Builder
             return -1;
         }
 
+        public ItemInfo GetItem(int index)
+        {
+            return index >= 0 && index < this.items.Length ? this.items[index] : null;
+        }
+
         public List<ItemInfo> GetItems()
         {
             return this.items.ToList();

@@ -57,7 +57,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formItems));
-            this.gridMain = new Grid();
+            this.gridMain = new RiotPls.Controls.Grid();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -82,14 +82,14 @@ namespace RiotPls.Forms
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1166, 9);
             // 
-            // picLoading
-            // 
-            this.picLoading.Location = new System.Drawing.Point(533, 349);
-            // 
             // btnSettings
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.Visible = false;
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(533, 349);
             // 
             // gridMain
             // 
@@ -193,7 +193,7 @@ namespace RiotPls.Forms
             this.itmLockTooltip,
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 70);
+            this.cmenMain.Size = new System.Drawing.Size(177, 92);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmShowStats
@@ -457,6 +457,5 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
-
     }
 }
