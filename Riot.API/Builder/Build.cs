@@ -40,6 +40,8 @@ namespace RiotPls.API.Builder
             get;
             private set;
         }
+
+        public StatsTable Table => this.stats.Table;
         private Build(int index)
         {
             this.Index = index;

@@ -223,6 +223,8 @@ namespace RiotPls.Forms
             // update items
             for (int i = 0; i < 6; i++)
                 this.itemDrops[i].Set(this.build.GetItem(i));
+            // update grid
+            this.gridMain.DataSource = this.build.Table;
             return;
         }
         private void BuildManager_BuildChanged(int index)

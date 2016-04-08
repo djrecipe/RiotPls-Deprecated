@@ -59,7 +59,6 @@ namespace RiotPls.Forms
         public formTooltipStats()
         {
             this.InitializeComponent();
-            this.gridMain.AutoGenerateColumns = false;
         }
         private void InitializeComponent()
         {

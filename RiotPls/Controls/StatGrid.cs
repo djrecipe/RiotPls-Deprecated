@@ -12,6 +12,7 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colMovementSpeed;
         private DataGridViewTextBoxColumn colAttackRange;
         private DataGridViewTextBoxColumn colAttackDamage;
+        private DataGridViewTextBoxColumn colAbilityPower;
         private DataGridViewTextBoxColumn colAttackSpeed;
         private DataGridViewTextBoxColumn colCriticalStrike;
         private DataGridViewTextBoxColumn colArmor;
@@ -21,6 +22,7 @@ namespace RiotPls.Controls
         public StatGrid()
         {
             this.InitializeComponent();
+            this.AutoGenerateColumns = false;
         }
 
         private void InitializeComponent()
@@ -37,9 +39,11 @@ namespace RiotPls.Controls
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             this.colMovementSpeed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAbilityPower = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackSpeed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCriticalStrike = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colArmor = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -51,7 +55,7 @@ namespace RiotPls.Controls
             // 
             // colMovementSpeed
             // 
-            this.colMovementSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colMovementSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colMovementSpeed.DataPropertyName = "MovementSpeed";
             dataGridViewCellStyle1.Format = "n0";
             this.colMovementSpeed.DefaultCellStyle = dataGridViewCellStyle1;
@@ -62,7 +66,7 @@ namespace RiotPls.Controls
             // 
             // colAttackRange
             // 
-            this.colAttackRange.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAttackRange.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAttackRange.DataPropertyName = "AttackRange";
             dataGridViewCellStyle2.Format = "n0";
             this.colAttackRange.DefaultCellStyle = dataGridViewCellStyle2;
@@ -73,7 +77,7 @@ namespace RiotPls.Controls
             // 
             // colAttackDamage
             // 
-            this.colAttackDamage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAttackDamage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAttackDamage.DataPropertyName = "AttackDamage";
             dataGridViewCellStyle3.Format = "n1";
             this.colAttackDamage.DefaultCellStyle = dataGridViewCellStyle3;
@@ -82,9 +86,20 @@ namespace RiotPls.Controls
             this.colAttackDamage.ReadOnly = true;
             this.colAttackDamage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // colAbilityPower
+            // 
+            this.colAbilityPower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colAbilityPower.DataPropertyName = "AbilityPower";
+            dataGridViewCellStyle13.Format = "n1";
+            this.colAbilityPower.DefaultCellStyle = dataGridViewCellStyle13;
+            this.colAbilityPower.HeaderText = "AP";
+            this.colAbilityPower.Name = "colAbilityPower";
+            this.colAbilityPower.ReadOnly = true;
+            this.colAbilityPower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // colAttackSpeed
             // 
-            this.colAttackSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAttackSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colAttackSpeed.DataPropertyName = "AttackSpeed";
             dataGridViewCellStyle4.Format = "n1";
             this.colAttackSpeed.DefaultCellStyle = dataGridViewCellStyle4;
@@ -95,7 +110,7 @@ namespace RiotPls.Controls
             // 
             // colCriticalStrike
             // 
-            this.colCriticalStrike.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCriticalStrike.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colCriticalStrike.DataPropertyName = "CriticalStrike";
             dataGridViewCellStyle5.Format = "n1";
             this.colCriticalStrike.DefaultCellStyle = dataGridViewCellStyle5;
@@ -106,7 +121,7 @@ namespace RiotPls.Controls
             // 
             // colArmor
             // 
-            this.colArmor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colArmor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colArmor.DataPropertyName = "Armor";
             dataGridViewCellStyle6.Format = "N1";
             dataGridViewCellStyle6.NullValue = null;
@@ -118,7 +133,7 @@ namespace RiotPls.Controls
             // 
             // colMagicResist
             // 
-            this.colMagicResist.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colMagicResist.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colMagicResist.DataPropertyName = "MagicResist";
             dataGridViewCellStyle7.Format = "n1";
             this.colMagicResist.DefaultCellStyle = dataGridViewCellStyle7;
@@ -129,7 +144,7 @@ namespace RiotPls.Controls
             // 
             // colHealth
             // 
-            this.colHealth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colHealth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colHealth.DataPropertyName = "Health";
             dataGridViewCellStyle8.Format = "n0";
             this.colHealth.DefaultCellStyle = dataGridViewCellStyle8;
@@ -140,7 +155,7 @@ namespace RiotPls.Controls
             // 
             // colResource
             // 
-            this.colResource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colResource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.colResource.DataPropertyName = "Resource";
             dataGridViewCellStyle9.Format = "n0";
             this.colResource.DefaultCellStyle = dataGridViewCellStyle9;
@@ -164,12 +179,14 @@ namespace RiotPls.Controls
             this.colMovementSpeed,
             this.colAttackRange,
             this.colAttackDamage,
+            this.colAbilityPower,
             this.colAttackSpeed,
             this.colCriticalStrike,
             this.colArmor,
             this.colMagicResist,
             this.colHealth,
             this.colResource});
+            this.DataMember = "Stats";
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
