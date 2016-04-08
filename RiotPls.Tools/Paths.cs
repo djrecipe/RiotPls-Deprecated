@@ -9,10 +9,13 @@ namespace RiotPls.Tools
 {
     public abstract class Paths
     {
-        public static string AppData => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RiotPls");
+        public static readonly string AppData = null;
+        public static readonly string Documents = null;
 
         static Paths()
         {
+            Paths.AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RiotPls");
+            Paths.Documents = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RiotPls");
             try
             {
                 string directory = Paths.AppData;

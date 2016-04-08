@@ -10,7 +10,7 @@ using RiotPls.API.Serialization.General;
 namespace RiotPls.Test.Serialization
 {
     /// <summary>
-    /// Summary description for TestImageInfo
+    /// Tests construction, serialization, and deserialization of image information
     /// </summary>
     [TestClass]
     public class TestImageInfo

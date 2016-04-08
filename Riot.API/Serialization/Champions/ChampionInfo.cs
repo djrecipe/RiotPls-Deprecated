@@ -98,7 +98,7 @@ namespace RiotPls.API.Serialization.Champions
             {
                 return this._Name;
             }
-            private set
+            protected set
             {
                 this._Name = value;
             }

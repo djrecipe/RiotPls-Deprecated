@@ -603,7 +603,7 @@ namespace RiotPls.Forms
             else
             {
                 this.itmShowStats.Checked = this.stat_windows.ContainsKey(this.last_champ_name);
-                this.itmSelectedForBuilder.Checked = this.build.GetChampion()?.Name == this.last_champ_name;
+                this.itmSelectedForBuilder.Checked = this.build.Champion?.Name == this.last_champ_name;
             }
             return;
         }
