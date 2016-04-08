@@ -21,6 +21,7 @@ namespace RiotPls.Forms
         private DropSlot dropItem3;
         private DropSlot dropItem4;
         private DropSlot dropItem5;
+        private StatGrid gridMain;
         private DropSlot dropItem6;
         public formBuilder()
         {
@@ -39,7 +40,9 @@ namespace RiotPls.Forms
             this.dropItem4 = new RiotPls.Controls.DropSlot();
             this.dropItem5 = new RiotPls.Controls.DropSlot();
             this.dropItem6 = new RiotPls.Controls.DropSlot();
+            this.gridMain = new RiotPls.Controls.StatGrid();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClose
@@ -154,12 +157,26 @@ namespace RiotPls.Forms
             this.dropItem6.TabIndex = 28;
             this.dropItem6.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
+            // gridMain
+            // 
+            this.gridMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridMain.Location = new System.Drawing.Point(29, 195);
+            this.gridMain.Margin = new System.Windows.Forms.Padding(20, 10, 20, 20);
+            this.gridMain.Name = "gridMain";
+            this.gridMain.ReadOnly = true;
+            this.gridMain.Size = new System.Drawing.Size(782, 276);
+            this.gridMain.TabIndex = 29;
+            // 
             // formBuilder
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(840, 500);
+            this.Controls.Add(this.gridMain);
             this.Controls.Add(this.dropItem6);
             this.Controls.Add(this.dropItem5);
             this.Controls.Add(this.dropItem4);
@@ -182,7 +199,9 @@ namespace RiotPls.Forms
             this.Controls.SetChildIndex(this.dropItem4, 0);
             this.Controls.SetChildIndex(this.dropItem5, 0);
             this.Controls.SetChildIndex(this.dropItem6, 0);
+            this.Controls.SetChildIndex(this.gridMain, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 
         }

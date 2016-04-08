@@ -8,3 +8,7 @@
 /RiotPls/obj
 /Riot.API/obj
 /Compiled
+/.vs/RiotPls/v14
+/RiotPls.Tools/bin/Release
+/RiotPls.Tools/obj/Release
+/RiotPls.sln.DotSettings.user
