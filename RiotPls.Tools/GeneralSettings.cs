@@ -44,7 +44,8 @@ namespace RiotPls.Tools
             if (row != null && row.Width != 0 && row.Height != 0)
             {
                 form.Location = new Point(row.Left, row.Top);
-                form.Size = new Size(row.Width, row.Height);
+                if(form.FormBorderStyle == FormBorderStyle.Sizable || form.FormBorderStyle == FormBorderStyle.SizableToolWindow)
+                    form.Size = new Size(row.Width, row.Height);
             }
             return;
         }

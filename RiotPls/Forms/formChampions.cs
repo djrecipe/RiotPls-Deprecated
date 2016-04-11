@@ -22,14 +22,10 @@ namespace RiotPls.Forms
         #region Controls
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
-        private formTooltip fTooltip = null;
         private TextBox txtSearch;
-        private Label lblSearch;
         private ComboBox comboFilter;
         private ContextMenuStrip cmenMain;
-        private ToolStripMenuItem itmShowStats;
         private ToolStripMenuItem itmSelectedForBuilder;
-        private ToolStripMenuItem itmLockTooltip;
         private DataGridViewImageColumn colR;
         private DataGridViewImageColumn colE;
         private DataGridViewImageColumn colW;
@@ -48,8 +44,9 @@ namespace RiotPls.Forms
         private string last_champ_name = null;
         private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
         private BindingList<ChampionInfo> source = null;
-        private Point last_location = Point.Empty;
-        private Dictionary<string, formTooltipStats> stat_windows = new Dictionary<string, formTooltipStats>();
+        private Label lblInfo;
+        private Label lblInfoTitle;
+        private Label lblSearchTitle;
         private Build build = null;
         #endregion     
         #region Instance Methods
@@ -76,14 +73,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
-            this.gridMain = new Grid();
-            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.itmShowStats = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmLockTooltip = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.lblSearch = new System.Windows.Forms.Label();
-            this.comboFilter = new System.Windows.Forms.ComboBox();
+            this.gridMain = new RiotPls.Controls.Grid();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,6 +88,13 @@ namespace RiotPls.Forms
             this.colW = new System.Windows.Forms.DataGridViewImageColumn();
             this.colE = new System.Windows.Forms.DataGridViewImageColumn();
             this.colR = new System.Windows.Forms.DataGridViewImageColumn();
+            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.comboFilter = new System.Windows.Forms.ComboBox();
+            this.lblInfo = new System.Windows.Forms.Label();
+            this.lblInfoTitle = new System.Windows.Forms.Label();
+            this.lblSearchTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.cmenMain.SuspendLayout();
@@ -108,14 +105,14 @@ namespace RiotPls.Forms
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.Location = new System.Drawing.Point(1166, 9);
             // 
-            // picLoading
-            // 
-            this.picLoading.Location = new System.Drawing.Point(533, 349);
-            // 
             // btnSettings
             // 
             this.btnSettings.FlatAppearance.BorderSize = 0;
             this.btnSettings.Visible = false;
+            // 
+            // picLoading
+            // 
+            this.picLoading.Location = new System.Drawing.Point(533, 340);
             // 
             // gridMain
             // 
@@ -165,7 +162,7 @@ namespace RiotPls.Forms
             this.gridMain.EnableHeadersVisualStyles = false;
             this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.gridMain.Location = new System.Drawing.Point(34, 53);
-            this.gridMain.Margin = new System.Windows.Forms.Padding(23, 22, 23, 22);
+            this.gridMain.Margin = new System.Windows.Forms.Padding(23, 22, 23, 5);
             this.gridMain.MultiSelect = false;
             this.gridMain.Name = "gridMain";
             this.gridMain.ReadOnly = true;
@@ -187,85 +184,10 @@ namespace RiotPls.Forms
             this.gridMain.ShowCellErrors = false;
             this.gridMain.ShowEditingIcon = false;
             this.gridMain.ShowRowErrors = false;
-            this.gridMain.Size = new System.Drawing.Size(1127, 703);
+            this.gridMain.Size = new System.Drawing.Size(1127, 619);
             this.gridMain.TabIndex = 0;
             this.gridMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridMain_CellMouseDown);
             this.gridMain.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellMouseEnter);
-            // 
-            // cmenMain
-            // 
-            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itmShowStats,
-            this.itmLockTooltip,
-            this.itmSelectedForBuilder});
-            this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 70);
-            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
-            // 
-            // itmShowStats
-            // 
-            this.itmShowStats.CheckOnClick = true;
-            this.itmShowStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.itmShowStats.Name = "itmShowStats";
-            this.itmShowStats.Size = new System.Drawing.Size(176, 22);
-            this.itmShowStats.Text = "Show Stats";
-            this.itmShowStats.CheckedChanged += new System.EventHandler(this.itmShowStats_CheckedChanged);
-            // 
-            // itmLockTooltip
-            // 
-            this.itmLockTooltip.CheckOnClick = true;
-            this.itmLockTooltip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.itmLockTooltip.Name = "itmLockTooltip";
-            this.itmLockTooltip.Size = new System.Drawing.Size(176, 22);
-            this.itmLockTooltip.Text = "Lock Tooltip Data";
-            // 
-            // itmSelectedForBuilder
-            // 
-            this.itmSelectedForBuilder.CheckOnClick = true;
-            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
-            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
-            this.itmSelectedForBuilder.Text = "Selected for Builder";
-            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.txtSearch.Location = new System.Drawing.Point(84, 788);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(314, 20);
-            this.txtSearch.TabIndex = 3;
-            this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
-            // 
-            // lblSearch
-            // 
-            this.lblSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblSearch.BackColor = System.Drawing.Color.Transparent;
-            this.lblSearch.Location = new System.Drawing.Point(19, 788);
-            this.lblSearch.Margin = new System.Windows.Forms.Padding(10, 10, 5, 10);
-            this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(50, 20);
-            this.lblSearch.TabIndex = 4;
-            this.lblSearch.Text = "Filter:";
-            this.lblSearch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // comboFilter
-            // 
-            this.comboFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.comboFilter.FormattingEnabled = true;
-            this.comboFilter.Location = new System.Drawing.Point(421, 788);
-            this.comboFilter.Name = "comboFilter";
-            this.comboFilter.Size = new System.Drawing.Size(158, 22);
-            this.comboFilter.TabIndex = 5;
-            this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
             // 
             // colImage
             // 
@@ -449,16 +371,102 @@ namespace RiotPls.Forms
             this.colR.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colR.Width = 64;
             // 
+            // cmenMain
+            // 
+            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itmSelectedForBuilder});
+            this.cmenMain.Name = "cmenMain";
+            this.cmenMain.Size = new System.Drawing.Size(177, 48);
+            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
+            // 
+            // itmSelectedForBuilder
+            // 
+            this.itmSelectedForBuilder.CheckOnClick = true;
+            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
+            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
+            this.itmSelectedForBuilder.Text = "Selected for Builder";
+            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.txtSearch.Location = new System.Drawing.Point(32, 733);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(366, 20);
+            this.txtSearch.TabIndex = 3;
+            this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
+            // 
+            // comboFilter
+            // 
+            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.comboFilter.FormattingEnabled = true;
+            this.comboFilter.Location = new System.Drawing.Point(411, 732);
+            this.comboFilter.Name = "comboFilter";
+            this.comboFilter.Size = new System.Drawing.Size(158, 22);
+            this.comboFilter.TabIndex = 5;
+            this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.lblInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblInfo.Location = new System.Drawing.Point(602, 713);
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Padding = new System.Windows.Forms.Padding(10);
+            this.lblInfo.Size = new System.Drawing.Size(564, 67);
+            this.lblInfo.TabIndex = 11;
+            this.lblInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblInfoTitle
+            // 
+            this.lblInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(110)))), ((int)(((byte)(40)))));
+            this.lblInfoTitle.Location = new System.Drawing.Point(602, 682);
+            this.lblInfoTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
+            this.lblInfoTitle.Name = "lblInfoTitle";
+            this.lblInfoTitle.Size = new System.Drawing.Size(564, 21);
+            this.lblInfoTitle.TabIndex = 12;
+            this.lblInfoTitle.Text = "Information";
+            this.lblInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblSearchTitle
+            // 
+            this.lblSearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(170)))), ((int)(((byte)(240)))));
+            this.lblSearchTitle.Location = new System.Drawing.Point(29, 682);
+            this.lblSearchTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
+            this.lblSearchTitle.Name = "lblSearchTitle";
+            this.lblSearchTitle.Size = new System.Drawing.Size(564, 21);
+            this.lblSearchTitle.TabIndex = 13;
+            this.lblSearchTitle.Text = "Search";
+            this.lblSearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // formChampions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ChildWindow = true;
-            this.ClientSize = new System.Drawing.Size(1195, 827);
+            this.ClientSize = new System.Drawing.Size(1195, 809);
             this.ControlBox = false;
+            this.Controls.Add(this.lblSearchTitle);
+            this.Controls.Add(this.lblInfoTitle);
+            this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.comboFilter);
-            this.Controls.Add(this.lblSearch);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.gridMain);
             this.DoubleBuffered = true;
@@ -466,21 +474,21 @@ namespace RiotPls.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "formChampions";
-            this.ShowIcon = false;
             this.ShowLoading = true;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "RiotPls-Champions";
             this.Activated += new System.EventHandler(this.formChampions_Activated);
-            this.LocationChanged += new System.EventHandler(this.formChampions_LocationChanged);
             this.VisibleChanged += new System.EventHandler(this.formChampions_VisibleChanged);
-            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.txtSearch, 0);
-            this.Controls.SetChildIndex(this.lblSearch, 0);
             this.Controls.SetChildIndex(this.comboFilter, 0);
+            this.Controls.SetChildIndex(this.lblInfo, 0);
+            this.Controls.SetChildIndex(this.btnSettings, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
+            this.Controls.SetChildIndex(this.lblInfoTitle, 0);
+            this.Controls.SetChildIndex(this.lblSearchTitle, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.cmenMain.ResumeLayout(false);
@@ -490,7 +498,7 @@ namespace RiotPls.Forms
         }
         private void ShowTooltip(int row_index, int column_index)
         {
-            if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount || (this.fTooltip != null && this.fTooltip.Visible && this.itmLockTooltip.Checked))
+            if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount)
                 return;
             string champion_name = this.gridMain.Rows[row_index].Cells["colName"].Value.ToString();
             this.last_champ_name = Engine.CleanseChampionName(this.champions, champion_name);
@@ -555,8 +563,9 @@ namespace RiotPls.Forms
                     subtitle_out = "Lore Summary";
                     break;
             }
-            if(this.fTooltip != null)
-                this.fTooltip.ShowTooltip(champion_info.Name, subtitle_out, value_out, this);
+            this.lblInfoTitle.Text = subtitle_out;
+            this.lblInfo.Text = value_out;
+            return;
         }
         private void UpdateFilter()
         {
@@ -602,7 +611,6 @@ namespace RiotPls.Forms
                 e.Cancel = true;
             else
             {
-                this.itmShowStats.Checked = this.stat_windows.ContainsKey(this.last_champ_name);
                 this.itmSelectedForBuilder.Checked = this.build.Champion?.Name == this.last_champ_name;
             }
             return;
@@ -631,48 +639,15 @@ namespace RiotPls.Forms
             this.gridMain.Focus();
             return;
         }
-        private void formChampions_LocationChanged(object sender, EventArgs e)
-        {
-            if (this.last_location != Point.Empty)
-            {
-                if(this.fTooltip != null)
-                    this.fTooltip.Location = new Point(this.fTooltip.Left + (this.Left - this.last_location.X), this.fTooltip.Top + (this.Top - this.last_location.Y));
-                foreach (formTooltipStats form in this.stat_windows.Values)
-                    form.Location = new Point(form.Left + (this.Left - this.last_location.X), form.Top + (this.Top - this.last_location.Y)); 
-            }
-            this.last_location = this.Location;
-            return;
-        }
         private void formChampions_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
             {
                 this.LoadWindowSettings();
                 this.build = Build.GetBuild(0);
-                this.fTooltip = new formTooltip();
-                this.fTooltip.Location = new Point(this.Right + 10, this.Top);
                 this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
                     this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
             }
-            return;
-        }
-        private void fStats_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            formTooltipStats old_window = sender as formTooltipStats;
-            if (old_window != null && this.stat_windows.ContainsValue(old_window))
-                this.stat_windows.Remove(this.stat_windows.FirstOrDefault(item => item.Value == old_window).Key);
-            return;
-        }
-        private void fStats_GridScrolled(object sender, int e)
-        {
-            foreach (formTooltipStats form in this.stat_windows.Values.Where(f => f.ScrollIndex != e))
-                form.ScrollIndex = e;
-            return;
-        }
-        private void fStats_GridSelectionChanged(object sender, List<Point> e)
-        {
-            foreach (formTooltipStats form in this.stat_windows.Values.Where(f => f.Selections != e))
-                form.Selections = e;
             return;
         }
         private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -695,53 +670,6 @@ namespace RiotPls.Forms
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
         }
-        private void itmShowStats_CheckedChanged(object sender, EventArgs e)
-        {
-            if(this.last_champ_name == null)
-                return;
-            if (this.itmShowStats.Checked)
-            {
-                if (!this.stat_windows.ContainsKey(this.last_champ_name))
-                {
-                    formTooltipStats last_window = null;
-                    formTooltipStats fStats = new formTooltipStats();
-                    if(this.stat_windows.Count<1)
-                        fStats.Location = new Point(this.fTooltip.Left, this.fTooltip.Bottom + 10);
-                    else
-                    {
-                        last_window = this.stat_windows[this.stat_windows.Keys.ToArray()[this.stat_windows.Keys.Count - 1]];
-                        Point location = new Point(last_window.Left, last_window.Bottom + 10);
-                        bool on_screen = false;
-                        foreach (Screen screen in Screen.AllScreens)
-                        {
-                            if (screen.WorkingArea.Contains(new Rectangle(location, fStats.Size)))
-                            {
-                                on_screen = true;
-                                break;
-                            }
-                        }             
-                        if(!on_screen)
-                            location = new Point(this.Left + 50, this.Top + 50);
-                        fStats.Location = location; 
-                    }
-                    fStats.FormClosed += this.fStats_FormClosed;
-                    fStats.GridSelectionChanged += this.fStats_GridSelectionChanged;
-                    fStats.GridScrolled += this.fStats_GridScrolled;
-                    fStats.ShowTooltip(this.champions[this.last_champ_name].Name, "Stats", this.champions[this.last_champ_name], this);
-                    if (last_window != null)
-                    {
-                        fStats.Selections = last_window.Selections;
-                        fStats.ScrollIndex = last_window.ScrollIndex;
-                    }
-                    this.stat_windows.Add(this.last_champ_name, fStats);
-                }
-            }
-            else if(this.stat_windows.ContainsKey(this.last_champ_name))
-            {
-                this.stat_windows[this.last_champ_name].Close();
-            }
-            return;
-        }
         private void itmSelectedForBuilder_CheckedChanged(object sender, EventArgs e)
         {
             if (this.itmSelectedForBuilder.Checked)
@@ -754,7 +682,7 @@ namespace RiotPls.Forms
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (this.comboFilter.SelectedItem != null && this.comboFilter.SelectedItem.ToString() == "Free")
-                this.lblSearch.Focus();
+                this.lblInfoTitle.Focus();
         }
         private void txtSearch_MouseClick(object sender, MouseEventArgs e)
         {
@@ -800,33 +728,6 @@ namespace RiotPls.Forms
         #endregion
         #endregion
         #region Override Methods
-        protected override void btnClose_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (this.fTooltip != null && !this.fTooltip.IsDisposed)
-            {
-                if(this.fTooltip.Visible)
-                    this.fTooltip.Close();
-                this.fTooltip.Dispose();
-                this.fTooltip = null;
-            }
-            List<formTooltipStats> forms = this.stat_windows.Values.ToList();
-            // while (1)
-            // {
-            //    Emmy.doesLove(JD)
-            // }
-            foreach (formTooltipStats form in forms)
-            {
-                if (!form.IsDisposed)
-                {
-                    if (form.Visible)
-                        form.Close();
-                    form.Dispose();
-                }
-            }
-            this.stat_windows.Clear();
-            base.btnClose_MouseDown(sender, e);
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
