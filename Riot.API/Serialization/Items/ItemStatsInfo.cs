@@ -92,6 +92,7 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        public override double AttackSpeedBase { get; protected set; } = 0.0;
         [JsonProperty("rPercentAttackSpeedModPerLevel")]
         public override double AttackSpeedPerLevel
         {
@@ -102,6 +103,19 @@ namespace RiotPls.API.Serialization.Items
             internal set
             {
                 base.AttackSpeedPerLevel = value;
+                return;
+            }
+        }
+        [JsonProperty("PercentAttackSpeedMod")]
+        public override double AttackSpeedIncrease
+        {
+            get
+            {
+                return base.AttackSpeedIncrease;
+            }
+            internal set
+            {
+                base.AttackSpeedIncrease = value;
                 return;
             }
         }

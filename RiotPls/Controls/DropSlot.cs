@@ -16,7 +16,13 @@ namespace RiotPls.Controls
         public delegate void delDropOccurred(DropSlot slot, IRiotDroppable drop);
         #endregion
         #region Instance Members
-        #region Controls
+        #region Controls           
+        private System.ComponentModel.IContainer components;
+        private ContextMenuStrip cmenItem;
+        private ContextMenuStrip cmenChampion;
+        private ToolStripMenuItem mnuitmRemoveItem;
+        private ToolStripMenuItem mnuitmItemLevelObtained;
+        private ToolStripTextBox mnuitmLevelObtainedValue;
         private Label lblMain;
         private PictureBox picMain;
         #endregion
@@ -26,7 +32,16 @@ namespace RiotPls.Controls
         private IRiotDroppable drop = null;
         #endregion
         #region Instance Properties
-        public DataType DataType { get; set; } = DataType.Champion;
+        private DataType _DataType = DataType.Champion;
+        public DataType DataType
+        {
+            get { return this._DataType; }
+            set
+            {
+                this._DataType = value;
+                this.UpdateContextMenu();
+            }
+        }
         private string _NullText = "";
         public string NullText
         {
@@ -46,9 +61,16 @@ namespace RiotPls.Controls
         }
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.picMain = new System.Windows.Forms.PictureBox();
             this.lblMain = new System.Windows.Forms.Label();
+            this.cmenItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuitmRemoveItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitmItemLevelObtained = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitmLevelObtainedValue = new System.Windows.Forms.ToolStripTextBox();
+            this.cmenChampion = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
+            this.cmenItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // picMain
@@ -76,6 +98,42 @@ namespace RiotPls.Controls
             this.lblMain.TabIndex = 1;
             this.lblMain.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cmenItem
+            // 
+            this.cmenItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuitmRemoveItem,
+            this.mnuitmItemLevelObtained});
+            this.cmenItem.Name = "cmenItem";
+            this.cmenItem.Size = new System.Drawing.Size(154, 48);
+            // 
+            // mnuitmRemoveItem
+            // 
+            this.mnuitmRemoveItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.mnuitmRemoveItem.Name = "mnuitmRemoveItem";
+            this.mnuitmRemoveItem.Size = new System.Drawing.Size(153, 22);
+            this.mnuitmRemoveItem.Text = "Remove";
+            this.mnuitmRemoveItem.Click += new System.EventHandler(this.mnuitmRemoveItem_Click);
+            // 
+            // mnuitmItemLevelObtained
+            // 
+            this.mnuitmItemLevelObtained.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.mnuitmItemLevelObtained.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuitmLevelObtainedValue});
+            this.mnuitmItemLevelObtained.Name = "mnuitmItemLevelObtained";
+            this.mnuitmItemLevelObtained.Size = new System.Drawing.Size(153, 22);
+            this.mnuitmItemLevelObtained.Text = "Level Obtained";
+            this.mnuitmItemLevelObtained.TextChanged += new System.EventHandler(this.mnuitmItemLevelObtained_TextChanged);
+            // 
+            // mnuitmLevelObtainedValue
+            // 
+            this.mnuitmLevelObtainedValue.Name = "mnuitmLevelObtainedValue";
+            this.mnuitmLevelObtainedValue.Size = new System.Drawing.Size(100, 23);
+            // 
+            // cmenChampion
+            // 
+            this.cmenChampion.Name = "cmenChampion";
+            this.cmenChampion.Size = new System.Drawing.Size(153, 26);
+            // 
             // DropSlot
             // 
             this.AllowDrop = true;
@@ -86,6 +144,7 @@ namespace RiotPls.Controls
             this.Name = "DropSlot";
             this.Size = new System.Drawing.Size(80, 110);
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
+            this.cmenItem.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -111,6 +170,12 @@ namespace RiotPls.Controls
             }
             return;
         }
+
+        private void UpdateContextMenu()
+        {
+            this.ContextMenuStrip = this.DataType == DataType.Item ? this.cmenItem : this.cmenChampion;
+            return;
+        }
         private void UpdateData()
         {
             this.picMain.BackgroundImage = this.drop?.Image;
@@ -118,7 +183,16 @@ namespace RiotPls.Controls
             this.FireDropOccurredEvent(this.drop);
             return;
         }
-        #region Event Methods
+        #region Event Methods        
+        private void mnuitmItemLevelObtained_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void mnuitmRemoveItem_Click(object sender, EventArgs e)
+        {
+            if (this.DropOccurred != null)
+                this.DropOccurred(this, null);
+        }
         #endregion
         #region Override Methods
         protected override void OnDragDrop(DragEventArgs e)
@@ -158,5 +232,6 @@ namespace RiotPls.Controls
 
         #endregion
         #endregion
+
     }
 }

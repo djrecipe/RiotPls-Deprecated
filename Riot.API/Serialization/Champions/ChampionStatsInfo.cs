@@ -72,6 +72,7 @@ namespace RiotPls.API.Serialization.Champions
                 return;
             }
         }
+        public override double AttackSpeedBase { get; protected set; } = 0.625;
         [JsonProperty("attackspeedoffset")]
         public override double AttackSpeedOffset
         {

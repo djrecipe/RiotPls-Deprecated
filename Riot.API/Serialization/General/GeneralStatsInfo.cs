@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
@@ -17,7 +18,8 @@ namespace RiotPls.API.Serialization.General
             x.AttackDamage = x.AttackDamage + y.AttackDamage;
             x.AttackDamagePerLevel = x.AttackDamagePerLevel + y.AttackDamagePerLevel;
             x.AttackRange = x.AttackRange + y.AttackRange;
-            x.AttackSpeed = x.AttackSpeed + y.AttackSpeed;
+            x.AttackSpeedBase = x.AttackSpeedBase + y.AttackSpeedBase; 
+            x.AttackSpeedIncrease = x.AttackSpeedIncrease + y.AttackSpeedIncrease;
             x.AttackSpeedOffset = x.AttackSpeedOffset + y.AttackSpeedOffset;
             x.AttackSpeedPerLevel = x.AttackSpeedPerLevel + y.AttackSpeedPerLevel;
             x.CriticalStrike = x.CriticalStrike + y.CriticalStrike;
@@ -141,6 +143,18 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+
+        private double _AttackSpeedBase = 0.0;
+        public virtual double AttackSpeedBase
+        {
+            get { return this._AttackSpeedBase; }
+            protected set
+            {
+                this._AttackSpeedBase = value;
+                this.UpdateAttackSpeed();
+            }
+        }
+        public double AttackSpeedCap => 2.5;
         private double _AttackSpeedOffset = 0;
         public virtual double AttackSpeedOffset
         {
@@ -151,7 +165,21 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this._AttackSpeedOffset = value;
-                this.AttackSpeed = 0.625 / (1.0 + value);
+                this.UpdateAttackSpeed();
+                return;
+            }
+        }
+        private double _AttackSpeedIncrease = 0;
+        public virtual double AttackSpeedIncrease
+        {
+            get
+            {
+                return this._AttackSpeedIncrease;
+            }
+            internal set
+            {
+                this._AttackSpeedIncrease = value;
+                this.InitializeAttackSpeedRows();
                 return;
             }
         }
@@ -373,8 +401,13 @@ namespace RiotPls.API.Serialization.General
         }
         private void InitializeAttackSpeedRows()
         {
+            double increment = ((double) this.Stats[1]["AttackSpeed"]/100.0)*(double) this.Stats[0]["AttackSpeed"];
+            double increase = 1.0 + this.AttackSpeedIncrease;
             for (int i = 2; i <= 18; i++)
-                this.Stats[i]["AttackSpeed"] = (double)this.Stats[0]["AttackSpeed"] + (double)this.Stats[1]["AttackSpeed"] * (double)i;
+            {
+                double value = ((double) this.Stats[0]["AttackSpeed"] + increment * (double) i) * increase;
+                this.Stats[i]["AttackSpeed"] = Math.Min(value, this.AttackSpeedCap);
+            }
             return;
         }
         private void InitializeCriticalStrikeRows()
@@ -417,6 +450,12 @@ namespace RiotPls.API.Serialization.General
         {
             for (int i = 2; i <= 18; i++)
                 this.Stats[i]["ResourceRegen"] = (double)this.Stats[0]["ResourceRegen"] + (double)this.Stats[1]["ResourceRegen"] * (double)i;
+            return;
+        }
+
+        private void UpdateAttackSpeed()
+        {
+            this.AttackSpeed = this.AttackSpeedBase / (1.0 + this.AttackSpeedOffset);
             return;
         }
         #endregion

@@ -71,7 +71,8 @@ namespace RiotPls.API.Builder
         private void FireUpdate(int index)
         {
             this.stats = new GeneralStatsInfo();
-            this.stats += this.Champion.Stats;
+            if(this.Champion != null)
+                this.stats += this.Champion.Stats;
             foreach (ItemInfo item in this.Items.Where(i => i != null))
             {
                 this.stats += item.Stats;
