@@ -86,6 +86,17 @@ namespace RiotPls.API.Serialization.Champions
                 return;
             }
         }
+        public override double AttackSpeedMultiplier
+        {
+            get
+            {
+                return 1.0;
+            }
+            internal set
+            {
+                return;
+            }
+        }
         [JsonProperty("attackspeedperlevel")]
         public override double AttackSpeedPerLevel
         {

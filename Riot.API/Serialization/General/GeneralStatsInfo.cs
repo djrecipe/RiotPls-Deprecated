@@ -1,42 +1,24 @@
 ﻿using System;
 using System.Data;
 using System.Runtime.CompilerServices;
+using RiotPls.API.Serialization.Interfaces;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 
 namespace RiotPls.API.Serialization.General
 {
-    public class GeneralStatsInfo
+    /// <summary>
+    /// Generic stat collection for a single game entity
+    /// </summary>
+    public abstract class GeneralStatsInfo : IStatsInfo
     {
         #region Static Methods
-        public static GeneralStatsInfo operator +(GeneralStatsInfo x, GeneralStatsInfo y)
+        public static CombinedStatsInfo operator +(GeneralStatsInfo x, GeneralStatsInfo y)
         {
-            x.AbilityPower = x.AbilityPower + y.AbilityPower;
-            x.AbilityPowerPerLevel = x.AbilityPowerPerLevel + y.AbilityPowerPerLevel;
-            x.Armor = x.Armor + y.Armor;
-            x.ArmorPerLevel = x.ArmorPerLevel + y.ArmorPerLevel;
-            x.AttackDamage = x.AttackDamage + y.AttackDamage;
-            x.AttackDamagePerLevel = x.AttackDamagePerLevel + y.AttackDamagePerLevel;
-            x.AttackRange = x.AttackRange + y.AttackRange;
-            x.AttackSpeedBase = x.AttackSpeedBase + y.AttackSpeedBase; 
-            x.AttackSpeedIncrease = x.AttackSpeedIncrease + y.AttackSpeedIncrease;
-            x.AttackSpeedOffset = x.AttackSpeedOffset + y.AttackSpeedOffset;
-            x.AttackSpeedPerLevel = x.AttackSpeedPerLevel + y.AttackSpeedPerLevel;
-            x.CriticalStrike = x.CriticalStrike + y.CriticalStrike;
-            x.CriticalStrikePerLevel = x.CriticalStrikePerLevel + y.CriticalStrikePerLevel;
-            x.Health = x.Health + y.Health;
-            x.HealthPerLevel = x.HealthPerLevel + y.HealthPerLevel;
-            x.HealthRegen = x.HealthRegen + y.HealthRegen;
-            x.HealthRegenPerLevel = x.HealthRegenPerLevel + y.HealthRegenPerLevel;
-            x.MagicResist = x.MagicResist + y.MagicResist;
-            x.MagicResistPerLevel = x.MagicResistPerLevel + y.MagicResistPerLevel;
-            x.MovementSpeed = x.MovementSpeed + y.MovementSpeed;
-            x.Resource = x.Resource + y.Resource;
-            x.ResourcePerLevel = x.ResourcePerLevel + y.ResourcePerLevel;
-            x.ResourceRegen = x.ResourceRegen + y.ResourceRegen;
-            x.ResourceRegenPerLevel = x.ResourceRegenPerLevel + y.ResourceRegenPerLevel;
-
-            return x;
+            CombinedStatsInfo info = new CombinedStatsInfo();
+            info += x;
+            info += y;
+            return info;
         }
 
         #endregion
@@ -169,16 +151,16 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
-        private double _AttackSpeedIncrease = 0;
-        public virtual double AttackSpeedIncrease
+        private double _AttackSpeedMultiplier = 1.0;
+        public virtual double AttackSpeedMultiplier
         {
             get
             {
-                return this._AttackSpeedIncrease;
+                return this._AttackSpeedMultiplier;
             }
             internal set
             {
-                this._AttackSpeedIncrease = value;
+                this._AttackSpeedMultiplier = value;
                 this.InitializeAttackSpeedRows();
                 return;
             }
@@ -313,6 +295,7 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        public virtual int RequiredLevel { get; set; } = 1;
         public virtual double Resource
         {
             get
@@ -402,10 +385,9 @@ namespace RiotPls.API.Serialization.General
         private void InitializeAttackSpeedRows()
         {
             double increment = ((double) this.Stats[1]["AttackSpeed"]/100.0)*(double) this.Stats[0]["AttackSpeed"];
-            double increase = 1.0 + this.AttackSpeedIncrease;
             for (int i = 2; i <= 18; i++)
             {
-                double value = ((double) this.Stats[0]["AttackSpeed"] + increment * (double) i) * increase;
+                double value = ((double) this.Stats[0]["AttackSpeed"] + increment * (double) i) * this.AttackSpeedMultiplier;
                 this.Stats[i]["AttackSpeed"] = Math.Min(value, this.AttackSpeedCap);
             }
             return;
@@ -452,11 +434,27 @@ namespace RiotPls.API.Serialization.General
                 this.Stats[i]["ResourceRegen"] = (double)this.Stats[0]["ResourceRegen"] + (double)this.Stats[1]["ResourceRegen"] * (double)i;
             return;
         }
-
-        private void UpdateAttackSpeed()
+        protected void UpdateAttackSpeed()
         {
             this.AttackSpeed = this.AttackSpeedBase / (1.0 + this.AttackSpeedOffset);
             return;
+        }
+        public void UpdateStats()
+        {
+            this.UpdateAttackSpeed();
+            this.InitializeAbilityPowerRows();
+            this.InitializeArmorRows();
+            this.InitializeAttackDamageRows();
+            this.InitializeAttackRangeRows();
+            this.InitializeAttackSpeedRows();
+            this.InitializeCriticalStrikeRows();
+            this.InitializeHealthRows();
+            this.InitializeHealthRegenRows();
+            this.InitializeMagicResistRows();
+            this.InitializeMovementSpeedRows();
+            this.InitializeResourceRows();
+            this.InitializeResourceRegenRows();
+
         }
         #endregion
     }

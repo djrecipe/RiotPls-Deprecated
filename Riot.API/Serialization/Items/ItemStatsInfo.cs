@@ -107,15 +107,15 @@ namespace RiotPls.API.Serialization.Items
             }
         }
         [JsonProperty("PercentAttackSpeedMod")]
-        public override double AttackSpeedIncrease
+        public override double AttackSpeedMultiplier
         {
             get
             {
-                return base.AttackSpeedIncrease;
+                return base.AttackSpeedMultiplier;
             }
             internal set
             {
-                base.AttackSpeedIncrease = value;
+                base.AttackSpeedMultiplier = 1.0 + value;
                 return;
             }
         }

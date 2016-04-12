@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
-using RiotPls.Tools;
 
 namespace RiotPls.API.Builder
 {
@@ -42,7 +41,7 @@ namespace RiotPls.API.Builder
         }
         #endregion
         #region Instance Members
-        private GeneralStatsInfo stats = new GeneralStatsInfo();
+        private CombinedStatsInfo stats = new CombinedStatsInfo();
         #endregion
         #region Instance Properties  
         [JsonProperty("Champion")]
@@ -70,7 +69,7 @@ namespace RiotPls.API.Builder
 
         private void FireUpdate(int index)
         {
-            this.stats = new GeneralStatsInfo();
+            this.stats = new CombinedStatsInfo();
             if(this.Champion != null)
                 this.stats += this.Champion.Stats;
             foreach (ItemInfo item in this.Items.Where(i => i != null))

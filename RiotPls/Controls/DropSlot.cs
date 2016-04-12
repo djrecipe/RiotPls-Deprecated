@@ -33,6 +33,8 @@ namespace RiotPls.Controls
         #endregion
         #region Instance Properties
         private DataType _DataType = DataType.Champion;
+        private ToolStripMenuItem mnuitmRemoveChampion;
+
         public DataType DataType
         {
             get { return this._DataType; }
@@ -58,6 +60,7 @@ namespace RiotPls.Controls
         public DropSlot()
         {
             this.InitializeComponent();
+            this.UpdateContextMenu();
         }
         private void InitializeComponent()
         {
@@ -69,8 +72,10 @@ namespace RiotPls.Controls
             this.mnuitmItemLevelObtained = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuitmLevelObtainedValue = new System.Windows.Forms.ToolStripTextBox();
             this.cmenChampion = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuitmRemoveChampion = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.cmenItem.SuspendLayout();
+            this.cmenChampion.SuspendLayout();
             this.SuspendLayout();
             // 
             // picMain
@@ -112,7 +117,7 @@ namespace RiotPls.Controls
             this.mnuitmRemoveItem.Name = "mnuitmRemoveItem";
             this.mnuitmRemoveItem.Size = new System.Drawing.Size(153, 22);
             this.mnuitmRemoveItem.Text = "Remove";
-            this.mnuitmRemoveItem.Click += new System.EventHandler(this.mnuitmRemoveItem_Click);
+            this.mnuitmRemoveItem.Click += new System.EventHandler(this.mnuitmRemove_Click);
             // 
             // mnuitmItemLevelObtained
             // 
@@ -131,8 +136,17 @@ namespace RiotPls.Controls
             // 
             // cmenChampion
             // 
+            this.cmenChampion.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuitmRemoveChampion});
             this.cmenChampion.Name = "cmenChampion";
-            this.cmenChampion.Size = new System.Drawing.Size(153, 26);
+            this.cmenChampion.Size = new System.Drawing.Size(153, 48);
+            // 
+            // mnuitmRemoveChampion
+            // 
+            this.mnuitmRemoveChampion.Name = "mnuitmRemoveChampion";
+            this.mnuitmRemoveChampion.Size = new System.Drawing.Size(152, 22);
+            this.mnuitmRemoveChampion.Text = "Remove";
+            this.mnuitmRemoveChampion.Click += new System.EventHandler(this.mnuitmRemove_Click);
             // 
             // DropSlot
             // 
@@ -145,6 +159,7 @@ namespace RiotPls.Controls
             this.Size = new System.Drawing.Size(80, 110);
             ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.cmenItem.ResumeLayout(false);
+            this.cmenChampion.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -188,7 +203,7 @@ namespace RiotPls.Controls
         {
 
         }
-        private void mnuitmRemoveItem_Click(object sender, EventArgs e)
+        private void mnuitmRemove_Click(object sender, EventArgs e)
         {
             if (this.DropOccurred != null)
                 this.DropOccurred(this, null);
@@ -231,6 +246,7 @@ namespace RiotPls.Controls
         }
 
         #endregion
+
         #endregion
 
     }

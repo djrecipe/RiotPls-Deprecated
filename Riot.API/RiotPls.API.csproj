@@ -75,6 +75,7 @@
     <Compile Include="Serialization\Champions\SkinInfo.cs" />
     <Compile Include="Serialization\Champions\SpellInfo.cs" />
     <Compile Include="Serialization\Champions\ChampionStatsInfo.cs" />
+    <Compile Include="Serialization\General\CombinedStatsInfo.cs" />
     <Compile Include="Serialization\General\GeneralStatsInfo.cs" />
     <Compile Include="Serialization\General\RealmInfoSet.cs" />
     <Compile Include="Serialization\General\RealmInfo.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Serialization\General\RiotSerializable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotDroppable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
+    <Compile Include="Serialization\Interfaces\IStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemInfoSet.cs" />
     <Compile Include="Serialization\Maps\MapInfoSet.cs" />
