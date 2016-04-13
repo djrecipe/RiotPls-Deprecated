@@ -277,7 +277,7 @@ namespace RiotPls.Controls
         }
         private void ResizeColumns()
         {
-            int width = (this.Width - this.gridMain.RowHeadersWidth - 20) / this.gridMain.ColumnCount;
+            int width = (this.Width - this.gridMain.RowHeadersWidth - 55) / this.gridMain.ColumnCount;
             foreach (DataGridViewColumn column in this.gridMain.Columns)
                 column.Width = width;
             return;
