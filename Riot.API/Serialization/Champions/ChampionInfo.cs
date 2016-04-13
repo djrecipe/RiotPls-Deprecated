@@ -1,155 +1,95 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Interfaces;
-using RiotPls.Tools;
 
 namespace RiotPls.API.Serialization.Champions
 {
+    /// <summary>
+    /// Static champion information which thoroughly describes all stats and capabilities
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class ChampionInfo : IRiotDroppable
     {
-        public Bitmap AttackBitmap => this.RatingInfo.AttackBitmap;
-        public DataType Type => DataType.Item;
-        public Bitmap DefenseBitmap => this.RatingInfo.DefenseBitmap;
-        public Bitmap DifficultyBitmap => this.RatingInfo.DifficultyBitmap;
-        public bool FreeToPlay => this.LiveInfo.FreeToPlay;
-        private int _ID = -1;
+        /// <summary>
+        /// An image depicting the champion's emphasis on physical attacks
+        /// </summary>
+        public Bitmap AttackBitmap => this.RatingInfo?.AttackBitmap;
+        /// <summary>
+        /// An image depicting the champion's emphasis on defense
+        /// </summary>
+        public Bitmap DefenseBitmap => this.RatingInfo?.DefenseBitmap;
+        /// <summary>
+        /// An image depicting the champion's difficulty
+        /// </summary>
+        public Bitmap DifficultyBitmap => this.RatingInfo?.DifficultyBitmap;
+        /// <summary>
+        /// True if the champion is free-to-play for the week, False otherwise
+        /// </summary>
+        public bool FreeToPlay => this.LiveInfo?.FreeToPlay ?? false;
+        /// <summary>
+        /// Unique champion ID
+        /// </summary>
         [JsonProperty("id")]
-        public int ID
-        {
-            get
-            {
-                return this._ID;
-            }
-            private set
-            {
-                this._ID = value;
-            }
-        }
+        public int ID { get; private set; } = -1;
+        /// <summary>
+        /// Champion mugshot
+        /// </summary>
         public Bitmap Image => this.ImageData?.Image;
-        private ImageInfo _ImageData = null;
+        /// <summary>
+        /// Image data for champion's portrait
+        /// </summary>
         [JsonProperty("image", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public ImageInfo ImageData
-        {
-            get
-            {
-                return this._ImageData;
-            }
-            private set
-            {
-                this._ImageData = value;
-                return;
-            }
-        }
-        private LiveChampionInfo _LiveInfo = null;
-        public LiveChampionInfo LiveInfo
-        {
-            get
-            {
-                return this._LiveInfo;
-            }
-            set
-            {
-                this._LiveInfo = value;
-            }
-        }
-        private string _Lore = null;
+        private ImageInfo ImageData { get; set; } = null;
+        /// <summary>
+        /// Collection of non-static data, primarily in regards to champion availability
+        /// </summary>
+        public LiveChampionInfo LiveInfo { get; set; } = null;
+        /// <summary>
+        /// Full champion lore
+        /// </summary>
         [JsonProperty("lore")]
-        public string Lore
-        {
-            get
-            {
-                return this._Lore;
-            }
-            private set
-            {
-                this._Lore = value;
-            }
-        }
-        private string _LoreSummary = null;
+        public string Lore { get; private set; } = null;
+        /// <summary>
+        /// Excerpt of champion lore
+        /// </summary>
         [JsonProperty("blurb")]
-        public string LoreSummary
-        {
-            get
-            {
-                return this._LoreSummary;
-            }
-            private set
-            {
-                this._LoreSummary = value;
-            }
-        }
-        public Bitmap MagicBitmap
-        {
-            get
-            {
-                return this.RatingInfo.MagicBitmap;
-            }
-        }
-        private string _Name = null;
+        public string LoreSummary { get; private set; } = null;
+        /// <summary>
+        /// An image depicting the champion's emphasis on magic attacks
+        /// </summary>
+        public Bitmap MagicBitmap => this.RatingInfo?.MagicBitmap;
+        /// <summary>
+        /// Unique champion name
+        /// </summary>
         [JsonProperty("name")]
-        public string Name
-        {
-            get
-            {
-                return this._Name;
-            }
-            protected set
-            {
-                this._Name = value;
-            }
-        }
-        public string PassiveDescription
-        {
-            get
-            {
-                return this.PassiveInfo.Description;
-            }
-        }
-        private PassiveInfo _PassiveInfo = new PassiveInfo();
+        public string Name { get; protected set; } = null;
+        /// <summary>
+        /// Description of champion's passive ability
+        /// </summary>
+        public string PassiveDescription => this.PassiveInfo?.Description;
+        /// <summary>
+        /// Data for the champion's passive ability
+        /// </summary>
         [JsonProperty("passive", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public PassiveInfo PassiveInfo
-        {
-            get
-            {
-                return this._PassiveInfo;
-            }
-            set
-            {
-                this._PassiveInfo = value;
-            }
-        }
-        public Bitmap PassiveImage
-        {
-            get
-            {
-                return this.PassiveInfo.Image;
-            }
-        }
-        public string PassiveName
-        {
-            get
-            {
-                return this.PassiveInfo.Name;
-            }
-        }
-        private RatingInfo _RatingInfo = new RatingInfo();
+        private PassiveInfo PassiveInfo { get; set; } = new PassiveInfo();
+        /// <summary>
+        /// Icon for champion's passive ability
+        /// </summary>
+        public Bitmap PassiveImage => this.PassiveInfo?.Image;
+        /// <summary>
+        /// Name of champion's passive ability
+        /// </summary>
+        public string PassiveName => this.PassiveInfo?.Name;
+        /// <summary>
+        /// Data for champion's ratings (attack, difficulty, etc.)
+        /// </summary>
         [JsonProperty("info", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public RatingInfo RatingInfo
-        {
-            get
-            {
-                return this._RatingInfo;
-            }
-            private set
-            {
-                this._RatingInfo = value;
-            }
-        }
+        public RatingInfo RatingInfo { get; private set; } = new RatingInfo();
+        /// <summary>
+        /// List of champion's skin names, flattened to a single string
+        /// </summary>
         public string SkinList
         {
             get
@@ -160,162 +100,82 @@ namespace RiotPls.API.Serialization.Champions
                 return value;
             }
         }
-        private List<SkinInfo> _Skins = new List<SkinInfo>();
+        /// <summary>
+        /// List of champion's skin data
+        /// </summary>
         [JsonProperty("skins", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public List<SkinInfo> Skins
-        {
-            get
-            {
-                return this._Skins;
-            }
-            private set
-            {
-                this._Skins = value;
-            }
-        }
-        public string SpellDescriptionQ
-        {
-            get
-            {
-                return this.Spells.Count > 0 ? this.Spells[0].Description : null;
-            }
-        }
-        public string SpellDescriptionW
-        {
-            get
-            {
-                return this.Spells.Count > 1 ? this.Spells[1].Description : null;
-            }
-        }
-        public string SpellDescriptionE
-        {
-            get
-            {
-                return this.Spells.Count > 2 ? this.Spells[2].Description : null;
-            }
-        }
-        public string SpellDescriptionR
-        {
-            get
-            {
-                return this.Spells.Count > 3 ? this.Spells[3].Description : null;
-            }
-        }
-        public Bitmap SpellImageQ
-        {
-            get
-            {
-                return this.Spells.Count > 0 ? this.Spells[0].Image : null;
-            }
-        }
-        public Bitmap SpellImageW
-        {
-            get
-            {
-                return this.Spells.Count > 1 ? this.Spells[1].Image : null;
-            }
-        }
-        public Bitmap SpellImageE
-        {
-            get
-            {
-                return this.Spells.Count > 2 ? this.Spells[2].Image : null;
-            }
-        }
-        public Bitmap SpellImageR
-        {
-            get
-            {
-                return this.Spells.Count > 3 ? this.Spells[3].Image : null;
-            }
-        }
-        public string SpellNameQ
-        {
-            get
-            {
-                return this.Spells.Count > 0 ? this.Spells[0].Name : null;
-            }
-        }
-        public string SpellNameW
-        {
-            get
-            {
-                return this.Spells.Count > 1 ? this.Spells[1].Name : null;
-            }
-        }
-        public string SpellNameE
-        {
-            get
-            {
-                return this.Spells.Count > 2 ? this.Spells[2].Name : null;
-            }
-        }
-        public string SpellNameR
-        {
-            get
-            {
-                return this.Spells.Count > 3 ? this.Spells[3].Name : null;
-            }
-        }
-        private List<SpellInfo> _Spells = new List<SpellInfo>();
+        public List<SkinInfo> Skins { get; private set; } = new List<SkinInfo>();
+        /// <summary>
+        /// Description of champion's 'Q' ability
+        /// </summary>
+        public string SpellDescriptionQ => this.Spells.Count > 0 ? this.Spells[0].Description : null;
+        /// <summary>
+        /// Description of champion's 'W' ability
+        /// </summary>
+        public string SpellDescriptionW => this.Spells.Count > 1 ? this.Spells[1].Description : null;
+        /// <summary>
+        /// Description of champion's 'E' ability
+        /// </summary>
+        public string SpellDescriptionE => this.Spells.Count > 2 ? this.Spells[2].Description : null;
+        /// <summary>
+        /// Description of champion's 'R' ability
+        /// </summary>
+        public string SpellDescriptionR => this.Spells.Count > 3 ? this.Spells[3].Description : null;
+        /// <summary>
+        /// Icon for champion's 'Q' ability
+        /// </summary>
+        public Bitmap SpellImageQ => this.Spells.Count > 0 ? this.Spells[0].Image : null;
+        /// <summary>
+        /// Icon for champion's 'W' ability
+        /// </summary>
+        public Bitmap SpellImageW => this.Spells.Count > 1 ? this.Spells[1].Image : null;
+        /// <summary>
+        /// Icon for champion's 'E' ability
+        /// </summary>
+        public Bitmap SpellImageE => this.Spells.Count > 2 ? this.Spells[2].Image : null;
+        /// <summary>
+        /// Icon for champion's 'R' ability
+        /// </summary>
+        public Bitmap SpellImageR => this.Spells.Count > 3 ? this.Spells[3].Image : null;
+        /// <summary>
+        /// Name of champion's 'Q' ability
+        /// </summary>
+        public string SpellNameQ => this.Spells.Count > 0 ? this.Spells[0].Name : null;
+        /// <summary>
+        /// Name of champion's 'W' ability
+        /// </summary>
+        public string SpellNameW => this.Spells.Count > 1 ? this.Spells[1].Name : null;
+        /// <summary>
+        /// Name of champion's 'E' ability
+        /// </summary>
+        public string SpellNameE => this.Spells.Count > 2 ? this.Spells[2].Name : null;
+        /// <summary>
+        /// Name of champion's 'R' ability
+        /// </summary>
+        public string SpellNameR => this.Spells.Count > 3 ? this.Spells[3].Name : null;
+        /// <summary>
+        /// List of champion's spell data
+        /// </summary>
         [JsonProperty("spells", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public List<SpellInfo> Spells
-        {
-            get
-            {
-                return this._Spells;
-            }
-            private set
-            {
-                this._Spells = value;
-            }
-        }
-        private ChampionStatsInfo _Stats = new ChampionStatsInfo();
+        public List<SpellInfo> Spells { get; private set; } = new List<SpellInfo>();
+        /// <summary>
+        /// Description of basic champion stats (armor, movement speed, etc.)
+        /// </summary>
         [JsonProperty("stats", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public ChampionStatsInfo Stats
-        {
-            get
-            {
-                return this._Stats;
-            }
-            private set
-            {
-                this._Stats = value;
-                return;
-            }
-        }
-        public string TagList
-        {
-            get
-            {
-                return String.Join(", ", this.Tags.ToArray());
-            }
-        }
-        private List<string> _Tags = new List<string>();
+        public ChampionStatsInfo Stats { get; private set; } = new ChampionStatsInfo();
+        /// <summary>
+        /// List of champion's tags, flattened to a single string
+        /// </summary>
+        public string TagList => string.Join(", ", this.Tags.ToArray());
+        /// <summary>
+        /// List of champion's tags
+        /// </summary>
         [JsonProperty("tags")]
-        public List<string> Tags
-        {
-            get
-            {
-                return this._Tags;
-            }
-            private set
-            {
-                this._Tags = value;
-            }
-        }
-        private string _Title = null;
+        public List<string> Tags { get; private set; } = new List<string>();
+        /// <summary>
+        /// Champion's lore-related title
+        /// </summary>
         [JsonProperty("title")]
-        public string Title
-        {
-            get
-            {
-                return this._Title;
-            }
-            private set
-            {
-                this._Title = value;
-            }
-        }
+        public string Title { get; private set; } = null;
     }
 }

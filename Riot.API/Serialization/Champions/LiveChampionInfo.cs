@@ -2,62 +2,41 @@
 
 namespace RiotPls.API.Serialization.Champions
 {
+    /// <summary>
+    /// Non-static champion information, primarily regarding champion availability
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class LiveChampionInfo
     {
+        /// <summary>
+        /// True if the champion is enabled for play, False otherwise
+        /// </summary>
         [JsonProperty("active")]
-        private bool _Active = false;
-        public bool Active
-        {
-            get
-            {
-                return this._Active;
-            }
-        }
+        public bool Active { get; protected set; } = false;
+        /// <summary>
+        /// True if the champion is enabled for play in a custom bot match, False otherwise
+        /// </summary>
         [JsonProperty("botEnabled")]
-        private bool _CustomBotEnabled = false;
-        public bool CustomBotEnabled
-        {
-            get
-            {
-                return this._CustomBotEnabled;
-            }
-        }
+        public bool CustomBotEnabled { get; protected set; } = false;
+        /// <summary>
+        /// True if the champion is free-to-play for the week, False otherwise
+        /// </summary>
         [JsonProperty("freeToPlay")]
-        private bool _FreeToPlay = false;
-        public bool FreeToPlay
-        {
-            get
-            {
-                return this._FreeToPlay;
-            }
-        }
+        public bool FreeToPlay { get; protected set; } = false;
+        /// <summary>
+        /// True if the champion is enabled for play in a public bot match, False otherwise
+        /// </summary>
         [JsonProperty("botMmEnabled")]
-        private bool _PublicBotEnabled = false;
-        public bool PublicBotEnabled
-        {
-            get
-            {
-                return this._PublicBotEnabled;
-            }
-        }
+        public bool PublicBotEnabled { get; protected set; } = false;
+        /// <summary>
+        /// Unique champion ID
+        /// </summary>
         [JsonProperty("id")]
-        private long _ID = 0;
-        public long ID
-        {
-            get
-            {
-                return this._ID;
-            }
-        }
+        public long ID { get; protected set; } = 0;
+        /// <summary>
+        /// True if the champion is enabled for play in a ranked match, False otherwise
+        /// </summary>
         [JsonProperty("rankedPlayEnabled")]
-        private bool _RankedPlayEnabled = false;
-        public bool RankedPlayEnabled
-        {
-            get
-            {
-                return this._RankedPlayEnabled;
-            }
-        }
+        public bool RankedPlayEnabled { get; protected set; } = false;
     }
 }

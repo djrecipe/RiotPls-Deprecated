@@ -63,7 +63,7 @@ namespace RiotPls.Forms
             // 
             this.dropChampion.AllowDrop = true;
             this.dropChampion.BackColor = System.Drawing.Color.Transparent;
-            this.dropChampion.DataType = RiotPls.API.Serialization.Interfaces.DataType.Champion;
+            this.dropChampion.Type = DropSlot.DataType.Champion;
             this.dropChampion.Location = new System.Drawing.Point(20, 20);
             this.dropChampion.Margin = new System.Windows.Forms.Padding(20, 20, 5, 20);
             this.dropChampion.MinimumSize = new System.Drawing.Size(80, 110);
@@ -77,7 +77,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem1.AllowDrop = true;
             this.dropItem1.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem1.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem1.Type = DropSlot.DataType.Item;
             this.dropItem1.Location = new System.Drawing.Point(154, 50);
             this.dropItem1.Margin = new System.Windows.Forms.Padding(5, 50, 0, 5);
             this.dropItem1.MinimumSize = new System.Drawing.Size(80, 110);
@@ -91,7 +91,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem2.AllowDrop = true;
             this.dropItem2.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem2.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem2.Type = DropSlot.DataType.Item;
             this.dropItem2.Location = new System.Drawing.Point(250, 50);
             this.dropItem2.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem2.MinimumSize = new System.Drawing.Size(80, 110);
@@ -105,7 +105,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem3.AllowDrop = true;
             this.dropItem3.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem3.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem3.Type = DropSlot.DataType.Item;
             this.dropItem3.Location = new System.Drawing.Point(346, 50);
             this.dropItem3.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem3.MinimumSize = new System.Drawing.Size(80, 110);
@@ -119,7 +119,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem4.AllowDrop = true;
             this.dropItem4.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem4.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem4.Type = DropSlot.DataType.Item;
             this.dropItem4.Location = new System.Drawing.Point(442, 50);
             this.dropItem4.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem4.MinimumSize = new System.Drawing.Size(80, 110);
@@ -133,7 +133,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem5.AllowDrop = true;
             this.dropItem5.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem5.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem5.Type = DropSlot.DataType.Item;
             this.dropItem5.Location = new System.Drawing.Point(538, 50);
             this.dropItem5.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem5.MinimumSize = new System.Drawing.Size(80, 110);
@@ -147,7 +147,7 @@ namespace RiotPls.Forms
             // 
             this.dropItem6.AllowDrop = true;
             this.dropItem6.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem6.DataType = RiotPls.API.Serialization.Interfaces.DataType.Item;
+            this.dropItem6.Type = DropSlot.DataType.Item;
             this.dropItem6.Location = new System.Drawing.Point(634, 50);
             this.dropItem6.Margin = new System.Windows.Forms.Padding(0, 50, 5, 5);
             this.dropItem6.MinimumSize = new System.Drawing.Size(80, 110);

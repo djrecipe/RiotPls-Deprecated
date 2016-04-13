@@ -14,6 +14,11 @@ namespace RiotPls.Controls
     {
         #region Types
         public delegate void delDropOccurred(DropSlot slot, IRiotDroppable drop);
+        public enum DataType : uint
+        {
+            Champion = 0,
+            Item = 1
+        };
         #endregion
         #region Instance Members
         #region Controls           
@@ -22,6 +27,7 @@ namespace RiotPls.Controls
         private ContextMenuStrip cmenChampion;
         private ToolStripMenuItem mnuitmRemoveItem;
         private ToolStripMenuItem mnuitmItemLevelObtained;
+        private ToolStripMenuItem mnuitmRemoveChampion;
         private ToolStripTextBox mnuitmLevelObtainedValue;
         private Label lblMain;
         private PictureBox picMain;
@@ -32,18 +38,6 @@ namespace RiotPls.Controls
         private IRiotDroppable drop = null;
         #endregion
         #region Instance Properties
-        private DataType _DataType = DataType.Champion;
-        private ToolStripMenuItem mnuitmRemoveChampion;
-
-        public DataType DataType
-        {
-            get { return this._DataType; }
-            set
-            {
-                this._DataType = value;
-                this.UpdateContextMenu();
-            }
-        }
         private string _NullText = "";
         public string NullText
         {
@@ -52,6 +46,16 @@ namespace RiotPls.Controls
             {
                 this._NullText = value ?? "";
                 this.UpdateData();
+            }
+        }
+        private DataType _Type = DataType.Champion;
+        public DataType Type
+        {
+            get { return this._Type; }
+            set
+            {
+                this._Type = value;
+                this.UpdateContextMenu();
             }
         }
 
@@ -188,7 +192,7 @@ namespace RiotPls.Controls
 
         private void UpdateContextMenu()
         {
-            this.ContextMenuStrip = this.DataType == DataType.Item ? this.cmenItem : this.cmenChampion;
+            this.ContextMenuStrip = this.Type == DataType.Item ? this.cmenItem : this.cmenChampion;
             return;
         }
         private void UpdateData()
@@ -213,7 +217,7 @@ namespace RiotPls.Controls
         protected override void OnDragDrop(DragEventArgs e)
         {                                                                                 
             base.OnDragDrop(e);
-            switch (this.DataType)
+            switch (this.Type)
             {
                 default:
                 case DataType.Champion:
@@ -230,7 +234,7 @@ namespace RiotPls.Controls
         protected override void OnDragEnter(DragEventArgs e)               
         {
             base.OnDragEnter(e);
-            switch (this.DataType)
+            switch (this.Type)
             {
                 default:
                 case DataType.Champion:

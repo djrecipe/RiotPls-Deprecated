@@ -57,7 +57,6 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
-        public DataType Type => DataType.Item;
         [JsonProperty("sanitizedDescription")]
         public string Description { get; private set; } = null;
         [JsonProperty("hideFromAll")]

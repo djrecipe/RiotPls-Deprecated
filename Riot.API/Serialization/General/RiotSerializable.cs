@@ -11,16 +11,18 @@ namespace RiotPls.API.Serialization.General
 {
     public abstract class RiotSerializable<T> : IRiotSerializable<T>
     {
+        #region Instance Properties
         public abstract string LocalFileName { get; }
         public abstract string RootToken { get; }
         public abstract RiotURL URL { get; }
+        #endregion
+        #region Instance Methods
         public T Get()
         {
             this.Validate();
             JsonPayload<T> payload = new JsonPayload<T>(this.URL, this.LocalFileName, this.RootToken);
             return payload.Get();
         }
-
         private void Validate()
         {
             if (string.IsNullOrWhiteSpace(this.LocalFileName))
@@ -29,5 +31,6 @@ namespace RiotPls.API.Serialization.General
                 throw new ArgumentException("Must provide a valid URL object", "URL");
             return;
         }
+        #endregion
     }
 }
