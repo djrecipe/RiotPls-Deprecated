@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.General;
@@ -13,47 +14,49 @@ namespace RiotPls.API.Builder
     public class Build
     {
         #region Types
-        public delegate void BuildChangedDelegate(int index);
+        public delegate void BuildChangedDelegate(string name);
         #endregion
         #region Static Members
-        public static BuildChangedDelegate BuildChanged;
         private static List<Build> builds = new List<Build>();
         #endregion
         #region Static Properties
+        public static int Count => Build.builds.Count;
         #endregion
         #region Static Methods
+        public static Build CreateBuild()
+        {
+            Build build = new Build(string.Format("Build #{0}", Build.builds.Count + 1));
+            Build.builds.Add(build);
+            return build;
+        }
+        public static Build GetBuild(string name)
+        {
+            return Build.builds.FirstOrDefault(b => b.Name == name);
+        }
+
         public static Build GetBuild(int index)
         {
-            Build build = Build.builds.FirstOrDefault(b => b.Index == index);
-            if (build == null)
-            {
-                build = new Build(index);
-                Build.builds.Add(build);
-            }
-            return build;
+            return index >= Build.Count ? null : Build.builds[index];
         }
         public static void RemoveBuild(int index)
         {
-            Build build = Build.builds.FirstOrDefault(b => b.Index == index);
-            if (build != null)
-                Build.builds.Remove(build);
+            if (index >= Build.builds.Count)
+                return;
+            Build.builds.RemoveAt(index);
             return;
         }
         #endregion
         #region Instance Members
         private CombinedStatsInfo stats = new CombinedStatsInfo();
+        public BuildChangedDelegate BuildChanged;
         #endregion
         #region Instance Properties  
         [JsonProperty("Champion")]
         public ChampionInfo Champion { get; private set; }    
-        [JsonProperty("Index")]
-        public int Index
-        {
-            get;
-            private set;
-        }
         [JsonProperty("Items")]
         private ItemInfo[] Items { get; set; } = new ItemInfo[6];
+        [JsonProperty("Name")]
+        public string Name { get; set; } = null; 
         public StatsTable Table => this.stats.Table;
         #endregion
         #region Instance Methods
@@ -62,12 +65,12 @@ namespace RiotPls.API.Builder
         {
             
         }
-        private Build(int index)
+        private Build(string name)
         {
-            this.Index = index;
+            this.Name = name;
+            return;
         }
-
-        private void FireUpdate(int index)
+        private void FireUpdate(string name)
         {
             this.stats = new CombinedStatsInfo();
             if(this.Champion != null)
@@ -76,8 +79,8 @@ namespace RiotPls.API.Builder
             {
                 this.stats += item.Stats;
             }
-            if (Build.BuildChanged != null)
-                Build.BuildChanged(index);
+            if (this.BuildChanged != null)
+                this.BuildChanged(name);
             return;
         }
         public int GetItemIndex(string name)
@@ -91,17 +94,14 @@ namespace RiotPls.API.Builder
             }
             return -1;
         }
-
         public ItemInfo GetItem(int index)
         {
             return index >= 0 && index < this.Items.Length ? this.Items[index] : null;
         }
-
         public List<ItemInfo> GetItems()
         {
             return this.Items.ToList();
         }
-
         public void Save(string path)
         {
             try
@@ -125,7 +125,7 @@ namespace RiotPls.API.Builder
             if (this.Champion != champion_in)
             {
                 this.Champion = champion_in;
-                this.FireUpdate(this.Index);
+                this.FireUpdate(this.Name);
             }
             return;
         }
@@ -135,7 +135,7 @@ namespace RiotPls.API.Builder
             if(index < 0 || index >=6)
                 throw new ArgumentOutOfRangeException("Item index must be 0 or greater and less than six", "index");
             this.Items[index] = item;
-            this.FireUpdate(this.Index);
+            this.FireUpdate(this.Name);
             return;
         }
         #endregion

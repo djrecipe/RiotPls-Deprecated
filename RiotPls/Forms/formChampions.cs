@@ -48,8 +48,7 @@ namespace RiotPls.Forms
         private DataGridViewImageColumn colW;
         private DataGridViewImageColumn colE;
         private DataGridViewImageColumn colR;
-        private Build build = null;
-        #endregion     
+        #endregion
         #region Instance Methods
         public formChampions()
         {
@@ -375,16 +374,15 @@ namespace RiotPls.Forms
             this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 26);
+            this.cmenMain.Size = new System.Drawing.Size(177, 48);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmSelectedForBuilder
             // 
-            this.itmSelectedForBuilder.CheckOnClick = true;
+            this.itmSelectedForBuilder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
             this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
             this.itmSelectedForBuilder.Text = "Selected for Builder";
-            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
             // 
             // txtSearch
             // 
@@ -637,7 +635,20 @@ namespace RiotPls.Forms
                 e.Cancel = true;
             else
             {
-                this.itmSelectedForBuilder.Checked = this.build.Champion?.Name == this.last_champ_name;
+                this.itmSelectedForBuilder.DropDownItems.Clear();
+                for (int i = 0; i < Build.Count; i++)
+                {
+                    Build build = Build.GetBuild(i);
+                    if (build == null)
+                        continue;
+                    ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
+                    {
+                        CheckOnClick = true,
+                        Checked = build.Champion?.Name == this.last_champ_name,
+                    };
+                    item.CheckedChanged += this.itmSelectedForBuild_CheckedChanged;
+                    this.itmSelectedForBuilder.DropDownItems.Add(item);
+                }
             }
             return;
         }
@@ -670,7 +681,6 @@ namespace RiotPls.Forms
             if (this.Visible)
             {
                 this.LoadWindowSettings();
-                this.build = Build.GetBuild(0);
                 this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
                     this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
             }
@@ -701,13 +711,19 @@ namespace RiotPls.Forms
             this.ResizeColumns();
             return;
         }
-        private void itmSelectedForBuilder_CheckedChanged(object sender, EventArgs e)
+        private void itmSelectedForBuild_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.itmSelectedForBuilder.Checked)
-            {
-                ChampionInfo champion = Engine.GetChampion(this.last_champ_name);
-                this.build.SetChampion(champion);
-            }
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            if (item == null)
+                return;
+            int index = this.itmSelectedForBuilder.DropDownItems.IndexOf(item);
+            if (index < 0)
+                return;
+            Build build = Build.GetBuild(index);
+            if (build == null)
+                return;
+            ChampionInfo champion = item.Checked ? Engine.GetChampion(this.last_champ_name) : null;
+            build.SetChampion(champion);
             return;
         }
         private void txtSearch_Enter(object sender, EventArgs e)

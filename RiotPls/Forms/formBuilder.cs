@@ -11,6 +11,7 @@ namespace RiotPls.Forms
 {
     public class formBuilder : formTemplate
     {
+        #region Instance Members
         #region Controls
         private System.ComponentModel.IContainer components = null;
         private StatGrid gridMain;
@@ -22,15 +23,18 @@ namespace RiotPls.Forms
         private DropSlot dropItem5;
         private DropSlot dropItem6;
         private DropSlot[] itemDrops = null;
-        #endregion
         private FlowLayoutPanel flowTop;
         private SplitContainer splitVertical;
+        #endregion
         private Build build = null;
-        public formBuilder()
+        #endregion
+        #region Instance Methods
+        public formBuilder(Build build)
         {
             this.InitializeComponent();
             this.InitializeDragDrop();
-            Build.BuildChanged += this.BuildManager_BuildChanged;
+            this.build = build;
+            this.build.BuildChanged += this.Build_BuildChanged;
             return;
         }
         private void InitializeComponent()
@@ -63,7 +67,6 @@ namespace RiotPls.Forms
             // 
             this.dropChampion.AllowDrop = true;
             this.dropChampion.BackColor = System.Drawing.Color.Transparent;
-            this.dropChampion.Type = DropSlot.DataType.Champion;
             this.dropChampion.Location = new System.Drawing.Point(20, 20);
             this.dropChampion.Margin = new System.Windows.Forms.Padding(20, 20, 5, 20);
             this.dropChampion.MinimumSize = new System.Drawing.Size(80, 110);
@@ -71,13 +74,13 @@ namespace RiotPls.Forms
             this.dropChampion.NullText = "Champion";
             this.dropChampion.Size = new System.Drawing.Size(124, 151);
             this.dropChampion.TabIndex = 22;
+            this.dropChampion.Type = RiotPls.Controls.DropSlot.DataType.Champion;
             this.dropChampion.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropChampion_DropOccurred);
             // 
             // dropItem1
             // 
             this.dropItem1.AllowDrop = true;
             this.dropItem1.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem1.Type = DropSlot.DataType.Item;
             this.dropItem1.Location = new System.Drawing.Point(154, 50);
             this.dropItem1.Margin = new System.Windows.Forms.Padding(5, 50, 0, 5);
             this.dropItem1.MinimumSize = new System.Drawing.Size(80, 110);
@@ -85,13 +88,13 @@ namespace RiotPls.Forms
             this.dropItem1.NullText = "Item 1";
             this.dropItem1.Size = new System.Drawing.Size(96, 121);
             this.dropItem1.TabIndex = 23;
+            this.dropItem1.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem1.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // dropItem2
             // 
             this.dropItem2.AllowDrop = true;
             this.dropItem2.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem2.Type = DropSlot.DataType.Item;
             this.dropItem2.Location = new System.Drawing.Point(250, 50);
             this.dropItem2.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem2.MinimumSize = new System.Drawing.Size(80, 110);
@@ -99,13 +102,13 @@ namespace RiotPls.Forms
             this.dropItem2.NullText = "Item 2";
             this.dropItem2.Size = new System.Drawing.Size(96, 121);
             this.dropItem2.TabIndex = 24;
+            this.dropItem2.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem2.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // dropItem3
             // 
             this.dropItem3.AllowDrop = true;
             this.dropItem3.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem3.Type = DropSlot.DataType.Item;
             this.dropItem3.Location = new System.Drawing.Point(346, 50);
             this.dropItem3.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem3.MinimumSize = new System.Drawing.Size(80, 110);
@@ -113,13 +116,13 @@ namespace RiotPls.Forms
             this.dropItem3.NullText = "Item 3";
             this.dropItem3.Size = new System.Drawing.Size(96, 121);
             this.dropItem3.TabIndex = 25;
+            this.dropItem3.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem3.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // dropItem4
             // 
             this.dropItem4.AllowDrop = true;
             this.dropItem4.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem4.Type = DropSlot.DataType.Item;
             this.dropItem4.Location = new System.Drawing.Point(442, 50);
             this.dropItem4.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem4.MinimumSize = new System.Drawing.Size(80, 110);
@@ -127,13 +130,13 @@ namespace RiotPls.Forms
             this.dropItem4.NullText = "Item 4";
             this.dropItem4.Size = new System.Drawing.Size(96, 121);
             this.dropItem4.TabIndex = 26;
+            this.dropItem4.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem4.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // dropItem5
             // 
             this.dropItem5.AllowDrop = true;
             this.dropItem5.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem5.Type = DropSlot.DataType.Item;
             this.dropItem5.Location = new System.Drawing.Point(538, 50);
             this.dropItem5.Margin = new System.Windows.Forms.Padding(0, 50, 0, 5);
             this.dropItem5.MinimumSize = new System.Drawing.Size(80, 110);
@@ -141,13 +144,13 @@ namespace RiotPls.Forms
             this.dropItem5.NullText = "Item 5";
             this.dropItem5.Size = new System.Drawing.Size(96, 121);
             this.dropItem5.TabIndex = 27;
+            this.dropItem5.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem5.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // dropItem6
             // 
             this.dropItem6.AllowDrop = true;
             this.dropItem6.BackColor = System.Drawing.Color.Transparent;
-            this.dropItem6.Type = DropSlot.DataType.Item;
             this.dropItem6.Location = new System.Drawing.Point(634, 50);
             this.dropItem6.Margin = new System.Windows.Forms.Padding(0, 50, 5, 5);
             this.dropItem6.MinimumSize = new System.Drawing.Size(80, 110);
@@ -155,6 +158,7 @@ namespace RiotPls.Forms
             this.dropItem6.NullText = "Item 6";
             this.dropItem6.Size = new System.Drawing.Size(96, 121);
             this.dropItem6.TabIndex = 28;
+            this.dropItem6.Type = RiotPls.Controls.DropSlot.DataType.Item;
             this.dropItem6.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
             // 
             // gridMain
@@ -216,7 +220,7 @@ namespace RiotPls.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(780, 400);
             this.Name = "formBuilder";
-            this.Text = "Builder";
+            this.Text = "Build #1";
             this.VisibleChanged += new System.EventHandler(this.formStatSheet_VisibleChanged);
             this.Controls.SetChildIndex(this.picLoading, 0);
             this.Controls.SetChildIndex(this.splitVertical, 0);
@@ -229,7 +233,6 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
-
         private void InitializeDragDrop()
         {
             this.itemDrops = new DropSlot[] { this.dropItem1, this.dropItem2, this.dropItem3,
@@ -240,8 +243,8 @@ namespace RiotPls.Forms
         {
             if (!this.Visible)
                 return;
+            this.Text = this.build.Name;
             Drawing.SuspendDrawing(this.gridMain);
-            this.build = Build.GetBuild(0);
             // update champion
             this.dropChampion.Set(this.build.Champion);
             // update items
@@ -252,7 +255,9 @@ namespace RiotPls.Forms
             Drawing.ResumeDrawing(this.gridMain);
             return;
         }
-        private void BuildManager_BuildChanged(int index)
+        #endregion
+        #region Event Methods
+        private void Build_BuildChanged(string name)
         {
             this.UpdateBuild();
             return;
@@ -261,14 +266,6 @@ namespace RiotPls.Forms
         {
             this.UpdateBuild();
             return;
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private void dropChampion_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
@@ -283,5 +280,16 @@ namespace RiotPls.Forms
             ItemInfo item = drop as ItemInfo;
             this.build.SetItem(index, item);
         }
+        #endregion
+        #region Override Methods     
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        #endregion
     }
 }

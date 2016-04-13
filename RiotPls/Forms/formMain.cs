@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RiotPls.API.Builder;
 
 namespace RiotPls.Forms
 {
@@ -18,21 +19,13 @@ namespace RiotPls.Forms
         private ToolStripButton btnItems;
         private ToolStripButton btnMaps;
         private ToolStripButton btnConfig;
-        private ToolStripButton btnBuilder;
-        private formBuilder fBuilder = new formBuilder();
+        private ToolStripDropDownButton btnBuilder;
+        private ToolStripMenuItem btnCreateBuild;
         private formChampions fChampions = new formChampions();
         private formItems fItems = new formItems();
         private formMaps fMaps = new formMaps();
         private formSettings fSettings = new formSettings();
-        private bool BuilderVisible
-        {
-            get { return this.fBuilder.Visible; }
-            set
-            {
-                this.ToggleWindow(this.fBuilder, value);
-                return;
-            }
-        }
+        private List<formBuilder> fBuilders = new List<formBuilder>();
         private bool ChampionsVisible
         {
             get { return this.fChampions.Visible; }
@@ -72,7 +65,6 @@ namespace RiotPls.Forms
         public formMain()
         {
             InitializeComponent();
-            this.fBuilder.MdiParent = this;
             this.fChampions.MdiParent = this;
             this.fItems.MdiParent = this;
             this.fMaps.MdiParent = this;
@@ -86,7 +78,8 @@ namespace RiotPls.Forms
             this.btnChampions = new System.Windows.Forms.ToolStripButton();
             this.btnItems = new System.Windows.Forms.ToolStripButton();
             this.btnMaps = new System.Windows.Forms.ToolStripButton();
-            this.btnBuilder = new System.Windows.Forms.ToolStripButton();
+            this.btnBuilder = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnCreateBuild = new System.Windows.Forms.ToolStripMenuItem();
             this.btnConfig = new System.Windows.Forms.ToolStripButton();
             this.toolsTop.SuspendLayout();
             this.SuspendLayout();
@@ -146,6 +139,8 @@ namespace RiotPls.Forms
             // btnBuilder
             // 
             this.btnBuilder.AutoSize = false;
+            this.btnBuilder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnCreateBuild});
             this.btnBuilder.Image = global::RiotPls.Properties.Resources.BuilderIcon;
             this.btnBuilder.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnBuilder.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -153,7 +148,13 @@ namespace RiotPls.Forms
             this.btnBuilder.Name = "btnBuilder";
             this.btnBuilder.Size = new System.Drawing.Size(90, 20);
             this.btnBuilder.Text = "Builder";
-            this.btnBuilder.Click += new System.EventHandler(this.btnBuilder_Click);
+            // 
+            // btnCreateBuild
+            // 
+            this.btnCreateBuild.Name = "btnCreateBuild";
+            this.btnCreateBuild.Size = new System.Drawing.Size(152, 22);
+            this.btnCreateBuild.Text = "New...";
+            this.btnCreateBuild.Click += new System.EventHandler(this.btnCreateBuild_Click);
             // 
             // btnConfig
             // 
@@ -188,7 +189,18 @@ namespace RiotPls.Forms
             this.PerformLayout();
 
         }
-
+        private void CreateBuilderWindow()
+        {
+            int count = Build.Count;
+            formBuilder fBuilder = new formBuilder(Build.CreateBuild())
+            {
+                MdiParent = this,
+                Name = string.Format("Build #{0}", count + 1)
+            };
+            this.fBuilders.Add(fBuilder);
+            this.ToggleWindow(fBuilder, true);
+            this.UpdateBuilderButton();
+        }
         private void ToggleWindow(Form form, bool value)
         {
             bool was_visible = form.Visible;
@@ -205,9 +217,17 @@ namespace RiotPls.Forms
             }
             return;
         }
-        private void btnBuilder_Click(object sender, EventArgs e)
+
+        private void UpdateBuilderButton()
         {
-            this.BuilderVisible = true;
+            this.btnBuilder.DropDownItems.Clear();
+            this.btnBuilder.DropDownItems.Add(this.btnCreateBuild);
+            for (int i = 0; i < Build.Count; i++)
+            {
+                Build build = Build.GetBuild(i);
+                ToolStripMenuItem button = new ToolStripMenuItem(build.Name, null, this.btnSelectBuild_Click);
+                this.btnBuilder.DropDownItems.Add(button);
+            }
             return;
         }
         private void btnConfig_Click(object sender, EventArgs e)
@@ -220,6 +240,11 @@ namespace RiotPls.Forms
             this.ChampionsVisible = true;
             return;
         }
+        private void btnCreateBuild_Click(object sender, EventArgs e)
+        {
+            this.CreateBuilderWindow();
+            return;
+        }
         private void btnItems_Click(object sender, EventArgs e)
         {
             this.ItemsVisible = true;
@@ -230,9 +255,14 @@ namespace RiotPls.Forms
             this.MapsVisible = true;
             return;
         }
+        private void btnSelectBuild_Click(object sender, EventArgs e)
+        {
+            return;
+        }
         private void formMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Tools.GeneralSettings.SaveWindowSettings(this.fBuilder);
+            foreach(formBuilder form in this.fBuilders)
+                Tools.GeneralSettings.SaveWindowSettings(form);
             Tools.GeneralSettings.SaveWindowSettings(this.fChampions);
             Tools.GeneralSettings.SaveWindowSettings(this.fItems);
             Tools.GeneralSettings.SaveWindowSettings(this.fMaps);
@@ -242,7 +272,6 @@ namespace RiotPls.Forms
         }
         private void formMain_Load(object sender, EventArgs e)
         {
-
             Tools.GeneralSettings.LoadWindowSettings(this);
         }
         protected override void Dispose(bool disposing)

@@ -22,28 +22,18 @@ namespace RiotPls.Forms
         private ToolStripMenuItem itmShowStats;
         private ToolStripMenuItem itmLockTooltip;
         private ToolStripMenuItem itmSelectedForBuilder;
-        private ToolStripMenuItem itmSetAsItem1;
-        private ToolStripMenuItem itmSetAsItem2;
-        private ToolStripMenuItem itmSetAsItem3;
-        private ToolStripMenuItem itmSetAsItem4;
-        private ToolStripMenuItem itmSetAsItem5;
-        private ToolStripMenuItem itmSetAsItem6;
-        private ToolStripMenuItem[] menuItems = null;
         #endregion
         private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
         private BindingList<ItemInfo> source = null;
         private string last_item_name = null;
-        private Build build = null;
         private DataGridViewImageColumn colImage;
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colDescription;
-        private bool listeningToCheckboxes = false;
         #endregion
         #region Instance Methods
         public formItems()
         {
             this.InitializeComponent();
-            this.menuItems = new ToolStripMenuItem[] { this.itmSetAsItem1, this.itmSetAsItem2, this.itmSetAsItem3, this.itmSetAsItem4, this.itmSetAsItem5, this.itmSetAsItem6};
             this.gridMain.AutoGenerateColumns = false;
             this.gridMain.DataError += this.gridMain_DataError;
             return;
@@ -65,12 +55,6 @@ namespace RiotPls.Forms
             this.itmShowStats = new System.Windows.Forms.ToolStripMenuItem();
             this.itmLockTooltip = new System.Windows.Forms.ToolStripMenuItem();
             this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.itmSetAsItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.chkdlistFilter = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
@@ -185,7 +169,7 @@ namespace RiotPls.Forms
             this.itmLockTooltip,
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 70);
+            this.cmenMain.Size = new System.Drawing.Size(170, 92);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmShowStats
@@ -193,7 +177,7 @@ namespace RiotPls.Forms
             this.itmShowStats.CheckOnClick = true;
             this.itmShowStats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmShowStats.Name = "itmShowStats";
-            this.itmShowStats.Size = new System.Drawing.Size(176, 22);
+            this.itmShowStats.Size = new System.Drawing.Size(169, 22);
             this.itmShowStats.Text = "Show Stats";
             // 
             // itmLockTooltip
@@ -201,71 +185,16 @@ namespace RiotPls.Forms
             this.itmLockTooltip.CheckOnClick = true;
             this.itmLockTooltip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmLockTooltip.Name = "itmLockTooltip";
-            this.itmLockTooltip.Size = new System.Drawing.Size(176, 22);
+            this.itmLockTooltip.Size = new System.Drawing.Size(169, 22);
             this.itmLockTooltip.Text = "Lock Tooltip Data";
             // 
             // itmSelectedForBuilder
             // 
-            this.itmSelectedForBuilder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itmSetAsItem1,
-            this.itmSetAsItem2,
-            this.itmSetAsItem3,
-            this.itmSetAsItem4,
-            this.itmSetAsItem5,
-            this.itmSetAsItem6});
+            this.itmSelectedForBuilder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
-            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
+            this.itmSelectedForBuilder.ShowShortcutKeys = false;
+            this.itmSelectedForBuilder.Size = new System.Drawing.Size(169, 22);
             this.itmSelectedForBuilder.Text = "Selected for Builder";
-            this.itmSelectedForBuilder.DropDownClosed += new System.EventHandler(this.itmSelectedForBuilder_DropDownClosed);
-            this.itmSelectedForBuilder.DropDownOpening += new System.EventHandler(this.itmSelectedForBuilder_DropDownOpening);
-            // 
-            // itmSetAsItem1
-            // 
-            this.itmSetAsItem1.CheckOnClick = true;
-            this.itmSetAsItem1.Name = "itmSetAsItem1";
-            this.itmSetAsItem1.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem1.Text = "Set as Item 1";
-            this.itmSetAsItem1.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
-            // 
-            // itmSetAsItem2
-            // 
-            this.itmSetAsItem2.CheckOnClick = true;
-            this.itmSetAsItem2.Name = "itmSetAsItem2";
-            this.itmSetAsItem2.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem2.Text = "Set as Item 2";
-            this.itmSetAsItem2.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
-            // 
-            // itmSetAsItem3
-            // 
-            this.itmSetAsItem3.CheckOnClick = true;
-            this.itmSetAsItem3.Name = "itmSetAsItem3";
-            this.itmSetAsItem3.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem3.Text = "Set as Item 3";
-            this.itmSetAsItem3.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
-            // 
-            // itmSetAsItem4
-            // 
-            this.itmSetAsItem4.CheckOnClick = true;
-            this.itmSetAsItem4.Name = "itmSetAsItem4";
-            this.itmSetAsItem4.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem4.Text = "Set as Item 4";
-            this.itmSetAsItem4.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
-            // 
-            // itmSetAsItem5
-            // 
-            this.itmSetAsItem5.CheckOnClick = true;
-            this.itmSetAsItem5.Name = "itmSetAsItem5";
-            this.itmSetAsItem5.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem5.Text = "Set as Item 5";
-            this.itmSetAsItem5.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
-            // 
-            // itmSetAsItem6
-            // 
-            this.itmSetAsItem6.CheckOnClick = true;
-            this.itmSetAsItem6.Name = "itmSetAsItem6";
-            this.itmSetAsItem6.Size = new System.Drawing.Size(140, 22);
-            this.itmSetAsItem6.Text = "Set as Item 6";
-            this.itmSetAsItem6.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
             // chkdlistFilter
             // 
@@ -304,7 +233,6 @@ namespace RiotPls.Forms
             this.Name = "formItems";
             this.ShowLoading = true;
             this.Text = "Items";
-            this.VisibleChanged += new System.EventHandler(this.formItems_VisibleChanged);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.chkdlistFilter, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
@@ -360,22 +288,41 @@ namespace RiotPls.Forms
                 e.Cancel = true;
             else
             {
-                int index = this.build.GetItemIndex(this.last_item_name);
-                this.itmSelectedForBuilder.Checked = index > -1;
-            }
-            return;
-        }
-        private void formItems_VisibleChanged(object sender, EventArgs e)
-        {
-            if (this.Visible)
-            {
-                this.build = Build.GetBuild(0);
+                bool check_root = false;
+                this.itmSelectedForBuilder.DropDownItems.Clear();
+                for (int i = 0; i < Build.Count; i++)
+                {
+                    Build build = Build.GetBuild(i);
+                    if (build == null)
+                        continue;
+                    int index = build.GetItemIndex(this.last_item_name);
+                    if (index > -1)
+                        check_root = true;
+                    ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
+                    {
+                        CheckOnClick = false,
+                        Checked = index > -1
+                    };
+                    for (int j = 0; j < 6; j++)
+                    {
+                        ToolStripMenuItem subitem = new ToolStripMenuItem(string.Format("Item #{0}", j + 1))
+                        {
+                            CheckOnClick = true,
+                            Checked = index == j
+                        };
+                        subitem.CheckedChanged += this.itmSetAsItem_CheckedChanged;
+                        item.DropDownItems.Add(subitem);
+                    }
+                    this.itmSelectedForBuilder.Checked = check_root;
+                    this.itmSelectedForBuilder.DropDownItems.Add(item);
+                }
+                return;
             }
             return;
         }
         private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || this.items == null)
+            if (e.Button != MouseButtons.Left || this.items == null || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
             ItemInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ItemInfo;
             if (info != null)
@@ -403,33 +350,25 @@ namespace RiotPls.Forms
         }
         private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)
         {
-            if (!this.listeningToCheckboxes)
-                return;
             ToolStripMenuItem menu_item = sender as ToolStripMenuItem;
-            int index = this.menuItems.ToList().IndexOf(menu_item);
-            ItemInfo item = Engine.GetItem(this.last_item_name);
-            if (menu_item.Checked)
-            {
-                this.build.SetItem(index, item);
-            }
-            else
-            {
-                this.build.SetItem(index, null);
-            }
-            return;
-        }
-        private void itmSelectedForBuilder_DropDownClosed(object sender, EventArgs e)
-        {
-        }
-        private void itmSelectedForBuilder_DropDownOpening(object sender, EventArgs e)
-        {
-            this.listeningToCheckboxes = false;
-            int index = this.build.GetItemIndex(this.last_item_name);
-            for (int i = 0; i < this.menuItems.Length; i++)
-            {
-                this.menuItems[i].Checked = i == index;
-            }
-            this.listeningToCheckboxes = true;
+            if (menu_item == null)
+                return;
+            ToolStripMenuItem parent_item =
+                this.itmSelectedForBuilder.DropDownItems.Cast<ToolStripMenuItem>()
+                    .FirstOrDefault(itm => itm.DropDownItems.Contains(menu_item));
+            if (parent_item == null)
+                return;
+            int item_index = parent_item.DropDownItems.IndexOf(menu_item);
+            if (item_index < 0)
+                return;
+            int build_index = this.itmSelectedForBuilder.DropDownItems.IndexOf(parent_item);
+            if (build_index < 0)
+                return;
+            Build build = Build.GetBuild(build_index);
+            if (build == null)
+                return;
+            ItemInfo item = menu_item.Checked ? Engine.GetItem(this.last_item_name) : null;
+            build.SetItem(item_index, item);
             return;
         }
         #endregion

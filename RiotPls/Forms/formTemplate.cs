@@ -26,6 +26,20 @@ namespace RiotPls.Forms
             get;
             set;
         } = false;
+        #region Override Properties
+        /// <summary>
+        /// Results in a disabled close ('x') button
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
+                return myCp;
+            }
+        }
+        #endregion
         #endregion
         #region Instance Methods
         protected formTemplate()
@@ -69,6 +83,7 @@ namespace RiotPls.Forms
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formTemplate";
+            this.Load += new System.EventHandler(this.formTemplate_Load);
             this.SizeChanged += new System.EventHandler(this.formTemplate_SizeChanged);
             this.VisibleChanged += new System.EventHandler(this.formTemplate_VisibleChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.formTemplate_Paint);
@@ -100,7 +115,12 @@ namespace RiotPls.Forms
         }
 
         #endregion
-        #region Event Methods
+        #region Event Methods   
+        private void formTemplate_Load(object sender, EventArgs e)
+        {
+            Tools.GeneralSettings.LoadWindowSettings(this);
+            return;
+        }
         protected void formTemplate_MouseMove(object sender, MouseEventArgs e)
         {
             if (Control.MouseButtons.HasFlag(MouseButtons.Left))
@@ -123,13 +143,11 @@ namespace RiotPls.Forms
         {
             this.Invalidate();
         }
+
         private void formTemplate_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
-            {
-                Tools.GeneralSettings.LoadWindowSettings(this);
                 this.UpdateData();
-            }
             else
                 Tools.GeneralSettings.SaveWindowSettings(this);
             return;
@@ -142,7 +160,8 @@ namespace RiotPls.Forms
         {
 
         }
-        #endregion  
+        #endregion
+        #region Override Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -151,15 +170,6 @@ namespace RiotPls.Forms
             }
             base.Dispose(disposing);
         }
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams myCp = base.CreateParams;
-                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
-                return myCp;
-            }
-        }
-
+        #endregion
     }
 }
