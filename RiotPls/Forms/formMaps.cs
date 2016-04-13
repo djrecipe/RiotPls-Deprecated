@@ -71,6 +71,7 @@ namespace RiotPls.Forms
             this.Controls.Add(this.imgboxMap);
             this.Controls.Add(this.comboMaps);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(470, 300);
             this.Name = "formMaps";
             this.Text = "Maps";
             this.Controls.SetChildIndex(this.picLoading, 0);

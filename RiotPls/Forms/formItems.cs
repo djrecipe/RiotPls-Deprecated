@@ -298,6 +298,7 @@ namespace RiotPls.Forms
             this.Controls.Add(this.gridMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(470, 300);
             this.Name = "formItems";
             this.ShowLoading = true;
             this.Text = "Items";

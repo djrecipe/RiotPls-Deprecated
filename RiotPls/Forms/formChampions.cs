@@ -75,6 +75,14 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
             this.gridMain = new RiotPls.Controls.Grid();
+            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.comboFilter = new System.Windows.Forms.ComboBox();
+            this.lblInfo = new System.Windows.Forms.Label();
+            this.lblInfoTitle = new System.Windows.Forms.Label();
+            this.lblSearchTitle = new System.Windows.Forms.Label();
+            this.splitBottom = new System.Windows.Forms.SplitContainer();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,14 +97,6 @@ namespace RiotPls.Forms
             this.colW = new System.Windows.Forms.DataGridViewImageColumn();
             this.colE = new System.Windows.Forms.DataGridViewImageColumn();
             this.colR = new System.Windows.Forms.DataGridViewImageColumn();
-            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.itmSelectedForBuilder = new System.Windows.Forms.ToolStripMenuItem();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.comboFilter = new System.Windows.Forms.ComboBox();
-            this.lblInfo = new System.Windows.Forms.Label();
-            this.lblInfoTitle = new System.Windows.Forms.Label();
-            this.lblSearchTitle = new System.Windows.Forms.Label();
-            this.splitBottom = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.cmenMain.SuspendLayout();
@@ -158,7 +158,7 @@ namespace RiotPls.Forms
             this.gridMain.EnableHeadersVisualStyles = false;
             this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.gridMain.Location = new System.Drawing.Point(29, 29);
-            this.gridMain.Margin = new System.Windows.Forms.Padding(20, 20, 20, 5);
+            this.gridMain.Margin = new System.Windows.Forms.Padding(20, 20, 20, 15);
             this.gridMain.MultiSelect = false;
             this.gridMain.Name = "gridMain";
             this.gridMain.ReadOnly = true;
@@ -180,10 +180,120 @@ namespace RiotPls.Forms
             this.gridMain.ShowCellErrors = false;
             this.gridMain.ShowEditingIcon = false;
             this.gridMain.ShowRowErrors = false;
-            this.gridMain.Size = new System.Drawing.Size(1137, 472);
+            this.gridMain.Size = new System.Drawing.Size(1137, 467);
             this.gridMain.TabIndex = 0;
             this.gridMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridMain_CellMouseDown);
             this.gridMain.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellMouseEnter);
+            this.gridMain.SizeChanged += new System.EventHandler(this.gridMain_SizeChanged);
+            // 
+            // cmenMain
+            // 
+            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.itmSelectedForBuilder});
+            this.cmenMain.Name = "cmenMain";
+            this.cmenMain.Size = new System.Drawing.Size(177, 26);
+            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
+            // 
+            // itmSelectedForBuilder
+            // 
+            this.itmSelectedForBuilder.CheckOnClick = true;
+            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
+            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
+            this.itmSelectedForBuilder.Text = "Selected for Builder";
+            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.txtSearch.Location = new System.Drawing.Point(26, 50);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(329, 20);
+            this.txtSearch.TabIndex = 3;
+            this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
+            // 
+            // comboFilter
+            // 
+            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.comboFilter.FormattingEnabled = true;
+            this.comboFilter.Location = new System.Drawing.Point(368, 49);
+            this.comboFilter.Name = "comboFilter";
+            this.comboFilter.Size = new System.Drawing.Size(158, 22);
+            this.comboFilter.TabIndex = 5;
+            this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
+            // 
+            // lblInfo
+            // 
+            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.lblInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lblInfo.Location = new System.Drawing.Point(20, 25);
+            this.lblInfo.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Padding = new System.Windows.Forms.Padding(10);
+            this.lblInfo.Size = new System.Drawing.Size(594, 73);
+            this.lblInfo.TabIndex = 11;
+            this.lblInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // lblInfoTitle
+            // 
+            this.lblInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(110)))), ((int)(((byte)(40)))));
+            this.lblInfoTitle.Location = new System.Drawing.Point(20, 5);
+            this.lblInfoTitle.Margin = new System.Windows.Forms.Padding(20, 0, 20, 5);
+            this.lblInfoTitle.Name = "lblInfoTitle";
+            this.lblInfoTitle.Size = new System.Drawing.Size(594, 15);
+            this.lblInfoTitle.TabIndex = 12;
+            this.lblInfoTitle.Text = "Information";
+            this.lblInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblSearchTitle
+            // 
+            this.lblSearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(170)))), ((int)(((byte)(240)))));
+            this.lblSearchTitle.Location = new System.Drawing.Point(20, 5);
+            this.lblSearchTitle.Margin = new System.Windows.Forms.Padding(20, 0, 20, 5);
+            this.lblSearchTitle.Name = "lblSearchTitle";
+            this.lblSearchTitle.Size = new System.Drawing.Size(512, 15);
+            this.lblSearchTitle.TabIndex = 13;
+            this.lblSearchTitle.Text = "Search";
+            this.lblSearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // splitBottom
+            // 
+            this.splitBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitBottom.Location = new System.Drawing.Point(2, 506);
+            this.splitBottom.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.splitBottom.Name = "splitBottom";
+            // 
+            // splitBottom.Panel1
+            // 
+            this.splitBottom.Panel1.Controls.Add(this.txtSearch);
+            this.splitBottom.Panel1.Controls.Add(this.lblSearchTitle);
+            this.splitBottom.Panel1.Controls.Add(this.comboFilter);
+            // 
+            // splitBottom.Panel2
+            // 
+            this.splitBottom.Panel2.Controls.Add(this.lblInfo);
+            this.splitBottom.Panel2.Controls.Add(this.lblInfoTitle);
+            this.splitBottom.Size = new System.Drawing.Size(1190, 118);
+            this.splitBottom.SplitterDistance = 552;
+            this.splitBottom.TabIndex = 14;
             // 
             // colImage
             // 
@@ -208,6 +318,7 @@ namespace RiotPls.Forms
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5);
             this.colName.DefaultCellStyle = dataGridViewCellStyle3;
             this.colName.HeaderText = "Name";
+            this.colName.MinimumWidth = 55;
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
             this.colName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -221,6 +332,7 @@ namespace RiotPls.Forms
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.colTitle.DefaultCellStyle = dataGridViewCellStyle4;
             this.colTitle.HeaderText = "Title";
+            this.colTitle.MinimumWidth = 30;
             this.colTitle.Name = "colTitle";
             this.colTitle.ReadOnly = true;
             this.colTitle.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -243,6 +355,7 @@ namespace RiotPls.Forms
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.colTags.DefaultCellStyle = dataGridViewCellStyle5;
             this.colTags.HeaderText = "Tags";
+            this.colTags.MinimumWidth = 30;
             this.colTags.Name = "colTags";
             this.colTags.ReadOnly = true;
             this.colTags.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -366,115 +479,6 @@ namespace RiotPls.Forms
             this.colR.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.colR.Width = 64;
             // 
-            // cmenMain
-            // 
-            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.itmSelectedForBuilder});
-            this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 26);
-            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
-            // 
-            // itmSelectedForBuilder
-            // 
-            this.itmSelectedForBuilder.CheckOnClick = true;
-            this.itmSelectedForBuilder.Name = "itmSelectedForBuilder";
-            this.itmSelectedForBuilder.Size = new System.Drawing.Size(176, 22);
-            this.itmSelectedForBuilder.Text = "Selected for Builder";
-            this.itmSelectedForBuilder.CheckedChanged += new System.EventHandler(this.itmSelectedForBuilder_CheckedChanged);
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.txtSearch.Location = new System.Drawing.Point(26, 54);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(329, 20);
-            this.txtSearch.TabIndex = 3;
-            this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
-            this.txtSearch.Enter += new System.EventHandler(this.txtSearch_Enter);
-            // 
-            // comboFilter
-            // 
-            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.comboFilter.FormattingEnabled = true;
-            this.comboFilter.Location = new System.Drawing.Point(368, 53);
-            this.comboFilter.Name = "comboFilter";
-            this.comboFilter.Size = new System.Drawing.Size(158, 22);
-            this.comboFilter.TabIndex = 5;
-            this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
-            // 
-            // lblInfo
-            // 
-            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.lblInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblInfo.Location = new System.Drawing.Point(20, 45);
-            this.lblInfo.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
-            this.lblInfo.Name = "lblInfo";
-            this.lblInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.lblInfo.Size = new System.Drawing.Size(594, 53);
-            this.lblInfo.TabIndex = 11;
-            this.lblInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // lblInfoTitle
-            // 
-            this.lblInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(110)))), ((int)(((byte)(40)))));
-            this.lblInfoTitle.Location = new System.Drawing.Point(20, 14);
-            this.lblInfoTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
-            this.lblInfoTitle.Name = "lblInfoTitle";
-            this.lblInfoTitle.Size = new System.Drawing.Size(594, 21);
-            this.lblInfoTitle.TabIndex = 12;
-            this.lblInfoTitle.Text = "Information";
-            this.lblInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblSearchTitle
-            // 
-            this.lblSearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(170)))), ((int)(((byte)(240)))));
-            this.lblSearchTitle.Location = new System.Drawing.Point(20, 14);
-            this.lblSearchTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
-            this.lblSearchTitle.Name = "lblSearchTitle";
-            this.lblSearchTitle.Size = new System.Drawing.Size(512, 21);
-            this.lblSearchTitle.TabIndex = 13;
-            this.lblSearchTitle.Text = "Search";
-            this.lblSearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // splitBottom
-            // 
-            this.splitBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitBottom.Location = new System.Drawing.Point(2, 506);
-            this.splitBottom.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
-            this.splitBottom.Name = "splitBottom";
-            // 
-            // splitBottom.Panel1
-            // 
-            this.splitBottom.Panel1.Controls.Add(this.txtSearch);
-            this.splitBottom.Panel1.Controls.Add(this.lblSearchTitle);
-            this.splitBottom.Panel1.Controls.Add(this.comboFilter);
-            // 
-            // splitBottom.Panel2
-            // 
-            this.splitBottom.Panel2.Controls.Add(this.lblInfo);
-            this.splitBottom.Panel2.Controls.Add(this.lblInfoTitle);
-            this.splitBottom.Size = new System.Drawing.Size(1190, 118);
-            this.splitBottom.SplitterDistance = 552;
-            this.splitBottom.TabIndex = 14;
-            // 
             // formChampions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -509,6 +513,12 @@ namespace RiotPls.Forms
             this.splitBottom.ResumeLayout(false);
             this.ResumeLayout(false);
 
+        }
+        private void ResizeColumns()
+        {
+            int width = (this.gridMain.Width - 770)/3;
+            this.colName.Width = this.colTitle.Width = this.colTags.Width = width;
+            return;
         }
         private void ShowTooltip(int row_index, int column_index)
         {
@@ -683,6 +693,11 @@ namespace RiotPls.Forms
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
+        }
+        private void gridMain_SizeChanged(object sender, EventArgs e)
+        {
+            this.ResizeColumns();
+            return;
         }
         private void itmSelectedForBuilder_CheckedChanged(object sender, EventArgs e)
         {

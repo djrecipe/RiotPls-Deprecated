@@ -258,7 +258,9 @@ namespace RiotPls.Forms
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupAPI);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "formSettings";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             this.Controls.SetChildIndex(this.picLoading, 0);
@@ -275,7 +277,7 @@ namespace RiotPls.Forms
         }
         private void btnCancel_Click(object sender, System.EventArgs e)
         {
-            this.Close();
+            this.Hide();
             return;
         }
         private void btnOK_Click(object sender, System.EventArgs e)
@@ -283,7 +285,7 @@ namespace RiotPls.Forms
             try
             {
                 API.Engine.Key.Save(this.txtAPIKey.Text);
-                this.Close();
+                this.Hide();
             }
             catch (Exception ex)
             {
