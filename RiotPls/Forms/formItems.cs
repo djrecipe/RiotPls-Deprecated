@@ -18,9 +18,6 @@ namespace RiotPls.Forms
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
         private System.Windows.Forms.CheckedListBox chkdlistFilter;
-        private DataGridViewTextBoxColumn colDescription;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewImageColumn colImage;
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem itmShowStats;
         private ToolStripMenuItem itmLockTooltip;
@@ -37,6 +34,9 @@ namespace RiotPls.Forms
         private BindingList<ItemInfo> source = null;
         private string last_item_name = null;
         private Build build = null;
+        private DataGridViewImageColumn colImage;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colDescription;
         private bool listeningToCheckboxes = false;
         #endregion
         #region Instance Methods
@@ -143,6 +143,7 @@ namespace RiotPls.Forms
             this.gridMain.TabIndex = 3;
             this.gridMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridMain_CellMouseDown);
             this.gridMain.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellMouseEnter);
+            this.gridMain.SizeChanged += new System.EventHandler(this.gridMain_SizeChanged);
             // 
             // colImage
             // 
@@ -167,7 +168,7 @@ namespace RiotPls.Forms
             // 
             // colDescription
             // 
-            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colDescription.DataPropertyName = "Description";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -175,6 +176,7 @@ namespace RiotPls.Forms
             this.colDescription.HeaderText = "Description";
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 889;
             // 
             // cmenMain
             // 
@@ -298,7 +300,7 @@ namespace RiotPls.Forms
             this.Controls.Add(this.gridMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(470, 300);
+            this.MinimumSize = new System.Drawing.Size(500, 300);
             this.Name = "formItems";
             this.ShowLoading = true;
             this.Text = "Items";
@@ -335,6 +337,12 @@ namespace RiotPls.Forms
             {
             }
             return new_binding;
+        }
+        private void ResizeColumns()
+        {
+            int width = this.gridMain.Width - 270;
+            this.colDescription.Width = width;
+            return;
         }
         #endregion
         #region Event Methods
@@ -386,6 +394,11 @@ namespace RiotPls.Forms
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
+            return;
+        }
+        private void gridMain_SizeChanged(object sender, EventArgs e)
+        {
+            this.ResizeColumns();
             return;
         }
         private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)
@@ -446,5 +459,6 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
+
     }
 }

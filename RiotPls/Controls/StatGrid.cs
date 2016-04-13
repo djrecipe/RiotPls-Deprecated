@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using RiotPls.API;
+using RiotPls.Tools;
 
 namespace RiotPls.Controls
 {
-    public class StatGrid : Grid
+    public class StatGrid : UserControl
     {
+        #region Instance Members
+        #region Controls
+        private System.ComponentModel.IContainer components = null;
+        private Grid gridMain;
         private DataGridViewTextBoxColumn colMovementSpeed;
         private DataGridViewTextBoxColumn colAttackRange;
         private DataGridViewTextBoxColumn colAttackDamage;
@@ -19,12 +21,22 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colMagicResist;
         private DataGridViewTextBoxColumn colHealth;
         private DataGridViewTextBoxColumn colResource;
-        public StatGrid()
+        #endregion
+        #endregion
+        #region Instance Properties
+        public StatsTable DataSource
         {
-            this.InitializeComponent();
-            this.AutoGenerateColumns = false;
+            get { return this.gridMain.DataSource as StatsTable; }
+            set { this.gridMain.DataSource = value; }
         }
 
+        #endregion
+        #region Instance Methods
+        public StatGrid()
+        {
+            InitializeComponent();
+            this.gridMain.AutoGenerateColumns = false;
+        }
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -50,142 +62,160 @@ namespace RiotPls.Controls
             this.colMagicResist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHealth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResource = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            this.gridMain = new RiotPls.Controls.Grid();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
             // 
             // colMovementSpeed
             // 
             this.colMovementSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colMovementSpeed.Width = 70;
             this.colMovementSpeed.DataPropertyName = "MovementSpeed";
             dataGridViewCellStyle1.Format = "n0";
             this.colMovementSpeed.DefaultCellStyle = dataGridViewCellStyle1;
             this.colMovementSpeed.HeaderText = "Spd";
+            this.colMovementSpeed.MinimumWidth = 35;
             this.colMovementSpeed.Name = "colMovementSpeed";
             this.colMovementSpeed.ReadOnly = true;
             this.colMovementSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colMovementSpeed.Width = 70;
             // 
             // colAttackRange
             // 
             this.colAttackRange.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colAttackRange.Width = 70;
             this.colAttackRange.DataPropertyName = "AttackRange";
             dataGridViewCellStyle2.Format = "n0";
             this.colAttackRange.DefaultCellStyle = dataGridViewCellStyle2;
             this.colAttackRange.HeaderText = "Rng";
+            this.colAttackRange.MinimumWidth = 35;
             this.colAttackRange.Name = "colAttackRange";
             this.colAttackRange.ReadOnly = true;
             this.colAttackRange.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAttackRange.Width = 70;
             // 
             // colAttackDamage
             // 
             this.colAttackDamage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colAttackDamage.Width = 70;
             this.colAttackDamage.DataPropertyName = "AttackDamage";
             dataGridViewCellStyle3.Format = "n1";
             this.colAttackDamage.DefaultCellStyle = dataGridViewCellStyle3;
             this.colAttackDamage.HeaderText = "AD";
+            this.colAttackDamage.MinimumWidth = 35;
             this.colAttackDamage.Name = "colAttackDamage";
             this.colAttackDamage.ReadOnly = true;
             this.colAttackDamage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAttackDamage.Width = 70;
             // 
             // colAbilityPower
             // 
             this.colAbilityPower.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colAbilityPower.Width = 70;
             this.colAbilityPower.DataPropertyName = "AbilityPower";
-            dataGridViewCellStyle13.Format = "n1";
-            this.colAbilityPower.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle4.Format = "n1";
+            this.colAbilityPower.DefaultCellStyle = dataGridViewCellStyle4;
             this.colAbilityPower.HeaderText = "AP";
+            this.colAbilityPower.MinimumWidth = 35;
             this.colAbilityPower.Name = "colAbilityPower";
             this.colAbilityPower.ReadOnly = true;
             this.colAbilityPower.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAbilityPower.Width = 70;
             // 
             // colAttackSpeed
             // 
             this.colAttackSpeed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colAttackSpeed.Width = 70;
             this.colAttackSpeed.DataPropertyName = "AttackSpeed";
-            dataGridViewCellStyle4.Format = "n1";
-            this.colAttackSpeed.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Format = "n1";
+            this.colAttackSpeed.DefaultCellStyle = dataGridViewCellStyle5;
             this.colAttackSpeed.HeaderText = "AS";
+            this.colAttackSpeed.MinimumWidth = 35;
             this.colAttackSpeed.Name = "colAttackSpeed";
             this.colAttackSpeed.ReadOnly = true;
             this.colAttackSpeed.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colAttackSpeed.Width = 70;
             // 
             // colCriticalStrike
             // 
             this.colCriticalStrike.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colCriticalStrike.Width = 70;
             this.colCriticalStrike.DataPropertyName = "CriticalStrike";
-            dataGridViewCellStyle5.Format = "n1";
-            this.colCriticalStrike.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Format = "n1";
+            this.colCriticalStrike.DefaultCellStyle = dataGridViewCellStyle6;
             this.colCriticalStrike.HeaderText = "Crit";
+            this.colCriticalStrike.MinimumWidth = 35;
             this.colCriticalStrike.Name = "colCriticalStrike";
             this.colCriticalStrike.ReadOnly = true;
             this.colCriticalStrike.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colCriticalStrike.Width = 70;
             // 
             // colArmor
             // 
             this.colArmor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colArmor.Width = 70;
             this.colArmor.DataPropertyName = "Armor";
-            dataGridViewCellStyle6.Format = "N1";
-            dataGridViewCellStyle6.NullValue = null;
-            this.colArmor.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Format = "N1";
+            dataGridViewCellStyle7.NullValue = null;
+            this.colArmor.DefaultCellStyle = dataGridViewCellStyle7;
             this.colArmor.HeaderText = "Armor";
+            this.colArmor.MinimumWidth = 35;
             this.colArmor.Name = "colArmor";
             this.colArmor.ReadOnly = true;
             this.colArmor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colArmor.Width = 70;
             // 
             // colMagicResist
             // 
             this.colMagicResist.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colMagicResist.Width = 70;
             this.colMagicResist.DataPropertyName = "MagicResist";
-            dataGridViewCellStyle7.Format = "n1";
-            this.colMagicResist.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Format = "n1";
+            this.colMagicResist.DefaultCellStyle = dataGridViewCellStyle8;
             this.colMagicResist.HeaderText = "MR";
+            this.colMagicResist.MinimumWidth = 35;
             this.colMagicResist.Name = "colMagicResist";
             this.colMagicResist.ReadOnly = true;
             this.colMagicResist.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colMagicResist.Width = 70;
             // 
             // colHealth
             // 
             this.colHealth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colHealth.Width = 70;
             this.colHealth.DataPropertyName = "Health";
-            dataGridViewCellStyle8.Format = "n0";
-            this.colHealth.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Format = "n0";
+            this.colHealth.DefaultCellStyle = dataGridViewCellStyle9;
             this.colHealth.HeaderText = "HP";
+            this.colHealth.MinimumWidth = 35;
             this.colHealth.Name = "colHealth";
             this.colHealth.ReadOnly = true;
             this.colHealth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colHealth.Width = 70;
             // 
             // colResource
             // 
             this.colResource.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colResource.Width = 70;
             this.colResource.DataPropertyName = "Resource";
-            dataGridViewCellStyle9.Format = "n0";
-            this.colResource.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle10.Format = "n0";
+            this.colResource.DefaultCellStyle = dataGridViewCellStyle10;
             this.colResource.HeaderText = "MP";
+            this.colResource.MinimumWidth = 35;
             this.colResource.Name = "colResource";
             this.colResource.ReadOnly = true;
             this.colResource.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colResource.Width = 70;
             // 
-            // StatGrid
+            // gridMain
             // 
-            this.BackgroundColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(210)))));
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
-            this.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gridMain.AllowUserToAddRows = false;
+            this.gridMain.AllowUserToDeleteRows = false;
+            this.gridMain.AllowUserToResizeColumns = false;
+            this.gridMain.AllowUserToResizeRows = false;
+            this.gridMain.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridMain.BackgroundColor = System.Drawing.Color.Black;
+            this.gridMain.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(210)))));
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            this.gridMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colMovementSpeed,
             this.colAttackRange,
             this.colAttackDamage,
@@ -196,42 +226,95 @@ namespace RiotPls.Controls
             this.colMagicResist,
             this.colHealth,
             this.colResource});
-            this.DataMember = "Stats";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            dataGridViewCellStyle11.Format = "N3";
-            dataGridViewCellStyle11.NullValue = null;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DefaultCellStyle = dataGridViewCellStyle11;
-            this.Margin = new System.Windows.Forms.Padding(10);
-            this.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.gridMain.DataMember = "Stats";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             dataGridViewCellStyle12.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            dataGridViewCellStyle12.Format = "N3";
+            dataGridViewCellStyle12.NullValue = null;
             dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.Black;
             dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
-            this.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.ShowCellToolTips = false;
-            this.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.StatGrid_DataBindingComplete);
-            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridMain.DefaultCellStyle = dataGridViewCellStyle12;
+            this.gridMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridMain.EnableHeadersVisualStyles = false;
+            this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.gridMain.Location = new System.Drawing.Point(0, 0);
+            this.gridMain.Margin = new System.Windows.Forms.Padding(23, 22, 22, 22);
+            this.gridMain.MultiSelect = false;
+            this.gridMain.Name = "gridMain";
+            this.gridMain.ReadOnly = true;
+            this.gridMain.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            this.gridMain.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.gridMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridMain.ShowCellErrors = false;
+            this.gridMain.ShowEditingIcon = false;
+            this.gridMain.ShowRowErrors = false;
+            this.gridMain.Size = new System.Drawing.Size(150, 150);
+            this.gridMain.TabIndex = 0;
+            this.gridMain.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.gridMain_DataBindingComplete);
+            // 
+            // StatGrid
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridMain);
+            this.Name = "StatGrid";
+            this.Load += new System.EventHandler(this.StatGrid_Load);
+            this.SizeChanged += new System.EventHandler(this.StatGrid_SizeChanged);
+            ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 
         }
-
-        private void StatGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void ResizeColumns()
         {
-            this.Rows[0].HeaderCell.Value = "1";
-            this.Rows[1].HeaderCell.Value = "Per";
-            for (int i = 2; i <= 18; i++)
-                this.Rows[i].HeaderCell.Value = i.ToString();
+            int width = (this.Width - this.gridMain.RowHeadersWidth - 20) / this.gridMain.ColumnCount;
+            foreach (DataGridViewColumn column in this.gridMain.Columns)
+                column.Width = width;
             return;
         }
+        #endregion
+        #region Event Methods
+        private void StatGrid_SizeChanged(object sender, EventArgs e)
+        {
+            this.ResizeColumns();
+            return;
+        }
+        private void StatGrid_Load(object sender, EventArgs e)
+        {
+            this.BeginInvoke((MethodInvoker) delegate { this.ResizeColumns(); });
+            return;
+        }
+        private void gridMain_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (this.gridMain.RowCount < 1)
+                return;
+            this.gridMain.Rows[0].HeaderCell.Value = "1";
+            this.gridMain.Rows[1].HeaderCell.Value = "Per";
+            for (int i = 2; i <= 18; i++)
+                this.gridMain.Rows[i].HeaderCell.Value = i.ToString();
+            return;
+        }
+        #endregion
+        #region Override Methods
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        #endregion
+
     }
 }
