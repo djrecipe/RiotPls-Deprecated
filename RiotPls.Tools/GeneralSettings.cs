@@ -44,8 +44,12 @@ namespace RiotPls.Tools
             if (row != null && row.Width != 0 && row.Height != 0)
             {
                 form.Location = new Point(row.Left, row.Top);
-                if(form.FormBorderStyle == FormBorderStyle.Sizable || form.FormBorderStyle == FormBorderStyle.SizableToolWindow)
+                if (form.FormBorderStyle == FormBorderStyle.Sizable ||
+                    form.FormBorderStyle == FormBorderStyle.SizableToolWindow)
+                {
                     form.Size = new Size(row.Width, row.Height);
+                    form.WindowState = (FormWindowState)row.State;
+                }
             }
             return;
         }
@@ -64,12 +68,12 @@ namespace RiotPls.Tools
         }
         public static void SaveWindowSettings(Form form)
         {
-            if (form.WindowState == FormWindowState.Normal && form.Width != 0 && form.Height != 0)
+            if (form.WindowState != FormWindowState.Minimized && form.Width != 0 && form.Height != 0)
             {
                 WindowsRow row = GeneralSettings.settings.Windows.Rows.Find(form.Name) as WindowsRow;
                 if (row != null)
                     GeneralSettings.settings.Windows.RemoveWindowsRow(row);
-                GeneralSettings.settings.Windows.AddWindowsRow(form.Name, form.Left, form.Top, form.Width, form.Height);
+                GeneralSettings.settings.Windows.AddWindowsRow(form.Name, form.Left, form.Top, form.Width, form.Height, (int)form.WindowState);
             }
             return;
         }

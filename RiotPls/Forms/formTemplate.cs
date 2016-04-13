@@ -6,11 +6,10 @@ namespace RiotPls.Forms
 {
     public class formTemplate : Form
     {
+        private const int CP_NOCLOSE_BUTTON = 0x200;
         #region Instance Members  
         #region Controls               
         private System.ComponentModel.IContainer components = null;
-        protected System.Windows.Forms.Button btnClose;
-        protected System.Windows.Forms.Button btnSettings;
         protected System.ComponentModel.BackgroundWorker workerUpdateData;
         protected System.Windows.Forms.PictureBox picLoading;
         #endregion
@@ -36,31 +35,10 @@ namespace RiotPls.Forms
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formTemplate));
-            this.btnClose = new System.Windows.Forms.Button();
             this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
-            this.btnSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.BackColor = System.Drawing.Color.Transparent;
-            this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClose.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(210)))), ((int)(((byte)(210)))), ((int)(((byte)(210)))));
-            this.btnClose.Location = new System.Drawing.Point(302, 9);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(20, 20);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "x";
-            this.btnClose.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnClose.UseVisualStyleBackColor = false;
-            this.btnClose.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnClose_MouseDown);
             // 
             // workerUpdateData
             // 
@@ -80,36 +58,18 @@ namespace RiotPls.Forms
             this.picLoading.TabIndex = 7;
             this.picLoading.TabStop = false;
             // 
-            // btnSettings
-            // 
-            this.btnSettings.BackgroundImage = global::RiotPls.Properties.Resources.Gears;
-            this.btnSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btnSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSettings.Location = new System.Drawing.Point(10, 10);
-            this.btnSettings.Margin = new System.Windows.Forms.Padding(1);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(16, 16);
-            this.btnSettings.TabIndex = 9;
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            // 
             // formTemplate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(331, 282);
-            this.Controls.Add(this.btnSettings);
             this.Controls.Add(this.picLoading);
-            this.Controls.Add(this.btnClose);
             this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formTemplate";
-            this.Text = "formTemplate";
+            this.SizeChanged += new System.EventHandler(this.formTemplate_SizeChanged);
             this.VisibleChanged += new System.EventHandler(this.formTemplate_VisibleChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.formTemplate_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.formTemplate_MouseMove);
@@ -141,16 +101,6 @@ namespace RiotPls.Forms
 
         #endregion
         #region Event Methods
-        protected virtual void btnSettings_Click(object sender, EventArgs e)
-        {
-        }
-        protected virtual void btnClose_MouseDown(object sender, MouseEventArgs e)
-        {
-            if(this.ChildWindow)
-                this.Hide();
-            else
-                this.Close();
-        }
         protected void formTemplate_MouseMove(object sender, MouseEventArgs e)
         {
             if (Control.MouseButtons.HasFlag(MouseButtons.Left))
@@ -168,6 +118,10 @@ namespace RiotPls.Forms
         {
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(46, 46, 46), 6.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
             e.Graphics.DrawRectangle(new Pen(Color.FromArgb(120, 120, 120), 2.0f), new Rectangle(this.DisplayRectangle.Left, this.DisplayRectangle.Top, this.DisplayRectangle.Width, this.DisplayRectangle.Height));
+        }
+        private void formTemplate_SizeChanged(object sender, EventArgs e)
+        {
+            this.Invalidate();
         }
         private void formTemplate_VisibleChanged(object sender, EventArgs e)
         {
@@ -197,5 +151,15 @@ namespace RiotPls.Forms
             }
             base.Dispose(disposing);
         }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams myCp = base.CreateParams;
+                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
+                return myCp;
+            }
+        }
+
     }
 }

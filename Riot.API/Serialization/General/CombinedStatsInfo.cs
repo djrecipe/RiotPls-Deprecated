@@ -8,6 +8,9 @@ using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.API.Serialization.General
 {
+    /// <summary>
+    /// Generic stat collection for a multiple game entity(s)
+    /// </summary>
     public class CombinedStatsInfo : IStatsInfo
     {
         #region Static Methods            
@@ -25,10 +28,16 @@ namespace RiotPls.API.Serialization.General
             return x;
         }
         #endregion
+        #region Instance Members
         private readonly List<IStatsInfo> components = new List<IStatsInfo>();
+        #endregion
+        #region Instance Properties
         public double AttackSpeedBase => this.components.Sum(info => (double)info.AttackSpeedBase);
         public double AttackSpeedMultiplier => this.components.Sum(info => (double)info.AttackSpeedMultiplier);
         public double AttackSpeedPerLevel => this.components.Sum(info => (double)info.AttackSpeedPerLevel);
+        /// <summary>
+        /// The minimum level required to utilize all components
+        /// </summary>
         public int RequiredLevel
         {
             get { return this.components.Select(c => c.RequiredLevel).Max(); }
@@ -36,6 +45,8 @@ namespace RiotPls.API.Serialization.General
         }
         public StatsTable.StatsDataTable Stats => this.Table.Stats;
         public StatsTable Table { get; private set; } = new StatsTable();
+        #endregion
+        #region Instance Methods
         public CombinedStatsInfo()
         {
             for (int i = 0; i < 19; i++)
@@ -74,5 +85,6 @@ namespace RiotPls.API.Serialization.General
             }
             return;
         }
+        #endregion
     }
 }

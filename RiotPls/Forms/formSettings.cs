@@ -41,28 +41,18 @@ namespace RiotPls.Forms
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.groupResources = new System.Windows.Forms.GroupBox();
+            this.lblContentVersionValue = new System.Windows.Forms.LinkLabel();
+            this.lblContentVersion = new System.Windows.Forms.Label();
             this.lblIgnoredCount = new System.Windows.Forms.Label();
             this.lblIgnoreCountValue = new System.Windows.Forms.LinkLabel();
-            this.lblContentVersion = new System.Windows.Forms.Label();
-            this.lblContentVersionValue = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.groupAPI.SuspendLayout();
             this.groupResources.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnClose
-            // 
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(413, 9);
-            // 
             // picLoading
             // 
             this.picLoading.Location = new System.Drawing.Point(101, 183);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.Visible = false;
             // 
             // lblAPIStepOneInstructions
             // 
@@ -211,6 +201,30 @@ namespace RiotPls.Forms
             this.groupResources.TabStop = false;
             this.groupResources.Text = "Resources";
             // 
+            // lblContentVersionValue
+            // 
+            this.lblContentVersionValue.LinkColor = System.Drawing.Color.PaleTurquoise;
+            this.lblContentVersionValue.Location = new System.Drawing.Point(227, 94);
+            this.lblContentVersionValue.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
+            this.lblContentVersionValue.Name = "lblContentVersionValue";
+            this.lblContentVersionValue.Size = new System.Drawing.Size(50, 13);
+            this.lblContentVersionValue.TabIndex = 8;
+            this.lblContentVersionValue.TabStop = true;
+            this.lblContentVersionValue.Text = "6.6.1";
+            this.lblContentVersionValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblContentVersionValue.VisitedLinkColor = System.Drawing.Color.Violet;
+            this.lblContentVersionValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblContentVersionValue_LinkClicked);
+            // 
+            // lblContentVersion
+            // 
+            this.lblContentVersion.Location = new System.Drawing.Point(107, 93);
+            this.lblContentVersion.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
+            this.lblContentVersion.Name = "lblContentVersion";
+            this.lblContentVersion.Size = new System.Drawing.Size(100, 15);
+            this.lblContentVersion.TabIndex = 7;
+            this.lblContentVersion.Text = "Content Version:";
+            this.lblContentVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // lblIgnoredCount
             // 
             this.lblIgnoredCount.Location = new System.Drawing.Point(107, 53);
@@ -235,30 +249,6 @@ namespace RiotPls.Forms
             this.lblIgnoreCountValue.VisitedLinkColor = System.Drawing.Color.Violet;
             this.lblIgnoreCountValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblIgnoreCountValue_LinkClicked);
             // 
-            // lblContentVersion
-            // 
-            this.lblContentVersion.Location = new System.Drawing.Point(107, 93);
-            this.lblContentVersion.Margin = new System.Windows.Forms.Padding(20, 20, 10, 5);
-            this.lblContentVersion.Name = "lblContentVersion";
-            this.lblContentVersion.Size = new System.Drawing.Size(100, 15);
-            this.lblContentVersion.TabIndex = 7;
-            this.lblContentVersion.Text = "Content Version:";
-            this.lblContentVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblContentVersionValue
-            // 
-            this.lblContentVersionValue.LinkColor = System.Drawing.Color.PaleTurquoise;
-            this.lblContentVersionValue.Location = new System.Drawing.Point(227, 94);
-            this.lblContentVersionValue.Margin = new System.Windows.Forms.Padding(10, 20, 20, 5);
-            this.lblContentVersionValue.Name = "lblContentVersionValue";
-            this.lblContentVersionValue.Size = new System.Drawing.Size(50, 13);
-            this.lblContentVersionValue.TabIndex = 8;
-            this.lblContentVersionValue.TabStop = true;
-            this.lblContentVersionValue.Text = "6.6.1";
-            this.lblContentVersionValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblContentVersionValue.VisitedLinkColor = System.Drawing.Color.Violet;
-            this.lblContentVersionValue.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblContentVersionValue_LinkClicked);
-            // 
             // formSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -270,10 +260,8 @@ namespace RiotPls.Forms
             this.Controls.Add(this.groupAPI);
             this.Name = "formSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "+";
-            this.Controls.SetChildIndex(this.btnSettings, 0);
+            this.Text = "Settings";
             this.Controls.SetChildIndex(this.picLoading, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.groupAPI, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);

@@ -288,5 +288,10 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+
+        internal ItemStatsInfo() : base()
+        {
+            
+        }
     }
 }

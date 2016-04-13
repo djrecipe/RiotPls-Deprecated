@@ -13,7 +13,7 @@ namespace RiotPls
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Forms.formMenu());
+            Application.Run(new Forms.formMain());
         }
     }
 }

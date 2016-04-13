@@ -289,6 +289,8 @@ namespace RiotPls.Tools {
             
             private global::System.Data.DataColumn columnHeight;
             
+            private global::System.Data.DataColumn columnState;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public WindowsDataTable() {
@@ -364,6 +366,14 @@ namespace RiotPls.Tools {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StateColumn {
+                get {
+                    return this.columnState;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -399,14 +409,15 @@ namespace RiotPls.Tools {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public WindowsRow AddWindowsRow(string Name, int Left, int Top, int Width, int Height) {
+            public WindowsRow AddWindowsRow(string Name, int Left, int Top, int Width, int Height, int State) {
                 WindowsRow rowWindowsRow = ((WindowsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Name,
                         Left,
                         Top,
                         Width,
-                        Height};
+                        Height,
+                        State};
                 rowWindowsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowWindowsRow);
                 return rowWindowsRow;
@@ -441,6 +452,7 @@ namespace RiotPls.Tools {
                 this.columnTop = base.Columns["Top"];
                 this.columnWidth = base.Columns["Width"];
                 this.columnHeight = base.Columns["Height"];
+                this.columnState = base.Columns["State"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -456,6 +468,8 @@ namespace RiotPls.Tools {
                 base.Columns.Add(this.columnWidth);
                 this.columnHeight = new global::System.Data.DataColumn("Height", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHeight);
+                this.columnState = new global::System.Data.DataColumn("State", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnState);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint11", new global::System.Data.DataColumn[] {
                                 this.columnName}, true));
                 this.columnName.AllowDBNull = false;
@@ -467,6 +481,7 @@ namespace RiotPls.Tools {
                 this.columnWidth.DefaultValue = ((int)(0));
                 this.columnHeight.Caption = "Left";
                 this.columnHeight.DefaultValue = ((int)(0));
+                this.columnState.DefaultValue = ((int)(2));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -684,6 +699,22 @@ namespace RiotPls.Tools {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int State {
+                get {
+                    if (this.IsStateNull()) {
+                        return 2;
+                    }
+                    else {
+                        return ((int)(this[this.tableWindows.StateColumn]));
+                    }
+                }
+                set {
+                    this[this.tableWindows.StateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsLeftNull() {
                 return this.IsNull(this.tableWindows.LeftColumn);
             }
@@ -728,6 +759,18 @@ namespace RiotPls.Tools {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetHeightNull() {
                 this[this.tableWindows.HeightColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStateNull() {
+                return this.IsNull(this.tableWindows.StateColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStateNull() {
+                this[this.tableWindows.StateColumn] = global::System.Convert.DBNull;
             }
         }
         

@@ -279,5 +279,9 @@ namespace RiotPls.API.Serialization.Champions
                 return;
             }
         }
+        internal ChampionStatsInfo() : base()
+        {
+
+        }
     }
 }

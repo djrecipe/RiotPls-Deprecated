@@ -77,16 +77,6 @@ namespace RiotPls.Forms
             this.cmenMain.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnClose
-            // 
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(1166, 9);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.Visible = false;
-            // 
             // picLoading
             // 
             this.picLoading.Location = new System.Drawing.Point(533, 349);
@@ -193,7 +183,7 @@ namespace RiotPls.Forms
             this.itmLockTooltip,
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 92);
+            this.cmenMain.Size = new System.Drawing.Size(177, 70);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmShowStats
@@ -231,7 +221,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem1.CheckOnClick = true;
             this.itmSetAsItem1.Name = "itmSetAsItem1";
-            this.itmSetAsItem1.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem1.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem1.Text = "Set as Item 1";
             this.itmSetAsItem1.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -239,7 +229,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem2.CheckOnClick = true;
             this.itmSetAsItem2.Name = "itmSetAsItem2";
-            this.itmSetAsItem2.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem2.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem2.Text = "Set as Item 2";
             this.itmSetAsItem2.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -247,7 +237,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem3.CheckOnClick = true;
             this.itmSetAsItem3.Name = "itmSetAsItem3";
-            this.itmSetAsItem3.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem3.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem3.Text = "Set as Item 3";
             this.itmSetAsItem3.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -255,7 +245,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem4.CheckOnClick = true;
             this.itmSetAsItem4.Name = "itmSetAsItem4";
-            this.itmSetAsItem4.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem4.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem4.Text = "Set as Item 4";
             this.itmSetAsItem4.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -263,7 +253,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem5.CheckOnClick = true;
             this.itmSetAsItem5.Name = "itmSetAsItem5";
-            this.itmSetAsItem5.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem5.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem5.Text = "Set as Item 5";
             this.itmSetAsItem5.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -271,7 +261,7 @@ namespace RiotPls.Forms
             // 
             this.itmSetAsItem6.CheckOnClick = true;
             this.itmSetAsItem6.Name = "itmSetAsItem6";
-            this.itmSetAsItem6.Size = new System.Drawing.Size(152, 22);
+            this.itmSetAsItem6.Size = new System.Drawing.Size(140, 22);
             this.itmSetAsItem6.Text = "Set as Item 6";
             this.itmSetAsItem6.CheckedChanged += new System.EventHandler(this.itmSetAsItem_CheckedChanged);
             // 
@@ -310,10 +300,8 @@ namespace RiotPls.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formItems";
             this.ShowLoading = true;
-            this.Text = "RiotPls-Items";
+            this.Text = "Items";
             this.VisibleChanged += new System.EventHandler(this.formItems_VisibleChanged);
-            this.Controls.SetChildIndex(this.btnSettings, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.gridMain, 0);
             this.Controls.SetChildIndex(this.chkdlistFilter, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);

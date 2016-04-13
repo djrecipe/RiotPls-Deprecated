@@ -72,10 +72,10 @@
     <Compile Include="Forms\formItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\formMaps.cs">
+    <Compile Include="Forms\formMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\formMenu.cs">
+    <Compile Include="Forms\formMaps.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\formSettings.cs">
@@ -85,15 +85,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\formTemplate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\formTooltipStats.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\formTooltipTemplate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\formTooltip.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -114,11 +105,11 @@
     <EmbeddedResource Include="Forms\formItems.resx">
       <DependentUpon>formItems.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\formMain.resx">
+      <DependentUpon>formMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\formMaps.resx">
       <DependentUpon>formMaps.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\formMenu.resx">
-      <DependentUpon>formMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formSettings.resx">
       <DependentUpon>formSettings.cs</DependentUpon>
@@ -128,15 +119,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formTemplate.resx">
       <DependentUpon>formTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\formTooltipStats.resx">
-      <DependentUpon>formTooltipStats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\formTooltipTemplate.resx">
-      <DependentUpon>formTooltipTemplate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\formTooltip.resx">
-      <DependentUpon>formTooltip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

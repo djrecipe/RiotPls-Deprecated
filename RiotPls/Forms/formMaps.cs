@@ -27,15 +27,9 @@ namespace RiotPls.Forms
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnClose
+            // picLoading
             // 
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(1166, 9);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.Visible = false;
+            this.picLoading.Location = new System.Drawing.Point(157, 176);
             // 
             // comboMaps
             // 
@@ -78,10 +72,8 @@ namespace RiotPls.Forms
             this.Controls.Add(this.comboMaps);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formMaps";
-            this.Text = "RiotPls-Maps";
-            this.Controls.SetChildIndex(this.btnSettings, 0);
+            this.Text = "Maps";
             this.Controls.SetChildIndex(this.picLoading, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.comboMaps, 0);
             this.Controls.SetChildIndex(this.imgboxMap, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();

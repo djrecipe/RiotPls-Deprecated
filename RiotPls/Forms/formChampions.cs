@@ -26,20 +26,6 @@ namespace RiotPls.Forms
         private ComboBox comboFilter;
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem itmSelectedForBuilder;
-        private DataGridViewImageColumn colR;
-        private DataGridViewImageColumn colE;
-        private DataGridViewImageColumn colW;
-        private DataGridViewImageColumn colQ;
-        private DataGridViewImageColumn colPassive;
-        private DataGridViewImageColumn colDifficulty;
-        private DataGridViewImageColumn colMagic;
-        private DataGridViewImageColumn colDefense;
-        private DataGridViewImageColumn colAttack;
-        private DataGridViewTextBoxColumn colTags;
-        private DataGridViewCheckBoxColumn colFreeToPlay;
-        private DataGridViewTextBoxColumn colTitle;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewImageColumn colImage;
         #endregion
         private string last_champ_name = null;
         private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
@@ -47,6 +33,21 @@ namespace RiotPls.Forms
         private Label lblInfo;
         private Label lblInfoTitle;
         private Label lblSearchTitle;
+        private SplitContainer splitBottom;
+        private DataGridViewImageColumn colImage;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colTitle;
+        private DataGridViewCheckBoxColumn colFreeToPlay;
+        private DataGridViewTextBoxColumn colTags;
+        private DataGridViewImageColumn colAttack;
+        private DataGridViewImageColumn colDefense;
+        private DataGridViewImageColumn colMagic;
+        private DataGridViewImageColumn colDifficulty;
+        private DataGridViewImageColumn colPassive;
+        private DataGridViewImageColumn colQ;
+        private DataGridViewImageColumn colW;
+        private DataGridViewImageColumn colE;
+        private DataGridViewImageColumn colR;
         private Build build = null;
         #endregion     
         #region Instance Methods
@@ -95,24 +96,19 @@ namespace RiotPls.Forms
             this.lblInfo = new System.Windows.Forms.Label();
             this.lblInfoTitle = new System.Windows.Forms.Label();
             this.lblSearchTitle = new System.Windows.Forms.Label();
+            this.splitBottom = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.cmenMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitBottom)).BeginInit();
+            this.splitBottom.Panel1.SuspendLayout();
+            this.splitBottom.Panel2.SuspendLayout();
+            this.splitBottom.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnClose
-            // 
-            this.btnClose.FlatAppearance.BorderSize = 0;
-            this.btnClose.Location = new System.Drawing.Point(1166, 9);
-            // 
-            // btnSettings
-            // 
-            this.btnSettings.FlatAppearance.BorderSize = 0;
-            this.btnSettings.Visible = false;
             // 
             // picLoading
             // 
-            this.picLoading.Location = new System.Drawing.Point(533, 340);
+            this.picLoading.Location = new System.Drawing.Point(533, 249);
             // 
             // gridMain
             // 
@@ -161,8 +157,8 @@ namespace RiotPls.Forms
             this.gridMain.DefaultCellStyle = dataGridViewCellStyle11;
             this.gridMain.EnableHeadersVisualStyles = false;
             this.gridMain.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
-            this.gridMain.Location = new System.Drawing.Point(34, 53);
-            this.gridMain.Margin = new System.Windows.Forms.Padding(23, 22, 23, 5);
+            this.gridMain.Location = new System.Drawing.Point(29, 29);
+            this.gridMain.Margin = new System.Windows.Forms.Padding(20, 20, 20, 5);
             this.gridMain.MultiSelect = false;
             this.gridMain.Name = "gridMain";
             this.gridMain.ReadOnly = true;
@@ -184,7 +180,7 @@ namespace RiotPls.Forms
             this.gridMain.ShowCellErrors = false;
             this.gridMain.ShowEditingIcon = false;
             this.gridMain.ShowRowErrors = false;
-            this.gridMain.Size = new System.Drawing.Size(1127, 619);
+            this.gridMain.Size = new System.Drawing.Size(1137, 472);
             this.gridMain.TabIndex = 0;
             this.gridMain.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridMain_CellMouseDown);
             this.gridMain.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMain_CellMouseEnter);
@@ -206,7 +202,7 @@ namespace RiotPls.Forms
             // 
             // colName
             // 
-            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colName.DataPropertyName = "Name";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5);
@@ -215,11 +211,10 @@ namespace RiotPls.Forms
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
             this.colName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colName.Width = 61;
             // 
             // colTitle
             // 
-            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colTitle.DataPropertyName = "Title";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(5);
@@ -242,7 +237,7 @@ namespace RiotPls.Forms
             // 
             // colTags
             // 
-            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colTags.DataPropertyName = "TagList";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -376,7 +371,7 @@ namespace RiotPls.Forms
             this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.itmSelectedForBuilder});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(177, 48);
+            this.cmenMain.Size = new System.Drawing.Size(177, 26);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // itmSelectedForBuilder
@@ -389,14 +384,15 @@ namespace RiotPls.Forms
             // 
             // txtSearch
             // 
-            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
-            this.txtSearch.Location = new System.Drawing.Point(32, 733);
+            this.txtSearch.Location = new System.Drawing.Point(26, 54);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(366, 20);
+            this.txtSearch.Size = new System.Drawing.Size(329, 20);
             this.txtSearch.TabIndex = 3;
             this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -404,13 +400,13 @@ namespace RiotPls.Forms
             // 
             // comboFilter
             // 
-            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.comboFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.comboFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.comboFilter.FormattingEnabled = true;
-            this.comboFilter.Location = new System.Drawing.Point(411, 732);
+            this.comboFilter.Location = new System.Drawing.Point(368, 53);
             this.comboFilter.Name = "comboFilter";
             this.comboFilter.Size = new System.Drawing.Size(158, 22);
             this.comboFilter.TabIndex = 5;
@@ -418,42 +414,66 @@ namespace RiotPls.Forms
             // 
             // lblInfo
             // 
-            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.lblInfo.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lblInfo.Location = new System.Drawing.Point(602, 713);
+            this.lblInfo.Location = new System.Drawing.Point(20, 45);
             this.lblInfo.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.lblInfo.Size = new System.Drawing.Size(564, 67);
+            this.lblInfo.Size = new System.Drawing.Size(594, 53);
             this.lblInfo.TabIndex = 11;
             this.lblInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lblInfoTitle
             // 
-            this.lblInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.lblInfoTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfoTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(110)))), ((int)(((byte)(40)))));
-            this.lblInfoTitle.Location = new System.Drawing.Point(602, 682);
+            this.lblInfoTitle.Location = new System.Drawing.Point(20, 14);
             this.lblInfoTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
             this.lblInfoTitle.Name = "lblInfoTitle";
-            this.lblInfoTitle.Size = new System.Drawing.Size(564, 21);
+            this.lblInfoTitle.Size = new System.Drawing.Size(594, 21);
             this.lblInfoTitle.TabIndex = 12;
             this.lblInfoTitle.Text = "Information";
             this.lblInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSearchTitle
             // 
-            this.lblSearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblSearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSearchTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(170)))), ((int)(((byte)(240)))));
-            this.lblSearchTitle.Location = new System.Drawing.Point(29, 682);
+            this.lblSearchTitle.Location = new System.Drawing.Point(20, 14);
             this.lblSearchTitle.Margin = new System.Windows.Forms.Padding(20, 5, 20, 5);
             this.lblSearchTitle.Name = "lblSearchTitle";
-            this.lblSearchTitle.Size = new System.Drawing.Size(564, 21);
+            this.lblSearchTitle.Size = new System.Drawing.Size(512, 21);
             this.lblSearchTitle.TabIndex = 13;
             this.lblSearchTitle.Text = "Search";
             this.lblSearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // splitBottom
+            // 
+            this.splitBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitBottom.Location = new System.Drawing.Point(2, 506);
+            this.splitBottom.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
+            this.splitBottom.Name = "splitBottom";
+            // 
+            // splitBottom.Panel1
+            // 
+            this.splitBottom.Panel1.Controls.Add(this.txtSearch);
+            this.splitBottom.Panel1.Controls.Add(this.lblSearchTitle);
+            this.splitBottom.Panel1.Controls.Add(this.comboFilter);
+            // 
+            // splitBottom.Panel2
+            // 
+            this.splitBottom.Panel2.Controls.Add(this.lblInfo);
+            this.splitBottom.Panel2.Controls.Add(this.lblInfoTitle);
+            this.splitBottom.Size = new System.Drawing.Size(1190, 118);
+            this.splitBottom.SplitterDistance = 552;
+            this.splitBottom.TabIndex = 14;
             // 
             // formChampions
             // 
@@ -461,39 +481,33 @@ namespace RiotPls.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ChildWindow = true;
-            this.ClientSize = new System.Drawing.Size(1195, 809);
-            this.ControlBox = false;
-            this.Controls.Add(this.lblSearchTitle);
-            this.Controls.Add(this.lblInfoTitle);
-            this.Controls.Add(this.lblInfo);
-            this.Controls.Add(this.comboFilter);
-            this.Controls.Add(this.txtSearch);
+            this.ClientSize = new System.Drawing.Size(1195, 626);
+            this.Controls.Add(this.splitBottom);
             this.Controls.Add(this.gridMain);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
+            this.MinimumSize = new System.Drawing.Size(470, 300);
             this.Name = "formChampions";
             this.ShowLoading = true;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "RiotPls-Champions";
+            this.Text = "Champions";
             this.Activated += new System.EventHandler(this.formChampions_Activated);
             this.VisibleChanged += new System.EventHandler(this.formChampions_VisibleChanged);
             this.Controls.SetChildIndex(this.gridMain, 0);
-            this.Controls.SetChildIndex(this.txtSearch, 0);
-            this.Controls.SetChildIndex(this.comboFilter, 0);
-            this.Controls.SetChildIndex(this.lblInfo, 0);
-            this.Controls.SetChildIndex(this.btnSettings, 0);
-            this.Controls.SetChildIndex(this.btnClose, 0);
             this.Controls.SetChildIndex(this.picLoading, 0);
-            this.Controls.SetChildIndex(this.lblInfoTitle, 0);
-            this.Controls.SetChildIndex(this.lblSearchTitle, 0);
+            this.Controls.SetChildIndex(this.splitBottom, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.cmenMain.ResumeLayout(false);
+            this.splitBottom.Panel1.ResumeLayout(false);
+            this.splitBottom.Panel1.PerformLayout();
+            this.splitBottom.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitBottom)).EndInit();
+            this.splitBottom.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
         private void ShowTooltip(int row_index, int column_index)
