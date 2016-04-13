@@ -396,7 +396,7 @@ namespace RiotPls.Forms
             this.txtSearch.Location = new System.Drawing.Point(26, 50);
             this.txtSearch.Margin = new System.Windows.Forms.Padding(10);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(329, 20);
+            this.txtSearch.Size = new System.Drawing.Size(274, 20);
             this.txtSearch.TabIndex = 3;
             this.txtSearch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseClick);
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
@@ -410,9 +410,9 @@ namespace RiotPls.Forms
             this.comboFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.comboFilter.FormattingEnabled = true;
-            this.comboFilter.Location = new System.Drawing.Point(368, 49);
+            this.comboFilter.Location = new System.Drawing.Point(313, 49);
             this.comboFilter.Name = "comboFilter";
-            this.comboFilter.Size = new System.Drawing.Size(158, 22);
+            this.comboFilter.Size = new System.Drawing.Size(131, 22);
             this.comboFilter.TabIndex = 5;
             this.comboFilter.SelectionChangeCommitted += new System.EventHandler(this.comboFilter_SelectionChangeCommitted);
             // 
@@ -427,7 +427,7 @@ namespace RiotPls.Forms
             this.lblInfo.Margin = new System.Windows.Forms.Padding(20, 5, 20, 20);
             this.lblInfo.Name = "lblInfo";
             this.lblInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.lblInfo.Size = new System.Drawing.Size(594, 73);
+            this.lblInfo.Size = new System.Drawing.Size(676, 73);
             this.lblInfo.TabIndex = 11;
             this.lblInfo.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
@@ -439,7 +439,7 @@ namespace RiotPls.Forms
             this.lblInfoTitle.Location = new System.Drawing.Point(20, 5);
             this.lblInfoTitle.Margin = new System.Windows.Forms.Padding(20, 0, 20, 5);
             this.lblInfoTitle.Name = "lblInfoTitle";
-            this.lblInfoTitle.Size = new System.Drawing.Size(594, 15);
+            this.lblInfoTitle.Size = new System.Drawing.Size(676, 15);
             this.lblInfoTitle.TabIndex = 12;
             this.lblInfoTitle.Text = "Information";
             this.lblInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -452,7 +452,7 @@ namespace RiotPls.Forms
             this.lblSearchTitle.Location = new System.Drawing.Point(20, 5);
             this.lblSearchTitle.Margin = new System.Windows.Forms.Padding(20, 0, 20, 5);
             this.lblSearchTitle.Name = "lblSearchTitle";
-            this.lblSearchTitle.Size = new System.Drawing.Size(512, 15);
+            this.lblSearchTitle.Size = new System.Drawing.Size(430, 15);
             this.lblSearchTitle.TabIndex = 13;
             this.lblSearchTitle.Text = "Search";
             this.lblSearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -461,6 +461,8 @@ namespace RiotPls.Forms
             // 
             this.splitBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitBottom.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitBottom.IsSplitterFixed = true;
             this.splitBottom.Location = new System.Drawing.Point(2, 506);
             this.splitBottom.Margin = new System.Windows.Forms.Padding(0, 0, 0, 5);
             this.splitBottom.Name = "splitBottom";
@@ -476,7 +478,7 @@ namespace RiotPls.Forms
             this.splitBottom.Panel2.Controls.Add(this.lblInfo);
             this.splitBottom.Panel2.Controls.Add(this.lblInfoTitle);
             this.splitBottom.Size = new System.Drawing.Size(1190, 118);
-            this.splitBottom.SplitterDistance = 552;
+            this.splitBottom.SplitterDistance = 470;
             this.splitBottom.TabIndex = 14;
             // 
             // formChampions
@@ -492,7 +494,7 @@ namespace RiotPls.Forms
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(500, 300);
+            this.MinimumSize = new System.Drawing.Size(550, 300);
             this.Name = "formChampions";
             this.ShowLoading = true;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
