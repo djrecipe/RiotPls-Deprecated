@@ -22,13 +22,16 @@ namespace RiotPls.Forms
         private ToolStripMenuItem itmShowStats;
         private ToolStripMenuItem itmLockTooltip;
         private ToolStripMenuItem itmSelectedForBuilder;
+        private DataGridViewImageColumn colImage;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colDescription;
         #endregion
         private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
         private BindingList<ItemInfo> source = null;
         private string last_item_name = null;
-        private DataGridViewImageColumn colImage;
-        private DataGridViewTextBoxColumn colName;
-        private DataGridViewTextBoxColumn colDescription;
+        #endregion
+        #region Instance Properties
+        public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
         public formItems()
@@ -290,9 +293,9 @@ namespace RiotPls.Forms
             {
                 bool check_root = false;
                 this.itmSelectedForBuilder.DropDownItems.Clear();
-                for (int i = 0; i < Build.Count; i++)
+                for (int i = 0; i < this.Builds.Count; i++)
                 {
-                    Build build = Build.GetBuild(i);
+                    Build build = this.Builds[i];
                     if (build == null)
                         continue;
                     int index = build.GetItemIndex(this.last_item_name);
@@ -364,7 +367,7 @@ namespace RiotPls.Forms
             int build_index = this.itmSelectedForBuilder.DropDownItems.IndexOf(parent_item);
             if (build_index < 0)
                 return;
-            Build build = Build.GetBuild(build_index);
+            Build build = this.Builds[build_index];
             if (build == null)
                 return;
             ItemInfo item = menu_item.Checked ? Engine.GetItem(this.last_item_name) : null;

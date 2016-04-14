@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.General;
@@ -10,41 +9,15 @@ using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.API.Builder
 {
+    /// <summary>
+    /// Serializable collection of entities which describe an in-game build
+    /// </summary>
+    /// <remarks>Instantiation is accomplished via the <see cref="BuildManager"/> class</remarks>
     [JsonObject(MemberSerialization.OptIn)]
     public class Build
     {
         #region Types
         public delegate void BuildChangedDelegate(string name);
-        #endregion
-        #region Static Members
-        private static List<Build> builds = new List<Build>();
-        #endregion
-        #region Static Properties
-        public static int Count => Build.builds.Count;
-        #endregion
-        #region Static Methods
-        public static Build CreateBuild()
-        {
-            Build build = new Build(string.Format("Build #{0}", Build.builds.Count + 1));
-            Build.builds.Add(build);
-            return build;
-        }
-        public static Build GetBuild(string name)
-        {
-            return Build.builds.FirstOrDefault(b => b.Name == name);
-        }
-
-        public static Build GetBuild(int index)
-        {
-            return index >= Build.Count ? null : Build.builds[index];
-        }
-        public static void RemoveBuild(int index)
-        {
-            if (index >= Build.builds.Count)
-                return;
-            Build.builds.RemoveAt(index);
-            return;
-        }
         #endregion
         #region Instance Members
         private CombinedStatsInfo stats = new CombinedStatsInfo();
@@ -65,7 +38,7 @@ namespace RiotPls.API.Builder
         {
             
         }
-        private Build(string name)
+        internal Build(string name)
         {
             this.Name = name;
             return;

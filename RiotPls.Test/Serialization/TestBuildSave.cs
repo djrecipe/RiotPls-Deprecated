@@ -32,7 +32,7 @@ namespace RiotPls.Test.Serialization
         [TestMethod]
         public void SimpleSerialize()
         {
-            Build build = Build.GetBuild(0);
+            Build build = new Build("Test");
             build.SetChampion(new PseudoChampionInfo("Test"));
             for (int i = 0; i < 6; i++)
             {

@@ -13,19 +13,37 @@ namespace RiotPls.Forms
 {
     public class formMain : Form
     {
+        #region Instance Members       
+        #region Controls    
+        private System.ComponentModel.IContainer components = null;
         private ToolStrip toolsTop;
         private ToolStripButton btnChampions;
-        private System.ComponentModel.IContainer components = null;
         private ToolStripButton btnItems;
         private ToolStripButton btnMaps;
         private ToolStripButton btnConfig;
         private ToolStripDropDownButton btnBuilder;
         private ToolStripMenuItem btnCreateBuild;
+        #region Forms
         private formChampions fChampions = new formChampions();
         private formItems fItems = new formItems();
         private formMaps fMaps = new formMaps();
         private formSettings fSettings = new formSettings();
         private List<formBuilder> fBuilders = new List<formBuilder>();
+        #endregion
+        #endregion
+        #endregion
+        #region Instance Properties
+        private BuildCollection _Builds = new BuildCollection();
+        public BuildCollection Builds
+        {
+            get { return this._Builds; }
+            set
+            {
+                this._Builds = value;
+                this.UpdateBuilds();
+                return;
+            }
+        }
         private bool ChampionsVisible
         {
             get { return this.fChampions.Visible; }
@@ -62,18 +80,19 @@ namespace RiotPls.Forms
                 return;
             }
         }
+        #endregion
+        #region Instance Methods
+        #region Intialization Methods
         public formMain()
         {
-            InitializeComponent();
-            this.fChampions.MdiParent = this;
-            this.fItems.MdiParent = this;
-            this.fMaps.MdiParent = this;
-            this.fSettings.MdiParent = this;
+            this.InitializeComponent();
+            this.InitializeForms();
+            this.UpdateBuilds();
             return;
         }
-
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.toolsTop = new System.Windows.Forms.ToolStrip();
             this.btnChampions = new System.Windows.Forms.ToolStripButton();
             this.btnItems = new System.Windows.Forms.ToolStripButton();
@@ -152,7 +171,7 @@ namespace RiotPls.Forms
             // btnCreateBuild
             // 
             this.btnCreateBuild.Name = "btnCreateBuild";
-            this.btnCreateBuild.Size = new System.Drawing.Size(152, 22);
+            this.btnCreateBuild.Size = new System.Drawing.Size(107, 22);
             this.btnCreateBuild.Text = "New...";
             this.btnCreateBuild.Click += new System.EventHandler(this.btnCreateBuild_Click);
             // 
@@ -176,11 +195,13 @@ namespace RiotPls.Forms
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(434, 261);
             this.Controls.Add(this.toolsTop);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MinimumSize = new System.Drawing.Size(450, 300);
             this.Name = "formMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "RiotPls";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.Load += new System.EventHandler(this.formMain_Load);
             this.toolsTop.ResumeLayout(false);
@@ -189,17 +210,33 @@ namespace RiotPls.Forms
             this.PerformLayout();
 
         }
-        private void CreateBuilderWindow()
+
+        private void InitializeForms()
         {
-            int count = Build.Count;
-            formBuilder fBuilder = new formBuilder(Build.CreateBuild())
+            this.fChampions.MdiParent = this;
+            this.fItems.MdiParent = this;
+            this.fMaps.MdiParent = this;
+            this.fSettings.MdiParent = this;
+            return;
+        }
+        #endregion
+        private void CreateBuilderWindow(Build build, bool show)
+        {
+            formBuilder fBuilder = new formBuilder(build)
             {
                 MdiParent = this,
-                Name = string.Format("Build #{0}", count + 1)
+                Name = build.Name
             };
             this.fBuilders.Add(fBuilder);
-            this.ToggleWindow(fBuilder, true);
+            if(show)
+                this.ToggleWindow(fBuilder, true);
             this.UpdateBuilderButton();
+            return;
+        }
+        private void CreateNewBuild()
+        {
+            this.CreateBuilderWindow(this.Builds.New(), true);
+            return;
         }
         private void ToggleWindow(Form form, bool value)
         {
@@ -217,19 +254,28 @@ namespace RiotPls.Forms
             }
             return;
         }
-
         private void UpdateBuilderButton()
         {
             this.btnBuilder.DropDownItems.Clear();
             this.btnBuilder.DropDownItems.Add(this.btnCreateBuild);
-            for (int i = 0; i < Build.Count; i++)
+            for (int i = 0; i < this.Builds.Count; i++)
             {
-                Build build = Build.GetBuild(i);
+                Build build = this.Builds[i];
                 ToolStripMenuItem button = new ToolStripMenuItem(build.Name, null, this.btnSelectBuild_Click);
                 this.btnBuilder.DropDownItems.Add(button);
             }
             return;
         }
+        private void UpdateBuilds()
+        {
+            this.fChampions.Builds = this.fItems.Builds = this.fMaps.Builds = this.Builds;
+            this.fBuilders.Clear();
+            for (int i = 0; i < this.Builds.Count; i++)
+                this.CreateBuilderWindow(this.Builds[i], false);           
+            return;
+        }
+        #endregion
+        #region Event Methods
         private void btnConfig_Click(object sender, EventArgs e)
         {
             this.SettingsVisible = true;
@@ -242,7 +288,7 @@ namespace RiotPls.Forms
         }
         private void btnCreateBuild_Click(object sender, EventArgs e)
         {
-            this.CreateBuilderWindow();
+            this.CreateNewBuild();
             return;
         }
         private void btnItems_Click(object sender, EventArgs e)
@@ -257,6 +303,14 @@ namespace RiotPls.Forms
         }
         private void btnSelectBuild_Click(object sender, EventArgs e)
         {
+            ToolStripMenuItem button = sender as ToolStripMenuItem;
+            if (button == null)
+                return;
+            int index = this.btnBuilder.DropDownItems.IndexOf(button) - 1;
+            if (index < 0 || index >= this.fBuilders.Count)
+                return;
+            formBuilder form = this.fBuilders[index];
+            this.ToggleWindow(form, true);
             return;
         }
         private void formMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -274,6 +328,8 @@ namespace RiotPls.Forms
         {
             Tools.GeneralSettings.LoadWindowSettings(this);
         }
+        #endregion
+        #region Override Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -282,6 +338,6 @@ namespace RiotPls.Forms
             }
             base.Dispose(disposing);
         }
-
+        #endregion
     }
 }

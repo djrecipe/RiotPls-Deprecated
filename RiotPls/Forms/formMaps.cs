@@ -5,16 +5,25 @@ using System.Linq;
 using System.Windows.Forms;
 
 using RiotPls.API;
+using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Maps;
 
 namespace RiotPls.Forms
 {
     public class formMaps : formTemplate
     {
-        private ComboBox comboMaps;
+        #region Instance Members
+        #region Controls   
         private System.ComponentModel.IContainer components = null;
+        private ComboBox comboMaps;
         private Cyotek.Windows.Forms.ImageBox imgboxMap;
+        #endregion
         private Dictionary<string, MapInfo> source = new Dictionary<string, MapInfo>();
+        #endregion
+        #region Instance Properties
+        public BuildCollection Builds { get; set; }
+        #endregion
+        #region Instance Methods
         public formMaps()
         {
             InitializeComponent();
@@ -90,6 +99,7 @@ namespace RiotPls.Forms
             this.imgboxMap.Focus();
             return;
         }
+        #endregion
         #region Event Methods
         private void comboMaps_SelectedIndexChanged(object sender, EventArgs e)
         {

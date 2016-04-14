@@ -26,10 +26,6 @@ namespace RiotPls.Forms
         private ComboBox comboFilter;
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem itmSelectedForBuilder;
-        #endregion
-        private string last_champ_name = null;
-        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
-        private BindingList<ChampionInfo> source = null;
         private Label lblInfo;
         private Label lblInfoTitle;
         private Label lblSearchTitle;
@@ -48,6 +44,13 @@ namespace RiotPls.Forms
         private DataGridViewImageColumn colW;
         private DataGridViewImageColumn colE;
         private DataGridViewImageColumn colR;
+        #endregion
+        private string last_champ_name = null;
+        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
+        private BindingList<ChampionInfo> source = null;
+        #endregion
+        #region Instance Properties
+        public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
         public formChampions()
@@ -636,9 +639,9 @@ namespace RiotPls.Forms
             else
             {
                 this.itmSelectedForBuilder.DropDownItems.Clear();
-                for (int i = 0; i < Build.Count; i++)
+                for (int i = 0; i < this.Builds.Count; i++)
                 {
-                    Build build = Build.GetBuild(i);
+                    Build build = this.Builds[i];
                     if (build == null)
                         continue;
                     ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
@@ -719,7 +722,7 @@ namespace RiotPls.Forms
             int index = this.itmSelectedForBuilder.DropDownItems.IndexOf(item);
             if (index < 0)
                 return;
-            Build build = Build.GetBuild(index);
+            Build build = this.Builds[index];
             if (build == null)
                 return;
             ChampionInfo champion = item.Checked ? Engine.GetChampion(this.last_champ_name) : null;
