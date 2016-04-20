@@ -344,7 +344,7 @@ namespace RiotPls.Forms
             }
             catch(Exception ex)
             {
-
+                Console.WriteLine("Error while loading API key\n{0}", ex.Message);
             }
         }
         protected override void workerUpdateData_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -357,6 +357,7 @@ namespace RiotPls.Forms
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error while loading API key\n{0}", ex.Message);
             }
         }
 

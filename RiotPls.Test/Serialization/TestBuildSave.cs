@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RiotPls.API.Builder;
-using RiotPls.API.Serialization.Champions;
-using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.ExtensionMethods;
 using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.Test.Serialization
@@ -39,7 +38,7 @@ namespace RiotPls.Test.Serialization
                 ItemInfo item = new ItemInfo();
                 build.SetItem(i, item);
             }
-            build.Save(TestBuildSave.PATH);
+            build.SaveAsJson(TestBuildSave.PATH);
             Assert.IsTrue(File.Exists(TestBuildSave.PATH), "JSON File Was Not Created");
             string text = File.ReadAllText(TestBuildSave.PATH);
             build = null;

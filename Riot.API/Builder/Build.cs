@@ -75,24 +75,6 @@ namespace RiotPls.API.Builder
         {
             return this.Items.ToList();
         }
-        public void Save(string path)
-        {
-            try
-            {
-                JsonSerializerSettings settings = new JsonSerializerSettings
-                {
-                    ObjectCreationHandling = ObjectCreationHandling.Reuse,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                string text = JsonConvert.SerializeObject(this, settings);
-                File.WriteAllText(path, text);
-            }
-            catch (Exception e)
-            {
-            }
-            return;
-        }
-
         public void SetChampion(ChampionInfo champion_in)
         {
             if (this.Champion != champion_in)

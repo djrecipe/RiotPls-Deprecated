@@ -26,6 +26,16 @@ namespace RiotPls.Tools
             {
                 // ignored
             }
+            try
+            {
+                string directory = Paths.Documents;
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+            }
+            catch
+            {
+                // ignored
+            }
             return;
         }
     }

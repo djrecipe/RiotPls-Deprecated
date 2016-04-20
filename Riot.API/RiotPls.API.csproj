@@ -78,6 +78,7 @@
     <Compile Include="Serialization\Champions\ChampionStatsInfo.cs" />
     <Compile Include="Serialization\General\CombinedStatsInfo.cs" />
     <Compile Include="Serialization\General\GeneralStatsInfo.cs" />
+    <Compile Include="Serialization\Extension Methods\JsonSaveEngine.cs" />
     <Compile Include="Serialization\General\RealmInfoSet.cs" />
     <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />

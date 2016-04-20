@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RiotPls.API.Builder;
+using RiotPls.API.Serialization.ExtensionMethods;
 
 namespace RiotPls.Forms
 {
@@ -323,6 +325,7 @@ namespace RiotPls.Forms
             Tools.GeneralSettings.SaveWindowSettings(this.fSettings);
             Tools.GeneralSettings.SaveWindowSettings(this);
             Tools.GeneralSettings.Save();
+            this.Builds.SaveAsJson(Path.Combine(Tools.Paths.Documents, "Builds", "Autosave.builds"));
         }
         private void formMain_Load(object sender, EventArgs e)
         {
