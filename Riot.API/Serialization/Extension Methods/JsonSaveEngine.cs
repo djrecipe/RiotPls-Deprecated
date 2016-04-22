@@ -32,7 +32,7 @@ namespace RiotPls.API.Serialization.ExtensionMethods
             try
             {
                 string directory = Path.GetDirectoryName(path);
-                if (!Directory.Exists(directory))
+                if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
                 JsonSerializerSettings settings = new JsonSerializerSettings
                 {

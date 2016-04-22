@@ -63,6 +63,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="PseudoChampionInfo.cs" />
+    <Compile Include="Serialization\TestBuildCollectionSave.cs" />
     <Compile Include="Serialization\TestBuildSave.cs" />
     <Compile Include="Serialization\TestImageInfo.cs" />
     <Compile Include="TestAPIKey.cs" />
