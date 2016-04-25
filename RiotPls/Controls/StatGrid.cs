@@ -7,6 +7,9 @@ namespace RiotPls.Controls
 {
     public class StatGrid : UserControl
     {
+        #region Types
+        public delegate void SelectedRowChangedDelegate(int row);
+        #endregion
         #region Instance Members
         #region Controls
         private System.ComponentModel.IContainer components = null;
@@ -21,14 +24,24 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colMagicResist;
         private DataGridViewTextBoxColumn colHealth;
         private DataGridViewTextBoxColumn colResource;
-        #endregion
+        #endregion                                 
+        public event SelectedRowChangedDelegate SelectedRowChanged;
+        private bool ignoreRowChange = true;
         #endregion
         #region Instance Properties
+        /// <summary>
+        /// Data source which is bound to the table
+        /// </summary>
         public StatsTable DataSource
         {
             get { return this.gridMain.DataSource as StatsTable; }
             set { this.gridMain.DataSource = value; }
         }
+
+        /// <summary>
+        /// Current number of rows in the table
+        /// </summary>
+        public int RowCount => this.gridMain.RowCount;
 
         #endregion
         #region Instance Methods
@@ -262,6 +275,7 @@ namespace RiotPls.Controls
             this.gridMain.Size = new System.Drawing.Size(150, 150);
             this.gridMain.TabIndex = 0;
             this.gridMain.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.gridMain_DataBindingComplete);
+            this.gridMain.SelectionChanged += new System.EventHandler(this.gridMain_SelectionChanged);
             // 
             // StatGrid
             // 
@@ -274,6 +288,18 @@ namespace RiotPls.Controls
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 
+        }
+
+        public void SetSelectedRow(int row)
+        {
+            this.ignoreRowChange = true;
+            if (row >= 0 && row < this.gridMain.RowCount)
+            {
+                this.gridMain.Rows[row].Selected = true;
+                this.gridMain.CurrentCell = this.gridMain.Rows[row].Cells[0];
+            }
+            this.ignoreRowChange = false;
+            return;
         }
         private void ResizeColumns()
         {
@@ -303,6 +329,11 @@ namespace RiotPls.Controls
             for (int i = 2; i <= 18; i++)
                 this.gridMain.Rows[i].HeaderCell.Value = i.ToString();
             return;
+        }
+        private void gridMain_SelectionChanged(object sender, EventArgs e)
+        {
+            if (!this.ignoreRowChange && this.SelectedRowChanged != null)
+                this.SelectedRowChanged(this.gridMain.SelectedCells.Count > 0 ? this.gridMain.SelectedCells[0].RowIndex : 0);
         }
         #endregion
         #region Override Methods

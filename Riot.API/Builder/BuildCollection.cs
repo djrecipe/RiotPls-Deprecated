@@ -21,6 +21,17 @@ namespace RiotPls.API.Builder
         private List<Build> Builds { get; set; } = new List<Build>();
         public int Count => this.Builds.Count;
         public string Name { get; set; } = "My Builds";
+        private int _SelectedRow = 0;
+        public int SelectedRow
+        {
+            get { return this._SelectedRow; }
+            set
+            {
+                this._SelectedRow = value;
+                foreach (Build build in this.Builds)
+                    build.SelectedRow = this.SelectedRow;
+            }
+        }
         #endregion
         #region Instance Methods
         public BuildCollection(string name = "My Builds")
@@ -31,9 +42,13 @@ namespace RiotPls.API.Builder
         }
         public void Add(Build build)
         {
+            build.SelectedRow = this.SelectedRow;
+            build.SelectedRowChanged += this.Build_SelectedRowChanged;
             this.Builds.Add(build);
             return;
         }
+
+
         public Build Find(string name)
         {
             return this.Builds.FirstOrDefault(b => b.Name == name);
@@ -46,14 +61,27 @@ namespace RiotPls.API.Builder
         }
         public void Remove(Build build)
         {
-            if(this.Builds.Contains(build))
+            if (this.Builds.Contains(build))
+            {
+                build.SelectedRowChanged -= this.Build_SelectedRowChanged;
                 this.Builds.Remove(build);
+            }
             return;
         }
         public void RemoveAt(int index)
         {
-            if(index < this.Count)
-                this.Builds.RemoveAt(index);
+            if (index < this.Count)
+            {
+                Build build = this.Builds[index];
+                this.Remove(build);
+            }
+            return;
+        }
+        #endregion
+        #region Event Methods
+        private void Build_SelectedRowChanged(int row)
+        {
+            this.SelectedRow = row;
             return;
         }
         #endregion

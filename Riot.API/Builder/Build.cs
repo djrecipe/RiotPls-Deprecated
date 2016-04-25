@@ -18,10 +18,18 @@ namespace RiotPls.API.Builder
     {
         #region Types
         public delegate void BuildChangedDelegate(string name);
+        public delegate void SelectedRowChangedDelegate(int row);
         #endregion
         #region Instance Members
         private CombinedStatsInfo stats = new CombinedStatsInfo();
-        public BuildChangedDelegate BuildChanged;
+        /// <summary>
+        /// Notifies when build details change (i.e. champion or item changes)
+        /// </summary>
+        public event BuildChangedDelegate BuildChanged;
+        /// <summary>
+        /// Notifies when the SelectRow property value changes
+        /// </summary>
+        public event SelectedRowChangedDelegate SelectedRowChanged;
         #endregion
         #region Instance Properties  
         [JsonProperty("Champion")]
@@ -29,7 +37,21 @@ namespace RiotPls.API.Builder
         [JsonProperty("Items")]
         private ItemInfo[] Items { get; set; } = new ItemInfo[6];
         [JsonProperty("Name")]
-        public string Name { get; set; } = null; 
+        public string Name { get; set; } = null;
+        private int _SelectedRow = 0; 
+        public int SelectedRow
+        {
+            get { return this._SelectedRow; }
+            set
+            {
+                if (this.SelectedRow != value)
+                {
+                    this._SelectedRow = value;
+                    if (this.SelectedRowChanged != null)
+                        this.SelectedRowChanged(value);
+                }
+            }
+        }
         public StatsTable Table => this.stats.Table;
         #endregion
         #region Instance Methods

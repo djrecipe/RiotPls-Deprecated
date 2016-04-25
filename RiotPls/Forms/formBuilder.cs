@@ -35,8 +35,10 @@ namespace RiotPls.Forms
             this.InitializeDragDrop();
             this.build = build;
             this.build.BuildChanged += this.Build_BuildChanged;
+            this.build.SelectedRowChanged += this.Build_SelectedRowChanged;
             return;
         }
+
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -171,6 +173,7 @@ namespace RiotPls.Forms
             this.gridMain.Padding = new System.Windows.Forms.Padding(20, 0, 20, 10);
             this.gridMain.Size = new System.Drawing.Size(764, 314);
             this.gridMain.TabIndex = 29;
+            this.gridMain.SelectedRowChanged += new RiotPls.Controls.StatGrid.SelectedRowChangedDelegate(this.gridMain_SelectedRowChanged);
             // 
             // flowTop
             // 
@@ -239,6 +242,14 @@ namespace RiotPls.Forms
                 this.dropItem4, this.dropItem5, this.dropItem6 };
             return;
         }
+
+        private void SelectRow(int row)
+        {
+            if (row < 0 || row >= this.gridMain.RowCount)
+                row = 0;
+            this.gridMain.SetSelectedRow(row);
+            return;
+        }
         private void UpdateBuild()
         {
             if (!this.Visible)
@@ -252,22 +263,32 @@ namespace RiotPls.Forms
                 this.itemDrops[i].Set(this.build.GetItem(i));
             // update grid
             this.gridMain.DataSource = this.build.Table;
+            this.SelectRow(this.build.SelectedRow);
             Drawing.ResumeDrawing(this.gridMain);
             return;
         }
         #endregion
         #region Event Methods
+        #region Build Events
         private void Build_BuildChanged(string name)
         {
             this.UpdateBuild();
             return;
         }
+        private void Build_SelectedRowChanged(int row)
+        {
+            this.SelectRow(row);
+            return;
+        }
+        #endregion
+        #region Form Events
         private void formStatSheet_VisibleChanged(object sender, System.EventArgs e)
         {
             this.UpdateBuild();
             return;
         }
-
+        #endregion
+        #region DropSlot Events
         private void dropChampion_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             ChampionInfo champ = drop as ChampionInfo;
@@ -281,6 +302,13 @@ namespace RiotPls.Forms
             this.build.SetItem(index, item);
         }
         #endregion
+        #region Grid Events
+        private void gridMain_SelectedRowChanged(int row)
+        {
+            this.build.SelectedRow = row;
+        }
+        #endregion
+        #endregion
         #region Override Methods     
         protected override void Dispose(bool disposing)
         {
@@ -291,5 +319,6 @@ namespace RiotPls.Forms
             base.Dispose(disposing);
         }
         #endregion
+
     }
 }
