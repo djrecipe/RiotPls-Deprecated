@@ -42,6 +42,15 @@ namespace RiotPls.API.Serialization.Champions
         /// </summary>
         [JsonProperty("image", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         private ImageInfo ImageData { get; set; } = null;
+
+        /// <summary>
+        /// Level at which champion stats are taken into account
+        /// </summary>
+        public int LevelObtained
+        {
+            get { return this.Stats.RequiredLevel; }
+            set { this.Stats.RequiredLevel = value; }
+        }
         /// <summary>
         /// Collection of non-static data, primarily in regards to champion availability
         /// </summary>

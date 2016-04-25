@@ -109,9 +109,19 @@ namespace RiotPls.API.Builder
 
         public void SetItem(int index, ItemInfo item)
         {
-            if(index < 0 || index >=6)
+            if (index < 0 || index >= 6)
                 throw new ArgumentOutOfRangeException("Item index must be 0 or greater and less than six", "index");
             this.Items[index] = item;
+            this.FireUpdate(this.Name);
+            return;
+        }
+        public void SetItemLevel(int index, int level)
+        {
+            if (index < 0 || index >= 6)
+                throw new ArgumentOutOfRangeException("Item index must be 0 or greater and less than six", "index");
+            if (this.Items[index] == null)
+                return;
+            this.Items[index].LevelObtained = level;
             this.FireUpdate(this.Name);
             return;
         }

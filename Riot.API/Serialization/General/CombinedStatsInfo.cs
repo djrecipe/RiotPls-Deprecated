@@ -57,7 +57,7 @@ namespace RiotPls.API.Serialization.General
         {
             for (int i = 0; i <= 18; i++)
             {
-                IEnumerable<IStatsInfo> collection = this.components.Where(c => c.RequiredLevel == 1 || c.RequiredLevel >= i);
+                IEnumerable<IStatsInfo> collection = this.components.Where(c => c.RequiredLevel == 1 || c.RequiredLevel <= i);
                 this.Stats[i]["AbilityPower"] = collection.Sum(info => (double)info.Stats[i]["AbilityPower"]);
                 this.Stats[i]["Armor"] = collection.Sum(info => (double)info.Stats[i]["Armor"]);
                 this.Stats[i]["AttackDamage"] = collection.Sum(info => (double)info.Stats[i]["AttackDamage"]);

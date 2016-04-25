@@ -68,6 +68,14 @@ namespace RiotPls.API.Serialization.Items
         public ImageInfo ImageData { get; private set; } = null;
         [JsonProperty("inStore")]
         public bool IsInStore { get; private set; } = false;
+        /// <summary>
+        /// Level at which item stats are taken into account
+        /// </summary>
+        public int LevelObtained
+        {
+            get { return this.Stats.RequiredLevel; }
+            set { this.Stats.RequiredLevel = value; }
+        }
         [JsonProperty("maps", ItemIsReference = true)]
         public Dictionary<string, bool> Maps { get; private set; } = new Dictionary<string, bool>();
         [JsonProperty("name")]

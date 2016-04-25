@@ -17,7 +17,7 @@ namespace RiotPls.Tools
                 return;
             Drawing.SendMessage(parent.Handle, WM_SETREDRAW, true, 0);
             if (refresh)
-                parent.Invalidate();
+                parent.Refresh();
             return;
         }
         public static void SuspendDrawing(Control parent)

@@ -12,8 +12,9 @@ namespace RiotPls.Controls
 {
     public class DropSlot : UserControl
     {
-        #region Types
-        public delegate void delDropOccurred(DropSlot slot, IRiotDroppable drop);
+        #region Types                                                                     
+        public delegate void DropOccurredDelegate(DropSlot slot, IRiotDroppable drop);
+        public delegate void LevelObtainedChangedDelegate(DropSlot slot, IRiotDroppable drop, int level);
         public enum DataType : uint
         {
             Champion = 0,
@@ -32,8 +33,9 @@ namespace RiotPls.Controls
         private Label lblMain;
         private PictureBox picMain;
         #endregion
-        #region Events
-        public event delDropOccurred DropOccurred;
+        #region Events                                     
+        public event DropOccurredDelegate DropOccurred;
+        public event LevelObtainedChangedDelegate LevelObtainedChanged;
         #endregion
         private IRiotDroppable drop = null;
         #endregion
@@ -113,7 +115,7 @@ namespace RiotPls.Controls
             this.mnuitmRemoveItem,
             this.mnuitmItemLevelObtained});
             this.cmenItem.Name = "cmenItem";
-            this.cmenItem.Size = new System.Drawing.Size(154, 48);
+            this.cmenItem.Size = new System.Drawing.Size(154, 70);
             // 
             // mnuitmRemoveItem
             // 
@@ -131,24 +133,27 @@ namespace RiotPls.Controls
             this.mnuitmItemLevelObtained.Name = "mnuitmItemLevelObtained";
             this.mnuitmItemLevelObtained.Size = new System.Drawing.Size(153, 22);
             this.mnuitmItemLevelObtained.Text = "Level Obtained";
+            this.mnuitmItemLevelObtained.DropDownOpened += new System.EventHandler(this.mnuitmItemLevelObtained_DropDownOpened);
             this.mnuitmItemLevelObtained.TextChanged += new System.EventHandler(this.mnuitmItemLevelObtained_TextChanged);
             // 
             // mnuitmLevelObtainedValue
             // 
             this.mnuitmLevelObtainedValue.Name = "mnuitmLevelObtainedValue";
             this.mnuitmLevelObtainedValue.Size = new System.Drawing.Size(100, 23);
+            this.mnuitmLevelObtainedValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mnuitmLevelObtainedValue_KeyDown);
+            this.mnuitmLevelObtainedValue.TextChanged += new System.EventHandler(this.mnuitmLevelObtainedValue_TextChanged);
             // 
             // cmenChampion
             // 
             this.cmenChampion.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuitmRemoveChampion});
             this.cmenChampion.Name = "cmenChampion";
-            this.cmenChampion.Size = new System.Drawing.Size(153, 48);
+            this.cmenChampion.Size = new System.Drawing.Size(118, 26);
             // 
             // mnuitmRemoveChampion
             // 
             this.mnuitmRemoveChampion.Name = "mnuitmRemoveChampion";
-            this.mnuitmRemoveChampion.Size = new System.Drawing.Size(152, 22);
+            this.mnuitmRemoveChampion.Size = new System.Drawing.Size(117, 22);
             this.mnuitmRemoveChampion.Text = "Remove";
             this.mnuitmRemoveChampion.Click += new System.EventHandler(this.mnuitmRemove_Click);
             // 
@@ -199,6 +204,7 @@ namespace RiotPls.Controls
         {
             this.picMain.BackgroundImage = this.drop?.Image;
             this.lblMain.Text = this.drop?.Name ?? this.NullText;
+            this.mnuitmLevelObtainedValue.Text = (this.drop?.LevelObtained ?? 1).ToString();
             this.FireDropOccurredEvent(this.drop);
             return;
         }
@@ -251,6 +257,36 @@ namespace RiotPls.Controls
 
         #endregion
 
+        #endregion
+        #region Event Methods            
+        private void mnuitmItemLevelObtained_DropDownOpened(object sender, EventArgs e)
+        {
+            this.mnuitmLevelObtainedValue.Focus();
+            this.mnuitmLevelObtainedValue.SelectionStart = 0;
+            this.mnuitmLevelObtainedValue.SelectionLength = this.mnuitmLevelObtainedValue.TextLength;
+        }
+        private void mnuitmLevelObtainedValue_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.cmenItem.Close();
+                e.Handled = true;
+            }
+            return;
+        }
+        private void mnuitmLevelObtainedValue_TextChanged(object sender, EventArgs e)
+        {
+            if (this.drop == null)
+                return;
+            int level = 1;
+            if (int.TryParse(this.mnuitmLevelObtainedValue.Text, out level))
+            {
+                this.drop.LevelObtained = level;
+                if (this.LevelObtainedChanged != null)
+                    this.LevelObtainedChanged(this, this.drop, this.drop.LevelObtained);
+            }
+            return;
+        }
         #endregion
 
     }

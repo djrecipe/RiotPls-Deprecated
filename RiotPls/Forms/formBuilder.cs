@@ -79,7 +79,7 @@ namespace RiotPls.Forms
             this.dropChampion.Size = new System.Drawing.Size(124, 151);
             this.dropChampion.TabIndex = 22;
             this.dropChampion.Type = RiotPls.Controls.DropSlot.DataType.Champion;
-            this.dropChampion.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropChampion_DropOccurred);
+            this.dropChampion.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropChampion_DropOccurred);
             // 
             // dropItem1
             // 
@@ -93,7 +93,8 @@ namespace RiotPls.Forms
             this.dropItem1.Size = new System.Drawing.Size(96, 121);
             this.dropItem1.TabIndex = 23;
             this.dropItem1.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem1.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem1.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem1.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // dropItem2
             // 
@@ -107,7 +108,8 @@ namespace RiotPls.Forms
             this.dropItem2.Size = new System.Drawing.Size(96, 121);
             this.dropItem2.TabIndex = 24;
             this.dropItem2.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem2.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem2.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem2.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // dropItem3
             // 
@@ -121,7 +123,8 @@ namespace RiotPls.Forms
             this.dropItem3.Size = new System.Drawing.Size(96, 121);
             this.dropItem3.TabIndex = 25;
             this.dropItem3.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem3.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem3.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem3.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // dropItem4
             // 
@@ -135,7 +138,8 @@ namespace RiotPls.Forms
             this.dropItem4.Size = new System.Drawing.Size(96, 121);
             this.dropItem4.TabIndex = 26;
             this.dropItem4.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem4.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem4.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem4.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // dropItem5
             // 
@@ -149,7 +153,8 @@ namespace RiotPls.Forms
             this.dropItem5.Size = new System.Drawing.Size(96, 121);
             this.dropItem5.TabIndex = 27;
             this.dropItem5.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem5.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem5.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem5.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // dropItem6
             // 
@@ -163,7 +168,8 @@ namespace RiotPls.Forms
             this.dropItem6.Size = new System.Drawing.Size(96, 121);
             this.dropItem6.TabIndex = 28;
             this.dropItem6.Type = RiotPls.Controls.DropSlot.DataType.Item;
-            this.dropItem6.DropOccurred += new RiotPls.Controls.DropSlot.delDropOccurred(this.dropItem_DropOccurred);
+            this.dropItem6.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
+            this.dropItem6.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
             // gridMain
             // 
@@ -303,6 +309,11 @@ namespace RiotPls.Forms
             int index = this.itemDrops.ToList().IndexOf(slot);
             ItemInfo item = drop as ItemInfo;
             this.Build.SetItem(index, item);
+        }
+        private void dropItem_LevelObtainedChanged(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop, int level)
+        {
+            int index = this.itemDrops.ToList().IndexOf(slot);
+            this.Build.SetItemLevel(index, level);
         }
         #endregion
         #region Grid Events

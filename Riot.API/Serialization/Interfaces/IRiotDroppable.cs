@@ -11,6 +11,7 @@ namespace RiotPls.API.Serialization.Interfaces
     public interface IRiotDroppable
     {
         Bitmap Image { get; }
+        int LevelObtained { get; set; }
         string Name { get; }
     }
 }
