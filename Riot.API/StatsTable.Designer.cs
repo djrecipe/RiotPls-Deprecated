@@ -295,13 +295,17 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnHealthRegen;
             
+            private global::System.Data.DataColumn columnMagicPenFlat;
+            
+            private global::System.Data.DataColumn columnMagicPenPerc;
+            
+            private global::System.Data.DataColumn columnMagicResist;
+            
             private global::System.Data.DataColumn columnMovementSpeed;
             
             private global::System.Data.DataColumn columnResource;
             
             private global::System.Data.DataColumn columnResourceRegen;
-            
-            private global::System.Data.DataColumn columnMagicResist;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -402,6 +406,30 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MagicPenFlatColumn {
+                get {
+                    return this.columnMagicPenFlat;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MagicPenPercColumn {
+                get {
+                    return this.columnMagicPenPerc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MagicResistColumn {
+                get {
+                    return this.columnMagicResist;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn MovementSpeedColumn {
                 get {
                     return this.columnMovementSpeed;
@@ -421,14 +449,6 @@ namespace RiotPls.API {
             public global::System.Data.DataColumn ResourceRegenColumn {
                 get {
                     return this.columnResourceRegen;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn MagicResistColumn {
-                get {
-                    return this.columnMagicResist;
                 }
             }
             
@@ -469,7 +489,7 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StatsRow AddStatsRow(double AbilityPower, double Armor, double AttackDamage, double AttackRange, double AttackSpeed, double CriticalStrike, double Health, double HealthRegen, double MovementSpeed, double Resource, double ResourceRegen, double MagicResist) {
+            public StatsRow AddStatsRow(double AbilityPower, double Armor, double AttackDamage, double AttackRange, double AttackSpeed, double CriticalStrike, double Health, double HealthRegen, double MagicPenFlat, double MagicPenPerc, double MagicResist, double MovementSpeed, double Resource, double ResourceRegen) {
                 StatsRow rowStatsRow = ((StatsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         AbilityPower,
@@ -480,10 +500,12 @@ namespace RiotPls.API {
                         CriticalStrike,
                         Health,
                         HealthRegen,
+                        MagicPenFlat,
+                        MagicPenPerc,
+                        MagicResist,
                         MovementSpeed,
                         Resource,
-                        ResourceRegen,
-                        MagicResist};
+                        ResourceRegen};
                 rowStatsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStatsRow);
                 return rowStatsRow;
@@ -514,10 +536,12 @@ namespace RiotPls.API {
                 this.columnCriticalStrike = base.Columns["CriticalStrike"];
                 this.columnHealth = base.Columns["Health"];
                 this.columnHealthRegen = base.Columns["HealthRegen"];
+                this.columnMagicPenFlat = base.Columns["MagicPenFlat"];
+                this.columnMagicPenPerc = base.Columns["MagicPenPerc"];
+                this.columnMagicResist = base.Columns["MagicResist"];
                 this.columnMovementSpeed = base.Columns["MovementSpeed"];
                 this.columnResource = base.Columns["Resource"];
                 this.columnResourceRegen = base.Columns["ResourceRegen"];
-                this.columnMagicResist = base.Columns["MagicResist"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -539,14 +563,18 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnHealth);
                 this.columnHealthRegen = new global::System.Data.DataColumn("HealthRegen", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHealthRegen);
+                this.columnMagicPenFlat = new global::System.Data.DataColumn("MagicPenFlat", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMagicPenFlat);
+                this.columnMagicPenPerc = new global::System.Data.DataColumn("MagicPenPerc", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMagicPenPerc);
+                this.columnMagicResist = new global::System.Data.DataColumn("MagicResist", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMagicResist);
                 this.columnMovementSpeed = new global::System.Data.DataColumn("MovementSpeed", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnMovementSpeed);
                 this.columnResource = new global::System.Data.DataColumn("Resource", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnResource);
                 this.columnResourceRegen = new global::System.Data.DataColumn("ResourceRegen", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnResourceRegen);
-                this.columnMagicResist = new global::System.Data.DataColumn("MagicResist", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMagicResist);
                 this.columnAbilityPower.Caption = "Attack Damage";
                 this.columnAbilityPower.DefaultValue = ((double)(0D));
                 this.columnArmor.DefaultValue = ((double)(0D));
@@ -561,13 +589,17 @@ namespace RiotPls.API {
                 this.columnHealth.DefaultValue = ((double)(0D));
                 this.columnHealthRegen.Caption = "Health Regen";
                 this.columnHealthRegen.DefaultValue = ((double)(0D));
+                this.columnMagicPenFlat.Caption = "Critical Strike";
+                this.columnMagicPenFlat.DefaultValue = ((double)(0D));
+                this.columnMagicPenPerc.Caption = "Critical Strike";
+                this.columnMagicPenPerc.DefaultValue = ((double)(0D));
+                this.columnMagicResist.Caption = "Magic Resist";
+                this.columnMagicResist.DefaultValue = ((double)(0D));
                 this.columnMovementSpeed.Caption = "Movement Speed";
                 this.columnMovementSpeed.DefaultValue = ((double)(0D));
                 this.columnResource.DefaultValue = ((double)(0D));
                 this.columnResourceRegen.Caption = "Resource Regen";
                 this.columnResourceRegen.DefaultValue = ((double)(0D));
-                this.columnMagicResist.Caption = "Magic Resist";
-                this.columnMagicResist.DefaultValue = ((double)(0D));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -838,6 +870,54 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double MagicPenFlat {
+                get {
+                    if (this.IsMagicPenFlatNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.MagicPenFlatColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.MagicPenFlatColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double MagicPenPerc {
+                get {
+                    if (this.IsMagicPenPercNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.MagicPenPercColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.MagicPenPercColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double MagicResist {
+                get {
+                    if (this.IsMagicResistNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.MagicResistColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.MagicResistColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public double MovementSpeed {
                 get {
                     if (this.IsMovementSpeedNull()) {
@@ -881,22 +961,6 @@ namespace RiotPls.API {
                 }
                 set {
                     this[this.tableStats.ResourceRegenColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double MagicResist {
-                get {
-                    if (this.IsMagicResistNull()) {
-                        return 0D;
-                    }
-                    else {
-                        return ((double)(this[this.tableStats.MagicResistColumn]));
-                    }
-                }
-                set {
-                    this[this.tableStats.MagicResistColumn] = value;
                 }
             }
             
@@ -998,6 +1062,42 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMagicPenFlatNull() {
+                return this.IsNull(this.tableStats.MagicPenFlatColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMagicPenFlatNull() {
+                this[this.tableStats.MagicPenFlatColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMagicPenPercNull() {
+                return this.IsNull(this.tableStats.MagicPenPercColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMagicPenPercNull() {
+                this[this.tableStats.MagicPenPercColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMagicResistNull() {
+                return this.IsNull(this.tableStats.MagicResistColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMagicResistNull() {
+                this[this.tableStats.MagicResistColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsMovementSpeedNull() {
                 return this.IsNull(this.tableStats.MovementSpeedColumn);
             }
@@ -1030,18 +1130,6 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetResourceRegenNull() {
                 this[this.tableStats.ResourceRegenColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsMagicResistNull() {
-                return this.IsNull(this.tableStats.MagicResistColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetMagicResistNull() {
-                this[this.tableStats.MagicResistColumn] = global::System.Convert.DBNull;
             }
         }
         

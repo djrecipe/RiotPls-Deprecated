@@ -79,6 +79,8 @@ namespace RiotPls.API.Serialization.General
                 this.Stats[i]["Health"] = collection.Sum(info => (double)info.Stats[i]["Health"]);
                 this.Stats[i]["HealthRegen"] = collection.Sum(info => (double)info.Stats[i]["HealthRegen"]);
                 this.Stats[i]["MagicResist"] = collection.Sum(info => (double)info.Stats[i]["MagicResist"]);
+                this.Stats[i]["MagicPenFlat"] = collection.Sum(info => (double)info.Stats[i]["MagicPenFlat"]);
+                this.Stats[i]["MagicPenPerc"] = collection.Sum(info => (double)info.Stats[i]["MagicPenPerc"]);
                 this.Stats[i]["MovementSpeed"] = collection.Sum(info => (double)info.Stats[i]["MovementSpeed"]);
                 this.Stats[i]["Resource"] = collection.Sum(info => (double)info.Stats[i]["Resource"]);
                 this.Stats[i]["ResourceRegen"] = collection.Sum(info => (double)info.Stats[i]["ResourceRegen"]);

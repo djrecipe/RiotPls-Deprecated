@@ -197,6 +197,58 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        [JsonProperty("rFlatMagicPenetrationMod")]
+        public override double MagicPenFlat
+        {
+            get
+            {
+                return base.MagicPenFlat;
+            }
+            internal set
+            {
+                base.MagicPenFlat = value;
+                return;
+            }
+        }
+        [JsonProperty("rPercentMagicPenetrationMod")]
+        public override double MagicPenPerc
+        {
+            get
+            {
+                return base.MagicPenPerc;
+            }
+            internal set
+            {
+                base.MagicPenPerc = value;
+                return;
+            }
+        }
+        [JsonProperty("FlatSpellBlockMod")]
+        public override double MagicResist
+        {
+            get
+            {
+                return base.MagicResist;
+            }
+            internal set
+            {
+                base.MagicResist = value;
+                return;
+            }
+        }
+        [JsonProperty("rFlatSpellBlockModPerLevel")]
+        public override double MagicResistPerLevel
+        {
+            get
+            {
+                return base.MagicResistPerLevel;
+            }
+            internal set
+            {
+                base.MagicResistPerLevel = value;
+                return;
+            }
+        }
         [JsonProperty("FlatMovementSpeedMod")]
         public override double MovementSpeed
         {
@@ -259,32 +311,6 @@ namespace RiotPls.API.Serialization.Items
             internal set
             {
                 base.ResourceRegenPerLevel = value;
-                return;
-            }
-        }
-        [JsonProperty("FlatSpellBlockMod")]
-        public override double MagicResist
-        {
-            get
-            {
-                return base.MagicResist;
-            }
-            internal set
-            {
-                base.MagicResist = value;
-                return;
-            }
-        }
-        [JsonProperty("rFlatSpellBlockModPerLevel")]
-        public override double MagicResistPerLevel
-        {
-            get
-            {
-                return base.MagicResistPerLevel;
-            }
-            internal set
-            {
-                base.MagicResistPerLevel = value;
                 return;
             }
         }

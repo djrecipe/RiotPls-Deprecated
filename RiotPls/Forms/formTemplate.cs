@@ -16,6 +16,12 @@ namespace RiotPls.Forms
         private Point last_mouse = Point.Empty;
         #endregion
         #region Instance Properties  
+        private bool _CloseButtonEnabled = false;
+        public bool CloseButtonEnabled
+        {
+            get { return this._CloseButtonEnabled; }
+            set { this._CloseButtonEnabled = value; }
+        }
         public bool ChildWindow
         {
             get;
@@ -34,9 +40,13 @@ namespace RiotPls.Forms
         {
             get
             {
-                CreateParams myCp = base.CreateParams;
-                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
-                return myCp;
+                CreateParams my_cp = base.CreateParams;
+                my_cp.ClassStyle = my_cp.ClassStyle;
+                if (this.CloseButtonEnabled)
+                    my_cp.ClassStyle &= ~CP_NOCLOSE_BUTTON;
+                else
+                    my_cp.ClassStyle |= CP_NOCLOSE_BUTTON;
+                return my_cp;
             }
         }
         #endregion

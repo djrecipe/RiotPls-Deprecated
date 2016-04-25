@@ -26,16 +26,18 @@ namespace RiotPls.Forms
         private FlowLayoutPanel flowTop;
         private SplitContainer splitVertical;
         #endregion
-        private Build build = null;
+        #endregion
+        #region Instance Properties
+        public Build Build { get; private set; }
         #endregion
         #region Instance Methods
         public formBuilder(Build build)
         {
             this.InitializeComponent();
             this.InitializeDragDrop();
-            this.build = build;
-            this.build.BuildChanged += this.Build_BuildChanged;
-            this.build.SelectedRowChanged += this.Build_SelectedRowChanged;
+            this.Build = build;
+            this.Build.BuildChanged += this.Build_BuildChanged;
+            this.Build.SelectedRowChanged += this.Build_SelectedRowChanged;
             return;
         }
 
@@ -218,6 +220,7 @@ namespace RiotPls.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(764, 501);
+            this.CloseButtonEnabled = true;
             this.Controls.Add(this.splitVertical);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -254,16 +257,16 @@ namespace RiotPls.Forms
         {
             if (!this.Visible)
                 return;
-            this.Text = this.build.Name;
+            this.Text = this.Build.Name;
             Drawing.SuspendDrawing(this.gridMain);
             // update champion
-            this.dropChampion.Set(this.build.Champion);
+            this.dropChampion.Set(this.Build.Champion);
             // update items
             for (int i = 0; i < 6; i++)
-                this.itemDrops[i].Set(this.build.GetItem(i));
+                this.itemDrops[i].Set(this.Build.GetItem(i));
             // update grid
-            this.gridMain.DataSource = this.build.Table;
-            this.SelectRow(this.build.SelectedRow);
+            this.gridMain.DataSource = this.Build.Table;
+            this.SelectRow(this.Build.SelectedRow);
             Drawing.ResumeDrawing(this.gridMain);
             return;
         }
@@ -281,7 +284,7 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
-        #region Form Events
+        #region Form Events       
         private void formStatSheet_VisibleChanged(object sender, System.EventArgs e)
         {
             this.UpdateBuild();
@@ -292,20 +295,20 @@ namespace RiotPls.Forms
         private void dropChampion_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             ChampionInfo champ = drop as ChampionInfo;
-            this.build.SetChampion(champ);
+            this.Build.SetChampion(champ);
         }
 
         private void dropItem_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             int index = this.itemDrops.ToList().IndexOf(slot);
             ItemInfo item = drop as ItemInfo;
-            this.build.SetItem(index, item);
+            this.Build.SetItem(index, item);
         }
         #endregion
         #region Grid Events
         private void gridMain_SelectedRowChanged(int row)
         {
-            this.build.SelectedRow = row;
+            this.Build.SelectedRow = row;
         }
         #endregion
         #endregion

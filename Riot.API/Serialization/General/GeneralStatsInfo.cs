@@ -256,6 +256,32 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        public virtual double MagicPenFlat
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["MagicPenFlat"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["MagicPenFlat"] = value;
+                this.InitializeMagicPenFlatRows();
+                return;
+            }
+        }
+        public virtual double MagicPenPerc
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["MagicPenPerc"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["MagicPenPerc"] = value;
+                this.InitializeMagicPenPercRows();
+                return;
+            }
+        }
         public virtual double MagicResist
         {
             get
@@ -408,6 +434,18 @@ namespace RiotPls.API.Serialization.General
         {
             for (int i = 2; i <= 18; i++)
                 this.Stats[i]["HealthRegen"] = (double)this.Stats[0]["HealthRegen"] + (double)this.Stats[1]["HealthRegen"] * (double)i;
+            return;
+        }
+        private void InitializeMagicPenFlatRows()
+        {
+            for (int i = 2; i <= 18; i++)
+                this.Stats[i]["MagicPenFlat"] = (double)this.Stats[0]["MagicPenFlat"] + (double)this.Stats[1]["MagicPenFlat"] * (double)i;
+            return;
+        }
+        private void InitializeMagicPenPercRows()
+        {
+            for (int i = 2; i <= 18; i++)
+                this.Stats[i]["MagicPenPerc"] = (double)this.Stats[0]["MagicPenPerc"] + (double)this.Stats[1]["MagicPenPerc"] * (double)i;
             return;
         }
         private void InitializeMagicResistRows()

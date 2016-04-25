@@ -15,6 +15,15 @@ namespace RiotPls.API.Builder
     [JsonObject(MemberSerialization.OptIn)]
     public class BuildCollection
     {
+        #region Types
+        public delegate void BuildCollectionChangedDelegate();
+        #endregion
+        #region Static Members
+        private static int TotalCount = 0;
+        #endregion
+        #region Instance Members
+        public event BuildCollectionChangedDelegate BuildCollectionChanged;
+        #endregion
         #region Instance Properties
         public Build this[int key] => key >= Builds.Count ? null : this.Builds[key];
         [JsonProperty("Builds", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
@@ -45,6 +54,8 @@ namespace RiotPls.API.Builder
             build.SelectedRow = this.SelectedRow;
             build.SelectedRowChanged += this.Build_SelectedRowChanged;
             this.Builds.Add(build);
+            if (this.BuildCollectionChanged != null)
+                this.BuildCollectionChanged();
             return;
         }
 
@@ -55,7 +66,7 @@ namespace RiotPls.API.Builder
         }
         public Build New()
         {
-            Build build = new Build(string.Format("Build #{0}", this.Count + 1));
+            Build build = new Build(string.Format("Build #{0}", (BuildCollection.TotalCount++) + 1));
             this.Add(build);
             return build;
         }
@@ -65,6 +76,8 @@ namespace RiotPls.API.Builder
             {
                 build.SelectedRowChanged -= this.Build_SelectedRowChanged;
                 this.Builds.Remove(build);
+                if (this.BuildCollectionChanged != null)
+                    this.BuildCollectionChanged();
             }
             return;
         }

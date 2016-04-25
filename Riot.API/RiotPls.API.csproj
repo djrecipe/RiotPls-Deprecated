@@ -95,6 +95,9 @@
     <Compile Include="Serialization\Maps\MapInfo.cs" />
     <Compile Include="Serialization\Transport\JsonPayload.cs" />
     <Compile Include="Serialization\Transport\RiotURL.cs" />
+    <Compile Include="StatsTable.cs">
+      <DependentUpon>StatsTable.xsd</DependentUpon>
+    </Compile>
     <Compile Include="StatsTable.Designer.cs">
       <DependentUpon>StatsTable.xsd</DependentUpon>
       <AutoGen>True</AutoGen>

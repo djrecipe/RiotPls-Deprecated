@@ -90,6 +90,7 @@ namespace RiotPls.Forms
             this.InitializeComponent();
             this.InitializeForms();
             this.UpdateBuilds();
+            this.UpdateBuilderButton();
             return;
         }
         private void InitializeComponent()
@@ -229,12 +230,13 @@ namespace RiotPls.Forms
                 MdiParent = this,
                 Name = build.Name
             };
+            fBuilder.FormClosed += this.formBuilder_FormClosed;
             this.fBuilders.Add(fBuilder);
             if(show)
                 this.ToggleWindow(fBuilder, true);
-            this.UpdateBuilderButton();
             return;
         }
+
         private void CreateNewBuild()
         {
             this.CreateBuilderWindow(this.Builds.New(), true);
@@ -246,7 +248,7 @@ namespace RiotPls.Forms
             form.Visible = value;
             if (value)
             {
-                if (form.WindowState == FormWindowState.Minimized)
+                if (form.WindowState == FormWindowState.Minimized || !form.ContainsFocus)
                 {
                     form.WindowState = FormWindowState.Normal;
                     form.BringToFront();
@@ -273,11 +275,20 @@ namespace RiotPls.Forms
             this.fChampions.Builds = this.fItems.Builds = this.fMaps.Builds = this.Builds;
             this.fBuilders.Clear();
             for (int i = 0; i < this.Builds.Count; i++)
-                this.CreateBuilderWindow(this.Builds[i], false);           
+                this.CreateBuilderWindow(this.Builds[i], false);
+            this.Builds.BuildCollectionChanged += Builds_BuildCollectionChanged;        
             return;
         }
+
         #endregion
-        #region Event Methods
+        #region Event Methods   
+        #region Build Events  
+        private void Builds_BuildCollectionChanged()
+        {
+            this.UpdateBuilderButton();
+        }
+        #endregion
+        #region Button Events
         private void btnConfig_Click(object sender, EventArgs e)
         {
             this.SettingsVisible = true;
@@ -315,6 +326,17 @@ namespace RiotPls.Forms
             this.ToggleWindow(form, true);
             return;
         }
+        #endregion
+        #region Form Events
+        private void formBuilder_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            formBuilder form = sender as formBuilder;
+            if (form == null)
+                return;
+            this.fBuilders.Remove(form);
+            this.Builds.Remove(form.Build);
+            return;
+        }
         private void formMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             foreach(formBuilder form in this.fBuilders)
@@ -331,6 +353,7 @@ namespace RiotPls.Forms
         {
             Tools.GeneralSettings.LoadWindowSettings(this);
         }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
