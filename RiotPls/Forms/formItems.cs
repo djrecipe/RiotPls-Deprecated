@@ -11,6 +11,9 @@ using RiotPls.Controls;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Displays a list of items and their descriptions
+    /// </summary>
     public class formItems : formTemplate
     {
         #region Instance Members
@@ -28,12 +31,16 @@ namespace RiotPls.Forms
         #endregion
         private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
         private BindingList<ItemInfo> source = null;
-        private string last_item_name = null;
+        private string lastItemName = null;
         #endregion
-        #region Instance Properties
+        #region Instance Properties    
+        /// <summary>
+        /// Set of builds which may be modified
+        /// </summary>
         public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
+        #region Initialization Methods
         public formItems()
         {
             this.InitializeComponent();
@@ -226,7 +233,6 @@ namespace RiotPls.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(1195, 827);
             this.Controls.Add(this.chkdlistFilter);
             this.Controls.Add(this.gridMain);
@@ -245,6 +251,7 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
+        #endregion
         private BindingList<ItemInfo> ConstructFilter()
         {
             if (this.source == null)
@@ -287,7 +294,7 @@ namespace RiotPls.Forms
         }
         private void cmenMain_Opening(object sender, CancelEventArgs e)
         {
-            if (this.last_item_name == null)
+            if (this.lastItemName == null)
                 e.Cancel = true;
             else
             {
@@ -298,7 +305,7 @@ namespace RiotPls.Forms
                     Build build = this.Builds[i];
                     if (build == null)
                         continue;
-                    int index = build.GetItemIndex(this.last_item_name);
+                    int index = build.GetItemIndex(this.lastItemName);
                     if (index > -1)
                         check_root = true;
                     ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
@@ -339,7 +346,7 @@ namespace RiotPls.Forms
         {
             if (e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
-            this.last_item_name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            this.lastItemName = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
             return;
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -370,7 +377,7 @@ namespace RiotPls.Forms
             Build build = this.Builds[build_index];
             if (build == null)
                 return;
-            ItemInfo item = menu_item.Checked ? Engine.GetItem(this.last_item_name) : null;
+            ItemInfo item = menu_item.Checked ? Engine.GetItem(this.lastItemName) : null;
             build.SetItem(item_index, item);
             return;
         }
@@ -401,6 +408,5 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
-
     }
 }

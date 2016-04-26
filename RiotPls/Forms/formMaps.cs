@@ -10,6 +10,9 @@ using RiotPls.API.Serialization.Maps;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Displays hi-resolution images depicting each playable map
+    /// </summary>
     public class formMaps : formTemplate
     {
         #region Instance Members
@@ -20,10 +23,14 @@ namespace RiotPls.Forms
         #endregion
         private Dictionary<string, MapInfo> source = new Dictionary<string, MapInfo>();
         #endregion
-        #region Instance Properties
+        #region Instance Properties  
+        /// <summary>
+        /// Set of builds which may be modified
+        /// </summary>
         public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
+        #region Initialization Methods
         public formMaps()
         {
             InitializeComponent();
@@ -90,6 +97,7 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
+        #endregion
         private void UpdateImage()
         {
             if (this.source == null || this.source.Values.Count < 1)

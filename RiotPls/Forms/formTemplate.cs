@@ -4,9 +4,14 @@ using System.Windows.Forms;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Provides a window template with custom styling
+    /// </summary>
     public class formTemplate : Form
     {
+        #region Constants
         private const int CP_NOCLOSE_BUTTON = 0x200;
+        #endregion
         #region Instance Members  
         #region Controls               
         private System.ComponentModel.IContainer components = null;
@@ -17,16 +22,19 @@ namespace RiotPls.Forms
         #endregion
         #region Instance Properties  
         private bool _CloseButtonEnabled = false;
+        /// <summary>
+        /// Enable the built-in Windows Forms close (x) button
+        /// </summary>
+        /// <remarks>If False, the close button will be visible but disabled</remarks>
         public bool CloseButtonEnabled
         {
             get { return this._CloseButtonEnabled; }
             set { this._CloseButtonEnabled = value; }
         }
-        public bool ChildWindow
-        {
-            get;
-            set;
-        } = false;  
+        /// <summary>
+        /// Show loading gif when form is first opened 
+        /// </summary>
+        /// <remarks>Typically the loading gif is hidden after data binding is complete</remarks>
         public bool ShowLoading
         {
             get;
@@ -52,6 +60,7 @@ namespace RiotPls.Forms
         #endregion
         #endregion
         #region Instance Methods
+        #region Initialization Methods
         protected formTemplate()
         {
             this.InitializeComponent();
@@ -102,7 +111,7 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
-
+        #endregion
         protected void LoadWindowSettings()
         {
             Tools.GeneralSettings.LoadWindowSettings(this);

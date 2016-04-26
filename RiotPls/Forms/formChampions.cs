@@ -494,7 +494,6 @@ namespace RiotPls.Forms
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ChildWindow = true;
             this.ClientSize = new System.Drawing.Size(1195, 626);
             this.Controls.Add(this.splitBottom);
             this.Controls.Add(this.gridMain);

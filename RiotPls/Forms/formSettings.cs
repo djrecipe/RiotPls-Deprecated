@@ -5,8 +5,13 @@ using System.Windows.Forms;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Provides a UI for modifying application settings
+    /// </summary>
     public class formSettings : formTemplate
     {
+        #region Instance Members
+        #region Controls
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.LinkLabel lblAPIStepOneInstructions;
         private System.Windows.Forms.TextBox txtAPIKey;
@@ -23,6 +28,10 @@ namespace RiotPls.Forms
         private LinkLabel lblContentVersionValue;
         private Label lblContentVersion;
         private System.Windows.Forms.LinkLabel lblAPIStepTwoInstructions;
+        #endregion
+        #endregion
+        #region Instance Methods
+        #region Initialization Methods
         public formSettings()
         {
             InitializeComponent();
@@ -275,6 +284,10 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
+        #endregion
+        #endregion
+        #region Event Methods
+        #region Button Events
         private void btnCancel_Click(object sender, System.EventArgs e)
         {
             this.Hide();
@@ -293,6 +306,8 @@ namespace RiotPls.Forms
             }
             return;
         }
+        #endregion
+        #region Label Events
         private void lblAPIStepOneInstructions_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://developer.riotgames.com/sign-in");
@@ -327,6 +342,9 @@ namespace RiotPls.Forms
             }
             return;
         }
+        #endregion
+        #endregion
+        #region Override Methods
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -360,6 +378,6 @@ namespace RiotPls.Forms
                 Console.WriteLine("Error while loading API key\n{0}", ex.Message);
             }
         }
-
+        #endregion
     }
 }

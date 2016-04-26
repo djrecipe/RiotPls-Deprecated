@@ -13,6 +13,10 @@ using RiotPls.API.Serialization.ExtensionMethods;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Primary application window
+    /// </summary>
+    /// <remarks>Behaves as an MDI parent</remarks>
     public class formMain : Form
     {
         #region Instance Members       
@@ -36,6 +40,9 @@ namespace RiotPls.Forms
         #endregion
         #region Instance Properties
         private BuildCollection _Builds = new BuildCollection();
+        /// <summary>
+        /// Set of builds which may be modified
+        /// </summary>
         public BuildCollection Builds
         {
             get { return this._Builds; }
@@ -213,7 +220,6 @@ namespace RiotPls.Forms
             this.PerformLayout();
 
         }
-
         private void InitializeForms()
         {
             this.fChampions.MdiParent = this;
@@ -236,7 +242,6 @@ namespace RiotPls.Forms
                 this.ToggleWindow(fBuilder, true);
             return;
         }
-
         private void CreateNewBuild()
         {
             this.CreateBuilderWindow(this.Builds.New(), true);
