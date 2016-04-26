@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.Tools;
@@ -28,6 +30,8 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colMagicResist;
         private DataGridViewTextBoxColumn colHealth;
         private DataGridViewTextBoxColumn colResource;
+        private ContextMenuStrip cmenMain;
+        private ToolStripMenuItem mnuitmShowHideColumns;
 
         public event SelectedRowChangedDelegate SelectedRowChanged;
         private bool ignoreRowChange = true;
@@ -51,11 +55,14 @@ namespace RiotPls.Controls
         #region Instance Methods
         public StatGrid()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.gridMain.AutoGenerateColumns = false;
+            this.InitializeColumnVisibility();
+            return;
         }
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -71,6 +78,8 @@ namespace RiotPls.Controls
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuitmShowHideColumns = new System.Windows.Forms.ToolStripMenuItem();
             this.gridMain = new RiotPls.Controls.Grid();
             this.colMovementSpeed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,8 +93,24 @@ namespace RiotPls.Controls
             this.colMagicResist = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colHealth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colResource = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmenMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
             this.SuspendLayout();
+            // 
+            // cmenMain
+            // 
+            this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuitmShowHideColumns});
+            this.cmenMain.Name = "cmenMain";
+            this.cmenMain.Size = new System.Drawing.Size(185, 48);
+            this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
+            // 
+            // mnuitmShowHideColumns
+            // 
+            this.mnuitmShowHideColumns.Name = "mnuitmShowHideColumns";
+            this.mnuitmShowHideColumns.Size = new System.Drawing.Size(184, 22);
+            this.mnuitmShowHideColumns.Text = "Show/Hide Columns";
+            this.mnuitmShowHideColumns.DropDownOpening += new System.EventHandler(this.mnuitmShowHideColumns_DropDownOpening);
             // 
             // gridMain
             // 
@@ -118,6 +143,7 @@ namespace RiotPls.Controls
             this.colMagicResist,
             this.colHealth,
             this.colResource});
+            this.gridMain.ContextMenuStrip = this.cmenMain;
             this.gridMain.DataMember = "Stats";
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
@@ -321,9 +347,27 @@ namespace RiotPls.Controls
             this.Name = "StatGrid";
             this.Load += new System.EventHandler(this.StatGrid_Load);
             this.SizeChanged += new System.EventHandler(this.StatGrid_SizeChanged);
+            this.cmenMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
             this.ResumeLayout(false);
 
+        }
+        private void InitializeColumnVisibility()
+        {
+            foreach (DataGridViewColumn column in this.gridMain.Columns)
+                GeneralSettings.LoadStatColumnVisibility(column);
+            this.InitializeContextMenu();
+            return;
+        }
+        private void InitializeContextMenu()
+        {
+            foreach (DataGridViewColumn column in this.gridMain.Columns)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(column.HeaderText);
+                item.Click += this.mnuitmColumnVisible_Click;
+                this.mnuitmShowHideColumns.DropDownItems.Add(item);
+            }
+            return;
         }
 
         public void SetSelectedRow(int row)
@@ -332,30 +376,54 @@ namespace RiotPls.Controls
             if (row >= 0 && row < this.gridMain.RowCount)
             {
                 this.gridMain.Rows[row].Selected = true;
-                this.gridMain.CurrentCell = this.gridMain.Rows[row].Cells[0];
+                int first_visible = this.gridMain.Columns.Cast<DataGridViewColumn>().FirstOrDefault(c => c.Visible)?.Index ?? 0;
+                this.gridMain.CurrentCell = this.gridMain.Rows[row].Cells[first_visible];
             }
             this.ignoreRowChange = false;
             return;
         }
         private void ResizeColumns()
         {
-            int width = (this.Width - this.gridMain.RowHeadersWidth - 55) / this.gridMain.ColumnCount;
-            foreach (DataGridViewColumn column in this.gridMain.Columns)
+            List<DataGridViewColumn> columns = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(c => c.Visible).ToList();
+            int width = (this.Width - this.gridMain.RowHeadersWidth - 55) / columns.Count;
+            foreach (DataGridViewColumn column in columns)
                 column.Width = width;
             return;
         }
         #endregion
-        #region Event Methods
-        private void StatGrid_SizeChanged(object sender, EventArgs e)
+        #region Event Methods   
+        #region Context Menu Events
+        private void cmenMain_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
+        }
+        private void mnuitmColumnVisible_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            if (item == null)
+                return;
+            DataGridViewColumn column = this.gridMain.Columns.Cast<DataGridViewColumn>().FirstOrDefault(c => c.HeaderText == item.Text);
+            if (column == null)
+                return;
+            item.Checked = !item.Checked;
+            column.Visible = item.Checked;
+            GeneralSettings.SaveStatColumnVisibility(column);
             this.ResizeColumns();
             return;
         }
-        private void StatGrid_Load(object sender, EventArgs e)
+        private void mnuitmShowHideColumns_DropDownOpening(object sender, EventArgs e)
         {
-            this.BeginInvoke((MethodInvoker) delegate { this.ResizeColumns(); });
+            foreach (DataGridViewColumn column in this.gridMain.Columns)
+            {
+                ToolStripMenuItem item = this.mnuitmShowHideColumns.DropDownItems.Cast<ToolStripMenuItem>()
+                        .FirstOrDefault(t => t.Text == column.HeaderText);
+                if(item != null)
+                    item.Checked = column.Visible;
+            }
             return;
         }
+        #endregion
+        #region Grid Events   
         private void gridMain_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             if (this.gridMain.RowCount < 1)
@@ -370,7 +438,19 @@ namespace RiotPls.Controls
         {
             if (!this.ignoreRowChange && this.SelectedRowChanged != null)
                 this.SelectedRowChanged(this.gridMain.SelectedCells.Count > 0 ? this.gridMain.SelectedCells[0].RowIndex : 0);
+            return;
         }
+        private void StatGrid_SizeChanged(object sender, EventArgs e)
+        {
+            this.ResizeColumns();
+            return;
+        }
+        private void StatGrid_Load(object sender, EventArgs e)
+        {
+            this.BeginInvoke((MethodInvoker) delegate { this.ResizeColumns(); });
+            return;
+        }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)

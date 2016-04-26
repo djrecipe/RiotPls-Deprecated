@@ -6,6 +6,7 @@ namespace RiotPls.Tools
 {
     partial class GeneralSettings
     {
+
         private const string FILENAME = "GeneralSettings.rpxml";
         private static GeneralSettings settings = null;
         public static string Path => System.IO.Path.Combine(Tools.Paths.AppData, GeneralSettings.FILENAME);
@@ -38,6 +39,12 @@ namespace RiotPls.Tools
             }
             return;
         }
+        public static void LoadStatColumnVisibility(DataGridViewColumn column)
+        {
+            StatColumnsRow row = GeneralSettings.settings.StatColumns.Rows.Find(column.Name) as StatColumnsRow;
+            column.Visible = row?.Visible ?? true;
+            return;
+        }
         public static void LoadWindowSettings(Form form)
         {
             WindowsRow row = GeneralSettings.settings.Windows.Rows.Find(form.Name) as WindowsRow;
@@ -47,7 +54,7 @@ namespace RiotPls.Tools
                 if (form.FormBorderStyle == FormBorderStyle.Sizable ||
                     form.FormBorderStyle == FormBorderStyle.SizableToolWindow)
                 {
-                    if((FormWindowState)row.State == FormWindowState.Normal)
+                    if ((FormWindowState)row.State == FormWindowState.Normal)
                         form.Size = new Size(row.Width, row.Height);
                     form.WindowState = (FormWindowState)row.State;
                 }
@@ -65,6 +72,14 @@ namespace RiotPls.Tools
             {
                 // ignored
             }
+            return;
+        }
+        public static void SaveStatColumnVisibility(DataGridViewColumn column)
+        {
+            StatColumnsRow row = GeneralSettings.settings.StatColumns.Rows.Find(column.Name) as StatColumnsRow;
+            if (row != null)
+                GeneralSettings.settings.StatColumns.RemoveStatColumnsRow(row);
+            GeneralSettings.settings.StatColumns.AddStatColumnsRow(column.Name, column.Visible);
             return;
         }
         public static void SaveWindowSettings(Form form)
