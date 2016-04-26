@@ -7,6 +7,9 @@ using RiotPls.Tools;
 
 namespace RiotPls.Controls
 {
+    /// <summary>
+    /// Table of stats representing one or more Riot API entities
+    /// </summary>
     public class StatGrid : UserControl
     {
         #region Types
@@ -16,8 +19,6 @@ namespace RiotPls.Controls
         #region Controls
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
-        #endregion                                 
-
         private DataGridViewTextBoxColumn colMovementSpeed;
         private DataGridViewTextBoxColumn colAttackRange;
         private DataGridViewTextBoxColumn colAttackDamage;
@@ -32,7 +33,10 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colResource;
         private ContextMenuStrip cmenMain;
         private ToolStripMenuItem mnuitmShowHideColumns;
-
+        #endregion    
+        /// <summary>
+        /// Currently selected row has changed
+        /// </summary>
         public event SelectedRowChangedDelegate SelectedRowChanged;
         private bool ignoreRowChange = true;
         #endregion
@@ -370,6 +374,10 @@ namespace RiotPls.Controls
             return;
         }
 
+        /// <summary>
+        /// Set the currently selected row in the table
+        /// </summary>
+        /// <param name="row">Row index to select</param>
         public void SetSelectedRow(int row)
         {
             this.ignoreRowChange = true;

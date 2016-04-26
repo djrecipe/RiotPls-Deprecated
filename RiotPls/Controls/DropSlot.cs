@@ -10,11 +10,17 @@ using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.Controls
 {
+    /// <summary>
+    /// Receives and displays a drag-and-droppable Riot API entity
+    /// </summary>
     public class DropSlot : UserControl
     {
         #region Types                                                                     
         public delegate void DropOccurredDelegate(DropSlot slot, IRiotDroppable drop);
         public delegate void LevelObtainedChangedDelegate(DropSlot slot, IRiotDroppable drop, int level);
+        /// <summary>
+        /// Type of Riot entity being represented
+        /// </summary>
         public enum DataType : uint
         {
             Champion = 0,
@@ -33,14 +39,23 @@ namespace RiotPls.Controls
         private Label lblMain;
         private PictureBox picMain;
         #endregion
-        #region Events                                     
+        #region Events       
+        /// <summary>
+        /// An entity has been dropped onto the control
+        /// </summary>
         public event DropOccurredDelegate DropOccurred;
+        /// <summary>
+        /// Level obtained value for the current entity has changed
+        /// </summary>
         public event LevelObtainedChangedDelegate LevelObtainedChanged;
         #endregion
         private IRiotDroppable drop = null;
         #endregion
         #region Instance Properties
         private string _NullText = "";
+        /// <summary>
+        /// Displayed text when no entity is being represented
+        /// </summary>
         public string NullText
         {
             get { return this._NullText; }
@@ -51,6 +66,9 @@ namespace RiotPls.Controls
             }
         }
         private DataType _Type = DataType.Champion;
+        /// <summary>
+        /// Type of entity being represented by this control
+        /// </summary>
         public DataType Type
         {
             get { return this._Type; }
@@ -134,7 +152,6 @@ namespace RiotPls.Controls
             this.mnuitmItemLevelObtained.Size = new System.Drawing.Size(153, 22);
             this.mnuitmItemLevelObtained.Text = "Level Obtained";
             this.mnuitmItemLevelObtained.DropDownOpened += new System.EventHandler(this.mnuitmItemLevelObtained_DropDownOpened);
-            this.mnuitmItemLevelObtained.TextChanged += new System.EventHandler(this.mnuitmItemLevelObtained_TextChanged);
             // 
             // mnuitmLevelObtainedValue
             // 
@@ -172,7 +189,9 @@ namespace RiotPls.Controls
             this.ResumeLayout(false);
 
         }
-
+        /// <summary>
+        /// Removes the currently represented entity
+        /// </summary>
         public void Clear()
         {
             this.drop = null;
@@ -185,6 +204,10 @@ namespace RiotPls.Controls
                 this.DropOccurred(this, drop);
             return;
         }
+        /// <summary>
+        /// Sets the currently represented entity
+        /// </summary>
+        /// <param name="new_drop">Entity to represent</param>
         public void Set(IRiotDroppable new_drop)
         {
             if (this.drop != new_drop)
@@ -208,16 +231,43 @@ namespace RiotPls.Controls
             this.FireDropOccurredEvent(this.drop);
             return;
         }
-        #region Event Methods        
-        private void mnuitmItemLevelObtained_TextChanged(object sender, EventArgs e)
+        #region Event Methods     
+        #region Menu Events
+        private void mnuitmItemLevelObtained_DropDownOpened(object sender, EventArgs e)
         {
-
+            this.mnuitmLevelObtainedValue.Focus();
+            this.mnuitmLevelObtainedValue.SelectionStart = 0;
+            this.mnuitmLevelObtainedValue.SelectionLength = this.mnuitmLevelObtainedValue.TextLength;
+        }
+        private void mnuitmLevelObtainedValue_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.cmenItem.Close();
+                e.Handled = true;
+            }
+            return;
+        }
+        private void mnuitmLevelObtainedValue_TextChanged(object sender, EventArgs e)
+        {
+            if (this.drop == null)
+                return;
+            int level = 1;
+            if (int.TryParse(this.mnuitmLevelObtainedValue.Text, out level))
+            {
+                this.drop.LevelObtained = level;
+                if (this.LevelObtainedChanged != null)
+                    this.LevelObtainedChanged(this, this.drop, this.drop.LevelObtained);
+            }
+            return;
         }
         private void mnuitmRemove_Click(object sender, EventArgs e)
         {
             if (this.DropOccurred != null)
                 this.DropOccurred(this, null);
         }
+        #endregion
+        #endregion
         #endregion
         #region Override Methods
         protected override void OnDragDrop(DragEventArgs e)
@@ -255,38 +305,6 @@ namespace RiotPls.Controls
             return;
         }
 
-        #endregion
-
-        #endregion
-        #region Event Methods            
-        private void mnuitmItemLevelObtained_DropDownOpened(object sender, EventArgs e)
-        {
-            this.mnuitmLevelObtainedValue.Focus();
-            this.mnuitmLevelObtainedValue.SelectionStart = 0;
-            this.mnuitmLevelObtainedValue.SelectionLength = this.mnuitmLevelObtainedValue.TextLength;
-        }
-        private void mnuitmLevelObtainedValue_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.cmenItem.Close();
-                e.Handled = true;
-            }
-            return;
-        }
-        private void mnuitmLevelObtainedValue_TextChanged(object sender, EventArgs e)
-        {
-            if (this.drop == null)
-                return;
-            int level = 1;
-            if (int.TryParse(this.mnuitmLevelObtainedValue.Text, out level))
-            {
-                this.drop.LevelObtained = level;
-                if (this.LevelObtainedChanged != null)
-                    this.LevelObtainedChanged(this, this.drop, this.drop.LevelObtained);
-            }
-            return;
-        }
         #endregion
 
     }

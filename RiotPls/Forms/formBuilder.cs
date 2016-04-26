@@ -9,6 +9,10 @@ using RiotPls.Tools;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Facilitates displaying and modifying of a build
+    /// </summary>
+    /// <remarks>A build typically consists of a champion, set of items, table of stats, and other metadata</remarks>
     public class formBuilder : formTemplate
     {
         #region Instance Members
@@ -28,9 +32,13 @@ namespace RiotPls.Forms
         #endregion
         #endregion
         #region Instance Properties
+        /// <summary>
+        /// Build associated with this form
+        /// </summary>
         public Build Build { get; private set; }
         #endregion
         #region Instance Methods
+        #region Initialization Methods
         public formBuilder(Build build)
         {
             this.InitializeComponent();
@@ -40,7 +48,6 @@ namespace RiotPls.Forms
             this.Build.SelectedRowChanged += this.Build_SelectedRowChanged;
             return;
         }
-
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -251,7 +258,7 @@ namespace RiotPls.Forms
                 this.dropItem4, this.dropItem5, this.dropItem6 };
             return;
         }
-
+        #endregion
         private void SelectRow(int row)
         {
             if (row < 0 || row >= this.gridMain.RowCount)

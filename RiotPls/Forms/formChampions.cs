@@ -16,6 +16,9 @@ using RiotPls.Controls;
 
 namespace RiotPls.Forms
 {
+    /// <summary>
+    /// Displays a list of champions
+    /// </summary>
     public class formChampions : formTemplate
     {
         #region Instance Members
@@ -50,9 +53,13 @@ namespace RiotPls.Forms
         private BindingList<ChampionInfo> source = null;
         #endregion
         #region Instance Properties
+        /// <summary>
+        /// Set of builds which may be modified
+        /// </summary>
         public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
+        #region Initialization Methods
         public formChampions()
         {
             this.InitializeComponent();
@@ -517,6 +524,7 @@ namespace RiotPls.Forms
             this.ResumeLayout(false);
 
         }
+        #endregion
         private void ResizeColumns()
         {
             int width = (this.gridMain.Width - 770)/3;

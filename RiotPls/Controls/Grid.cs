@@ -2,6 +2,9 @@
 
 namespace RiotPls.Controls
 {
+    /// <summary>
+    /// DataGridView with custom styling
+    /// </summary>
     public class Grid : DataGridView
     {
         private System.ComponentModel.IContainer components = null;
