@@ -21,16 +21,11 @@ namespace RiotPls.Forms
         private Point last_mouse = Point.Empty;
         #endregion
         #region Instance Properties  
-        private bool _CloseButtonEnabled = false;
         /// <summary>
         /// Enable the built-in Windows Forms close (x) button
         /// </summary>
         /// <remarks>If False, the close button will be visible but disabled</remarks>
-        public bool CloseButtonEnabled
-        {
-            get { return this._CloseButtonEnabled; }
-            set { this._CloseButtonEnabled = value; }
-        }
+        public bool CloseButtonEnabled { get; set; }
         /// <summary>
         /// Show loading gif when form is first opened 
         /// </summary>

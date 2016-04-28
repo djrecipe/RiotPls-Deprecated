@@ -698,7 +698,7 @@ namespace RiotPls.Forms
         }
         private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || this.champions == null)
+            if (e.Button != MouseButtons.Left || this.champions == null || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
             ChampionInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ChampionInfo;
             if (info != null)

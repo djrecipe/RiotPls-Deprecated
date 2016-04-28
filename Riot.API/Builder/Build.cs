@@ -32,13 +32,25 @@ namespace RiotPls.API.Builder
         public event SelectedRowChangedDelegate SelectedRowChanged;
         #endregion
         #region Instance Properties  
+        /// <summary>
+        /// Champion associated with this build
+        /// </summary>
         [JsonProperty("Champion")]
-        public ChampionInfo Champion { get; private set; }    
+        public ChampionInfo Champion { get; private set; } 
+        /// <summary>
+        /// Six items associated with this build
+        /// </summary>
         [JsonProperty("Items")]
         private ItemInfo[] Items { get; set; } = new ItemInfo[6];
+        /// <summary>
+        /// Build name
+        /// </summary>
         [JsonProperty("Name")]
         public string Name { get; set; } = null;
         private int _SelectedRow = 0; 
+        /// <summary>
+        /// Currently selected row in the stats table
+        /// </summary>
         public int SelectedRow
         {
             get { return this._SelectedRow; }
@@ -52,6 +64,9 @@ namespace RiotPls.API.Builder
                 }
             }
         }
+        /// <summary>
+        /// Table of combined champion & item stats from champion levels 1 to 18
+        /// </summary>
         public StatsTable Table => this.stats.Table;
         #endregion
         #region Instance Methods
@@ -78,6 +93,11 @@ namespace RiotPls.API.Builder
                 this.BuildChanged(name);
             return;
         }
+        /// <summary>
+        /// Find and retrieve the item index of a given item name
+        /// </summary>
+        /// <param name="name">Name of the item to search for</param>
+        /// <returns>Index of item in the build, or -1 if the item is not a part of this build</returns>
         public int GetItemIndex(string name)
         {
             if(string.IsNullOrWhiteSpace(name))
@@ -89,14 +109,19 @@ namespace RiotPls.API.Builder
             }
             return -1;
         }
+        /// <summary>
+        /// Retrieve the item at a specified index
+        /// </summary>
+        /// <param name="index">Item index to check</param>
+        /// <returns>Item at the specified index, if any</returns>
         public ItemInfo GetItem(int index)
         {
             return index >= 0 && index < this.Items.Length ? this.Items[index] : null;
         }
-        public List<ItemInfo> GetItems()
-        {
-            return this.Items.ToList();
-        }
+        /// <summary>
+        /// Assign a champion to this build
+        /// </summary>
+        /// <param name="champion_in">Champion to assign to this build</param>
         public void SetChampion(ChampionInfo champion_in)
         {
             if (this.Champion != champion_in)
@@ -106,7 +131,11 @@ namespace RiotPls.API.Builder
             }
             return;
         }
-
+        /// <summary>
+        /// Assign an item to this build
+        /// </summary>
+        /// <param name="index">Index at which the item will be assigned (0-5)</param>
+        /// <param name="item">Item to assign at the specified index</param>
         public void SetItem(int index, ItemInfo item)
         {
             if (index < 0 || index >= 6)
@@ -115,6 +144,12 @@ namespace RiotPls.API.Builder
             this.FireUpdate(this.Name);
             return;
         }
+        /// <summary>
+        /// Assign a level to the item at the specified index
+        /// </summary>
+        /// <remarks>The item's stats will only be applied to stat rows at or above the specified level</remarks>
+        /// <param name="index">Index of the item to be affected</param>
+        /// <param name="level">Desired level (1-18)</param>
         public void SetItemLevel(int index, int level)
         {
             if (index < 0 || index >= 6)
