@@ -41,6 +41,19 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        [JsonProperty("rFlatArmorPenetrationMod")]
+        public override double ArmorPenFlat
+        {
+            get
+            {
+                return base.ArmorPenFlat;
+            }
+            internal set
+            {
+                base.ArmorPenFlat = value;
+                return;
+            }
+        }
         [JsonProperty("rFlatArmorModPerLevel")]
         public override double ArmorPerLevel
         {
@@ -116,6 +129,19 @@ namespace RiotPls.API.Serialization.Items
             internal set
             {
                 base.AttackSpeedMultiplier = 1.0 + value;
+                return;
+            }
+        }
+        [JsonProperty("rPercentCooldownMod")]
+        public override double CooldownReduction
+        {
+            get
+            {
+                return base.CooldownReduction;
+            }
+            internal set
+            {
+                base.CooldownReduction = value;
                 return;
             }
         }

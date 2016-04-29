@@ -283,6 +283,8 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnArmor;
             
+            private global::System.Data.DataColumn columnArmorPenFlat;
+            
             private global::System.Data.DataColumn columnAttackDamage;
             
             private global::System.Data.DataColumn columnAttackRange;
@@ -355,6 +357,14 @@ namespace RiotPls.API {
             public global::System.Data.DataColumn ArmorColumn {
                 get {
                     return this.columnArmor;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ArmorPenFlatColumn {
+                get {
+                    return this.columnArmorPenFlat;
                 }
             }
             
@@ -499,11 +509,28 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StatsRow AddStatsRow(double AbilityPower, double Armor, double AttackDamage, double AttackRange, double AttackSpeed, double CooldownReduction, double CriticalStrike, double Health, double HealthRegen, double MagicPenFlat, double MagicPenPerc, double MagicResist, double MovementSpeed, double Resource, double ResourceRegen) {
+            public StatsRow AddStatsRow(
+                        double AbilityPower, 
+                        double Armor, 
+                        double ArmorPenFlat, 
+                        double AttackDamage, 
+                        double AttackRange, 
+                        double AttackSpeed, 
+                        double CooldownReduction, 
+                        double CriticalStrike, 
+                        double Health, 
+                        double HealthRegen, 
+                        double MagicPenFlat, 
+                        double MagicPenPerc, 
+                        double MagicResist, 
+                        double MovementSpeed, 
+                        double Resource, 
+                        double ResourceRegen) {
                 StatsRow rowStatsRow = ((StatsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         AbilityPower,
                         Armor,
+                        ArmorPenFlat,
                         AttackDamage,
                         AttackRange,
                         AttackSpeed,
@@ -541,6 +568,7 @@ namespace RiotPls.API {
             internal void InitVars() {
                 this.columnAbilityPower = base.Columns["AbilityPower"];
                 this.columnArmor = base.Columns["Armor"];
+                this.columnArmorPenFlat = base.Columns["ArmorPenFlat"];
                 this.columnAttackDamage = base.Columns["AttackDamage"];
                 this.columnAttackRange = base.Columns["AttackRange"];
                 this.columnAttackSpeed = base.Columns["AttackSpeed"];
@@ -563,6 +591,8 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnAbilityPower);
                 this.columnArmor = new global::System.Data.DataColumn("Armor", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnArmor);
+                this.columnArmorPenFlat = new global::System.Data.DataColumn("ArmorPenFlat", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnArmorPenFlat);
                 this.columnAttackDamage = new global::System.Data.DataColumn("AttackDamage", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAttackDamage);
                 this.columnAttackRange = new global::System.Data.DataColumn("AttackRange", typeof(double), null, global::System.Data.MappingType.Element);
@@ -592,6 +622,8 @@ namespace RiotPls.API {
                 this.columnAbilityPower.Caption = "AP";
                 this.columnAbilityPower.DefaultValue = ((double)(0D));
                 this.columnArmor.DefaultValue = ((double)(0D));
+                this.columnArmorPenFlat.Caption = "Armor";
+                this.columnArmorPenFlat.DefaultValue = ((double)(0D));
                 this.columnAttackDamage.Caption = "AD";
                 this.columnAttackDamage.DefaultValue = ((double)(0D));
                 this.columnAttackRange.Caption = "Range";
@@ -785,6 +817,22 @@ namespace RiotPls.API {
                 }
                 set {
                     this[this.tableStats.ArmorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double ArmorPenFlat {
+                get {
+                    if (this.IsArmorPenFlatNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.ArmorPenFlatColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.ArmorPenFlatColumn] = value;
                 }
             }
             
@@ -1018,6 +1066,18 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetArmorNull() {
                 this[this.tableStats.ArmorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsArmorPenFlatNull() {
+                return this.IsNull(this.tableStats.ArmorPenFlatColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetArmorPenFlatNull() {
+                this[this.tableStats.ArmorPenFlatColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

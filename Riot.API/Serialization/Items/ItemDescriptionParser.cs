@@ -15,8 +15,10 @@ namespace RiotPls.API.Serialization.Items
     {
         private static readonly Dictionary<string, string> Stats = new Dictionary<string, string>()
         {
+            { "FlatArmorPen", @"(> *\+?(?<FlatArmorPen>\d+) *<a href='FlatArmorPen)"},
             { "FlatMagicPen", @"(> *\+?(?<FlatMagicPen>\d+) *<a href='FlatMagicPen)"},
-            { "PercMagicPen",  @"(> *\+?(?<PercMagicPen>\d+)%? *<a href='TotalMagicPen)"} 
+            { "PercMagicPen",  @"(> *\+?(?<PercMagicPen>\d+) *%? *<a href='TotalMagicPen)"},
+            { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"}
         }; 
         internal static ItemStatsInfo Parse(string description)
         {
@@ -31,6 +33,12 @@ namespace RiotPls.API.Serialization.Items
                     continue;
                 switch (pair.Key)
                 {
+                    case "CooldownReduction":
+                        info.CooldownReduction += value_int;
+                        break;
+                    case "FlatArmorPen":
+                        info.ArmorPenFlat += value_int;
+                        break;
                     case "FlatMagicPen":
                         info.MagicPenFlat += value_int;
                         break;

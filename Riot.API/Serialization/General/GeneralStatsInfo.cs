@@ -74,6 +74,19 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        public virtual double ArmorPenFlat
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["ArmorPenFlat"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["ArmorPenFlat"] = value;
+                this.InitializeArmorPenFlatRows();
+                return;
+            }
+        }
         public virtual double AttackDamage
         {
             get
@@ -407,6 +420,12 @@ namespace RiotPls.API.Serialization.General
         {
             for (int i = 2; i <= 18; i++)
                 this.Stats[i]["Armor"] = (double)this.Stats[0]["Armor"] + (double)this.Stats[1]["Armor"] * (double)i;
+            return;
+        }
+        private void InitializeArmorPenFlatRows()
+        {
+            for (int i = 2; i <= 18; i++)
+                this.Stats[i]["ArmorPenFlat"] = (double)this.Stats[0]["ArmorPenFlat"] + (double)this.Stats[1]["ArmorPenFlat"] * (double)i;
             return;
         }
         private void InitializeAttackDamageRows()
