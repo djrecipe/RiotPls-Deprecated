@@ -19,6 +19,8 @@ namespace RiotPls.Controls
         #region Controls
         private System.ComponentModel.IContainer components = null;
         private Grid gridMain;
+        private ContextMenuStrip cmenMain;
+        private ToolStripMenuItem mnuitmShowHideColumns;
         private DataGridViewTextBoxColumn colMovementSpeed;
         private DataGridViewTextBoxColumn colAttackRange;
         private DataGridViewTextBoxColumn colAttackDamage;
@@ -31,9 +33,8 @@ namespace RiotPls.Controls
         private DataGridViewTextBoxColumn colMagicResist;
         private DataGridViewTextBoxColumn colHealth;
         private DataGridViewTextBoxColumn colResource;
-        private ContextMenuStrip cmenMain;
-        private ToolStripMenuItem mnuitmShowHideColumns;
-        #endregion    
+        #endregion
+
         /// <summary>
         /// Currently selected row has changed
         /// </summary>
@@ -106,7 +107,7 @@ namespace RiotPls.Controls
             this.cmenMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuitmShowHideColumns});
             this.cmenMain.Name = "cmenMain";
-            this.cmenMain.Size = new System.Drawing.Size(185, 48);
+            this.cmenMain.Size = new System.Drawing.Size(185, 26);
             this.cmenMain.Opening += new System.ComponentModel.CancelEventHandler(this.cmenMain_Opening);
             // 
             // mnuitmShowHideColumns
@@ -192,7 +193,7 @@ namespace RiotPls.Controls
             this.colMovementSpeed.DataPropertyName = "MovementSpeed";
             dataGridViewCellStyle2.Format = "n0";
             this.colMovementSpeed.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colMovementSpeed.HeaderText = "Spd";
+            this.colMovementSpeed.HeaderText = "Speed";
             this.colMovementSpeed.MinimumWidth = 35;
             this.colMovementSpeed.Name = "colMovementSpeed";
             this.colMovementSpeed.ReadOnly = true;
@@ -205,7 +206,7 @@ namespace RiotPls.Controls
             this.colAttackRange.DataPropertyName = "AttackRange";
             dataGridViewCellStyle3.Format = "n0";
             this.colAttackRange.DefaultCellStyle = dataGridViewCellStyle3;
-            this.colAttackRange.HeaderText = "Rng";
+            this.colAttackRange.HeaderText = "Range";
             this.colAttackRange.MinimumWidth = 35;
             this.colAttackRange.Name = "colAttackRange";
             this.colAttackRange.ReadOnly = true;

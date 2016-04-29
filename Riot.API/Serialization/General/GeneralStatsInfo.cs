@@ -178,6 +178,19 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        public virtual double CooldownReduction
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["CooldownReduction"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["CooldownReduction"] = value;
+                this.InitializeCooldownReductionRows();
+                return;
+            }
+        }
         public virtual double CriticalStrike
         {
             get
@@ -410,12 +423,18 @@ namespace RiotPls.API.Serialization.General
         }
         private void InitializeAttackSpeedRows()
         {
-            double increment = ((double) this.Stats[1]["AttackSpeed"]/100.0)*(double) this.Stats[0]["AttackSpeed"];
+            double increment = ((double)this.Stats[1]["AttackSpeed"] / 100.0) * (double)this.Stats[0]["AttackSpeed"];
             for (int i = 2; i <= 18; i++)
             {
-                double value = ((double) this.Stats[0]["AttackSpeed"] + increment * (double) i) * this.AttackSpeedMultiplier;
+                double value = ((double)this.Stats[0]["AttackSpeed"] + increment * (double)i) * this.AttackSpeedMultiplier;
                 this.Stats[i]["AttackSpeed"] = Math.Min(value, this.AttackSpeedCap);
             }
+            return;
+        }
+        private void InitializeCooldownReductionRows()
+        {
+            for (int i = 2; i <= 18; i++)
+                this.Stats[i]["CooldownReduction"] = (double)this.Stats[0]["CooldownReduction"] + (double)this.Stats[1]["CooldownReduction"] * (double)i;
             return;
         }
         private void InitializeCriticalStrikeRows()

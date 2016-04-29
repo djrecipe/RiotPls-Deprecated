@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,9 +77,11 @@
     <Compile Include="Serialization\Champions\SkinInfo.cs" />
     <Compile Include="Serialization\Champions\SpellInfo.cs" />
     <Compile Include="Serialization\Champions\ChampionStatsInfo.cs" />
+    <Compile Include="Serialization\General\AttackSpeed.cs" />
     <Compile Include="Serialization\General\CombinedStatsInfo.cs" />
     <Compile Include="Serialization\General\GeneralStatsInfo.cs" />
     <Compile Include="Serialization\Extension Methods\JsonSaveEngine.cs" />
+    <Compile Include="Serialization\General\Level.cs" />
     <Compile Include="Serialization\General\RealmInfoSet.cs" />
     <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Serialization\Interfaces\IRiotDroppable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
     <Compile Include="Serialization\Interfaces\IStatsInfo.cs" />
+    <Compile Include="Serialization\Items\ItemDescriptionParser.cs" />
     <Compile Include="Serialization\Items\ItemStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemInfoSet.cs" />
     <Compile Include="Serialization\Maps\MapInfoSet.cs" />

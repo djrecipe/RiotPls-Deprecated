@@ -289,6 +289,8 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnAttackSpeed;
             
+            private global::System.Data.DataColumn columnCooldownReduction;
+            
             private global::System.Data.DataColumn columnCriticalStrike;
             
             private global::System.Data.DataColumn columnHealth;
@@ -377,6 +379,14 @@ namespace RiotPls.API {
             public global::System.Data.DataColumn AttackSpeedColumn {
                 get {
                     return this.columnAttackSpeed;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn CooldownReductionColumn {
+                get {
+                    return this.columnCooldownReduction;
                 }
             }
             
@@ -489,7 +499,7 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public StatsRow AddStatsRow(double AbilityPower, double Armor, double AttackDamage, double AttackRange, double AttackSpeed, double CriticalStrike, double Health, double HealthRegen, double MagicPenFlat, double MagicPenPerc, double MagicResist, double MovementSpeed, double Resource, double ResourceRegen) {
+            public StatsRow AddStatsRow(double AbilityPower, double Armor, double AttackDamage, double AttackRange, double AttackSpeed, double CooldownReduction, double CriticalStrike, double Health, double HealthRegen, double MagicPenFlat, double MagicPenPerc, double MagicResist, double MovementSpeed, double Resource, double ResourceRegen) {
                 StatsRow rowStatsRow = ((StatsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         AbilityPower,
@@ -497,6 +507,7 @@ namespace RiotPls.API {
                         AttackDamage,
                         AttackRange,
                         AttackSpeed,
+                        CooldownReduction,
                         CriticalStrike,
                         Health,
                         HealthRegen,
@@ -533,6 +544,7 @@ namespace RiotPls.API {
                 this.columnAttackDamage = base.Columns["AttackDamage"];
                 this.columnAttackRange = base.Columns["AttackRange"];
                 this.columnAttackSpeed = base.Columns["AttackSpeed"];
+                this.columnCooldownReduction = base.Columns["CooldownReduction"];
                 this.columnCriticalStrike = base.Columns["CriticalStrike"];
                 this.columnHealth = base.Columns["Health"];
                 this.columnHealthRegen = base.Columns["HealthRegen"];
@@ -557,6 +569,8 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnAttackRange);
                 this.columnAttackSpeed = new global::System.Data.DataColumn("AttackSpeed", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAttackSpeed);
+                this.columnCooldownReduction = new global::System.Data.DataColumn("CooldownReduction", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCooldownReduction);
                 this.columnCriticalStrike = new global::System.Data.DataColumn("CriticalStrike", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCriticalStrike);
                 this.columnHealth = new global::System.Data.DataColumn("Health", typeof(double), null, global::System.Data.MappingType.Element);
@@ -575,23 +589,25 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnResource);
                 this.columnResourceRegen = new global::System.Data.DataColumn("ResourceRegen", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnResourceRegen);
-                this.columnAbilityPower.Caption = "Attack Damage";
+                this.columnAbilityPower.Caption = "AP";
                 this.columnAbilityPower.DefaultValue = ((double)(0D));
                 this.columnArmor.DefaultValue = ((double)(0D));
-                this.columnAttackDamage.Caption = "Attack Damage";
+                this.columnAttackDamage.Caption = "AD";
                 this.columnAttackDamage.DefaultValue = ((double)(0D));
-                this.columnAttackRange.Caption = "Attack Range";
+                this.columnAttackRange.Caption = "Range";
                 this.columnAttackRange.DefaultValue = ((double)(0D));
-                this.columnAttackSpeed.Caption = "Attack Speed";
+                this.columnAttackSpeed.Caption = "AS";
                 this.columnAttackSpeed.DefaultValue = ((double)(0D));
-                this.columnCriticalStrike.Caption = "Critical Strike";
+                this.columnCooldownReduction.Caption = "CDR";
+                this.columnCooldownReduction.DefaultValue = ((double)(0D));
+                this.columnCriticalStrike.Caption = "Crit %";
                 this.columnCriticalStrike.DefaultValue = ((double)(0D));
                 this.columnHealth.DefaultValue = ((double)(0D));
                 this.columnHealthRegen.Caption = "Health Regen";
                 this.columnHealthRegen.DefaultValue = ((double)(0D));
-                this.columnMagicPenFlat.Caption = "Critical Strike";
+                this.columnMagicPenFlat.Caption = "Magic Pen (F)";
                 this.columnMagicPenFlat.DefaultValue = ((double)(0D));
-                this.columnMagicPenPerc.Caption = "Critical Strike";
+                this.columnMagicPenPerc.Caption = "Magic Pen (%)";
                 this.columnMagicPenPerc.DefaultValue = ((double)(0D));
                 this.columnMagicResist.Caption = "Magic Resist";
                 this.columnMagicResist.DefaultValue = ((double)(0D));
@@ -822,6 +838,22 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double CooldownReduction {
+                get {
+                    if (this.IsCooldownReductionNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.CooldownReductionColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.CooldownReductionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public double CriticalStrike {
                 get {
                     if (this.IsCriticalStrikeNull()) {
@@ -1022,6 +1054,18 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAttackSpeedNull() {
                 this[this.tableStats.AttackSpeedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsCooldownReductionNull() {
+                return this.IsNull(this.tableStats.CooldownReductionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetCooldownReductionNull() {
+                this[this.tableStats.CooldownReductionColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

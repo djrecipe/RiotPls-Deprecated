@@ -12,22 +12,25 @@ namespace RiotPls.API.Serialization.Items
     [JsonObject(MemberSerialization.OptIn)]
     public class ItemInfo : IRiotDroppable
     {
-        private static List<ItemInfo> consumables = new List<ItemInfo>();
-        private static List<ItemInfo> non_consumables = new List<ItemInfo>();
+        #region Static Members
+        private static readonly List<ItemInfo> consumables = new List<ItemInfo>();
+        private static readonly List<ItemInfo> nonConsumables = new List<ItemInfo>();
+        #endregion
+        #region Static Methods
         private static void RemoveReference(ItemInfo info)
         {
             if (consumables.FirstOrDefault(x => x.Name == info.Name) != null)
                 consumables.Remove(info);
-            if (non_consumables.FirstOrDefault(x => x.Name == info.Name) != null)
-                non_consumables.Remove(info);
+            if (nonConsumables.FirstOrDefault(x => x.Name == info.Name) != null)
+                nonConsumables.Remove(info);
             return;
         }
         private static void UpdateConsumableStatus(ItemInfo info)
         {
             if (info.Consumable)
             {
-                if (non_consumables.FirstOrDefault(x => x.Name == info.Name) != null)
-                    non_consumables.Remove(info);
+                if (nonConsumables.FirstOrDefault(x => x.Name == info.Name) != null)
+                    nonConsumables.Remove(info);
                 if (consumables.FirstOrDefault(x => x.Name == info.Name) == null)
                     consumables.Add(info);
             }
@@ -35,11 +38,16 @@ namespace RiotPls.API.Serialization.Items
             {
                 if (consumables.FirstOrDefault(x => x.Name == info.Name) != null)
                     consumables.Remove(info);
-                if (non_consumables.FirstOrDefault(x => x.Name == info.Name) == null)
-                    non_consumables.Add(info);
+                if (nonConsumables.FirstOrDefault(x => x.Name == info.Name) == null)
+                    nonConsumables.Add(info);
             }
             return;
         }
+        #endregion
+        #region Instance Members
+        private ItemStatsInfo descriptionStats = new ItemStatsInfo();
+        #endregion
+        #region Instance Properties
         [JsonProperty("colloq")]
         public string ColloquialName { get; private set; }
         private bool _Consumable = false;
@@ -59,6 +67,19 @@ namespace RiotPls.API.Serialization.Items
         }
         [JsonProperty("sanitizedDescription")]
         public string Description { get; private set; } = null;
+        private string _FullDescription = null;
+        [JsonProperty("description")]
+        public string FullDescription
+        {
+            get { return this._FullDescription; }
+            private set
+            {
+                this._FullDescription = value;
+                this.RemoveDescriptionStats();
+                this.ParseDescription(this.FullDescription);
+                this.AddDescriptionStats();
+            }
+        }
         [JsonProperty("hideFromAll")]
         public bool HideFromAll { get; private set; } = false;
         [JsonProperty("id")]
@@ -82,8 +103,19 @@ namespace RiotPls.API.Serialization.Items
         public string Name { get; private set; } = null;
         [JsonProperty("requiredChampion")]
         public string RequiredChampion { get; private set; } = null;
-        [JsonProperty("stats", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
-        public ItemStatsInfo Stats { get; private set; } = new ItemStatsInfo();
+        private ItemStatsInfo _Stats = new ItemStatsInfo();
+        [JsonProperty("stats", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize, Order = 0)]
+        public ItemStatsInfo Stats
+        {   // must be deserialized first, since deserialization does not invoke this setter
+            get { return this._Stats; }
+            private set
+            {
+                this._Stats = value;
+                this.AddDescriptionStats();
+            }
+        }
+        #endregion
+        #region Instance Methods
         public ItemInfo()
         {
             ItemInfo.UpdateConsumableStatus(this);
@@ -93,5 +125,25 @@ namespace RiotPls.API.Serialization.Items
         {
             ItemInfo.RemoveReference(this);
         }
+        private void AddDescriptionStats()
+        {
+            if(this.descriptionStats.MagicPenFlat > 0)
+                this.Stats.MagicPenFlat += this.descriptionStats.MagicPenFlat;
+            this.Stats.MagicPenPerc += this.descriptionStats.MagicPenPerc;
+            return;
+        }
+        private ItemStatsInfo ParseDescription(string description)
+        {
+            this.descriptionStats = ItemDescriptionParser.Parse(description);
+            return this.descriptionStats;
+        }
+        private void RemoveDescriptionStats()
+        {
+            this.Stats.MagicPenFlat -= this.descriptionStats.MagicPenFlat;
+            this.Stats.MagicPenPerc -= this.descriptionStats.MagicPenPerc;
+            return;
+        }
+
+        #endregion
     }
 }

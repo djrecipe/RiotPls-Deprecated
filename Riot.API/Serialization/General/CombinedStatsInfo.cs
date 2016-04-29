@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,43 +48,37 @@ namespace RiotPls.API.Serialization.General
         public StatsTable Table { get; private set; } = new StatsTable();
         #endregion
         #region Instance Methods
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public CombinedStatsInfo()
         {
             for (int i = 0; i < 19; i++)
                 this.Stats.AddStatsRow(this.Stats.NewStatsRow());
             return;
         }
+        /// <summary>
+        /// Re-calculate all stat information using the current list of components
+        /// </summary>
         public void UpdateStats()
         {
             for (int i = 0; i <= 18; i++)
             {
                 IEnumerable<IStatsInfo> collection = this.components.Where(c => c.RequiredLevel == 1 || c.RequiredLevel <= i);
-                this.Stats[i]["AbilityPower"] = collection.Sum(info => (double)info.Stats[i]["AbilityPower"]);
-                this.Stats[i]["Armor"] = collection.Sum(info => (double)info.Stats[i]["Armor"]);
-                this.Stats[i]["AttackDamage"] = collection.Sum(info => (double)info.Stats[i]["AttackDamage"]);
-                this.Stats[i]["AttackRange"] = collection.Sum(info => (double)info.Stats[i]["AttackRange"]);
-                if (i == 1)
+                AttackSpeed attack_speed = new AttackSpeed(collection);
+                foreach (DataColumn column in this.Stats.Columns)
                 {
-                    this.Stats[i]["AttackSpeed"] = collection.Sum(info => (double)info.Stats[i]["AttackSpeed"]);
+                    string name = column.ColumnName;
+                    switch (column.ColumnName)
+                    {
+                        case "AttackSpeed":
+                            this.Stats[i][name] = attack_speed.GetAttackSpeed((Level)i);
+                            break;
+                        default:
+                            this.Stats[i][name] = collection.Sum(info => (double)info.Stats[i][name]);
+                            break;
+                    }
                 }
-                else
-                {
-                    double atk_speed_base_sum = collection.Sum(info => (double)info.AttackSpeedBase);
-                    double atk_speed_perlvl_sum = collection.Sum(info => (double)info.AttackSpeedPerLevel);
-                    double atk_speed_incr_sum = 1.0 + collection.Sum(info => (double)info.AttackSpeedMultiplier - 1.0);
-                    double atk_speed_increment = (atk_speed_perlvl_sum / 100.0) * atk_speed_base_sum;
-                    double value = (atk_speed_base_sum + atk_speed_increment * (double)i) * atk_speed_incr_sum;
-                    this.Stats[i]["AttackSpeed"] = value;
-                }
-                this.Stats[i]["CriticalStrike"] = collection.Sum(info => (double)info.Stats[i]["CriticalStrike"]);
-                this.Stats[i]["Health"] = collection.Sum(info => (double)info.Stats[i]["Health"]);
-                this.Stats[i]["HealthRegen"] = collection.Sum(info => (double)info.Stats[i]["HealthRegen"]);
-                this.Stats[i]["MagicResist"] = collection.Sum(info => (double)info.Stats[i]["MagicResist"]);
-                this.Stats[i]["MagicPenFlat"] = collection.Sum(info => (double)info.Stats[i]["MagicPenFlat"]);
-                this.Stats[i]["MagicPenPerc"] = collection.Sum(info => (double)info.Stats[i]["MagicPenPerc"]);
-                this.Stats[i]["MovementSpeed"] = collection.Sum(info => (double)info.Stats[i]["MovementSpeed"]);
-                this.Stats[i]["Resource"] = collection.Sum(info => (double)info.Stats[i]["Resource"]);
-                this.Stats[i]["ResourceRegen"] = collection.Sum(info => (double)info.Stats[i]["ResourceRegen"]);
             }
             return;
         }
