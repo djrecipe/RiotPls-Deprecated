@@ -54,6 +54,19 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        [JsonProperty("rPercentArmorPenetrationMod")]
+        public override double ArmorPenPerc
+        {
+            get
+            {
+                return base.ArmorPenPerc;
+            }
+            internal set
+            {
+                base.ArmorPenPerc = value;
+                return;
+            }
+        }
         [JsonProperty("rFlatArmorModPerLevel")]
         public override double ArmorPerLevel
         {

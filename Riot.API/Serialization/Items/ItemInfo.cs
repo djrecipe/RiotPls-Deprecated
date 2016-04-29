@@ -128,6 +128,7 @@ namespace RiotPls.API.Serialization.Items
         private void AddDescriptionStats()
         {
             this.Stats.ArmorPenFlat += this.descriptionStats.ArmorPenFlat;
+            this.Stats.ArmorPenPerc += this.descriptionStats.ArmorPenPerc;
             this.Stats.CooldownReduction += this.descriptionStats.CooldownReduction;
             this.Stats.MagicPenFlat += this.descriptionStats.MagicPenFlat;
             this.Stats.MagicPenPerc += this.descriptionStats.MagicPenPerc;
@@ -141,6 +142,7 @@ namespace RiotPls.API.Serialization.Items
         private void RemoveDescriptionStats()
         {
             this.Stats.ArmorPenFlat -= this.descriptionStats.ArmorPenFlat;
+            this.Stats.ArmorPenPerc -= this.descriptionStats.ArmorPenPerc;
             this.Stats.CooldownReduction -= this.descriptionStats.CooldownReduction;
             this.Stats.MagicPenFlat -= this.descriptionStats.MagicPenFlat;
             this.Stats.MagicPenPerc -= this.descriptionStats.MagicPenPerc;

@@ -17,6 +17,7 @@ namespace RiotPls.API.Serialization.Items
         {
             { "FlatArmorPen", @"(> *\+?(?<FlatArmorPen>\d+) *<a href='FlatArmorPen)"},
             { "FlatMagicPen", @"(> *\+?(?<FlatMagicPen>\d+) *<a href='FlatMagicPen)"},
+            { "PercArmorPen",  @"(> *\+?(?<PercArmorPen>\d+) *%? *<a href='BonusArmorPen)"},
             { "PercMagicPen",  @"(> *\+?(?<PercMagicPen>\d+) *%? *<a href='TotalMagicPen)"},
             { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"}
         }; 
@@ -41,6 +42,9 @@ namespace RiotPls.API.Serialization.Items
                         break;
                     case "FlatMagicPen":
                         info.MagicPenFlat += value_int;
+                        break;
+                    case "PercArmorPen":
+                        info.ArmorPenPerc += value_int;
                         break;
                     case "PercMagicPen":
                         info.MagicPenPerc += value_int;
