@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
-                                           
+
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 namespace RiotPls.API.Serialization.Champions
 {
@@ -72,7 +72,7 @@ namespace RiotPls.API.Serialization.Champions
                 return;
             }
         }
-        public override double AttackSpeedBase { get; protected set; } = 0.625;
+        public override double AttackSpeedBase { get; internal set; } = 0.625;
         [JsonProperty("attackspeedoffset")]
         public override double AttackSpeedOffset
         {

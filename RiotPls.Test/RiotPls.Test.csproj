@@ -62,10 +62,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="PseudoItemInfo.cs" />
     <Compile Include="PseudoChampionInfo.cs" />
     <Compile Include="Serialization\TestBuildCollectionSave.cs" />
     <Compile Include="Serialization\TestBuildSave.cs" />
     <Compile Include="Serialization\TestImageInfo.cs" />
+    <Compile Include="Specific Stats\TestAttackSpeed.cs" />
+    <Compile Include="Specific Stats\TestMagicPenetration.cs" />
     <Compile Include="TestAPIKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGeneralStatsInfo.cs" />

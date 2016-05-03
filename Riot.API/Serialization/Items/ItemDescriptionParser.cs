@@ -53,8 +53,7 @@ namespace RiotPls.API.Serialization.Items
             }
             return info;
         }
-
-        internal static string ParseSection(string name, string regex, string text)
+        private static string ParseSection(string name, string regex, string text)
         {
             Regex rx = null;
             try

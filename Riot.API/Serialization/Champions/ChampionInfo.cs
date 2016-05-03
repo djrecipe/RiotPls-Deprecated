@@ -186,5 +186,12 @@ namespace RiotPls.API.Serialization.Champions
         /// </summary>
         [JsonProperty("title")]
         public string Title { get; private set; } = null;
+        /// <summary>
+        /// This class cannot be directly instantiated
+        /// </summary>
+        protected ChampionInfo()
+        {
+            
+        }
     }
 }

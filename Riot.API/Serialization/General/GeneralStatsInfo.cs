@@ -156,7 +156,7 @@ namespace RiotPls.API.Serialization.General
         public virtual double AttackSpeedBase
         {
             get { return this._AttackSpeedBase; }
-            protected set
+            internal set
             {
                 this._AttackSpeedBase = value;
                 this.UpdateAttackSpeed();

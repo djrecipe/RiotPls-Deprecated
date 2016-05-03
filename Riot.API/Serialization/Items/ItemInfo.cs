@@ -72,7 +72,7 @@ namespace RiotPls.API.Serialization.Items
         public string FullDescription
         {
             get { return this._FullDescription; }
-            private set
+            internal set
             {
                 this._FullDescription = value;
                 this.RemoveDescriptionStats();
@@ -100,7 +100,7 @@ namespace RiotPls.API.Serialization.Items
         [JsonProperty("maps", ItemIsReference = true)]
         public Dictionary<string, bool> Maps { get; private set; } = new Dictionary<string, bool>();
         [JsonProperty("name")]
-        public string Name { get; private set; } = null;
+        public string Name { get; protected set; } = null;
         [JsonProperty("requiredChampion")]
         public string RequiredChampion { get; private set; } = null;
         private ItemStatsInfo _Stats = new ItemStatsInfo();
@@ -116,7 +116,10 @@ namespace RiotPls.API.Serialization.Items
         }
         #endregion
         #region Instance Methods
-        public ItemInfo()
+        /// <summary>
+        /// This class cannot be directly instantiated
+        /// </summary>
+        protected ItemInfo()
         {
             ItemInfo.UpdateConsumableStatus(this);
             return;

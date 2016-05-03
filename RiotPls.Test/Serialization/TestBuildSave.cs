@@ -32,10 +32,10 @@ namespace RiotPls.Test.Serialization
         public void SimpleSerialize()
         {
             Build build = new Build("Test");
-            build.SetChampion(new PseudoChampionInfo("Test"));
+            build.SetChampion(new PseudoChampionInfo("TestChampion"));
             for (int i = 0; i < 6; i++)
             {
-                ItemInfo item = new ItemInfo();
+                PseudoItemInfo item = new PseudoItemInfo("TestItem");
                 build.SetItem(i, item);
             }
             build.SaveAsJson(TestBuildSave.PATH);
@@ -43,7 +43,8 @@ namespace RiotPls.Test.Serialization
             string text = File.ReadAllText(TestBuildSave.PATH);
             build = null;
             build = JsonConvert.DeserializeObject<Build>(text, this.jsonSettings);
-            Assert.IsTrue(build?.Champion?.Name == "Test", "Failed to Verify Champion Name");
+            Assert.IsTrue(build?.Champion?.Name == "TestChampion", "Failed to Verify Champion Name");
+            Assert.IsTrue(build?.GetItem(0)?.Name == "TestItem", "Failed to Verify Item Name");
         }
     }
 }

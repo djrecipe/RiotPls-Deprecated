@@ -33,10 +33,10 @@ namespace RiotPls.Test.Serialization
         {
             BuildCollection collection = new BuildCollection("Test.BuildCollection");
             Build build = collection[0];
-            build.SetChampion(new PseudoChampionInfo("Test"));
+            build.SetChampion(new PseudoChampionInfo("TestChampion"));
             for (int i = 0; i < 6; i++)
             {
-                ItemInfo item = new ItemInfo();
+                PseudoItemInfo item = new PseudoItemInfo("TestItem");
                 build.SetItem(i, item);
             }
             collection.SaveAsJson(TestBuildCollectionSave.PATH);
@@ -44,7 +44,8 @@ namespace RiotPls.Test.Serialization
             string text = File.ReadAllText(TestBuildCollectionSave.PATH);
             collection = null;
             collection = JsonConvert.DeserializeObject<BuildCollection>(text, this.jsonSettings);
-            Assert.IsTrue(collection?[0]?.Champion?.Name == "Test", "Failed to Verify Champion Name");
+            Assert.IsTrue(collection?[0]?.Champion?.Name == "TestChampion", "Failed to Verify Champion Name");
+            Assert.IsTrue(collection?[0]?.GetItem(0)?.Name == "TestItem", "Failed to Verify Item Name");
         }
     }
 }
