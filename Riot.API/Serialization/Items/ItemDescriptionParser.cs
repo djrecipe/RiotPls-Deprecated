@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -13,6 +14,8 @@ namespace RiotPls.API.Serialization.Items
     /// </summary>
     public abstract class ItemDescriptionParser
     {
+        #region Static Members       
+        private static readonly DescriptionDetails.ItemDataTable CustomStats = new DescriptionDetails.ItemDataTable();
         private static readonly Dictionary<string, string> Stats = new Dictionary<string, string>()
         {
             { "FlatArmorPen", @"(> *\+?(?<FlatArmorPen>\d+) *<a href='FlatArmorPen)"},
@@ -20,7 +23,28 @@ namespace RiotPls.API.Serialization.Items
             { "PercArmorPen",  @"(> *\+?(?<PercArmorPen>\d+) *%? *<a href='BonusArmorPen)"},
             { "PercMagicPen",  @"(> *\+?(?<PercMagicPen>\d+) *%? *<a href='TotalMagicPen)"},
             { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"}
-        }; 
+        };
+        #endregion
+        #region Static Properties
+        private static string CustomStatsPath => Path.Combine(Tools.Paths.AppData, "ItemDescriptionStats.rpxml");
+        #endregion
+        #region Static Methods
+        static ItemDescriptionParser()
+        {
+            if (File.Exists(ItemDescriptionParser.CustomStatsPath))
+            {
+                ItemDescriptionParser.CustomStats.ReadXml(ItemDescriptionParser.CustomStatsPath);
+                foreach (DescriptionDetails.ItemRow row in ItemDescriptionParser.CustomStats)
+                {
+                    if (ItemDescriptionParser.Stats.ContainsKey(row.Name))
+                        ItemDescriptionParser.Stats.Remove(row.Name);
+                    ItemDescriptionParser.Stats.Add(row.Name, row.RegEx);
+                }
+            }
+            else
+                ItemDescriptionParser.CustomStats.WriteXml(ItemDescriptionParser.CustomStatsPath);
+            return;
+        }
         internal static ItemStatsInfo Parse(string description)
         {
             ItemStatsInfo info = new ItemStatsInfo();
@@ -73,5 +97,6 @@ namespace RiotPls.API.Serialization.Items
                 return null;
             return matches[0]?.Groups[group_index].Value;
         }
+        #endregion
     }
 }
