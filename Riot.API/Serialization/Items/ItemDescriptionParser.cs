@@ -23,7 +23,8 @@ namespace RiotPls.API.Serialization.Items
             { "ArmorPenPerc",  @"(> *\+?(?<ArmorPenPerc>\d+) *%? *<a href='BonusArmorPen)"},
             { "MagicPenPerc",  @"(> *\+?(?<MagicPenPerc>\d+) *%? *<a href='TotalMagicPen)"},
             { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"},
-            { "Tenacity", @"Reduces the duration of stuns.*by (?<Tenacity>\d+) *%?" }
+            { "Tenacity", @"Reduces the duration of stuns.*by (?<Tenacity>\d+) *%?" },
+            { "GoldPer10", @"\+(?<GoldPer10>\d+) *Gold per 10"}
         };
         #endregion
         #region Static Properties

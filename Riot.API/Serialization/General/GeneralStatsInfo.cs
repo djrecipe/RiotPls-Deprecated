@@ -265,6 +265,20 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        [Statistic("GoldPer10", IsFromDescription = true)]
+        public virtual double GoldPer10
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["GoldPer10"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["GoldPer10"] = value;
+                this.InitializeGenericRows("GoldPer10");
+                return;
+            }
+        }
         [Statistic("Health")]
         public virtual double Health
         {

@@ -297,6 +297,8 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnCriticalStrike;
             
+            private global::System.Data.DataColumn columnGoldPer10;
+            
             private global::System.Data.DataColumn columnHealth;
             
             private global::System.Data.DataColumn columnHealthRegen;
@@ -422,6 +424,14 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GoldPer10Column {
+                get {
+                    return this.columnGoldPer10;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn HealthColumn {
                 get {
                     return this.columnHealth;
@@ -539,6 +549,7 @@ namespace RiotPls.API {
                         double AttackSpeed, 
                         double CooldownReduction, 
                         double CriticalStrike, 
+                        double GoldPer10, 
                         double Health, 
                         double HealthRegen, 
                         double MagicPenFlat, 
@@ -559,6 +570,7 @@ namespace RiotPls.API {
                         AttackSpeed,
                         CooldownReduction,
                         CriticalStrike,
+                        GoldPer10,
                         Health,
                         HealthRegen,
                         MagicPenFlat,
@@ -599,6 +611,7 @@ namespace RiotPls.API {
                 this.columnAttackSpeed = base.Columns["AttackSpeed"];
                 this.columnCooldownReduction = base.Columns["CooldownReduction"];
                 this.columnCriticalStrike = base.Columns["CriticalStrike"];
+                this.columnGoldPer10 = base.Columns["GoldPer10"];
                 this.columnHealth = base.Columns["Health"];
                 this.columnHealthRegen = base.Columns["HealthRegen"];
                 this.columnMagicPenFlat = base.Columns["MagicPenFlat"];
@@ -631,6 +644,8 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnCooldownReduction);
                 this.columnCriticalStrike = new global::System.Data.DataColumn("CriticalStrike", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnCriticalStrike);
+                this.columnGoldPer10 = new global::System.Data.DataColumn("GoldPer10", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGoldPer10);
                 this.columnHealth = new global::System.Data.DataColumn("Health", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHealth);
                 this.columnHealthRegen = new global::System.Data.DataColumn("HealthRegen", typeof(double), null, global::System.Data.MappingType.Element);
@@ -666,6 +681,8 @@ namespace RiotPls.API {
                 this.columnCooldownReduction.DefaultValue = ((double)(0D));
                 this.columnCriticalStrike.Caption = "Crit %";
                 this.columnCriticalStrike.DefaultValue = ((double)(0D));
+                this.columnGoldPer10.Caption = "Tenacity";
+                this.columnGoldPer10.DefaultValue = ((double)(0D));
                 this.columnHealth.DefaultValue = ((double)(0D));
                 this.columnHealthRegen.Caption = "Health Regen";
                 this.columnHealthRegen.DefaultValue = ((double)(0D));
@@ -967,6 +984,22 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double GoldPer10 {
+                get {
+                    if (this.IsGoldPer10Null()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.GoldPer10Column]));
+                    }
+                }
+                set {
+                    this[this.tableStats.GoldPer10Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public double Health {
                 get {
                     if (this.IsHealthNull()) {
@@ -1215,6 +1248,18 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetCriticalStrikeNull() {
                 this[this.tableStats.CriticalStrikeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGoldPer10Null() {
+                return this.IsNull(this.tableStats.GoldPer10Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGoldPer10Null() {
+                this[this.tableStats.GoldPer10Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
