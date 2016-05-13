@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.Interfaces;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
@@ -23,6 +27,7 @@ namespace RiotPls.API.Serialization.General
 
         #endregion
         #region Instance Properties
+        [Statistic("AbilityPower")]
         public virtual double AbilityPower
         {
             get
@@ -32,10 +37,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["AbilityPower"] = value;
-                this.InitializeAbilityPowerRows();
+                this.InitializeGenericRows("AbilityPower");
                 return;
             }
         }
+        [Statistic("AbilityPower")]
         public virtual double AbilityPowerPerLevel
         {
             get
@@ -45,9 +51,10 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["AbilityPower"] = value;
-                this.InitializeAbilityPowerRows();
+                this.InitializeGenericRows("AbilityPower");
             }
         }
+        [Statistic("Armor")]
         public virtual double Armor
         {
             get
@@ -57,10 +64,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["Armor"] = value;
-                this.InitializeArmorRows();
+                this.InitializeGenericRows("Armor");
                 return;
             }
         }
+        [Statistic("Armor")]
         public virtual double ArmorPerLevel
         {
             get
@@ -70,10 +78,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["Armor"] = value;
-                this.InitializeArmorRows();
+                this.InitializeGenericRows("Armor");
                 return;
             }
         }
+        [Statistic("ArmorPenFlat", IsFromDescription = true)]
         public virtual double ArmorPenFlat
         {
             get
@@ -83,10 +92,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["ArmorPenFlat"] = value;
-                this.InitializeArmorPenFlatRows();
+                this.InitializeGenericRows("ArmorPenFlat");
                 return;
             }
         }
+        [Statistic("ArmorPenPerc", IsFromDescription=true)]
         public virtual double ArmorPenPerc
         {
             get
@@ -96,10 +106,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["ArmorPenPerc"] = value;
-                this.InitializeArmorPenPercRows();
+                this.InitializeGenericRows("ArmorPenPerc");
                 return;
             }
         }
+        [Statistic("AttackDamage")]
         public virtual double AttackDamage
         {
             get
@@ -109,10 +120,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["AttackDamage"] = value;
-                this.InitializeAttackDamageRows();
+                this.InitializeGenericRows("AttackDamage");
                 return;
             }
         }
+        [Statistic("AttackDamage")]
         public virtual double AttackDamagePerLevel
         {
             get
@@ -122,9 +134,10 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["AttackDamage"] = value;
-                this.InitializeAttackDamageRows();
+                this.InitializeGenericRows("AttackDamage");
             }
         }
+        [Statistic("AttackRange")]
         public virtual double AttackRange
         {
             get
@@ -134,10 +147,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["AttackRange"] = value;
-                this.InitializeAttackRangeRows();
+                this.InitializeGenericRows("AttackRange");
                 return;
             }
         }
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public virtual double AttackSpeed
         {
             get
@@ -153,6 +167,7 @@ namespace RiotPls.API.Serialization.General
         }
 
         private double _AttackSpeedBase = 0.0;
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public virtual double AttackSpeedBase
         {
             get { return this._AttackSpeedBase; }
@@ -162,8 +177,10 @@ namespace RiotPls.API.Serialization.General
                 this.UpdateAttackSpeed();
             }
         }
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public double AttackSpeedCap => 2.5;
         private double _AttackSpeedOffset = 0;
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public virtual double AttackSpeedOffset
         {
             get
@@ -178,6 +195,7 @@ namespace RiotPls.API.Serialization.General
             }
         }
         private double _AttackSpeedMultiplier = 1.0;
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public virtual double AttackSpeedMultiplier
         {
             get
@@ -191,6 +209,7 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        [Statistic("AttackSpeed", IsGeneric = false)]
         public virtual double AttackSpeedPerLevel
         {
             get
@@ -204,6 +223,7 @@ namespace RiotPls.API.Serialization.General
                 return;
             }
         }
+        [Statistic("CooldownReduction", IsFromDescription = true)]
         public virtual double CooldownReduction
         {
             get
@@ -213,10 +233,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["CooldownReduction"] = value;
-                this.InitializeCooldownReductionRows();
+                this.InitializeGenericRows("CooldownReduction");
                 return;
             }
         }
+        [Statistic("CriticalStrike")]
         public virtual double CriticalStrike
         {
             get
@@ -226,10 +247,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["CriticalStrike"] = value;
-                this.InitializeCriticalStrikeRows();
+                this.InitializeGenericRows("CriticalStrike");
                 return;
             }
         }
+        [Statistic("CriticalStrike")]
         public virtual double CriticalStrikePerLevel
         {
             get
@@ -239,10 +261,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["CriticalStrike"] = value;
-                this.InitializeCriticalStrikeRows();
+                this.InitializeGenericRows("CriticalStrike");
                 return;
             }
         }
+        [Statistic("Health")]
         public virtual double Health
         {
             get
@@ -252,10 +275,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["Health"] = value;
-                this.InitializeHealthRows();
+                this.InitializeGenericRows("Health");
                 return;
             }
         }
+        [Statistic("Health")]
         public virtual double HealthPerLevel
         {
             get
@@ -265,10 +289,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["Health"] = value;
-                this.InitializeHealthRows();
+                this.InitializeGenericRows("Health");
                 return;
             }
         }
+        [Statistic("HealthRegen")]
         public virtual double HealthRegen
         {
             get
@@ -278,10 +303,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["HealthRegen"] = value;
-                this.InitializeHealthRegenRows();
+                this.InitializeGenericRows("HealthRegen");
                 return;
             }
         }
+        [Statistic("HealthRegen")]
         public virtual double HealthRegenPerLevel
         {
             get
@@ -291,10 +317,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["HealthRegen"] = value;
-                this.InitializeHealthRegenRows();
+                this.InitializeGenericRows("HealthRegen");
                 return;
             }
         }
+        [Statistic("MagicPenFlat", IsFromDescription = true)]
         public virtual double MagicPenFlat
         {
             get
@@ -304,10 +331,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["MagicPenFlat"] = value;
-                this.InitializeMagicPenFlatRows();
+                this.InitializeGenericRows("MagicPenFlat");
                 return;
             }
         }
+        [Statistic("MagicPenPerc", IsFromDescription = true)]
         public virtual double MagicPenPerc
         {
             get
@@ -317,10 +345,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["MagicPenPerc"] = value;
-                this.InitializeMagicPenPercRows();
+                this.InitializeGenericRows("MagicPenPerc");
                 return;
             }
         }
+        [Statistic("MagicResist")]
         public virtual double MagicResist
         {
             get
@@ -330,10 +359,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["MagicResist"] = value;
-                this.InitializeMagicResistRows();
+                this.InitializeGenericRows("MagicResist");
                 return;
             }
         }
+        [Statistic("MagicResist")]
         public virtual double MagicResistPerLevel
         {
             get
@@ -343,10 +373,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["MagicResist"] = value;
-                this.InitializeMagicResistRows();
+                this.InitializeGenericRows("MagicResist");
                 return;
             }
         }
+        [Statistic("MovementSpeed")]
         public virtual double MovementSpeed
         {
             get
@@ -356,11 +387,12 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["MovementSpeed"] = value;
-                this.InitializeMovementSpeedRows();
+                this.InitializeGenericRows("MovementSpeed");
                 return;
             }
         }
         public virtual int RequiredLevel { get; set; } = 1;
+        [Statistic("Resource")]
         public virtual double Resource
         {
             get
@@ -370,10 +402,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["Resource"] = value;
-                this.InitializeResourceRows();
+                this.InitializeGenericRows("Resource");
                 return;
             }
         }
+        [Statistic("Resource")]
         public virtual double ResourcePerLevel
         {
             get
@@ -383,10 +416,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["Resource"] = value;
-                this.InitializeResourceRows();
+                this.InitializeGenericRows("Resource");
                 return;
             }
         }
+        [Statistic("ResourceRegen")]
         public virtual double ResourceRegen
         {
             get
@@ -396,10 +430,11 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[0]["ResourceRegen"] = value;
-                this.InitializeResourceRegenRows();
+                this.InitializeGenericRows("ResourceRegen");
                 return;
             }
         }
+        [Statistic("ResourceRegen")]
         public virtual double ResourceRegenPerLevel
         {
             get
@@ -409,54 +444,32 @@ namespace RiotPls.API.Serialization.General
             internal set
             {
                 this.Stats.Rows[1]["ResourceRegen"] = value;
-                this.InitializeResourceRegenRows();
+                this.InitializeGenericRows("ResourceRegen");
                 return;
             }
         }
         public StatsTable.StatsDataTable Stats => this.Table.Stats;
         public StatsTable Table { get; private set; } = new StatsTable();
+        [Statistic("Tenacity", IsFromDescription = true)]
+        public virtual double Tenacity
+        {
+            get
+            {
+                return (double)this.Stats.Rows[0]["Tenacity"];
+            }
+            internal set
+            {
+                this.Stats.Rows[0]["Tenacity"] = value;
+                this.InitializeGenericRows("Tenacity");
+                return;
+            }
+        }
         #endregion
         #region Instance Methods
         internal GeneralStatsInfo()
         {
             for (int i = 0; i < 19; i++)
                 this.Stats.AddStatsRow(this.Stats.NewStatsRow());
-            return;
-        }
-        private void InitializeAbilityPowerRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["AbilityPower"] = (double)this.Stats[0]["AbilityPower"] + (double)this.Stats[1]["AbilityPower"] * (double)i;
-            return;
-        }
-        private void InitializeArmorRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["Armor"] = (double)this.Stats[0]["Armor"] + (double)this.Stats[1]["Armor"] * (double)i;
-            return;
-        }
-        private void InitializeArmorPenFlatRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["ArmorPenFlat"] = (double)this.Stats[0]["ArmorPenFlat"] + (double)this.Stats[1]["ArmorPenFlat"] * (double)i;
-            return;
-        }
-        private void InitializeArmorPenPercRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["ArmorPenPerc"] = (double)this.Stats[0]["ArmorPenPerc"] + (double)this.Stats[1]["ArmorPenPerc"] * (double)i;
-            return;
-        }
-        private void InitializeAttackDamageRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["AttackDamage"] = (double)this.Stats[0]["AttackDamage"] + (double)this.Stats[1]["AttackDamage"] * (double)i;
-            return;
-        }
-        private void InitializeAttackRangeRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["AttackRange"] = (double)this.Stats[0]["AttackRange"] + (double)this.Stats[1]["AttackRange"] * (double)i;
             return;
         }
         private void InitializeAttackSpeedRows()
@@ -469,65 +482,39 @@ namespace RiotPls.API.Serialization.General
             }
             return;
         }
-        private void InitializeCooldownReductionRows()
+        private void InitializeGenericRows(string name)
         {
             for (int i = 2; i <= 18; i++)
-                this.Stats[i]["CooldownReduction"] = (double)this.Stats[0]["CooldownReduction"] + (double)this.Stats[1]["CooldownReduction"] * (double)i;
+                this.Stats[i][name] = (double)this.Stats[0][name] + (double)this.Stats[1][name] * (double)i;
             return;
         }
-        private void InitializeCriticalStrikeRows()
+        /// <summary>
+        /// Uses reflection to attempt to set the property with the specified name to the specified value
+        /// </summary>
+        /// <param name="name">Property name to set</param>
+        /// <param name="value">Value to apply</param>
+        /// <returns>True if the property with the specified name was found, False otherwise</returns>
+        public bool SetValue(string name, int value)
         {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["CriticalStrike"] = (double)this.Stats[0]["CriticalStrike"] + (double)this.Stats[1]["CriticalStrike"] * (double)i;
-            return;
+            PropertyInfo property = this.GetType().GetProperty(name);
+            if (property == null)
+                return false;
+            property.SetValue(this, Convert.ChangeType(value, property.PropertyType), null);
+            return true;
         }
-        private void InitializeHealthRows()
+        /// <summary>
+        /// Uses reflection to attempt to set the property with the specified name to the specified value
+        /// </summary>
+        /// <param name="name">Property name to set</param>
+        /// <param name="value">Value to apply</param>
+        /// <returns>True if the property with the specified name was found, False otherwise</returns>
+        public bool SetValue(string name, double value)
         {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["Health"] = (double)this.Stats[0]["Health"] + (double)this.Stats[1]["Health"] * (double)i;
-            return;
-        }
-        private void InitializeHealthRegenRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["HealthRegen"] = (double)this.Stats[0]["HealthRegen"] + (double)this.Stats[1]["HealthRegen"] * (double)i;
-            return;
-        }
-        private void InitializeMagicPenFlatRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["MagicPenFlat"] = (double)this.Stats[0]["MagicPenFlat"] + (double)this.Stats[1]["MagicPenFlat"] * (double)i;
-            return;
-        }
-        private void InitializeMagicPenPercRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["MagicPenPerc"] = (double)this.Stats[0]["MagicPenPerc"] + (double)this.Stats[1]["MagicPenPerc"] * (double)i;
-            return;
-        }
-        private void InitializeMagicResistRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["MagicResist"] = (double)this.Stats[0]["MagicResist"] + (double)this.Stats[1]["MagicResist"] * (double)i;
-            return;
-        }
-        private void InitializeMovementSpeedRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["MovementSpeed"] = (double)this.Stats[0]["MovementSpeed"] + (double)this.Stats[1]["MovementSpeed"] * (double)i;
-            return;
-        }
-        private void InitializeResourceRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["Resource"] = (double)this.Stats[0]["Resource"] + (double)this.Stats[1]["Resource"] * (double)i;
-            return;
-        }
-        private void InitializeResourceRegenRows()
-        {
-            for (int i = 2; i <= 18; i++)
-                this.Stats[i]["ResourceRegen"] = (double)this.Stats[0]["ResourceRegen"] + (double)this.Stats[1]["ResourceRegen"] * (double)i;
-            return;
+            PropertyInfo property = this.GetType().GetProperty(name);
+            if (property == null)
+                return false;
+            property.SetValue(this, Convert.ChangeType(value, property.PropertyType), null);
+            return true;
         }
         protected void UpdateAttackSpeed()
         {
@@ -537,19 +524,11 @@ namespace RiotPls.API.Serialization.General
         public void UpdateStats()
         {
             this.UpdateAttackSpeed();
-            this.InitializeAbilityPowerRows();
-            this.InitializeArmorRows();
-            this.InitializeAttackDamageRows();
-            this.InitializeAttackRangeRows();
             this.InitializeAttackSpeedRows();
-            this.InitializeCriticalStrikeRows();
-            this.InitializeHealthRows();
-            this.InitializeHealthRegenRows();
-            this.InitializeMagicResistRows();
-            this.InitializeMovementSpeedRows();
-            this.InitializeResourceRows();
-            this.InitializeResourceRegenRows();
-
+            List<PropertyInfo> properties = this.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(Statistic))).ToList();
+            List<Statistic> statistics = properties.Select(p => p.GetCustomAttribute(typeof(Statistic)) as Statistic).Where(s => s.IsGeneric).Distinct().ToList();
+            foreach (Statistic statistic in statistics)
+                this.InitializeGenericRows(statistic.Name);
         }
         #endregion
     }

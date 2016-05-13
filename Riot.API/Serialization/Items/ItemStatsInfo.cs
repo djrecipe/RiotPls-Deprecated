@@ -353,6 +353,18 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        public override double Tenacity
+        {
+            get
+            {
+                return base.Tenacity;
+            }
+            internal set
+            {
+                base.Tenacity = value;
+                return;
+            }
+        }
 
         internal ItemStatsInfo() : base()
         {

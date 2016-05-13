@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="Engine.cs" />
     <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Serialization\Attributes\Statistic.cs" />
     <Compile Include="Serialization\Champions\ChampionInfo.cs" />
     <Compile Include="Serialization\Champions\LiveChampionInfoSet.cs" />
     <Compile Include="Serialization\Champions\ChampionInfoSet.cs" />

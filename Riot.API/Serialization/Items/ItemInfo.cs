@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Interfaces;
 
@@ -130,11 +132,16 @@ namespace RiotPls.API.Serialization.Items
         }
         private void AddDescriptionStats()
         {
-            this.Stats.ArmorPenFlat += this.descriptionStats.ArmorPenFlat;
-            this.Stats.ArmorPenPerc += this.descriptionStats.ArmorPenPerc;
-            this.Stats.CooldownReduction += this.descriptionStats.CooldownReduction;
-            this.Stats.MagicPenFlat += this.descriptionStats.MagicPenFlat;
-            this.Stats.MagicPenPerc += this.descriptionStats.MagicPenPerc;
+            List<PropertyInfo> properties = this.Stats.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(Statistic))).ToList();
+            foreach (PropertyInfo property in properties)
+            {
+                Statistic statistic = property.GetCustomAttribute(typeof (Statistic)) as Statistic;
+                if (!statistic.IsFromDescription)
+                    continue;
+                double old_value = (double)property.GetValue(this.Stats);
+                double add_value = (double)property.GetValue(this.descriptionStats);
+                this.Stats.SetValue(statistic.Name, old_value + add_value);
+            }
             return;
         }
         private ItemStatsInfo ParseDescription(string description)
@@ -144,11 +151,16 @@ namespace RiotPls.API.Serialization.Items
         }
         private void RemoveDescriptionStats()
         {
-            this.Stats.ArmorPenFlat -= this.descriptionStats.ArmorPenFlat;
-            this.Stats.ArmorPenPerc -= this.descriptionStats.ArmorPenPerc;
-            this.Stats.CooldownReduction -= this.descriptionStats.CooldownReduction;
-            this.Stats.MagicPenFlat -= this.descriptionStats.MagicPenFlat;
-            this.Stats.MagicPenPerc -= this.descriptionStats.MagicPenPerc;
+            List<PropertyInfo> properties = this.Stats.GetType().GetProperties().Where(prop => Attribute.IsDefined(prop, typeof(Statistic))).ToList();
+            foreach (PropertyInfo property in properties)
+            {
+                Statistic statistic = property.GetCustomAttribute(typeof(Statistic)) as Statistic;
+                if (!statistic.IsFromDescription)
+                    continue;
+                double old_value = (double)property.GetValue(this.Stats);
+                double sub_value = (double)property.GetValue(this.descriptionStats);
+                this.Stats.SetValue(statistic.Name, old_value - sub_value);
+            }
             return;
         }
 

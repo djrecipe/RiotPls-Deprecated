@@ -18,11 +18,12 @@ namespace RiotPls.API.Serialization.Items
         private static readonly DescriptionDetails.ItemDataTable CustomStats = new DescriptionDetails.ItemDataTable();
         private static readonly Dictionary<string, string> Stats = new Dictionary<string, string>()
         {
-            { "FlatArmorPen", @"(> *\+?(?<FlatArmorPen>\d+) *<a href='FlatArmorPen)"},
-            { "FlatMagicPen", @"(> *\+?(?<FlatMagicPen>\d+) *<a href='FlatMagicPen)"},
-            { "PercArmorPen",  @"(> *\+?(?<PercArmorPen>\d+) *%? *<a href='BonusArmorPen)"},
-            { "PercMagicPen",  @"(> *\+?(?<PercMagicPen>\d+) *%? *<a href='TotalMagicPen)"},
-            { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"}
+            { "ArmorPenFlat", @"(> *\+?(?<ArmorPenFlat>\d+) *<a href='FlatArmorPen)"},
+            { "MagicPenFlat", @"(> *\+?(?<MagicPenFlat>\d+) *<a href='FlatMagicPen)"},
+            { "ArmorPenPerc",  @"(> *\+?(?<ArmorPenPerc>\d+) *%? *<a href='BonusArmorPen)"},
+            { "MagicPenPerc",  @"(> *\+?(?<MagicPenPerc>\d+) *%? *<a href='TotalMagicPen)"},
+            { "CooldownReduction",  @"(> *\+?(?<CooldownReduction>\d+) *%? *Cooldown Reduction)"},
+            { "Tenacity", @"Reduces the duration of stuns.*by (?<Tenacity>\d+) *%?" }
         };
         #endregion
         #region Static Properties
@@ -56,24 +57,7 @@ namespace RiotPls.API.Serialization.Items
                 int value_int = 0;
                 if (string.IsNullOrWhiteSpace(value) || !int.TryParse(value, out value_int))
                     continue;
-                switch (pair.Key)
-                {
-                    case "CooldownReduction":
-                        info.CooldownReduction += value_int;
-                        break;
-                    case "FlatArmorPen":
-                        info.ArmorPenFlat += value_int;
-                        break;
-                    case "FlatMagicPen":
-                        info.MagicPenFlat += value_int;
-                        break;
-                    case "PercArmorPen":
-                        info.ArmorPenPerc += value_int;
-                        break;
-                    case "PercMagicPen":
-                        info.MagicPenPerc += value_int;
-                        break;
-                }
+                info.SetValue(pair.Key, value_int);
             }
             return info;
         }

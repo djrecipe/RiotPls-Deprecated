@@ -313,6 +313,8 @@ namespace RiotPls.API {
             
             private global::System.Data.DataColumn columnResourceRegen;
             
+            private global::System.Data.DataColumn columnTenacity;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public StatsDataTable() {
@@ -484,6 +486,14 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn TenacityColumn {
+                get {
+                    return this.columnTenacity;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -536,7 +546,8 @@ namespace RiotPls.API {
                         double MagicResist, 
                         double MovementSpeed, 
                         double Resource, 
-                        double ResourceRegen) {
+                        double ResourceRegen, 
+                        double Tenacity) {
                 StatsRow rowStatsRow = ((StatsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         AbilityPower,
@@ -555,7 +566,8 @@ namespace RiotPls.API {
                         MagicResist,
                         MovementSpeed,
                         Resource,
-                        ResourceRegen};
+                        ResourceRegen,
+                        Tenacity};
                 rowStatsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowStatsRow);
                 return rowStatsRow;
@@ -595,6 +607,7 @@ namespace RiotPls.API {
                 this.columnMovementSpeed = base.Columns["MovementSpeed"];
                 this.columnResource = base.Columns["Resource"];
                 this.columnResourceRegen = base.Columns["ResourceRegen"];
+                this.columnTenacity = base.Columns["Tenacity"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -634,6 +647,8 @@ namespace RiotPls.API {
                 base.Columns.Add(this.columnResource);
                 this.columnResourceRegen = new global::System.Data.DataColumn("ResourceRegen", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnResourceRegen);
+                this.columnTenacity = new global::System.Data.DataColumn("Tenacity", typeof(double), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTenacity);
                 this.columnAbilityPower.Caption = "AP";
                 this.columnAbilityPower.DefaultValue = ((double)(0D));
                 this.columnArmor.DefaultValue = ((double)(0D));
@@ -665,6 +680,7 @@ namespace RiotPls.API {
                 this.columnResource.DefaultValue = ((double)(0D));
                 this.columnResourceRegen.Caption = "Resource Regen";
                 this.columnResourceRegen.DefaultValue = ((double)(0D));
+                this.columnTenacity.DefaultValue = ((double)(0D));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1079,6 +1095,22 @@ namespace RiotPls.API {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public double Tenacity {
+                get {
+                    if (this.IsTenacityNull()) {
+                        return 0D;
+                    }
+                    else {
+                        return ((double)(this[this.tableStats.TenacityColumn]));
+                    }
+                }
+                set {
+                    this[this.tableStats.TenacityColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsAbilityPowerNull() {
                 return this.IsNull(this.tableStats.AbilityPowerColumn);
             }
@@ -1279,6 +1311,18 @@ namespace RiotPls.API {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetResourceRegenNull() {
                 this[this.tableStats.ResourceRegenColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsTenacityNull() {
+                return this.IsNull(this.tableStats.TenacityColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetTenacityNull() {
+                this[this.tableStats.TenacityColumn] = global::System.Convert.DBNull;
             }
         }
         
