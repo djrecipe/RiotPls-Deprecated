@@ -305,25 +305,23 @@ namespace RiotPls.Forms
                     Build build = this.Builds[i];
                     if (build == null)
                         continue;
-                    int index = build.GetItemIndex(this.lastItemName);
-                    if (index > -1)
-                        check_root = true;
+                    List<int> indices = build.GetItemIndices(this.lastItemName);
                     ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
                     {
                         CheckOnClick = false,
-                        Checked = index > -1
+                        Checked = indices.Count > 0
                     };
                     for (int j = 0; j < 6; j++)
                     {
                         ToolStripMenuItem subitem = new ToolStripMenuItem(string.Format("Item #{0}", j + 1))
                         {
                             CheckOnClick = true,
-                            Checked = index == j
+                            Checked = indices.Contains(j)
                         };
                         subitem.CheckedChanged += this.itmSetAsItem_CheckedChanged;
                         item.DropDownItems.Add(subitem);
                     }
-                    this.itmSelectedForBuilder.Checked = check_root;
+                    this.itmSelectedForBuilder.Checked = indices.Count > 0;
                     this.itmSelectedForBuilder.DropDownItems.Add(item);
                 }
                 return;

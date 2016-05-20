@@ -94,20 +94,21 @@ namespace RiotPls.API.Builder
             return;
         }
         /// <summary>
-        /// Find and retrieve the item index of a given item name
+        /// Find and retrieve the item indices of a given item name
         /// </summary>
         /// <param name="name">Name of the item to search for</param>
-        /// <returns>Index of item in the build, or -1 if the item is not a part of this build</returns>
-        public int GetItemIndex(string name)
+        /// <returns>List of indices of item in the build</returns>
+        public List<int> GetItemIndices(string name)
         {
             if(string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException("Item name must be valid", "name");
+            List<int> list = new List<int>();
             for (int i = 0; i < this.Items.Length; i++)
             {
                 if (this.Items[i]?.Name == name)
-                    return i;
+                    list.Add(i);
             }
-            return -1;
+            return list;
         }
         /// <summary>
         /// Retrieve the item at a specified index
