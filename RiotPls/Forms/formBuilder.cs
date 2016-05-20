@@ -28,6 +28,9 @@ namespace RiotPls.Forms
         private DropSlot dropItem6;
         private DropSlot[] itemDrops = null;
         private FlowLayoutPanel flowTop;
+        private TabControl tabsMain;
+        private TabPage tabStats;
+        private TabPage tabBuys;
         private SplitContainer splitVertical;
         #endregion
         #endregion
@@ -62,12 +65,17 @@ namespace RiotPls.Forms
             this.gridMain = new RiotPls.Controls.StatGrid();
             this.flowTop = new System.Windows.Forms.FlowLayoutPanel();
             this.splitVertical = new System.Windows.Forms.SplitContainer();
+            this.tabsMain = new System.Windows.Forms.TabControl();
+            this.tabStats = new System.Windows.Forms.TabPage();
+            this.tabBuys = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.flowTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitVertical)).BeginInit();
             this.splitVertical.Panel1.SuspendLayout();
             this.splitVertical.Panel2.SuspendLayout();
             this.splitVertical.SuspendLayout();
+            this.tabsMain.SuspendLayout();
+            this.tabStats.SuspendLayout();
             this.SuspendLayout();
             // 
             // picLoading
@@ -186,7 +194,7 @@ namespace RiotPls.Forms
             this.gridMain.Margin = new System.Windows.Forms.Padding(0);
             this.gridMain.Name = "gridMain";
             this.gridMain.Padding = new System.Windows.Forms.Padding(20, 0, 20, 10);
-            this.gridMain.Size = new System.Drawing.Size(764, 314);
+            this.gridMain.Size = new System.Drawing.Size(756, 287);
             this.gridMain.TabIndex = 29;
             this.gridMain.SelectedRowChanged += new RiotPls.Controls.StatGrid.SelectedRowChangedDelegate(this.gridMain_SelectedRowChanged);
             // 
@@ -202,7 +210,7 @@ namespace RiotPls.Forms
             this.flowTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowTop.Location = new System.Drawing.Point(0, 0);
             this.flowTop.Name = "flowTop";
-            this.flowTop.Size = new System.Drawing.Size(764, 183);
+            this.flowTop.Size = new System.Drawing.Size(756, 183);
             this.flowTop.TabIndex = 30;
             this.flowTop.WrapContents = false;
             // 
@@ -218,14 +226,51 @@ namespace RiotPls.Forms
             // 
             // splitVertical.Panel1
             // 
+            this.splitVertical.Panel1.BackColor = System.Drawing.Color.Transparent;
             this.splitVertical.Panel1.Controls.Add(this.flowTop);
             // 
             // splitVertical.Panel2
             // 
+            this.splitVertical.Panel2.BackColor = System.Drawing.Color.Transparent;
             this.splitVertical.Panel2.Controls.Add(this.gridMain);
-            this.splitVertical.Size = new System.Drawing.Size(764, 501);
+            this.splitVertical.Size = new System.Drawing.Size(756, 474);
             this.splitVertical.SplitterDistance = 183;
             this.splitVertical.TabIndex = 31;
+            // 
+            // tabsMain
+            // 
+            this.tabsMain.Controls.Add(this.tabStats);
+            this.tabsMain.Controls.Add(this.tabBuys);
+            this.tabsMain.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tabsMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabsMain.Location = new System.Drawing.Point(0, 0);
+            this.tabsMain.Multiline = true;
+            this.tabsMain.Name = "tabsMain";
+            this.tabsMain.SelectedIndex = 0;
+            this.tabsMain.Size = new System.Drawing.Size(764, 501);
+            this.tabsMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabsMain.TabIndex = 29;
+            // 
+            // tabStats
+            // 
+            this.tabStats.BackColor = System.Drawing.Color.Black;
+            this.tabStats.Controls.Add(this.splitVertical);
+            this.tabStats.Location = new System.Drawing.Point(4, 23);
+            this.tabStats.Margin = new System.Windows.Forms.Padding(0);
+            this.tabStats.Name = "tabStats";
+            this.tabStats.Size = new System.Drawing.Size(756, 474);
+            this.tabStats.TabIndex = 0;
+            this.tabStats.Text = "Stats";
+            // 
+            // tabBuys
+            // 
+            this.tabBuys.BackColor = System.Drawing.Color.Black;
+            this.tabBuys.Location = new System.Drawing.Point(4, 23);
+            this.tabBuys.Margin = new System.Windows.Forms.Padding(0);
+            this.tabBuys.Name = "tabBuys";
+            this.tabBuys.Size = new System.Drawing.Size(756, 474);
+            this.tabBuys.TabIndex = 1;
+            this.tabBuys.Text = "Buys";
             // 
             // formBuilder
             // 
@@ -234,7 +279,7 @@ namespace RiotPls.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(764, 501);
             this.CloseButtonEnabled = true;
-            this.Controls.Add(this.splitVertical);
+            this.Controls.Add(this.tabsMain);
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(780, 400);
@@ -242,13 +287,15 @@ namespace RiotPls.Forms
             this.Text = "Build #1";
             this.VisibleChanged += new System.EventHandler(this.formStatSheet_VisibleChanged);
             this.Controls.SetChildIndex(this.picLoading, 0);
-            this.Controls.SetChildIndex(this.splitVertical, 0);
+            this.Controls.SetChildIndex(this.tabsMain, 0);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.flowTop.ResumeLayout(false);
             this.splitVertical.Panel1.ResumeLayout(false);
             this.splitVertical.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitVertical)).EndInit();
             this.splitVertical.ResumeLayout(false);
+            this.tabsMain.ResumeLayout(false);
+            this.tabStats.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
