@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RiotPls.API.Serialization.Interfaces
 {
-    public interface IRiotDroppable
+    public interface IRiotDroppable : ICloneable
     {
         Bitmap Image { get; }
         int LevelObtained { get; set; }

@@ -144,6 +144,21 @@ namespace RiotPls.API.Serialization.Items
             }
             return;
         }
+        /// <summary>
+        /// Performs a deep clone via JSON serialization
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Reuse,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            string text = JsonConvert.SerializeObject(this, settings);
+            ItemInfo item = JsonConvert.DeserializeObject<ItemInfo>(text, settings);
+            return item;
+        }
         private ItemStatsInfo ParseDescription(string description)
         {
             this.descriptionStats = ItemDescriptionParser.Parse(description);

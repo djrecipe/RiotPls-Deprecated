@@ -193,5 +193,21 @@ namespace RiotPls.API.Serialization.Champions
         {
             
         }
+
+        /// <summary>
+        /// Performs a deep clone via JSON serialization
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Reuse,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            string text = JsonConvert.SerializeObject(this, settings);
+            ChampionInfo info = JsonConvert.DeserializeObject<ChampionInfo>(text, settings);
+            return info;
+        }
     }
 }

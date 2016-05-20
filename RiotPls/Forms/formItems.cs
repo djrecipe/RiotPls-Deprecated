@@ -338,7 +338,7 @@ namespace RiotPls.Forms
             if (info != null)
             {
                 this.BeginInvoke((MethodInvoker)delegate
-                { this.gridMain.DoDragDrop(info, DragDropEffects.Copy); });
+                { this.gridMain.DoDragDrop(info.Clone() as ItemInfo, DragDropEffects.Copy); });
             }
             return;
         }

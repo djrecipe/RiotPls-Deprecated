@@ -704,7 +704,7 @@ namespace RiotPls.Forms
             if (info != null)
             {
                 this.BeginInvoke((MethodInvoker) delegate
-                { this.gridMain.DoDragDrop(info, DragDropEffects.Copy); });
+                { this.gridMain.DoDragDrop(info.Clone() as ChampionInfo, DragDropEffects.Copy); });
             }
             return;                                                          
         }

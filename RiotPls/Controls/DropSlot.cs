@@ -115,6 +115,7 @@ namespace RiotPls.Controls
             this.picMain.Size = new System.Drawing.Size(60, 60);
             this.picMain.TabIndex = 0;
             this.picMain.TabStop = false;
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             // 
             // lblMain
             // 
@@ -133,7 +134,7 @@ namespace RiotPls.Controls
             this.mnuitmRemoveItem,
             this.mnuitmItemLevelObtained});
             this.cmenItem.Name = "cmenItem";
-            this.cmenItem.Size = new System.Drawing.Size(154, 70);
+            this.cmenItem.Size = new System.Drawing.Size(154, 48);
             // 
             // mnuitmRemoveItem
             // 
@@ -196,6 +197,7 @@ namespace RiotPls.Controls
         {
             this.drop = null;
             this.UpdateData();
+            this.FireDropOccurredEvent(this.drop);
         }
 
         private void FireDropOccurredEvent(IRiotDroppable drop)
@@ -214,6 +216,7 @@ namespace RiotPls.Controls
             {
                 this.drop = new_drop;
                 this.UpdateData();
+                this.FireDropOccurredEvent(this.drop);
             }
             return;
         }
@@ -228,7 +231,6 @@ namespace RiotPls.Controls
             this.picMain.BackgroundImage = this.drop?.Image;
             this.lblMain.Text = this.drop?.Name ?? this.NullText;
             this.mnuitmLevelObtainedValue.Text = (this.drop?.LevelObtained ?? 1).ToString();
-            this.FireDropOccurredEvent(this.drop);
             return;
         }
         #region Event Methods     
@@ -266,6 +268,13 @@ namespace RiotPls.Controls
             if (this.DropOccurred != null)
                 this.DropOccurred(this, null);
         }
+        private void picMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left || this.drop == null)
+                return;
+            this.BeginInvoke((MethodInvoker)delegate { this.DoDragDrop(this.drop.Clone() as IRiotDroppable, DragDropEffects.Copy); });
+            return;
+        }
         #endregion
         #endregion
         #endregion
@@ -284,6 +293,7 @@ namespace RiotPls.Controls
                     break;
             }
             this.UpdateData();
+            this.FireDropOccurredEvent(this.drop);
             return;
         }
 
@@ -304,7 +314,6 @@ namespace RiotPls.Controls
             }
             return;
         }
-
         #endregion
 
     }
