@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace RiotPls.Forms
+namespace RiotPls.UI.Views
 {
     /// <summary>
     /// Provides a UI for modifying application settings

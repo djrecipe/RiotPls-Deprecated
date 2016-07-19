@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
+using RiotPls.Tools;
 
 namespace RiotPls.API.Builder
 {
@@ -17,19 +18,18 @@ namespace RiotPls.API.Builder
     public class Build
     {
         #region Types
-        public delegate void BuildChangedDelegate(string name);
-        public delegate void SelectedRowChangedDelegate(int row);
+        public delegate void BuildDelegate(Build build);
         #endregion
         #region Instance Members
         private CombinedStatsInfo stats = new CombinedStatsInfo();
         /// <summary>
         /// Notifies when build details change (i.e. champion or item changes)
         /// </summary>
-        public event BuildChangedDelegate BuildChanged;
+        public event StringDelegate BuildChanged;
         /// <summary>
         /// Notifies when the SelectRow property value changes
         /// </summary>
-        public event SelectedRowChangedDelegate SelectedRowChanged;
+        public event IntegerDelegate SelectedRowChanged;
         #endregion
         #region Instance Properties   
         /// <summary>

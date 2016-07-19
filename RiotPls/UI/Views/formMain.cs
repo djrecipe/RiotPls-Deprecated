@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.ExtensionMethods;
 
-namespace RiotPls.Forms
+namespace RiotPls.UI.Views
 {
     /// <summary>
     /// Primary application window

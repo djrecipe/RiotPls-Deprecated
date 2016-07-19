@@ -8,7 +8,7 @@ using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Maps;
 
-namespace RiotPls.Forms
+namespace RiotPls.UI.Views
 {
     /// <summary>
     /// Displays hi-resolution images depicting each playable map

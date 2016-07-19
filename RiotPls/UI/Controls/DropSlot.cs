@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.Interfaces;
 using RiotPls.API.Serialization.Items;
 
-namespace RiotPls.Controls
+namespace RiotPls.UI.Controls
 {
     /// <summary>
     /// Receives and displays a drag-and-droppable Riot API entity

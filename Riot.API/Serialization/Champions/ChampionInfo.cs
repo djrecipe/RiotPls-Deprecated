@@ -7,11 +7,13 @@ using RiotPls.API.Serialization.Interfaces;
 namespace RiotPls.API.Serialization.Champions
 {
     /// <summary>
-    /// Static champion information which thoroughly describes all stats and capabilities
-    /// </summary>
+    /// Champion description, stats, capabilities, etc.
+    /// </summary>           
+    /// <remarks>Serializable to/from JSON</remarks>
     [JsonObject(MemberSerialization.OptIn)]
     public class ChampionInfo : IRiotDroppable
     {
+        #region Instance Properties
         /// <summary>
         /// An image depicting the champion's emphasis on physical attacks
         /// </summary>
@@ -186,6 +188,8 @@ namespace RiotPls.API.Serialization.Champions
         /// </summary>
         [JsonProperty("title")]
         public string Title { get; private set; } = null;
+        #endregion
+        #region Instance Methods
         /// <summary>
         /// This class cannot be directly instantiated
         /// </summary>
@@ -193,7 +197,6 @@ namespace RiotPls.API.Serialization.Champions
         {
             
         }
-
         /// <summary>
         /// Performs a deep clone via JSON serialization
         /// </summary>
@@ -209,5 +212,6 @@ namespace RiotPls.API.Serialization.Champions
             ChampionInfo info = JsonConvert.DeserializeObject<ChampionInfo>(text, settings);
             return info;
         }
+        #endregion
     }
 }

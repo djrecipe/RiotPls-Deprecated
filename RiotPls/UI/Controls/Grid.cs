@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace RiotPls.Controls
+namespace RiotPls.UI.Controls
 {
     /// <summary>
     /// DataGridView with custom styling

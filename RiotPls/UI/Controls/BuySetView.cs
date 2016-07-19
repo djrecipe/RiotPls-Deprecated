@@ -6,8 +6,13 @@ using System.Windows.Forms;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Items;
 
-namespace RiotPls.Controls
+namespace RiotPls.UI.Controls
 {
+    /// <summary>
+    /// Display and/or edit a single buy
+    /// </summary>                        
+    /// <seealso cref="BuySet"/>
+    /// <seealso cref="BuySetCollectionView"/>
     public class BuySetView : UserControl
     {
         #region Instance Members
@@ -156,7 +161,6 @@ namespace RiotPls.Controls
             }
         }
         #endregion
-
         private void AddItem(int index)
         {
             ItemInfo item = this.Build.GetItem(index);
@@ -178,8 +182,6 @@ namespace RiotPls.Controls
             this.UpdateCost();
             return;
         }
-
-
         private void UpdateCost()
         {
             this.lblCost.Text = string.Format("Cost: {0} gold", this.BuySet.TotalCost);
@@ -248,6 +250,5 @@ namespace RiotPls.Controls
             base.Dispose(disposing);
         }
         #endregion
-
     }
 }

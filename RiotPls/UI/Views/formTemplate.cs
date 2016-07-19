@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RiotPls.Forms
+namespace RiotPls.UI.Views
 {
     /// <summary>
     /// Provides a window template with custom styling

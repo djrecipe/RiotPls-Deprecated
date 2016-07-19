@@ -8,4 +8,6 @@ namespace RiotPls.Tools
 {
     public delegate void VoidDelegate();
     public delegate void IntegerDelegate(int value);
+
+    public delegate void StringDelegate(string value);
 }

@@ -47,6 +47,11 @@ namespace RiotPls.API.Serialization.Items
                 ItemDescriptionParser.CustomStats.WriteXml(ItemDescriptionParser.CustomStatsPath);
             return;
         }
+        /// <summary>
+        /// Parse item description text and extract any relevant stats
+        /// </summary>
+        /// <param name="description">Text to parse</param>
+        /// <returns>Stats parsed from the description</returns>
         internal static ItemStatsInfo Parse(string description)
         {
             ItemStatsInfo info = new ItemStatsInfo();

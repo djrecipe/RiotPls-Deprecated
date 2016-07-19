@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.Tools;
 
-namespace RiotPls.Controls
+namespace RiotPls.UI.Controls
 {
     /// <summary>
     /// Table of stats representing one or more Riot API entities
@@ -95,7 +95,7 @@ namespace RiotPls.Controls
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cmenMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuitmShowHideColumns = new System.Windows.Forms.ToolStripMenuItem();
-            this.gridMain = new RiotPls.Controls.Grid();
+            this.gridMain = new RiotPls.UI.Controls.Grid();
             this.colMovementSpeed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackRange = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAttackDamage = new System.Windows.Forms.DataGridViewTextBoxColumn();

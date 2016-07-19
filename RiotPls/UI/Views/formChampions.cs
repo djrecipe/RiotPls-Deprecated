@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Win32;
 
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
-using RiotPls.Controls;
+using RiotPls.UI.Controls;
 
-namespace RiotPls.Forms
+namespace RiotPls.UI.Views
 {
     /// <summary>
     /// Displays a list of champions
@@ -83,7 +79,7 @@ namespace RiotPls.Forms
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formChampions));
-            this.gridMain = new RiotPls.Controls.Grid();
+            this.gridMain = new RiotPls.UI.Controls.Grid();
             this.colImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
