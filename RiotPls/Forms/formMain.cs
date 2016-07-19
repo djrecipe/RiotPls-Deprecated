@@ -339,7 +339,7 @@ namespace RiotPls.Forms
             if (form == null)
                 return;
             this.fBuilders.Remove(form);
-            this.Builds.Remove(form.Build);
+            this.Builds.Remove(form.Model.Build);
             return;
         }
         private void formMain_FormClosing(object sender, FormClosingEventArgs e)

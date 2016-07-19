@@ -61,6 +61,8 @@
     <Compile Include="APIKey.cs" />
     <Compile Include="Builder\Build.cs" />
     <Compile Include="Builder\BuildCollection.cs" />
+    <Compile Include="Builder\BuySet.cs" />
+    <Compile Include="Builder\BuySetCollection.cs" />
     <Compile Include="DescriptionDetails.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,6 +97,7 @@
     <Compile Include="Serialization\Interfaces\IRiotDroppable.cs" />
     <Compile Include="Serialization\Interfaces\IRiotSerializable.cs" />
     <Compile Include="Serialization\Interfaces\IStatsInfo.cs" />
+    <Compile Include="Serialization\Items\ItemCost.cs" />
     <Compile Include="Serialization\Items\ItemDescriptionParser.cs" />
     <Compile Include="Serialization\Items\ItemStatsInfo.cs" />
     <Compile Include="Serialization\Items\ItemInfoSet.cs" />

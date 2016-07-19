@@ -45,6 +45,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Delegates.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="GeneralSettings.cs">
       <DependentUpon>GeneralSettings.xsd</DependentUpon>

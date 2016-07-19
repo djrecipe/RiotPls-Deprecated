@@ -11,9 +11,20 @@ using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.API.Serialization.Items
 {
+    /// <summary>
+    /// Full item description, metadata, stats, etc.
+    /// </summary>
+    /// <remarks>Serializable to/from JSON</remarks>
     [JsonObject(MemberSerialization.OptIn)]
     public class ItemInfo : IRiotDroppable
     {
+        #region Types
+        public enum PricingStyles : uint
+        {
+            Full = 0,
+            Upgrade = 1
+        }
+        #endregion
         #region Static Members
         private static readonly List<ItemInfo> consumables = new List<ItemInfo>();
         private static readonly List<ItemInfo> nonConsumables = new List<ItemInfo>();
@@ -67,6 +78,15 @@ namespace RiotPls.API.Serialization.Items
                 return;
             }
         }
+        /// <summary>
+        /// Cost of the item
+        /// </summary>
+        public int Cost => this.PricingStyle == PricingStyles.Full ? this.CostInfo.TotalCost : this.CostInfo.UpgradeCost;
+        /// <summary>
+        /// Information regarding cost and purchasing of the item
+        /// </summary>                            
+        [JsonProperty("gold", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public ItemCost CostInfo { get; private set; }
         [JsonProperty("sanitizedDescription")]
         public string Description { get; private set; } = null;
         private string _FullDescription = null;
@@ -103,6 +123,8 @@ namespace RiotPls.API.Serialization.Items
         public Dictionary<string, bool> Maps { get; private set; } = new Dictionary<string, bool>();
         [JsonProperty("name")]
         public string Name { get; protected set; } = null;
+        [JsonProperty("pricingstyle")]
+        public PricingStyles PricingStyle { get; set; } = PricingStyles.Upgrade;
         [JsonProperty("requiredChampion")]
         public string RequiredChampion { get; private set; } = null;
         private ItemStatsInfo _Stats = new ItemStatsInfo();

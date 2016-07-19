@@ -31,16 +31,21 @@ namespace RiotPls.API.Builder
         /// </summary>
         public event SelectedRowChangedDelegate SelectedRowChanged;
         #endregion
-        #region Instance Properties  
+        #region Instance Properties   
+        /// <summary>
+        /// Buys associated with this build
+        /// </summary>               
+        [JsonProperty("Buys", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public BuySetCollection Buys { get; private set; } = new BuySetCollection();
         /// <summary>
         /// Champion associated with this build
-        /// </summary>
-        [JsonProperty("Champion")]
-        public ChampionInfo Champion { get; private set; } 
+        /// </summary>              
+        [JsonProperty("Champion", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
+        public ChampionInfo Champion { get; private set; }
         /// <summary>
         /// Six items associated with this build
-        /// </summary>
-        [JsonProperty("Items")]
+        /// </summary>            
+        [JsonProperty("Items", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         private ItemInfo[] Items { get; set; } = new ItemInfo[6];
         /// <summary>
         /// Build name
@@ -80,6 +85,7 @@ namespace RiotPls.API.Builder
             this.Name = name;
             return;
         }
+
         private void FireUpdate(string name)
         {
             this.stats = new CombinedStatsInfo();
@@ -119,6 +125,7 @@ namespace RiotPls.API.Builder
         {
             return index >= 0 && index < this.Items.Length ? this.Items[index] : null;
         }
+
         /// <summary>
         /// Assign a champion to this build
         /// </summary>

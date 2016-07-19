@@ -5,6 +5,7 @@ using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.Items;
 using RiotPls.Controls;
+using RiotPls.Forms.Models;
 using RiotPls.Tools;
 
 namespace RiotPls.Forms
@@ -31,14 +32,12 @@ namespace RiotPls.Forms
         private TabControl tabsMain;
         private TabPage tabStats;
         private TabPage tabBuys;
+        private BuySetCollectionView buildcolMain;
         private SplitContainer splitVertical;
         #endregion
         #endregion
         #region Instance Properties
-        /// <summary>
-        /// Build associated with this form
-        /// </summary>
-        public Build Build { get; private set; }
+        public formBuilderModel Model { get; private set; } = null;
         #endregion
         #region Instance Methods
         #region Initialization Methods
@@ -46,11 +45,30 @@ namespace RiotPls.Forms
         {
             this.InitializeComponent();
             this.InitializeDragDrop();
-            this.Build = build;
-            this.Build.BuildChanged += this.Build_BuildChanged;
-            this.Build.SelectedRowChanged += this.Build_SelectedRowChanged;
+            this.buildcolMain.Build = build;
+            this.Model = new formBuilderModel(build);
+            this.Model.BuildChanged += this.Model_BuildChanged;
+            this.Model.RowChanged += this.Model_RowChanged;
             return;
         }
+
+        private void Model_BuildChanged()
+        {
+            if (!this.Visible)
+                return;
+            this.Text = this.Model.Build.Name;
+            Drawing.SuspendDrawing(this.gridMain);
+            // update champion
+            this.dropChampion.Set(this.Model.Build.Champion);
+            // update items
+            for (int i = 0; i < 6; i++)
+                this.itemDrops[i].Set(this.Model.Build.GetItem(i));
+            // update grid
+            this.gridMain.DataSource = this.Model.Build.Table;
+            this.Model.SelectRow(this.Model.Build.SelectedRow);
+            Drawing.ResumeDrawing(this.gridMain);
+        }
+
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
@@ -68,6 +86,7 @@ namespace RiotPls.Forms
             this.tabsMain = new System.Windows.Forms.TabControl();
             this.tabStats = new System.Windows.Forms.TabPage();
             this.tabBuys = new System.Windows.Forms.TabPage();
+            this.buildcolMain = new RiotPls.Controls.BuySetCollectionView();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.flowTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitVertical)).BeginInit();
@@ -76,6 +95,7 @@ namespace RiotPls.Forms
             this.splitVertical.SuspendLayout();
             this.tabsMain.SuspendLayout();
             this.tabStats.SuspendLayout();
+            this.tabBuys.SuspendLayout();
             this.SuspendLayout();
             // 
             // picLoading
@@ -93,7 +113,7 @@ namespace RiotPls.Forms
             this.dropChampion.NullText = "Champion";
             this.dropChampion.Size = new System.Drawing.Size(124, 151);
             this.dropChampion.TabIndex = 22;
-            this.dropChampion.Type = RiotPls.Controls.DropSlot.DataType.Champion;
+            this.dropChampion.Type = RiotPls.Controls.DropSlot.DataTypes.Champion;
             this.dropChampion.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropChampion_DropOccurred);
             // 
             // dropItem1
@@ -107,7 +127,7 @@ namespace RiotPls.Forms
             this.dropItem1.NullText = "Item 1";
             this.dropItem1.Size = new System.Drawing.Size(96, 121);
             this.dropItem1.TabIndex = 23;
-            this.dropItem1.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem1.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem1.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem1.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -122,7 +142,7 @@ namespace RiotPls.Forms
             this.dropItem2.NullText = "Item 2";
             this.dropItem2.Size = new System.Drawing.Size(96, 121);
             this.dropItem2.TabIndex = 24;
-            this.dropItem2.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem2.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem2.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem2.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -137,7 +157,7 @@ namespace RiotPls.Forms
             this.dropItem3.NullText = "Item 3";
             this.dropItem3.Size = new System.Drawing.Size(96, 121);
             this.dropItem3.TabIndex = 25;
-            this.dropItem3.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem3.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem3.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem3.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -152,7 +172,7 @@ namespace RiotPls.Forms
             this.dropItem4.NullText = "Item 4";
             this.dropItem4.Size = new System.Drawing.Size(96, 121);
             this.dropItem4.TabIndex = 26;
-            this.dropItem4.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem4.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem4.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem4.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -167,7 +187,7 @@ namespace RiotPls.Forms
             this.dropItem5.NullText = "Item 5";
             this.dropItem5.Size = new System.Drawing.Size(96, 121);
             this.dropItem5.TabIndex = 27;
-            this.dropItem5.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem5.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem5.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem5.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -182,7 +202,7 @@ namespace RiotPls.Forms
             this.dropItem6.NullText = "Item 6";
             this.dropItem6.Size = new System.Drawing.Size(96, 121);
             this.dropItem6.TabIndex = 28;
-            this.dropItem6.Type = RiotPls.Controls.DropSlot.DataType.Item;
+            this.dropItem6.Type = RiotPls.Controls.DropSlot.DataTypes.Item;
             this.dropItem6.DropOccurred += new RiotPls.Controls.DropSlot.DropOccurredDelegate(this.dropItem_DropOccurred);
             this.dropItem6.LevelObtainedChanged += new RiotPls.Controls.DropSlot.LevelObtainedChangedDelegate(this.dropItem_LevelObtainedChanged);
             // 
@@ -265,12 +285,24 @@ namespace RiotPls.Forms
             // tabBuys
             // 
             this.tabBuys.BackColor = System.Drawing.Color.Black;
+            this.tabBuys.Controls.Add(this.buildcolMain);
             this.tabBuys.Location = new System.Drawing.Point(4, 23);
             this.tabBuys.Margin = new System.Windows.Forms.Padding(0);
             this.tabBuys.Name = "tabBuys";
             this.tabBuys.Size = new System.Drawing.Size(756, 474);
             this.tabBuys.TabIndex = 1;
             this.tabBuys.Text = "Buys";
+            // 
+            // buildcolMain
+            // 
+            this.buildcolMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.buildcolMain.BackColor = System.Drawing.Color.Transparent;
+            this.buildcolMain.Build = null;
+            this.buildcolMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buildcolMain.Location = new System.Drawing.Point(0, 0);
+            this.buildcolMain.Name = "buildcolMain";
+            this.buildcolMain.Size = new System.Drawing.Size(756, 474);
+            this.buildcolMain.TabIndex = 0;
             // 
             // formBuilder
             // 
@@ -296,6 +328,7 @@ namespace RiotPls.Forms
             this.splitVertical.ResumeLayout(false);
             this.tabsMain.ResumeLayout(false);
             this.tabStats.ResumeLayout(false);
+            this.tabBuys.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -306,48 +339,14 @@ namespace RiotPls.Forms
             return;
         }
         #endregion
-        private void SelectRow(int row)
-        {
-            if (row < 0 || row >= this.gridMain.RowCount)
-                row = 0;
-            this.gridMain.SetSelectedRow(row);
-            return;
-        }
-        private void UpdateBuild()
-        {
-            if (!this.Visible)
-                return;
-            this.Text = this.Build.Name;
-            Drawing.SuspendDrawing(this.gridMain);
-            // update champion
-            this.dropChampion.Set(this.Build.Champion);
-            // update items
-            for (int i = 0; i < 6; i++)
-                this.itemDrops[i].Set(this.Build.GetItem(i));
-            // update grid
-            this.gridMain.DataSource = this.Build.Table;
-            this.SelectRow(this.Build.SelectedRow);
-            Drawing.ResumeDrawing(this.gridMain);
-            return;
-        }
         #endregion
         #region Event Methods
         #region Build Events
-        private void Build_BuildChanged(string name)
-        {
-            this.UpdateBuild();
-            return;
-        }
-        private void Build_SelectedRowChanged(int row)
-        {
-            this.SelectRow(row);
-            return;
-        }
         #endregion
         #region Form Events       
         private void formStatSheet_VisibleChanged(object sender, System.EventArgs e)
         {
-            this.UpdateBuild();
+            this.Model.UpdateBuild();
             return;
         }
         #endregion
@@ -355,25 +354,34 @@ namespace RiotPls.Forms
         private void dropChampion_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             ChampionInfo champ = drop as ChampionInfo;
-            this.Build.SetChampion(champ);
+            this.Model.Build.SetChampion(champ);
         }
 
         private void dropItem_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             int index = this.itemDrops.ToList().IndexOf(slot);
             ItemInfo item = drop as ItemInfo;
-            this.Build.SetItem(index, item);
+            this.Model.Build.SetItem(index, item);
         }
         private void dropItem_LevelObtainedChanged(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop, int level)
         {
             int index = this.itemDrops.ToList().IndexOf(slot);
-            this.Build.SetItemLevel(index, level);
+            this.Model.Build.SetItemLevel(index, level);
         }
         #endregion
         #region Grid Events
         private void gridMain_SelectedRowChanged(int row)
         {
-            this.Build.SelectedRow = row;
+            this.Model.Build.SelectedRow = row;
+        }
+        #endregion
+        #region Model Events
+        private void Model_RowChanged(int value)
+        {
+            if (value < 0 || value >= this.gridMain.RowCount)
+                value = 0;
+            this.gridMain.SetSelectedRow(value);
+            return;
         }
         #endregion
         #endregion
