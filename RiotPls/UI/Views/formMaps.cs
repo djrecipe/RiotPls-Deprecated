@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Maps;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -21,20 +22,20 @@ namespace RiotPls.UI.Views
         private ComboBox comboMaps;
         private Cyotek.Windows.Forms.ImageBox imgboxMap;
         #endregion
-        private Dictionary<string, MapInfo> source = new Dictionary<string, MapInfo>();
         #endregion
         #region Instance Properties  
-        /// <summary>
-        /// Set of builds which may be modified
-        /// </summary>
-        public BuildCollection Builds { get; set; }
+        public formMapsModel Model => this.model as formMapsModel;
         #endregion
         #region Instance Methods
         #region Initialization Methods
         public formMaps()
         {
             InitializeComponent();
+            this.model = new formMapsModel();
+            this.model.DataUpdateStarted += Model_DataUpdateStarted;
+            this.model.DataUpdateFinished += Model_DataUpdateFinished;
         }
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMaps));
@@ -100,9 +101,9 @@ namespace RiotPls.UI.Views
         #endregion
         private void UpdateImage()
         {
-            if (this.source == null || this.source.Values.Count < 1)
-                return;
-            this.imgboxMap.Image = this.comboMaps.SelectedIndex < 0 ? null : this.source.Values.FirstOrDefault(m => m.Name == this.comboMaps.Items[this.comboMaps.SelectedIndex].ToString()).Image;
+            string name = this.comboMaps.SelectedIndex < 0 || this.comboMaps.SelectedIndex >= this.comboMaps.Items.Count
+                ? null : this.comboMaps.Items[this.comboMaps.SelectedIndex].ToString();
+            this.imgboxMap.Image = this.Model.GetImage(name);
             this.imgboxMap.ZoomToFit();
             this.imgboxMap.Focus();
             return;
@@ -119,6 +120,17 @@ namespace RiotPls.UI.Views
             this.imgboxMap.Zoom = Math.Max(0, this.imgboxMap.Zoom);
             return;
         }
+        #region Model Events
+        private void Model_DataUpdateFinished(object sender, object e)
+        {
+            this.comboMaps.SelectedIndex = this.comboMaps.Items.IndexOf("Summoner's Rift");
+            return;
+        }
+        private void Model_DataUpdateStarted()
+        {
+            return;
+        }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
@@ -128,16 +140,6 @@ namespace RiotPls.UI.Views
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.source = Engine.GetMapInfo();
-            return;
-        }
-        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.comboMaps.SelectedIndex = this.comboMaps.Items.IndexOf("Summoner's Rift");
-            return;
         }
         #endregion
 

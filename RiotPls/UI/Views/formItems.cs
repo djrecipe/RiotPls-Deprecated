@@ -8,6 +8,7 @@ using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Items;
 using RiotPls.UI.Controls;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -29,21 +30,18 @@ namespace RiotPls.UI.Views
         private DataGridViewTextBoxColumn colName;
         private DataGridViewTextBoxColumn colDescription;
         #endregion
-        private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
-        private BindingList<ItemInfo> source = null;
-        private string lastItemName = null;
         #endregion
-        #region Instance Properties    
-        /// <summary>
-        /// Set of builds which may be modified
-        /// </summary>
-        public BuildCollection Builds { get; set; }
+        #region Instance Properties  
+        public formItemsModel Model => this.model as formItemsModel;
         #endregion
         #region Instance Methods
         #region Initialization Methods
-        public formItems()
+        public formItems() : base()
         {
             this.InitializeComponent();
+            this.model = new formItemsModel();
+            this.model.DataUpdateStarted += this.Model_DataUpdateStarted;
+            this.model.DataUpdateFinished += this.Model_DataUpdateFinished;
             this.gridMain.AutoGenerateColumns = false;
             this.gridMain.DataError += this.gridMain_DataError;
             return;
@@ -252,30 +250,6 @@ namespace RiotPls.UI.Views
 
         }
         #endregion
-        private BindingList<ItemInfo> ConstructFilter()
-        {
-            if (this.source == null)
-                return null;
-            BindingList<ItemInfo> new_binding = new BindingList<ItemInfo>(this.source.Where(info => string.IsNullOrWhiteSpace(info.RequiredChampion)).ToList<ItemInfo>());
-            if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Consumables")))
-            {
-                new_binding = new BindingList<ItemInfo>(new_binding.Where(info => !info.Consumable).ToList<ItemInfo>());
-            }
-            if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Non-Consumables")))
-            {
-                new_binding = new BindingList<ItemInfo>(new_binding.Where(info => info.Consumable).ToList<ItemInfo>());
-            }
-            if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Howling Abyss")))
-            {
-            }
-            if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Summoner's Rift")))
-            {
-            }
-            if (!this.chkdlistFilter.GetItemChecked(this.chkdlistFilter.Items.IndexOf("Twisted Treeline")))
-            {
-            }
-            return new_binding;
-        }
         private void ResizeColumns()
         {
             int width = this.gridMain.Width - 270;
@@ -288,41 +262,26 @@ namespace RiotPls.UI.Views
         {
             if(this.IsHandleCreated && this.Visible)
             {
-                this.UpdateData();
+                this.BeginInvoke((MethodInvoker) delegate
+                {
+                    this.Model.SetFilterItems(this.chkdlistFilter.CheckedItems);
+                    this.model.UpdateData();
+                });
             }
             return;
         }
         private void cmenMain_Opening(object sender, CancelEventArgs e)
         {
-            if (this.lastItemName == null)
+            if (this.Model.SelectedItem == null)
                 e.Cancel = true;
             else
             {
-                bool check_root = false;
                 this.itmSelectedForBuilder.DropDownItems.Clear();
-                for (int i = 0; i < this.Builds.Count; i++)
+                List<ToolStripMenuItem> items = this.Model.GetBuildMenuItems();
+                if (items != null && items.Count > 0)
                 {
-                    Build build = this.Builds[i];
-                    if (build == null)
-                        continue;
-                    List<int> indices = build.GetItemIndices(this.lastItemName);
-                    ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
-                    {
-                        CheckOnClick = false,
-                        Checked = indices.Count > 0
-                    };
-                    for (int j = 0; j < 6; j++)
-                    {
-                        ToolStripMenuItem subitem = new ToolStripMenuItem(string.Format("Item #{0}", j + 1))
-                        {
-                            CheckOnClick = true,
-                            Checked = indices.Contains(j)
-                        };
-                        subitem.CheckedChanged += this.itmSetAsItem_CheckedChanged;
-                        item.DropDownItems.Add(subitem);
-                    }
-                    this.itmSelectedForBuilder.Checked = indices.Count > 0;
-                    this.itmSelectedForBuilder.DropDownItems.Add(item);
+                    this.itmSelectedForBuilder.Checked = items.Any(i => i.Checked);
+                    this.itmSelectedForBuilder.DropDownItems.AddRange(items.ToArray());
                 }
                 return;
             }
@@ -330,7 +289,7 @@ namespace RiotPls.UI.Views
         }
         private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || this.items == null || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
+            if (e.Button != MouseButtons.Left || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
             ItemInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ItemInfo;
             if (info != null)
@@ -344,7 +303,7 @@ namespace RiotPls.UI.Views
         {
             if (e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
-            this.lastItemName = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            this.Model.SelectedItem = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
             return;
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -356,29 +315,21 @@ namespace RiotPls.UI.Views
             this.ResizeColumns();
             return;
         }
-        private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)
+        #region Model Events
+        private void Model_DataUpdateFinished(object sender, object e)
         {
-            ToolStripMenuItem menu_item = sender as ToolStripMenuItem;
-            if (menu_item == null)
-                return;
-            ToolStripMenuItem parent_item =
-                this.itmSelectedForBuilder.DropDownItems.Cast<ToolStripMenuItem>()
-                    .FirstOrDefault(itm => itm.DropDownItems.Contains(menu_item));
-            if (parent_item == null)
-                return;
-            int item_index = parent_item.DropDownItems.IndexOf(menu_item);
-            if (item_index < 0)
-                return;
-            int build_index = this.itmSelectedForBuilder.DropDownItems.IndexOf(parent_item);
-            if (build_index < 0)
-                return;
-            Build build = this.Builds[build_index];
-            if (build == null)
-                return;
-            ItemInfo item = menu_item.Checked ? Engine.GetItem(this.lastItemName) : null;
-            build.SetItem(item_index, item);
+            BindingList<ItemInfo> new_binding = e as BindingList<ItemInfo>;
+            if (new_binding != null)
+                this.gridMain.DataSource = new_binding;
+            this.gridMain.Focus();
             return;
         }
+
+        private void Model_DataUpdateStarted()
+        {                                         
+            return;
+        }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
@@ -388,22 +339,6 @@ namespace RiotPls.UI.Views
                 components.Dispose();
             }
             base.Dispose(disposing);
-        }
-        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.items = Engine.GetItemInfo();
-            this.source = new SortableBindingList<ItemInfo>(this.items.Values.OrderBy(item => item.Name).ToList());
-            e.Result = this.ConstructFilter();
-            return;
-        }
-        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            BindingList<ItemInfo> new_binding = e.Result as BindingList<ItemInfo>;
-            if (new_binding != null)
-                this.gridMain.DataSource = new_binding;
-            this.picLoading.Visible = false;
-            this.gridMain.Focus();
-            return;
         }
         #endregion
     }

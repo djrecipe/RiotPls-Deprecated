@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using RiotPls.UI.Interfaces;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -15,10 +17,10 @@ namespace RiotPls.UI.Views
         #region Instance Members  
         #region Controls               
         private System.ComponentModel.IContainer components = null;
-        protected System.ComponentModel.BackgroundWorker workerUpdateData;
         protected System.Windows.Forms.PictureBox picLoading;
         #endregion
-        private Point last_mouse = Point.Empty;
+        private Point lastMouse = Point.Empty;
+        protected ITemplateViewModel model = null;
         #endregion
         #region Instance Properties  
         /// <summary>
@@ -59,19 +61,18 @@ namespace RiotPls.UI.Views
         protected formTemplate()
         {
             this.InitializeComponent();
+            return;
         }
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formTemplate));
-            this.workerUpdateData = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // workerUpdateData
             // 
-            this.workerUpdateData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerUpdateData_DoWork);
-            this.workerUpdateData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerUpdateData_RunWorkerCompleted);
             // 
             // picLoading
             // 
@@ -107,31 +108,32 @@ namespace RiotPls.UI.Views
 
         }
         #endregion
+        /// <summary>
+        /// Attempt to load settings for this window
+        /// </summary>
         protected void LoadWindowSettings()
         {
             Tools.GeneralSettings.LoadWindowSettings(this);
             return;
         }
+        /// <summary>
+        /// Save settings for this window
+        /// </summary>
         protected void SaveWindowSettings()
         {
             Tools.GeneralSettings.SaveWindowSettings(this);
             return;
         }
-
-        protected void UpdateData()
-        {
-            if (this.workerUpdateData.IsBusy)
-                return;
-            this.picLoading.Visible = this.ShowLoading;
-            this.picLoading.BringToFront();
-            this.workerUpdateData.RunWorkerAsync();
-            return;
-        }
-
         #endregion
-        #region Event Methods   
+        #region Event Methods  
+        #region Form Events 
         private void formTemplate_Load(object sender, EventArgs e)
         {
+            if (this.model != null)
+            {
+                this.model.DataUpdateStarted += this.Model_DataUpdateStarted;
+                this.model.DataUpdateFinished += this.Model_DataUpdateFinished;
+            }
             Tools.GeneralSettings.LoadWindowSettings(this);
             return;
         }
@@ -139,13 +141,13 @@ namespace RiotPls.UI.Views
         {
             if (Control.MouseButtons.HasFlag(MouseButtons.Left))
             {
-                if (this.last_mouse != Point.Empty)
-                    this.Location = new Point(this.Left + (e.X - this.last_mouse.X), this.Top + (e.Y - this.last_mouse.Y));
+                if (this.lastMouse != Point.Empty)
+                    this.Location = new Point(this.Left + (e.X - this.lastMouse.X), this.Top + (e.Y - this.lastMouse.Y));
                 else
-                    this.last_mouse = e.Location;
+                    this.lastMouse = e.Location;
             }
             else
-                this.last_mouse = Point.Empty;
+                this.lastMouse = Point.Empty;
             return;
         }
         private void formTemplate_Paint(object sender, PaintEventArgs e)
@@ -161,19 +163,25 @@ namespace RiotPls.UI.Views
         private void formTemplate_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
-                this.UpdateData();
+                this.model.UpdateData();
             else
                 Tools.GeneralSettings.SaveWindowSettings(this);
             return;
         }
-        protected virtual void workerUpdateData_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        #endregion
+        #region Model Events               
+        private void Model_DataUpdateFinished(object sender, object e)
         {
-
+            this.picLoading.Visible = false;
+            return;
         }
-        protected virtual void workerUpdateData_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void Model_DataUpdateStarted()
         {
-
+            this.picLoading.Visible = this.ShowLoading;
+            this.picLoading.BringToFront();
+            return;
         }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)

@@ -1,5 +1,10 @@
-﻿using RiotPls.API.Builder;
+﻿using System;
+using System.ComponentModel;
+using RiotPls.API.Builder;
 using RiotPls.Tools;
+using RiotPls.UI.Interfaces;
+using RiotPls.UI.Models;
+using RiotPls.UI.Views;
 
 namespace RiotPls.Forms.UI.Models
 {
@@ -7,13 +12,27 @@ namespace RiotPls.Forms.UI.Models
     /// View model for formBuilder
     /// </summary>
     /// <seealso cref="formBuilder"/>
-    public class formBuilderModel
+    public class formBuilderModel : ITemplateViewModel
     {
         #region Instance Members
-        #region Events
-        public event IntegerDelegate RowChanged;
+        #region Events                 
+        /// <summary>
+        /// Current build has changed
+        /// </summary>
         public event Build.BuildDelegate BuildChanged;
-        #endregion
+        /// <summary>
+        /// Data has finished updating
+        /// </summary>
+        public event EventHandler<object> DataUpdateFinished;
+        /// <summary>
+        /// Data update is about to start
+        /// </summary>
+        public event VoidDelegate DataUpdateStarted;
+        /// <summary>
+        /// Selected row has changed
+        /// </summary>
+        public event IntegerDelegate RowChanged;
+        #endregion     
         #endregion
         #region Instance Properties
         /// <summary>
@@ -21,11 +40,19 @@ namespace RiotPls.Forms.UI.Models
         /// </summary>
         public Build Build { get; set; }
         /// <summary>
+        /// Currently selected item
+        /// </summary>
+        public string SelectedItem { get; set; }
+        /// <summary>
+        /// Worker for updating data
+        /// </summary>
+        public BackgroundWorker Worker { get; }
+        #endregion
+        #region Instance Methods        
+        /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="build">Build associated with the window and view model</param>
-        #endregion
-        #region Instance Methods
         public formBuilderModel(Build build)
         {
             this.Build = build;
@@ -51,6 +78,14 @@ namespace RiotPls.Forms.UI.Models
                 this.RowChanged(row);
             return;
         }
+        /// <summary>
+        /// Update data
+        /// </summary>
+        public void UpdateData()
+        {
+        }
+        #endregion
+        #region Instance Events
         private void Build_BuildChanged(string name)
         {
             this.UpdateBuild();
@@ -62,5 +97,6 @@ namespace RiotPls.Forms.UI.Models
             return;
         }
         #endregion
+
     }
 }

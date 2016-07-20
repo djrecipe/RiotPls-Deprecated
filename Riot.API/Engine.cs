@@ -87,7 +87,8 @@ namespace RiotPls.API
 
         public static ItemInfo GetItem(string name)
         {
-            return Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
+            ItemInfo item = Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
+            return item;
         }
         public static Dictionary<string, ItemInfo> GetItemInfo()
         {

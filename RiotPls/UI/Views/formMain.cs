@@ -271,11 +271,11 @@ namespace RiotPls.UI.Views
         }
         private void UpdateBuilds()
         {
-            this.fChampions.Builds = this.fItems.Builds = this.fMaps.Builds = this.Builds;
+            this.fChampions.Model.Builds = this.fItems.Model.Builds = this.Builds;
             this.fBuilders.Clear();
             for (int i = 0; i < this.Builds.Count; i++)
                 this.CreateBuilderWindow(this.Builds[i], false);
-            this.Builds.BuildCollectionChanged += Builds_BuildCollectionChanged;        
+            this.Builds.BuildCollectionChanged += this.Builds_BuildCollectionChanged;        
             return;
         }
 

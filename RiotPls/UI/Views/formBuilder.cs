@@ -37,7 +37,7 @@ namespace RiotPls.UI.Views
         #endregion
         #endregion
         #region Instance Properties
-        public formBuilderModel Model { get; private set; } = null;
+        public formBuilderModel Model => this.model as formBuilderModel;
         #endregion
         #region Instance Methods
         #region Initialization Methods
@@ -46,7 +46,7 @@ namespace RiotPls.UI.Views
             this.InitializeComponent();
             this.InitializeDragDrop();
             this.buildcolMain.Build = build;
-            this.Model = new formBuilderModel(build);
+            this.model = new formBuilderModel(build);
             this.Model.BuildChanged += this.Model_BuildChanged;
             this.Model.RowChanged += this.Model_RowChanged;
             return;

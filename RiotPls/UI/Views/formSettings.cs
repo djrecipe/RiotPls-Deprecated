@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -30,11 +31,18 @@ namespace RiotPls.UI.Views
         private System.Windows.Forms.LinkLabel lblAPIStepTwoInstructions;
         #endregion
         #endregion
+        #region Instance Properties
+        private formSettingsModel Model => this.model as formSettingsModel;
+        #endregion
         #region Instance Methods
         #region Initialization Methods
-        public formSettings()
+        public formSettings()  : base()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.model = new formSettingsModel();
+            this.model.DataUpdateFinished += this.Model_DataUpdateFinished;
+            this.model.DataUpdateStarted += this.Model_DataUpdateStarted;
+            return;
         }
 
         private void InitializeComponent()
@@ -343,6 +351,25 @@ namespace RiotPls.UI.Views
             return;
         }
         #endregion
+        #region Model Events
+        private void Model_DataUpdateFinished(object sender, object e)
+        {
+            try
+            {
+                this.txtAPIKey.Text = e as string;
+                this.lblIgnoreCountValue.Text = API.Resources.Resource.IgnoreCount.ToString();
+                this.lblContentVersionValue.Text = API.Resources.Resource.ContentVersion.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while loading API key\n{0}", ex.Message);
+            }
+            return;
+        }
+        private void Model_DataUpdateStarted()
+        {
+        }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
@@ -353,31 +380,7 @@ namespace RiotPls.UI.Views
             }
             base.Dispose(disposing);
         }
-        protected override void workerUpdateData_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            try
-            {
-                API.Engine.Key.Load();
-                e.Result = API.Engine.Key.ToString();
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error while loading API key\n{0}", ex.Message);
-            }
-        }
-        protected override void workerUpdateData_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            try
-            {
-                this.txtAPIKey.Text = e.Result as string;
-                this.lblIgnoreCountValue.Text = API.Resources.Resource.IgnoreCount.ToString();
-                this.lblContentVersionValue.Text = API.Resources.Resource.ContentVersion.ToString();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while loading API key\n{0}", ex.Message);
-            }
-        }
+
         #endregion
     }
 }

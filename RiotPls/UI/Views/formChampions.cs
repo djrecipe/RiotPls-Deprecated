@@ -9,6 +9,7 @@ using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.UI.Controls;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -44,21 +45,18 @@ namespace RiotPls.UI.Views
         private DataGridViewImageColumn colE;
         private DataGridViewImageColumn colR;
         #endregion
-        private string last_champ_name = null;
-        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
-        private BindingList<ChampionInfo> source = null;
+        public formChampionsModel Model => this.model as formChampionsModel;
         #endregion
         #region Instance Properties
-        /// <summary>
-        /// Set of builds which may be modified
-        /// </summary>
-        public BuildCollection Builds { get; set; }
         #endregion
         #region Instance Methods
         #region Initialization Methods
         public formChampions()
         {
             this.InitializeComponent();
+            this.model = new formChampionsModel();
+            this.model.DataUpdateStarted += this.Model_DataUpdateStarted;
+            this.model.DataUpdateFinished += this.Model_DataUpdateFinished;
             this.gridMain.AutoGenerateColumns = false;
             this.gridMain.DataError += this.gridMain_DataError;
             return;
@@ -526,134 +524,20 @@ namespace RiotPls.UI.Views
             this.colName.Width = this.colTitle.Width = this.colTags.Width = width;
             return;
         }
-        private void ShowTooltip(int row_index, int column_index)
-        {
-            if (this.champions == null || row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount)
-                return;
-            string champion_name = this.gridMain.Rows[row_index].Cells["colName"].Value.ToString();
-            this.last_champ_name = Engine.CleanseChampionName(this.champions, champion_name);
-            ChampionInfo champion_info = this.champions[this.last_champ_name];
-            string column_name = this.gridMain.Columns[column_index].HeaderText;
-            string value_out = "???";
-            string subtitle_out = column_name;
-            switch (column_name)
-            {
-
-                case "Attack":
-                    value_out = champion_info.RatingInfo.Attack.ToString() + " / 10";
-                    break;
-                case "Defense":
-                    value_out = champion_info.RatingInfo.Defense.ToString() + " / 10";
-                    break;
-                case "Difficulty":
-                    value_out = champion_info.RatingInfo.Difficulty.ToString() + " / 10";
-                    break;
-                case "Magic":
-                    value_out = champion_info.RatingInfo.Magic.ToString() + " / 10";
-                    break;
-                case "Passive":
-                    value_out = "     " + champion_info.PassiveDescription;  
-                    subtitle_out = champion_info.PassiveName + " (Passive)";
-                    break;
-                //
-                case "Q":
-                    value_out = "     " + champion_info.SpellDescriptionQ;
-                    subtitle_out = champion_info.SpellNameQ + " (Q)";
-                    break;
-                case "W":
-                    value_out = "     " + champion_info.SpellDescriptionW; 
-                    subtitle_out = champion_info.SpellNameW + " (W)";
-                    break;
-                case "E":
-                    value_out = "     " + champion_info.SpellDescriptionE;
-                    subtitle_out = champion_info.SpellNameE + " (E)";
-                    break;
-                case "R":
-                    value_out = "     " + champion_info.SpellDescriptionR;
-                    subtitle_out = champion_info.SpellNameR + " (R)";
-                    break;
-                //
-                case "Image":
-                    value_out = champion_info.SkinList;
-                    subtitle_out = "Skins";
-                    break;
-                case "Free":
-                    value_out = champion_info.FreeToPlay.ToString();
-                    subtitle_out = "Free to Play?";
-                    break;
-                case "Name":
-                    value_out = champion_info.LoreSummary;
-                    subtitle_out = "Lore Summary";
-                    break;
-                case "Tags":
-                    value_out = champion_info.TagList;
-                    break;
-                case "Title":
-                    value_out = champion_info.LoreSummary;
-                    subtitle_out = "Lore Summary";
-                    break;
-            }
-            this.lblInfoTitle.Text = subtitle_out;
-            this.lblInfo.Text = value_out;
-            return;
-        }
-        private void UpdateFilter()
-        {
-            if (this.champions == null || this.workerUpdateData.IsBusy)
-                return;
-            if (this.comboFilter.SelectedItem == null || this.txtSearch.TextLength < 1)
-                this.gridMain.DataSource = this.source;
-            else
-            {
-                switch (this.comboFilter.SelectedItem.ToString())
-                {
-                    case "Free":
-                        if (this.txtSearch.Text == "Any")
-                            this.gridMain.DataSource = this.source;
-                        else
-                        {
-                            bool free_to_play = this.txtSearch.Text == "Free";
-                            this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
-                                info.FreeToPlay == free_to_play).ToList<ChampionInfo>());
-                        }
-                        break;
-                    case "Name":
-                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.Name.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
-                        break;
-                    case "Tags":
-                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.TagList.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
-                        break;
-                    case "Title":
-                        this.gridMain.DataSource = new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.Title.ToUpper().Contains(this.txtSearch.Text.ToUpper())).ToList<ChampionInfo>());
-                        break;
-                }
-            }
-            return;
-        }
         #endregion
         #region Event Methods
         private void cmenMain_Opening(object sender, CancelEventArgs e)
         {
-            if (this.last_champ_name == null)
+            if (this.Model.SelectedItem == null)
                 e.Cancel = true;
             else
             {
                 this.itmSelectedForBuilder.DropDownItems.Clear();
-                for (int i = 0; i < this.Builds.Count; i++)
+                List<ToolStripMenuItem> items = this.Model.GetBuildMenuItems();
+                if (items != null && items.Count > 0)
                 {
-                    Build build = this.Builds[i];
-                    if (build == null)
-                        continue;
-                    ToolStripMenuItem item = new ToolStripMenuItem(build.Name)
-                    {
-                        CheckOnClick = true,
-                        Checked = build.Champion?.Name == this.last_champ_name,
-                    };
-                    item.CheckedChanged += this.itmSelectedForBuild_CheckedChanged;
-                    this.itmSelectedForBuilder.DropDownItems.Add(item);
+                    this.itmSelectedForBuilder.Checked = items.Any(i => i.Checked);
+                    this.itmSelectedForBuilder.DropDownItems.AddRange(items.ToArray());
                 }
             }
             return;
@@ -674,9 +558,10 @@ namespace RiotPls.UI.Views
                 this.txtSearch.ReadOnly = false;
                 this.txtSearch.Cursor = Cursors.IBeam;
             }
-            this.UpdateFilter();
+            this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             return;
         }
+        #region Form Events
         private void formChampions_Activated(object sender, EventArgs e)
         {
             this.gridMain.Focus();
@@ -687,14 +572,25 @@ namespace RiotPls.UI.Views
             if (this.Visible)
             {
                 this.LoadWindowSettings();
-                this.ShowTooltip(this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0,
-                    this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0);
+                int row_index = this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0;
+                int column_index = this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0;
+                if (row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount)
+                    return;
+                string champion_name = this.gridMain.Rows[row_index].Cells["colName"].Value.ToString();
+                string column_name = this.gridMain.Columns[column_index].HeaderText;
+                string text = "";
+                string subtitle = "";
+                this.Model.GetTooltipText(champion_name, column_name, out text, out subtitle);
+                this.lblInfo.Text = text;
+                this.lblInfoTitle.Text = subtitle;
             }
             return;
         }
+        #endregion
+        #region Grid Events
         private void gridMain_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left || this.champions == null || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
+            if (e.Button != MouseButtons.Left || e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
             ChampionInfo info = this.gridMain.Rows[e.RowIndex].DataBoundItem as ChampionInfo;
             if (info != null)
@@ -706,7 +602,15 @@ namespace RiotPls.UI.Views
         }
         private void gridMain_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
-            this.ShowTooltip(e.RowIndex, e.ColumnIndex);
+            if (e.RowIndex < 0 || e.ColumnIndex < 0 || e.RowIndex >= this.gridMain.RowCount || e.ColumnIndex >= this.gridMain.ColumnCount)
+                return;
+            string champion_name = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            string column_name = this.gridMain.Columns[e.ColumnIndex].HeaderText;
+            string text = "";
+            string subtitle = "";
+            this.Model.GetTooltipText(champion_name, column_name, out text, out subtitle);
+            this.lblInfo.Text = text;
+            this.lblInfoTitle.Text = subtitle;
             return;
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -717,21 +621,8 @@ namespace RiotPls.UI.Views
             this.ResizeColumns();
             return;
         }
-        private void itmSelectedForBuild_CheckedChanged(object sender, EventArgs e)
-        {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
-            if (item == null)
-                return;
-            int index = this.itmSelectedForBuilder.DropDownItems.IndexOf(item);
-            if (index < 0)
-                return;
-            Build build = this.Builds[index];
-            if (build == null)
-                return;
-            ChampionInfo champion = item.Checked ? Engine.GetChampion(this.last_champ_name) : null;
-            build.SetChampion(champion);
-            return;
-        }
+        #endregion
+        #region Textbox Events
         private void txtSearch_Enter(object sender, EventArgs e)
         {
             if (this.comboFilter.SelectedItem != null && this.comboFilter.SelectedItem.ToString() == "Free")
@@ -754,29 +645,29 @@ namespace RiotPls.UI.Views
                         this.txtSearch.Text = "Any";
                         break;
                 }
-                this.UpdateFilter();
+                this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             }
             return;
         }
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            this.UpdateFilter();
+            this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             return;
         }
-        #region Worker Events
-        protected override void workerUpdateData_DoWork(object sender, DoWorkEventArgs e)
+        #endregion
+        #region Model Events
+        private void Model_DataUpdateFinished(object sender, object e)
         {
-            this.champions = Engine.GetChampionInfo();
-            this.source = new SortableBindingList<ChampionInfo>(this.champions.Values.OrderBy(champ => champ.Name).ToList());
-            return;
-        }
-        protected override void workerUpdateData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.gridMain.DataSource = this.source;
+            this.gridMain.DataSource = e as SortableBindingList<ChampionInfo>;
             this.comboFilter.DataSource = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(col => !(col is DataGridViewImageColumn)).Select(col => col.HeaderText)
                 .OrderBy(text => text).ToList<string>();
-            this.picLoading.Visible = false;
             this.gridMain.Focus();
+            return;
+        }
+
+        private void Model_DataUpdateStarted()
+        {
+            return;
         }
         #endregion
         #endregion
