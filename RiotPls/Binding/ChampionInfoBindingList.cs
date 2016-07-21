@@ -60,7 +60,7 @@ namespace RiotPls.Binding
         /// <remarks>Filter is not updated until Update() is called</remarks>
         public void SetFilter(IEnumerable<string> items, string search_text)
         {
-            this.FilterItems = items.ToList();
+            this.FilterItems = items?.ToList() ?? new List<string>();
             this.SearchText = search_text;
             return;
         }

@@ -51,10 +51,6 @@ namespace RiotPls.UI.Controls
         /// Level obtained value for the current entity has changed
         /// </summary>
         public event LevelObtainedChangedDelegate LevelObtainedChanged;
-        /// <summary>
-        /// Pricing style changed
-        /// </summary>
-        public event PricingChangedDelegate PricingChanged;
         #endregion
         private IRiotDroppable drop = null;
         #endregion
@@ -311,8 +307,6 @@ namespace RiotPls.UI.Controls
                     ? ItemInfo.PricingStyles.Full
                     : ItemInfo.PricingStyles.Upgrade;
             }
-            if (this.PricingChanged != null)
-                this.PricingChanged(this, this.drop, this.mnuitmFullPricing.Checked);
         }
         #region Event Methods     
         #region Menu Events       

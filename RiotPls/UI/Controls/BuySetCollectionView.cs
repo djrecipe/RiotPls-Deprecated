@@ -17,6 +17,7 @@ namespace RiotPls.UI.Controls
         private System.Windows.Forms.TableLayoutPanel layoutMain;
         private System.Windows.Forms.Button btnAdd;
         private Button btnExport;
+        private Label lblCost;
         #endregion
         private readonly List<BuySetView> buildFlows = new List<BuySetView>();
         #endregion
@@ -30,10 +31,14 @@ namespace RiotPls.UI.Controls
             }
             set
             {
+                if(this.Build?.Buys != null)
+                    this.Build.Buys.Changed -= this.BuySetCollection_Changed;
                 this._Build = value;
                 this.ClearBuys();
                 if (value != null)
                     this.AddNewBuy();
+                if (this.Build?.Buys != null)
+                    this.Build.Buys.Changed += this.BuySetCollection_Changed;
                 return;
             }
         }
@@ -49,6 +54,7 @@ namespace RiotPls.UI.Controls
             this.layoutMain = new System.Windows.Forms.TableLayoutPanel();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
+            this.lblCost = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // layoutMain
@@ -59,13 +65,13 @@ namespace RiotPls.UI.Controls
             this.layoutMain.AutoScroll = true;
             this.layoutMain.ColumnCount = 1;
             this.layoutMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutMain.Location = new System.Drawing.Point(0, 0);
-            this.layoutMain.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.layoutMain.Location = new System.Drawing.Point(0, 40);
+            this.layoutMain.Margin = new System.Windows.Forms.Padding(0, 5, 0, 10);
             this.layoutMain.Name = "layoutMain";
             this.layoutMain.Padding = new System.Windows.Forms.Padding(10);
             this.layoutMain.RowCount = 1;
             this.layoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layoutMain.Size = new System.Drawing.Size(480, 210);
+            this.layoutMain.Size = new System.Drawing.Size(480, 170);
             this.layoutMain.TabIndex = 0;
             // 
             // btnAdd
@@ -89,7 +95,7 @@ namespace RiotPls.UI.Controls
             // 
             // btnExport
             // 
-            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this.btnExport.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExport.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
@@ -106,12 +112,26 @@ namespace RiotPls.UI.Controls
             this.btnExport.UseVisualStyleBackColor = false;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // lblCost
+            // 
+            this.lblCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.lblCost.Location = new System.Drawing.Point(320, 10);
+            this.lblCost.Margin = new System.Windows.Forms.Padding(10, 10, 10, 5);
+            this.lblCost.Name = "lblCost";
+            this.lblCost.Size = new System.Drawing.Size(150, 20);
+            this.lblCost.TabIndex = 4;
+            this.lblCost.Text = "Total Cost: 0 gold";
+            this.lblCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // BuySetCollectionView
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoScroll = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.lblCost);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.layoutMain);
@@ -138,12 +158,14 @@ namespace RiotPls.UI.Controls
                 Margin = new Padding(10),
                 Name = string.Format("buy{0}", this.buildFlows.Count + 1)
             };
+            flow.RemoveClicked += this.BuySetView_RemoveClicked;
             this.buildFlows.Add(flow);
             //
             this.layoutMain.Controls.Add(flow);
             //
             return;
         }
+
         private void ClearBuys()
         {
             this.buildFlows.Clear();
@@ -157,6 +179,21 @@ namespace RiotPls.UI.Controls
         private void btnExport_Click(object sender, System.EventArgs e)
         {
 
+        }
+        private void BuySetCollection_Changed(BuySetCollection collection)
+        {
+            this.lblCost.Text = string.Format("Total Cost: {0}", collection.TotalCost);
+            return;
+        }
+        private void BuySetView_RemoveClicked(BuySetView view)
+        {
+            if (this.buildFlows.Count < 2)
+                return; // always leave one build set up
+            int index = this.buildFlows.IndexOf(view);
+            this.Build.Buys.Remove(view.BuySet);
+            this.buildFlows.Remove(view);
+            this.layoutMain.Controls.Remove(view);
+            return;
         }
         #endregion
         #region Override Methods

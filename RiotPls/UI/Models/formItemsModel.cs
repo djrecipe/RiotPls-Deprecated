@@ -81,7 +81,7 @@ namespace RiotPls.UI.Models
 
         public void SetFilter(CheckedListBox.CheckedItemCollection items)
         {
-            this.binding.SetFilter(items.Cast<string>(), null);
+            this.binding?.SetFilter(items.Cast<string>(), null);
             return;
         }
         public void UpdateData()

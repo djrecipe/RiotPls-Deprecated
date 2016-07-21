@@ -14,6 +14,14 @@ namespace RiotPls.API.Builder
     [JsonObject(MemberSerialization.OptIn)]
     public class BuySet
     {
+        #region Types
+        public delegate void BuySetDelegate(BuySet set);
+        #endregion
+        #region Instance Members
+        #region Events
+        public event BuySetDelegate Changed;
+        #endregion
+        #endregion
         #region Instance Properties
         /// <summary>
         /// Items associated with the buy
@@ -37,8 +45,12 @@ namespace RiotPls.API.Builder
         /// <param name="item">Item to add</param>
         public void AddItem(ItemInfo item)
         {
-            if (!this.ContainsItem(item))
-                this.Items.Add(item);
+            if (item == null)
+                throw new ArgumentNullException("item", "You must provide a valid ItemInfo");
+            this.Items.Add(item);
+            item.PricingStyleChanged += this.ItemInfo_PricingStyleChanged;
+            if (this.Changed != null)
+                this.Changed(this);
             return;
         }
 
@@ -49,17 +61,22 @@ namespace RiotPls.API.Builder
         /// <returns>True if the item is already in the buy set, false otherwise</returns>
         public bool ContainsItem(ItemInfo item)
         {
+            if (item == null)
+                throw new ArgumentNullException("item", "You must provide a valid ItemInfo");
             return this.Items.Contains(item);
         }
         /// <summary>
-        /// Remove an item from the buy set
+        /// Retrieve an item from the buy set
         /// </summary>
-        /// <param name="item">Item to remove</param>
-        public void RemoveItem(ItemInfo item)
+        /// <param name="index">Index of the item to retrieve</param>
+        /// <returns>Item at the specified index, if any</returns>
+        public ItemInfo GetItemAt(int index)
         {
-            if (this.ContainsItem(item))
-                this.Items.Remove(item);
-            return;
+            if (index > -1 && index < this.Items.Count)
+            {
+                return this.Items[index];
+            }
+            return null;
         }
         /// <summary>
         /// Remove an item from the buy set
@@ -67,9 +84,20 @@ namespace RiotPls.API.Builder
         /// <param name="index">Index of the item to remove</param>
         public void RemoveItemAt(int index)
         {
-            if(index > -1 && index < this.Items.Count)
+            if (index > -1 && index < this.Items.Count)
+            {
                 this.Items.RemoveAt(index);
+                if (this.Changed != null)
+                    this.Changed(this);
+            }
             return;
+        }
+        #endregion
+        #region Instance Events
+        private void ItemInfo_PricingStyleChanged(ItemInfo item, ItemInfo.PricingStyles pricing_style)
+        {
+            if (this.Changed != null)
+                this.Changed(this);
         }
         #endregion
     }

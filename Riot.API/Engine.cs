@@ -90,6 +90,23 @@ namespace RiotPls.API
             Engine.ItemInfos = data.Get();
             return Engine.ItemInfos;
         }
+
+        public static List<ItemInfo> GetItemComponents(string name)
+        {
+            List<ItemInfo> components = new List<ItemInfo>();
+            ItemInfo item = Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
+            if (item != null)
+            {
+                foreach (string component_id in item.ComponentIDs.Where(id => Engine.ItemInfos.ContainsKey(id)))
+                {
+                    ItemInfo item_component = Engine.ItemInfos[component_id];
+                    if (item_component != null)
+                        components.Add(item_component);
+                }
+            }
+            return components;
+
+        } 
         public static Dictionary<string, MapInfo> GetMapInfo()
         {
             MapInfoSet data = new MapInfoSet();

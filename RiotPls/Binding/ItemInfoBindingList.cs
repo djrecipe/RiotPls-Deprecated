@@ -17,7 +17,7 @@ namespace RiotPls.Binding
         /// Categories/columns to be used when filtering
         /// </summary>
         /// <seealso cref="SetFilter"/>
-        public List<string> FilterItems { get; private set; }
+        public List<string> FilterItems { get; private set; } = new List<string>();
         /// <summary>                              
         /// Search text used when filtering
         /// </summary>

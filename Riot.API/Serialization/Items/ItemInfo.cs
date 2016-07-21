@@ -32,6 +32,7 @@ namespace RiotPls.API.Serialization.Items
             /// </summary>
             Upgrade = 1
         }
+        public delegate void PricingStylesDelegate(ItemInfo item, PricingStyles pricing_style);
         #endregion
         #region Static Members
         private static readonly List<ItemInfo> consumables = new List<ItemInfo>();
@@ -67,6 +68,7 @@ namespace RiotPls.API.Serialization.Items
         #endregion
         #region Instance Members
         private ItemStatsInfo descriptionStats = new ItemStatsInfo();
+        public event PricingStylesDelegate PricingStyleChanged;
         #endregion
         #region Instance Properties
         /// <summary>
@@ -74,6 +76,23 @@ namespace RiotPls.API.Serialization.Items
         /// </summary>
         [JsonProperty("colloq")]
         public string ColloquialName { get; private set; }
+        private string[] _ComponentNames = new string[0];
+        /// <summary>
+        /// List of components required to upgrade to this item
+        /// </summary>
+        [JsonProperty("from", ItemIsReference = true)]
+        public string[] ComponentIDs
+        {
+            get
+            {
+                return new List<string>(this._ComponentNames).ToArray();
+            }
+            set
+            {
+                this._ComponentNames = value;
+                return;
+            }
+        }
         private bool _Consumable = false;
         /// <summary>
         /// Item is consumed on use
@@ -97,6 +116,10 @@ namespace RiotPls.API.Serialization.Items
         /// </summary>
         /// <remarks>Influenced by PricingStyle</remarks>
         public int Cost => this.PricingStyle == PricingStyles.Full ? this.CostInfo.TotalCost : this.CostInfo.UpgradeCost;
+        /// <summary>
+        /// Text summarizing the item cost
+        /// </summary>
+        public string CostSummary => string.Format("Upgrade: {0}\nTotal: {1}", this.CostInfo.UpgradeCost, this.CostInfo.TotalCost);
         /// <summary>
         /// Information regarding cost and purchasing of the item
         /// </summary>                            
@@ -165,12 +188,23 @@ namespace RiotPls.API.Serialization.Items
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; protected set; } = null;
+        private PricingStyles _PricingStyle = PricingStyles.Upgrade;
         /// <summary>
         /// Pricing style for the item
         /// </summary>
         /// <remarks>Determines whether item componenets are included in the price</remarks>
         [JsonProperty("pricingstyle")]
-        public PricingStyles PricingStyle { get; set; } = PricingStyles.Upgrade;
+        public PricingStyles PricingStyle
+        {
+            get { return this._PricingStyle; }
+            set
+            {
+                this._PricingStyle = value;
+                if (this.PricingStyleChanged != null)
+                    this.PricingStyleChanged(this, this.PricingStyle);
+                return;
+            }
+        }
         /// <summary>
         /// Champion required in order to use the item
         /// </summary>

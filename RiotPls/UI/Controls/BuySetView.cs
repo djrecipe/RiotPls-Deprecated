@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Items;
 
@@ -15,6 +16,9 @@ namespace RiotPls.UI.Controls
     /// <seealso cref="BuySetCollectionView"/>
     public class BuySetView : UserControl
     {
+        #region Types
+        public delegate void BuySetViewDelegate(BuySetView view);
+        #endregion
         #region Instance Members
         private IContainer components = null;
         private TableLayoutPanel layoutMain;
@@ -23,6 +27,10 @@ namespace RiotPls.UI.Controls
         private ContextMenuStrip cmenItems;
         private Button btnAddItem;
         private List<DropSlot>  dropSlots = new List<DropSlot>();
+        private Button btnRemove;
+        #region Events
+        public event BuySetViewDelegate RemoveClicked;
+        #endregion
         #endregion
         #region Instance Properties
         public Build Build { get; set; }
@@ -50,9 +58,10 @@ namespace RiotPls.UI.Controls
             this.components = new System.ComponentModel.Container();
             this.cmenItems = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.layoutMain = new System.Windows.Forms.TableLayoutPanel();
+            this.btnAddItem = new System.Windows.Forms.Button();
             this.txtName = new System.Windows.Forms.TextBox();
             this.lblCost = new System.Windows.Forms.Label();
-            this.btnAddItem = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
             this.layoutMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,34 +89,8 @@ namespace RiotPls.UI.Controls
             this.layoutMain.Padding = new System.Windows.Forms.Padding(10);
             this.layoutMain.RowCount = 1;
             this.layoutMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layoutMain.Size = new System.Drawing.Size(260, 152);
+            this.layoutMain.Size = new System.Drawing.Size(316, 152);
             this.layoutMain.TabIndex = 1;
-            // 
-            // txtName
-            // 
-            this.txtName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.txtName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.txtName.Location = new System.Drawing.Point(18, 10);
-            this.txtName.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(120, 20);
-            this.txtName.TabIndex = 2;
-            this.txtName.Text = "Buy #1";
-            this.txtName.WordWrap = false;
-            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
-            // 
-            // lblCost
-            // 
-            this.lblCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
-            this.lblCost.Location = new System.Drawing.Point(148, 10);
-            this.lblCost.Margin = new System.Windows.Forms.Padding(10);
-            this.lblCost.Name = "lblCost";
-            this.lblCost.Size = new System.Drawing.Size(98, 20);
-            this.lblCost.TabIndex = 3;
-            this.lblCost.Text = "Cost: 0 gold";
-            this.lblCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnAddItem
             // 
@@ -127,44 +110,75 @@ namespace RiotPls.UI.Controls
             this.btnAddItem.UseVisualStyleBackColor = false;
             this.btnAddItem.Click += new System.EventHandler(this.btnAddItem_Click);
             // 
-            // BuildFlow
+            // txtName
+            // 
+            this.txtName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.txtName.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.txtName.Location = new System.Drawing.Point(18, 10);
+            this.txtName.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(120, 20);
+            this.txtName.TabIndex = 2;
+            this.txtName.Text = "Buy #1";
+            this.txtName.WordWrap = false;
+            this.txtName.TextChanged += new System.EventHandler(this.txtName_TextChanged);
+            // 
+            // lblCost
+            // 
+            this.lblCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
+            this.lblCost.Location = new System.Drawing.Point(169, 9);
+            this.lblCost.Margin = new System.Windows.Forms.Padding(10);
+            this.lblCost.Name = "lblCost";
+            this.lblCost.Size = new System.Drawing.Size(98, 20);
+            this.lblCost.TabIndex = 3;
+            this.lblCost.Text = "Cost: 0 gold";
+            this.lblCost.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.btnRemove.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRemove.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnRemove.Location = new System.Drawing.Point(282, 10);
+            this.btnRemove.Margin = new System.Windows.Forms.Padding(5, 10, 10, 5);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(20, 20);
+            this.btnRemove.TabIndex = 4;
+            this.btnRemove.Text = "X";
+            this.btnRemove.UseVisualStyleBackColor = false;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // BuySetView
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(190)))), ((int)(((byte)(190)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.lblCost);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.layoutMain);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MinimumSize = new System.Drawing.Size(260, 180);
-            this.Name = "BuildFlow";
-            this.Size = new System.Drawing.Size(256, 180);
+            this.Name = "BuySetView";
+            this.Size = new System.Drawing.Size(312, 180);
             this.layoutMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
-        private void PopulateContextMenu()
-        {
-            this.cmenItems.Items.Clear();
-            for (int i = 0; i < 6; i++)
-            {
-                ItemInfo info = this.Build.GetItem(i);
-                if (info != null && !this.BuySet.ContainsItem(info))
-                {
-                    ToolStripItem item = new ToolStripMenuItem(info.Name);
-                    item.Tag = i;
-                    this.cmenItems.Items.Add(item);
-                }
-            }
-        }
         #endregion
-        private void AddItem(int index)
+        private void AddItem(string name)
         {
-            ItemInfo item = this.Build.GetItem(index);
+            ItemInfo item = Engine.GetItem(name);
             this.BuySet.AddItem(item);
+            item.PricingStyleChanged += this.ItemInfo_PricingStyleChanged;
             DropSlot box = new DropSlot
             {
                 BorderStyle = BorderStyle.None,
@@ -177,9 +191,32 @@ namespace RiotPls.UI.Controls
             this.dropSlots.Add(box);
             box.Set(item);
             box.DropOccurred += this.DropSlot_DropOccurred;
-            box.PricingChanged += this.DropSlot_PricingChanged;
             this.layoutMain.Controls.Add(box);
             this.UpdateCost();
+            return;
+        }
+
+        private void PopulateContextMenu()
+        {
+            this.cmenItems.Items.Clear();
+            // iterate through build items
+            for (int i = 0; i < 6; i++)
+            {
+                ItemInfo info = this.Build.GetItem(i);
+                if (info != null && !this.BuySet.ContainsItem(info))
+                {
+                    ToolStripItem item = new ToolStripMenuItem(info.Name);
+                    item.Tag = info.Name;
+                    this.cmenItems.Items.Add(item);
+                    // add build item components
+                    foreach (ItemInfo component_info in Engine.GetItemComponents(info.Name))
+                    {
+                        ToolStripItem component_item = new ToolStripMenuItem(component_info.Name);
+                        component_item.Tag = component_info.Name;
+                        this.cmenItems.Items.Add(component_item);
+                    }
+                }
+            }
             return;
         }
         private void UpdateCost()
@@ -195,6 +232,12 @@ namespace RiotPls.UI.Controls
             this.cmenItems.Show(this.btnAddItem, Point.Empty, ToolStripDropDownDirection.Default);
             return;
         }
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (this.RemoveClicked != null)
+                this.RemoveClicked(this);
+            return;
+        }
         private void cmenItems_Opening(object sender, CancelEventArgs e)
         {
             return;
@@ -202,14 +245,16 @@ namespace RiotPls.UI.Controls
         private void cmenItems_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             ToolStripItem menu_item = e.ClickedItem;
-            int index = (int)menu_item.Tag;
-            if (index > -1)
-                this.AddItem(index);
+            string name = (string)menu_item.Tag;
+            if (!string.IsNullOrWhiteSpace(name))
+                this.AddItem(name);
             return;
         }
         private void DropSlot_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             int index = this.dropSlots.IndexOf(slot);
+            ItemInfo old_item = this.BuySet.GetItemAt(index);
+            old_item.PricingStyleChanged -= this.ItemInfo_PricingStyleChanged;
             this.BuySet.RemoveItemAt(index);
             if (drop == null)
             {
@@ -225,7 +270,7 @@ namespace RiotPls.UI.Controls
             this.UpdateCost();
             return;
         }
-        private void DropSlot_PricingChanged(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop, bool full_pricing)
+        private void ItemInfo_PricingStyleChanged(ItemInfo item, ItemInfo.PricingStyles pricing_style)
         {
             this.UpdateCost();
             return;
@@ -250,5 +295,6 @@ namespace RiotPls.UI.Controls
             base.Dispose(disposing);
         }
         #endregion
+
     }
 }
