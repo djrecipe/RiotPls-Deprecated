@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
+using RiotPls.Binding;
 using RiotPls.Tools;
 using RiotPls.UI.Interfaces;
 using RiotPls.UI.Views;
@@ -19,8 +20,7 @@ namespace RiotPls.UI.Models
     public class formChampionsModel : IBuildModifier
     {
         #region Instance Members
-        private Dictionary<string, ChampionInfo> champions = new Dictionary<string, ChampionInfo>();
-        private BindingList<ChampionInfo> source = null;
+        private ChampionInfoBindingList binding = null;
         #region Events               
         /// <summary>
         /// Data update is about to start
@@ -77,8 +77,8 @@ namespace RiotPls.UI.Models
         } 
         public void GetTooltipText(string champion_name, string column_name, out string text, out string subtitle)
         {
-            this.SelectedItem = Engine.CleanseChampionName(this.champions, champion_name);
-            ChampionInfo champion_info = this.champions[this.SelectedItem];
+            this.SelectedItem = champion_name;
+            ChampionInfo champion_info = this.binding.Retrieve(this.SelectedItem);
             text = "???";
             subtitle = column_name;
             switch (column_name)
@@ -159,46 +159,29 @@ namespace RiotPls.UI.Models
             return;
         }
 
-        public object UpdateFilter(string selected_item, string search_text)
+        public void SetFilter(string selected_item, string search_text)
         {
-            if (this.champions == null || this.Worker.IsBusy)
-                return null;
-            if (selected_item == null || search_text.Length < 1)
-                return this.source;
-            else
-            {
-                switch (selected_item)
-                {
-                    case "Free":
-                        if (search_text == "Any")
-                            return this.source;
-                        else
-                        {
-                            bool free_to_play = search_text == "Free";
-                            return new BindingList<ChampionInfo>(this.source.Where(info =>
-                                info.FreeToPlay == free_to_play).ToList<ChampionInfo>());
-                        }
-                    case "Name":
-                        return new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.Name.ToUpper().Contains(search_text.ToUpper())).ToList<ChampionInfo>());
-                    case "Tags":
-                        return new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.TagList.ToUpper().Contains(search_text.ToUpper())).ToList<ChampionInfo>());
-                    case "Title":
-                        return new BindingList<ChampionInfo>(this.source.Where(info =>
-                            info.Title.ToUpper().Contains(search_text.ToUpper())).ToList<ChampionInfo>());
-                    default:
-                        return this.source;
-                }
-            }
+            if (this.binding == null || this.Worker.IsBusy)
+                return;
+            this.binding.SetFilter(new List<string>() { selected_item }, search_text);
+            return;
+        }
+
+        public void SetFilterAndUpdate(string selected_item, string search_text)
+        {
+            this.SetFilter(selected_item, search_text);
+            this.UpdateData();
+            return;
         }
         #endregion
         #region Instance Events   
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.champions = Engine.GetChampionInfo();
-            this.source = new SortableBindingList<ChampionInfo>(this.champions.Values.OrderBy(champ => champ.Name).ToList());
-            e.Result = this.source;
+            if (this.binding == null)                        // only instantiate once, but instantiate on worker thread to keep UI responsive
+                this.binding = new ChampionInfoBindingList();
+            else                                            // update filter
+                this.binding.Update();
+            e.Result = this.binding.Binding;
             return;
         }
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

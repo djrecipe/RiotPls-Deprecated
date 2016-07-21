@@ -67,15 +67,9 @@ namespace RiotPls.API
             Engine.Key.Load();
             return;
         }
-
-        public static string CleanseChampionName(Dictionary<string, ChampionInfo> info, string name)
-        {
-            KeyValuePair<string, ChampionInfo> pair = info.FirstOrDefault(i => i.Value.Name == name);
-            return pair.Equals(default(KeyValuePair<string, ChampionInfo>)) ? null : pair.Key;
-        }
         public static ChampionInfo GetChampion(string name)
         {
-            return Engine.ChampionInfos.ContainsKey(name) ? Engine.ChampionInfos[name] : null;
+            return Engine.ChampionInfos.FirstOrDefault(c => c.Value.Name == name).Value;
         }
         public static Dictionary<string, ChampionInfo> GetChampionInfo()
         {

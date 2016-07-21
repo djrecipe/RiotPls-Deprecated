@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Items;
+using RiotPls.Binding;
 using RiotPls.Tools;
 using RiotPls.UI.Interfaces;
 using RiotPls.UI.Views;
@@ -19,9 +20,7 @@ namespace RiotPls.UI.Models
     public class formItemsModel : IBuildModifier
     {
         #region Instance Members  
-        private Dictionary<string, ItemInfo> items = new Dictionary<string, ItemInfo>();
-        private BindingList<ItemInfo> source = null;
-        private CheckedListBox.CheckedItemCollection filterItems = null;
+        private ItemInfoBindingList binding = null;
         #region Events
         public event VoidDelegate DataUpdateStarted;
         public event EventHandler<object> DataUpdateFinished;
@@ -42,23 +41,6 @@ namespace RiotPls.UI.Models
             this.Worker.DoWork += this.BackgroundWorker_DoWork;
             this.Worker.RunWorkerCompleted += this.BackgroundWorker_RunWorkerCompleted;
             return;
-        }
-        private BindingList<ItemInfo> ConstructFilter()
-        {
-            if (this.source == null)
-                return null;
-            BindingList<ItemInfo> new_binding = new BindingList<ItemInfo>(this.source.Where(info => string.IsNullOrWhiteSpace(info.RequiredChampion)).ToList<ItemInfo>());
-            if (this.filterItems != null)
-            {
-                if (this.filterItems.Contains("Consumables"))
-                    new_binding =
-                        new BindingList<ItemInfo>(new_binding.Where(info => info.Consumable).ToList<ItemInfo>());
-                if (this.filterItems.Contains("Non-Consumables"))
-                    new_binding =
-                        new BindingList<ItemInfo>(new_binding.Where(info => !info.Consumable).ToList<ItemInfo>());
-                // TODO: 07/20/16 implement more filters here
-            }
-            return new_binding;
         }
         public List<ToolStripMenuItem> GetBuildMenuItems()
         {
@@ -97,9 +79,9 @@ namespace RiotPls.UI.Models
             build.SetItem(item_index, item);
         }
 
-        public void SetFilterItems(CheckedListBox.CheckedItemCollection items)
+        public void SetFilter(CheckedListBox.CheckedItemCollection items)
         {
-            this.filterItems = items;
+            this.binding.SetFilter(items.Cast<string>(), null);
             return;
         }
         public void UpdateData()
@@ -116,9 +98,11 @@ namespace RiotPls.UI.Models
         #region Instance Events    
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.items = Engine.GetItemInfo();
-            this.source = new SortableBindingList<ItemInfo>(this.items.Values.OrderBy(item => item.Name).ToList());
-            e.Result = this.ConstructFilter();
+            if(this.binding == null)                        // only instantiate once, but instantiate on worker thread to keep UI responsive
+                this.binding = new ItemInfoBindingList();
+            else                                            // update filter
+                this.binding.Update();
+            e.Result = this.binding.Binding;
             return;
         }
 
@@ -139,7 +123,7 @@ namespace RiotPls.UI.Models
             int build_index = root_item?.DropDownItems.IndexOf(parent_item) ?? -1;
             if (build_index < 0)
                 return;
-            ItemInfo item = menu_item.Checked ? Engine.GetItem(this.SelectedItem) : null;
+            ItemInfo item = menu_item.Checked ? this.binding.Retrieve(this.SelectedItem) : null;
             this.SetBuildItem(build_index, item_index, item);
             return;
         }

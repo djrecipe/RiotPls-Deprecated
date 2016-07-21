@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.Champions;
+using RiotPls.Binding;
 using RiotPls.UI.Controls;
 using RiotPls.UI.Models;
 
@@ -558,7 +559,7 @@ namespace RiotPls.UI.Views
                 this.txtSearch.ReadOnly = false;
                 this.txtSearch.Cursor = Cursors.IBeam;
             }
-            this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
+            this.Model.SetFilterAndUpdate(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             return;
         }
         #region Form Events
@@ -645,13 +646,13 @@ namespace RiotPls.UI.Views
                         this.txtSearch.Text = "Any";
                         break;
                 }
-                this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
+                this.Model.SetFilterAndUpdate(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             }
             return;
         }
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            this.Model.UpdateFilter(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
+            this.Model.SetFilterAndUpdate(this.comboFilter.SelectedItem.ToString(), this.txtSearch.Text);
             return;
         }
         #endregion

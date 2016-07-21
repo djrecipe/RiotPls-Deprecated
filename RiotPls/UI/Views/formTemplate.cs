@@ -163,7 +163,7 @@ namespace RiotPls.UI.Views
         private void formTemplate_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
-                this.model.UpdateData();
+                this.model?.UpdateData();
             else
                 Tools.GeneralSettings.SaveWindowSettings(this);
             return;

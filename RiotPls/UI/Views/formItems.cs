@@ -264,7 +264,7 @@ namespace RiotPls.UI.Views
             {
                 this.BeginInvoke((MethodInvoker) delegate
                 {
-                    this.Model.SetFilterItems(this.chkdlistFilter.CheckedItems);
+                    this.Model.SetFilter(this.chkdlistFilter.CheckedItems);
                     this.model.UpdateData();
                 });
             }
