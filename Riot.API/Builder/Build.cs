@@ -43,6 +43,10 @@ namespace RiotPls.API.Builder
         [JsonProperty("Champion", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]
         public ChampionInfo Champion { get; private set; }
         /// <summary>
+        /// Total number of valid items in the build
+        /// </summary>
+        public int ItemCount => this.Items.Count(i => i != null);
+        /// <summary>
         /// Six items associated with this build
         /// </summary>            
         [JsonProperty("Items", ItemIsReference = true, ReferenceLoopHandling = ReferenceLoopHandling.Serialize)]

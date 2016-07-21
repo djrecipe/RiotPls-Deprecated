@@ -1,24 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace RiotPls.API.Serialization.ExtensionMethods
 {
     /// <summary>
-    /// Facilitates serialization of a class to a JSON file on disk 
+    /// Facilitates serialization of a class to/from a JSON file on disk 
     /// </summary>
     public static class JsonSaveEngine
     {
         /// <summary>
-        /// Serializes the class to a JSON string and saves the string to the specified path
+        /// Clone object of type T via serialization
         /// </summary>
-        /// <param name="obj">JSON serializable object</param>
-        /// <param name="path">Path to save at</param>
-        public static void SaveAsJson(this object obj, string path)
+        /// <typeparam name="T">Type of object to clone</typeparam>
+        /// <param name="target">Object to clone</param>
+        /// <returns>Clone of object</returns>
+        public static T CloneJsonObject<T>(T target)
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Reuse,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            string text = JsonConvert.SerializeObject(target, settings);
+            return JsonConvert.DeserializeObject<T>(text, settings);
+        }
+
+        /// <summary>
+        /// Deserialize an object from a file
+        /// </summary>
+        /// <typeparam name="T">Type of object to deserialize</typeparam>
+        /// <param name="path">Path where JSON file exists</param>
+        /// <returns>Object of type T</returns>
+        public static T LoadFromJson<T>(string path)
+        {
+            if(string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+                return default(T);
+            string text = File.ReadAllText(path);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ObjectCreationHandling = ObjectCreationHandling.Reuse,
+                MissingMemberHandling = MissingMemberHandling.Ignore
+            };
+            return JsonConvert.DeserializeObject<T>(text, settings);
+        }
+
+        /// <summary>
+        /// Serialize an object to JSON then save the JSON to disk
+        /// </summary>
+        /// <typeparam name="T">Type of object to serialize</typeparam>
+        /// <param name="obj">Object to serialize</param>
+        /// <param name="path">Path to save JSON file</param>
+        public static void SaveAsJson<T>(this T obj, string path)
         {
             try
             {

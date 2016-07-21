@@ -18,9 +18,6 @@ namespace RiotPls.API.Builder
         #region Types
         public delegate void BuildCollectionChangedDelegate();
         #endregion
-        #region Static Members
-        private static int totalCount = 0;
-        #endregion
         #region Instance Members
         /// <summary>
         /// Event which fires when a build has been added or removed
@@ -98,7 +95,7 @@ namespace RiotPls.API.Builder
         /// <returns>The newly instantiated build</returns>
         public Build New()
         {
-            Build build = new Build(string.Format("Build #{0}", (BuildCollection.totalCount++) + 1));
+            Build build = new Build(string.Format("Build #{0}", (this.Builds.Count) + 1));
             this.Add(build);
             return build;
         }
@@ -128,6 +125,16 @@ namespace RiotPls.API.Builder
                 Build build = this.Builds[index];
                 this.Remove(build);
             }
+            return;
+        }
+        /// <summary>
+        /// Removes any builds that contain no items
+        /// </summary>
+        public void RemoveEmptyBuilds()
+        {
+            List<Build> builds = this.Builds.Where(b => b.ItemCount < 1).ToList();
+            foreach (Build build in builds)
+                this.Remove(build);
             return;
         }
         #endregion

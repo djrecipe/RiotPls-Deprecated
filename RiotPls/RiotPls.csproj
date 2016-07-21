@@ -75,6 +75,7 @@
     <Compile Include="UI\Controls\StatGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UI\Models\formMainModel.cs" />
     <Compile Include="UI\Models\formSettingsModel.cs" />
     <Compile Include="UI\Models\formMapsModel.cs" />
     <Compile Include="UI\Models\formItemsModel.cs" />

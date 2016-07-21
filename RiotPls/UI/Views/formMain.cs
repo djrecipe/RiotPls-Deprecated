@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.ExtensionMethods;
+using RiotPls.UI.Models;
 
 namespace RiotPls.UI.Views
 {
@@ -23,77 +24,23 @@ namespace RiotPls.UI.Views
         private ToolStripButton btnConfig;
         private ToolStripDropDownButton btnBuilder;
         private ToolStripMenuItem btnCreateBuild;
-        #region Forms
-        private formChampions fChampions = new formChampions();
-        private formItems fItems = new formItems();
-        private formMaps fMaps = new formMaps();
-        private formSettings fSettings = new formSettings();
-        private List<formBuilder> fBuilders = new List<formBuilder>();
         #endregion
-        #endregion
+        private formMainModel model = null;
         #endregion
         #region Instance Properties
-        private BuildCollection _Builds = new BuildCollection();
-        /// <summary>
-        /// Set of builds which may be modified
-        /// </summary>
-        public BuildCollection Builds
-        {
-            get { return this._Builds; }
-            set
-            {
-                this._Builds = value;
-                this.UpdateBuilds();
-                return;
-            }
-        }
-        private bool ChampionsVisible
-        {
-            get { return this.fChampions.Visible; }
-            set
-            {
-                this.ToggleWindow(this.fChampions, value);
-                return;
-            }
-        }
-        private bool ItemsVisible
-        {
-            get { return this.fItems.Visible; }
-            set
-            {
-                this.ToggleWindow(this.fItems, value);
-                return;
-            }
-        }
-        private bool MapsVisible
-        {
-            get { return this.fMaps.Visible; }
-            set
-            {
-                this.ToggleWindow(this.fMaps, value);
-                return;
-            }
-        }
-        private bool SettingsVisible
-        {
-            get { return this.fSettings.Visible; }
-            set
-            {
-                this.ToggleWindow(this.fSettings, value);
-                return;
-            }
-        }
         #endregion
         #region Instance Methods
         #region Intialization Methods
         public formMain()
         {
             this.InitializeComponent();
-            this.InitializeForms();
-            this.UpdateBuilds();
+            this.model = new formMainModel(this);
+            this.model.BuildCollectionChanged += this.Model_BuildCollectionChanged;
             this.UpdateBuilderButton();
             return;
         }
+
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
@@ -214,143 +161,59 @@ namespace RiotPls.UI.Views
             this.PerformLayout();
 
         }
-        private void InitializeForms()
-        {
-            this.fChampions.MdiParent = this;
-            this.fItems.MdiParent = this;
-            this.fMaps.MdiParent = this;
-            this.fSettings.MdiParent = this;
-            return;
-        }
-        #endregion
-        private void CreateBuilderWindow(Build build, bool show)
-        {
-            formBuilder fBuilder = new formBuilder(build)
-            {
-                MdiParent = this,
-                Name = build.Name
-            };
-            fBuilder.FormClosed += this.formBuilder_FormClosed;
-            this.fBuilders.Add(fBuilder);
-            if(show)
-                this.ToggleWindow(fBuilder, true);
-            return;
-        }
-        private void CreateNewBuild()
-        {
-            this.CreateBuilderWindow(this.Builds.New(), true);
-            return;
-        }
-        private void ToggleWindow(Form form, bool value)
-        {
-            bool was_visible = form.Visible;
-            form.Visible = value;
-            if (value)
-            {
-                if (form.WindowState == FormWindowState.Minimized || !form.ContainsFocus)
-                {
-                    form.WindowState = FormWindowState.Normal;
-                    form.BringToFront();
-                }
-                else if(was_visible)
-                    form.WindowState = FormWindowState.Minimized;
-            }
-            return;
-        }
         private void UpdateBuilderButton()
         {
             this.btnBuilder.DropDownItems.Clear();
             this.btnBuilder.DropDownItems.Add(this.btnCreateBuild);
-            for (int i = 0; i < this.Builds.Count; i++)
-            {
-                Build build = this.Builds[i];
-                ToolStripMenuItem button = new ToolStripMenuItem(build.Name, null, this.btnSelectBuild_Click);
-                this.btnBuilder.DropDownItems.Add(button);
-            }
+            List<ToolStripMenuItem> items = this.model.GetBuilderItems();
+            this.btnBuilder.DropDownItems.AddRange(items.ToArray());
             return;
         }
-        private void UpdateBuilds()
-        {
-            this.fChampions.Model.Builds = this.fItems.Model.Builds = this.Builds;
-            this.fBuilders.Clear();
-            for (int i = 0; i < this.Builds.Count; i++)
-                this.CreateBuilderWindow(this.Builds[i], false);
-            this.Builds.BuildCollectionChanged += this.Builds_BuildCollectionChanged;        
-            return;
-        }
+        #endregion
 
         #endregion
         #region Event Methods   
-        #region Build Events  
-        private void Builds_BuildCollectionChanged()
-        {
-            this.UpdateBuilderButton();
-        }
-        #endregion
         #region Button Events
         private void btnConfig_Click(object sender, EventArgs e)
         {
-            this.SettingsVisible = true;
+            this.model.SettingsVisible = true;
             return;
         }
         private void btnChampions_Click(object sender, EventArgs e)
         {
-            this.ChampionsVisible = true;
+            this.model.ChampionsVisible = true;
             return;
         }
         private void btnCreateBuild_Click(object sender, EventArgs e)
         {
-            this.CreateNewBuild();
+            this.model.CreateNewBuild();
             return;
         }
         private void btnItems_Click(object sender, EventArgs e)
         {
-            this.ItemsVisible = true;
+            this.model.ItemsVisible = true;
             return;
         }
         private void btnMaps_Click(object sender, EventArgs e)
         {
-            this.MapsVisible = true;
-            return;
-        }
-        private void btnSelectBuild_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem button = sender as ToolStripMenuItem;
-            if (button == null)
-                return;
-            int index = this.btnBuilder.DropDownItems.IndexOf(button) - 1;
-            if (index < 0 || index >= this.fBuilders.Count)
-                return;
-            formBuilder form = this.fBuilders[index];
-            this.ToggleWindow(form, true);
+            this.model.MapsVisible = true;
             return;
         }
         #endregion
         #region Form Events
-        private void formBuilder_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            formBuilder form = sender as formBuilder;
-            if (form == null)
-                return;
-            this.fBuilders.Remove(form);
-            this.Builds.Remove(form.Model.Build);
-            return;
-        }
         private void formMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach(formBuilder form in this.fBuilders)
-                Tools.GeneralSettings.SaveWindowSettings(form);
-            Tools.GeneralSettings.SaveWindowSettings(this.fChampions);
-            Tools.GeneralSettings.SaveWindowSettings(this.fItems);
-            Tools.GeneralSettings.SaveWindowSettings(this.fMaps);
-            Tools.GeneralSettings.SaveWindowSettings(this.fSettings);
-            Tools.GeneralSettings.SaveWindowSettings(this);
-            Tools.GeneralSettings.Save();
-            this.Builds.SaveAsJson(Path.Combine(Tools.Paths.Documents, "Builds", "Autosave.builds"));
+            this.model.Cleanup();
         }
         private void formMain_Load(object sender, EventArgs e)
         {
             Tools.GeneralSettings.LoadWindowSettings(this);
+        }
+        #endregion
+        #region Model Events
+        private void Model_BuildCollectionChanged()
+        {
+            this.UpdateBuilderButton();
         }
         #endregion
         #endregion

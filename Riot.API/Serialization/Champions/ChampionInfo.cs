@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using Newtonsoft.Json;
+using RiotPls.API.Serialization.ExtensionMethods;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Interfaces;
 
@@ -203,14 +204,7 @@ namespace RiotPls.API.Serialization.Champions
         /// <returns></returns>
         public object Clone()
         {
-            JsonSerializerSettings settings = new JsonSerializerSettings
-            {
-                ObjectCreationHandling = ObjectCreationHandling.Reuse,
-                MissingMemberHandling = MissingMemberHandling.Ignore
-            };
-            string text = JsonConvert.SerializeObject(this, settings);
-            ChampionInfo info = JsonConvert.DeserializeObject<ChampionInfo>(text, settings);
-            return info;
+            return JsonSaveEngine.CloneJsonObject(this);
         }
         #endregion
     }
