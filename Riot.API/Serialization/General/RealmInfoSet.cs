@@ -8,10 +8,14 @@ using RiotPls.API.Serialization.Transport;
 
 namespace RiotPls.API.Serialization.General
 {
-    class RealmInfoSet : RiotSerializable<RealmInfo>
+    internal class RealmInfoSet : RiotSerializable<RealmInfo>
     {
         public override string LocalFileName => "RealmInfo.json";
         public override string RootToken => null;
-        public override RiotURL URL => new RiotURL(true, "realm?");
+        public override RiotURL URL => new RiotURL(this.apiKey, true, "realm?");
+
+        public RealmInfoSet(APIKey key) : base(key)
+        {
+        }
     }
 }

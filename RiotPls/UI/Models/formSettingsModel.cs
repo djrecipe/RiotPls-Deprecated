@@ -60,8 +60,7 @@ namespace RiotPls.UI.Models
         {
             try
             {
-                API.Engine.Key.Load();
-                e.Result = API.Engine.Key.ToString();
+                e.Result = API.Engine.TryLoadKey();
             }
             catch (Exception ex)
             {

@@ -34,8 +34,7 @@ namespace RiotPls.Binding
         /// </summary>
         public ItemInfoBindingList()
         {
-            Dictionary<string, ItemInfo> infos = Engine.GetItemInfo();
-            this.Source = new SortableBindingList<ItemInfo>(infos.Values.OrderBy(item => item.Name).ToList());
+            this.Source = new SortableBindingList<ItemInfo>(Engine.Items.GetList());
             this.Update();
             return;
         }

@@ -38,8 +38,7 @@ namespace RiotPls.Binding
         /// </summary>
         public ChampionInfoBindingList()
         {
-            Dictionary <string, ChampionInfo> infos = Engine.GetChampionInfo();
-            this.Source = new SortableBindingList<ChampionInfo>(infos.Values.OrderBy(champ => champ.Name).ToList());
+            this.Source = new SortableBindingList<ChampionInfo>(Engine.Champions.GetList());
             this.Update();
             return;
         }

@@ -8,10 +8,14 @@ using RiotPls.API.Serialization.Transport;
 
 namespace RiotPls.API.Serialization.Champions
 {
-    class LiveChampionInfoSet : RiotSerializable<List<LiveChampionInfo>>
+    internal class LiveChampionInfoSet : RiotSerializable<List<LiveChampionInfo>>
     {
         public override string LocalFileName => "LiveChampionInfo.json";
         public override string RootToken => "champions";
-        public override RiotURL URL => new RiotURL(false, "champion?");
+        public override RiotURL URL => new RiotURL(this.apiKey, false, "champion?");
+
+        public LiveChampionInfoSet(APIKey key) : base(key)
+        {
+        }
     }
 }

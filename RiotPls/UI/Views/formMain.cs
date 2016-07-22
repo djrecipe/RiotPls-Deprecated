@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using RiotPls.API;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.ExtensionMethods;
 using RiotPls.UI.Models;
@@ -34,6 +35,7 @@ namespace RiotPls.UI.Views
         public formMain()
         {
             this.InitializeComponent();
+            Engine.Initialize();
             this.model = new formMainModel(this);
             this.model.BuildCollectionChanged += this.Model_BuildCollectionChanged;
             this.UpdateBuilderButton();

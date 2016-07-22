@@ -305,7 +305,7 @@ namespace RiotPls.UI.Views
         {
             try
             {
-                API.Engine.Key.Save(this.txtAPIKey.Text);
+                API.Engine.SetAPIKey(this.txtAPIKey.Text);
                 this.Hide();
             }
             catch (Exception ex)

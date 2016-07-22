@@ -199,7 +199,7 @@ namespace RiotPls.UI.Models
             int index = parent.DropDownItems.IndexOf(item);
             if (index < 0)
                 return;
-            this.UpdateBuildChampion(index, item.Checked ? Engine.GetChampion(this.SelectedItem) : null);
+            this.UpdateBuildChampion(index, item.Checked ? Engine.Champions.Get(this.SelectedItem) : null);
             return;
         }
         #endregion

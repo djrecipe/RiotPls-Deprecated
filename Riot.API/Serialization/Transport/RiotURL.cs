@@ -13,11 +13,11 @@ namespace RiotPls.API.Serialization.Transport
         private const string URL_STATIC = "api/lol/static-data/";
         public readonly string BaseURL;
         public readonly string Region;
-        public RiotURL(bool static_data, string sub_url)
+        public RiotURL(APIKey key, bool static_data, string sub_url)
         {
             this.Region = "na";
             this.BaseURL = RiotURL.URL_ROOT + (static_data ? RiotURL.URL_STATIC : RiotURL.URL_LIVE) +
-                this.Region + "/" + Engine.APIVersionString + "/" + sub_url + Engine.Key.ToString(true);
+                this.Region + "/" + Engine.APIVersionString + "/" + sub_url + key.ToString(true);
             return;
         }
         public static implicit operator string(RiotURL obj)

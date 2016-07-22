@@ -2,11 +2,12 @@
 using System.Drawing;
 using Newtonsoft.Json;
 using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.API.Serialization.Maps
 {
     [JsonObject(MemberSerialization.OptIn)]
-    public class MapInfo
+    public class MapInfo : INameable
     {
         private long _ID = -1;
         [JsonProperty("mapId")]

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using RiotPls.API;
 using RiotPls.API.Serialization.Maps;
+using RiotPls.Binding;
 using RiotPls.Tools;
 using RiotPls.UI.Interfaces;
 using RiotPls.UI.Views;
@@ -18,7 +19,7 @@ namespace RiotPls.UI.Models
     public class formMapsModel : ITemplateViewModel
     {
         #region Instance Members                                         
-        private Dictionary<string, MapInfo> source = new Dictionary<string, MapInfo>();
+        private SortableBindingList<MapInfo> source = new SortableBindingList<MapInfo> ();
         #region Events                       
         /// <summary>
         /// Data has finished updating
@@ -55,9 +56,9 @@ namespace RiotPls.UI.Models
         /// <returns>Map image</returns>
         public Image GetImage(string name)
         {
-            if (this.source == null || name == null || this.source.Values.Count < 1)
+            if (this.source == null || name == null || this.source.Count < 1)
                 return null;
-            return this.source.Values.FirstOrDefault(m => m.Name == name)?.Image;
+            return this.source.FirstOrDefault(m => m.Name == name)?.Image;
         }
 
         /// <summary>
@@ -77,7 +78,7 @@ namespace RiotPls.UI.Models
         #region Instance Events    
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.source = Engine.GetMapInfo();
+            this.source = new SortableBindingList<MapInfo>(Engine.Maps.GetList());
             e.Result = this.source;
             return;
         }

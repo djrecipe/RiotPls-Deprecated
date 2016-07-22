@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
+using RiotPls.API.DataManagers;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
@@ -21,15 +21,15 @@ namespace RiotPls.API
         #region Constants
         private const string REGION_NA = "na";
         #endregion
-        private static List<LiveChampionInfo> live_champion_info = new List<LiveChampionInfo>();
         private static string region_string = "na";
+        private static APIKey apiKey = new APIKey("key.txt");
         #endregion
         #region Static Properties
         public static string APIVersion { get; set; } = "1.2";
         public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
-        public static APIKey Key { get; private set; } = new APIKey("key.txt");
-        private static Dictionary<string, ChampionInfo> ChampionInfos { get; set; }
-        private static Dictionary<string, ItemInfo> ItemInfos { get; set; } 
+        public static ChampionDataManager Champions { get; private set; } = null;
+        public static ItemDataManager Items { get; private set; } = null;
+        public static MapDataManager Maps { get; private set; } = null;
         private static Regions _Region = Regions.NorthAmerica;
         public static Regions Region
         {
@@ -55,7 +55,10 @@ namespace RiotPls.API
         #region Static Methods
         static Engine()
         {
-            Engine.Key.Loaded += Engine.APIKey_Loaded;
+            Engine.Champions = new ChampionDataManager(Engine.apiKey);
+            Engine.Items = new ItemDataManager(Engine.apiKey);
+            Engine.Maps = new MapDataManager(Engine.apiKey);
+            Engine.apiKey.Loaded += Engine.APIKey_Loaded;
             try
             {
                 Engine.APIVersion = APISettings.APIVersion;
@@ -64,75 +67,40 @@ namespace RiotPls.API
             { 
                 // ignored
             }
-            Engine.Key.Load();
+            Engine.TryLoadKey();
             return;
         }
-        public static ChampionInfo GetChampion(string name)
+
+        public static void Initialize()
         {
-            return Engine.ChampionInfos.FirstOrDefault(c => c.Value.Name == name).Value;
-        }
-        public static Dictionary<string, ChampionInfo> GetChampionInfo()
-        {
-            ChampionInfoSet data = new ChampionInfoSet();
-            Engine.ChampionInfos = data.Get();
-            Engine.UpdateLiveChampionInfo();
-            return Engine.ChampionInfos;
+            // invoke static constructor    
         }
 
-        public static ItemInfo GetItem(string name)
-        {
-            ItemInfo item = Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
-            return item;
-        }
-        public static Dictionary<string, ItemInfo> GetItemInfo()
-        {
-            ItemInfoSet data = new ItemInfoSet();
-            Engine.ItemInfos = data.Get();
-            return Engine.ItemInfos;
-        }
-
-        public static List<ItemInfo> GetItemComponents(string name)
-        {
-            List<ItemInfo> components = new List<ItemInfo>();
-            ItemInfo item = Engine.ItemInfos.Values.FirstOrDefault(i => i.Name == name);
-            if (item != null)
-            {
-                foreach (string component_id in item.ComponentIDs.Where(id => Engine.ItemInfos.ContainsKey(id)))
-                {
-                    ItemInfo item_component = Engine.ItemInfos[component_id];
-                    if (item_component != null)
-                        components.Add(item_component);
-                }
-            }
-            return components;
-
-        } 
-        public static Dictionary<string, MapInfo> GetMapInfo()
-        {
-            MapInfoSet data = new MapInfoSet();
-            return data.Get();
-        }
-        private static void UpdateLiveChampionInfo()
-        {
-            LiveChampionInfoSet data = new LiveChampionInfoSet();
-            Engine.live_champion_info = data.Get();
-            foreach(string s in Engine.ChampionInfos.Keys)
-            {
-                ChampionInfo current_champion_info = Engine.ChampionInfos[s];
-                current_champion_info.LiveInfo = Engine.live_champion_info.FirstOrDefault(info => info.ID == current_champion_info.ID);
-            }
-            return;
-        }
         private static void UpdateRealmsInfo()
         {
-            RealmInfoSet data = new RealmInfoSet();
+            RealmInfoSet data = new RealmInfoSet(Engine.apiKey);
             Resources.Resource.UpdateVersions(data.Get());
             return;
+        }
+
+        public static void SetAPIKey(string text)
+        {
+            Engine.apiKey.Save(text);
+            return;
+        }
+
+        public static string TryLoadKey()
+        {
+            API.Engine.apiKey.Load();
+            return API.Engine.apiKey.ToString();
         }
         #endregion
         #region Static Event Methods
         private static void APIKey_Loaded(object sender, System.EventArgs e)
         {
+            Engine.Champions.Update();
+            Engine.Items.Update();
+            Engine.Maps.Update();
             Engine.UpdateRealmsInfo();
             return;
         }

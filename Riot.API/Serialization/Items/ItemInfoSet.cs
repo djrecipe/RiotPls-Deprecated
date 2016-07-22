@@ -12,6 +12,10 @@ namespace RiotPls.API.Serialization.Items
     {
         public override string LocalFileName => "ItemInfo.json";
         public override string RootToken => "data";
-        public override RiotURL URL => new RiotURL(true, "item?itemListData=all");
+        public override RiotURL URL => new RiotURL(this.apiKey, true, "item?itemListData=all");
+
+        public ItemInfoSet(APIKey key) : base(key)
+        {
+        }
     }
 }

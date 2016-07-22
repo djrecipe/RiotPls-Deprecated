@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RiotPls.API.Serialization.Interfaces;
 using RiotPls.API.Serialization.Transport;
 
@@ -11,12 +6,22 @@ namespace RiotPls.API.Serialization.General
 {
     public abstract class RiotSerializable<T> : IRiotSerializable<T>
     {
+        #region Instance Members
+        protected APIKey apiKey = null;
+        #endregion
         #region Instance Properties
         public abstract string LocalFileName { get; }
         public abstract string RootToken { get; }
         public abstract RiotURL URL { get; }
         #endregion
         #region Instance Methods
+        public RiotSerializable(APIKey key)
+        {
+            if (key == null)
+                throw new ArgumentNullException("key", "You must provide a non-null API key");
+            this.apiKey = key;
+            return;
+        } 
         public T Get()
         {
             this.Validate();

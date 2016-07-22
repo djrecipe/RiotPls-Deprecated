@@ -176,7 +176,7 @@ namespace RiotPls.UI.Controls
         #endregion
         private void AddItem(string name)
         {
-            ItemInfo item = Engine.GetItem(name);
+            ItemInfo item = Engine.Items.Get(name);
             this.BuySet.AddItem(item);
             item.PricingStyleChanged += this.ItemInfo_PricingStyleChanged;
             DropSlot box = new DropSlot
@@ -209,7 +209,7 @@ namespace RiotPls.UI.Controls
                     item.Tag = info.Name;
                     this.cmenItems.Items.Add(item);
                     // add build item components
-                    foreach (ItemInfo component_info in Engine.GetItemComponents(info.Name))
+                    foreach (ItemInfo component_info in Engine.Items.GetItemComponents(info.Name))
                     {
                         ToolStripItem component_item = new ToolStripMenuItem(component_info.Name);
                         component_item.Tag = component_info.Name;

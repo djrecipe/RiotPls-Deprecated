@@ -8,10 +8,14 @@ using RiotPls.API.Serialization.Transport;
 
 namespace RiotPls.API.Serialization.Maps
 {
-    class MapInfoSet : RiotSerializable<Dictionary<string, MapInfo>>
+    internal class MapInfoSet : RiotSerializable<Dictionary<string, MapInfo>>
     {
         public override string LocalFileName => "MapInfo.json";
         public override string RootToken => "data";
-        public override RiotURL URL => new RiotURL(true, "map?");
+        public override RiotURL URL => new RiotURL(this.apiKey, true, "map?");
+
+        public MapInfoSet(APIKey key) : base(key)
+        {
+        }
     }
 }

@@ -8,6 +8,10 @@ namespace RiotPls.API.Serialization.Champions
     {
         public override string LocalFileName => "ChampionInfo.json";
         public override string RootToken => "data";
-        public override RiotURL URL => new RiotURL(true, "champion?champData=all");
+        public override RiotURL URL => new RiotURL(this.apiKey, true, "champion?champData=all");
+
+        public ChampionInfoSet(APIKey key) : base(key)
+        {
+        }
     }
 }
