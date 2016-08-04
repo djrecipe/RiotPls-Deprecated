@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RiotPls.Tools
@@ -14,6 +16,11 @@ namespace RiotPls.Tools
         {
             GeneralSettings.Load();
         }
+
+        public static void ClearOpenWindows()
+        {
+            GeneralSettings.settings.VisibleWindows.Clear();
+        }
         public static void Create()
         {
             try
@@ -24,6 +31,12 @@ namespace RiotPls.Tools
             {
                 // ignored
             }
+        }
+
+        public static bool GetWindowWasOpen(Form form)
+        {
+            bool value = GeneralSettings.settings.VisibleWindows.FindByName(form.Name) != null;
+            return value;
         }
         public static void Load()
         {
@@ -59,6 +72,8 @@ namespace RiotPls.Tools
                     form.WindowState = (FormWindowState)row.State;
                 }
             }
+            if (GeneralSettings.GetWindowWasOpen(form))
+                form.Visible = true;
             return;
         }
         public static void Save()
@@ -72,6 +87,23 @@ namespace RiotPls.Tools
             {
                 // ignored
             }
+            return;
+        }
+
+        public static void SaveOpenWindow(Form form)
+        {
+            if (form.Visible)
+            {
+                VisibleWindowsRow row = GeneralSettings.settings.VisibleWindows.NewVisibleWindowsRow();
+                row.Name = form.Name;
+                GeneralSettings.settings.VisibleWindows.AddVisibleWindowsRow(row);
+            }
+            return;
+        }
+        public static void SaveOpenWindows(List<Form> forms)
+        {
+            foreach (Form form in forms)
+                GeneralSettings.SaveOpenWindow(form);
             return;
         }
         public static void SaveStatColumnVisibility(DataGridViewColumn column)

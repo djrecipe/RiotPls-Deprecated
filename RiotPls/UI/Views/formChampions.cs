@@ -572,7 +572,6 @@ namespace RiotPls.UI.Views
         {
             if (this.Visible)
             {
-                this.LoadWindowSettings();
                 int row_index = this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].RowIndex > -1 ? this.gridMain.SelectedCells[0].RowIndex : 0;
                 int column_index = this.gridMain.SelectedCells.Count > 0 && this.gridMain.SelectedCells[0].ColumnIndex > -1 ? this.gridMain.SelectedCells[0].ColumnIndex : 0;
                 if (row_index < 0 || column_index < 0 || row_index >= this.gridMain.RowCount || column_index >= this.gridMain.ColumnCount)

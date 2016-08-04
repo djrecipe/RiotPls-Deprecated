@@ -210,6 +210,8 @@ namespace RiotPls.UI.Views
         private void formMain_Load(object sender, EventArgs e)
         {
             Tools.GeneralSettings.LoadWindowSettings(this);
+            this.model.InitializeFormVisibility();
+            return;
         }
         #endregion
         #region Model Events

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.ExtensionMethods;
+using RiotPls.Tools;
 using RiotPls.UI.Views;
 
 namespace RiotPls.UI.Models
@@ -93,25 +94,15 @@ namespace RiotPls.UI.Models
             this.Builds = old_build ?? new BuildCollection();
             return;
         }
-        private void InitializeForms(Form parent)
-        {
-            this.parentWindow = parent;
-            this.fChampions.MdiParent = parent;
-            this.fItems.MdiParent = parent;
-            this.fMaps.MdiParent = parent;
-            this.fSettings.MdiParent = parent;
-            return;
-        }
 
         public void Cleanup()
         {
-            foreach (formBuilder form in this.fBuilders)
-                Tools.GeneralSettings.SaveWindowSettings(form);
-            Tools.GeneralSettings.SaveWindowSettings(this.fChampions);
-            Tools.GeneralSettings.SaveWindowSettings(this.fItems);
-            Tools.GeneralSettings.SaveWindowSettings(this.fMaps);
-            Tools.GeneralSettings.SaveWindowSettings(this.fSettings);
-            Tools.GeneralSettings.SaveWindowSettings(this.parentWindow);
+            Tools.GeneralSettings.ClearOpenWindows();
+            Tools.GeneralSettings.SaveOpenWindows(this.fBuilders.Cast<Form>().ToList());
+            Tools.GeneralSettings.SaveOpenWindow(this.fChampions);
+            Tools.GeneralSettings.SaveOpenWindow(this.fItems);
+            Tools.GeneralSettings.SaveOpenWindow(this.fMaps);
+            Tools.GeneralSettings.SaveOpenWindow(this.fSettings);
             Tools.GeneralSettings.Save();
             this.Builds.RemoveEmptyBuilds();
             this.Builds.SaveAsJson(Path.Combine(Tools.Paths.Documents, "Builds", "Autosave.builds"));
@@ -145,6 +136,26 @@ namespace RiotPls.UI.Models
                 menu_items.Add(button);
             }
             return menu_items;
+        }
+        private void InitializeForms(Form parent)
+        {
+            this.parentWindow = parent;
+            this.fChampions.MdiParent = parent;
+            this.fItems.MdiParent = parent;
+            this.fMaps.MdiParent = parent;
+            this.fSettings.MdiParent = parent;
+            return;
+        }
+
+        public void InitializeFormVisibility()
+        {
+            this.fChampions.Visible = GeneralSettings.GetWindowWasOpen(this.fChampions);
+            this.fItems.Visible = GeneralSettings.GetWindowWasOpen(this.fItems);
+            this.fMaps.Visible = GeneralSettings.GetWindowWasOpen(this.fMaps);
+            this.fSettings.Visible = GeneralSettings.GetWindowWasOpen(this.fSettings);
+            foreach(formBuilder form in this.fBuilders)
+                form.Visible = GeneralSettings.GetWindowWasOpen(form);
+            return;
         }
         private void ToggleWindow(Form form, bool value)
         {

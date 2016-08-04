@@ -71,9 +71,6 @@ namespace RiotPls.UI.Views
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.SuspendLayout();
             // 
-            // workerUpdateData
-            // 
-            // 
             // picLoading
             // 
             this.picLoading.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -98,6 +95,7 @@ namespace RiotPls.UI.Views
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "formTemplate";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formTemplate_FormClosing);
             this.Load += new System.EventHandler(this.formTemplate_Load);
             this.SizeChanged += new System.EventHandler(this.formTemplate_SizeChanged);
             this.VisibleChanged += new System.EventHandler(this.formTemplate_VisibleChanged);
@@ -108,25 +106,14 @@ namespace RiotPls.UI.Views
 
         }
         #endregion
-        /// <summary>
-        /// Attempt to load settings for this window
-        /// </summary>
-        protected void LoadWindowSettings()
-        {
-            Tools.GeneralSettings.LoadWindowSettings(this);
-            return;
-        }
-        /// <summary>
-        /// Save settings for this window
-        /// </summary>
-        protected void SaveWindowSettings()
+        #endregion
+        #region Event Methods  
+        #region Form Events          
+        private void formTemplate_FormClosing(object sender, FormClosingEventArgs e)
         {
             Tools.GeneralSettings.SaveWindowSettings(this);
             return;
         }
-        #endregion
-        #region Event Methods  
-        #region Form Events 
         private void formTemplate_Load(object sender, EventArgs e)
         {
             if (this.model != null)
@@ -163,7 +150,10 @@ namespace RiotPls.UI.Views
         private void formTemplate_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
+            {
+                Tools.GeneralSettings.LoadWindowSettings(this);
                 this.model?.UpdateData();
+            }
             else
                 Tools.GeneralSettings.SaveWindowSettings(this);
             return;
@@ -193,5 +183,6 @@ namespace RiotPls.UI.Views
             base.Dispose(disposing);
         }
         #endregion
+
     }
 }
