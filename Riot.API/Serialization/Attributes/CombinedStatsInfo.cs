@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RiotPls.API.Serialization.Interfaces;
 
-namespace RiotPls.API.Serialization.General
+namespace RiotPls.API.Serialization.Attributes
 {
     /// <summary>
     /// Generic stat collection for a multiple game entity(s)

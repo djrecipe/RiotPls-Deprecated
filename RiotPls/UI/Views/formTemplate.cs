@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using RiotPls.Tools;
 using RiotPls.UI.Interfaces;
 using RiotPls.UI.Models;
 
@@ -111,7 +112,11 @@ namespace RiotPls.UI.Views
         #region Form Events          
         private void formTemplate_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Tools.GeneralSettings.SaveWindowSettings(this);
+            // save window size & location, regardless of the nature of the window closing
+            GeneralSettings.SaveWindowSettings(this);
+            // save window visibility, only if window closed due to MDI parent closing
+            if(e.CloseReason == CloseReason.MdiFormClosing)
+                GeneralSettings.SaveOpenWindow(this);
             return;
         }
         private void formTemplate_Load(object sender, EventArgs e)

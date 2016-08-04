@@ -89,11 +89,11 @@
     <Compile Include="Serialization\Champions\SkinInfo.cs" />
     <Compile Include="Serialization\Champions\SpellInfo.cs" />
     <Compile Include="Serialization\Champions\ChampionStatsInfo.cs" />
-    <Compile Include="Serialization\General\AttackSpeed.cs" />
-    <Compile Include="Serialization\General\CombinedStatsInfo.cs" />
-    <Compile Include="Serialization\General\GeneralStatsInfo.cs" />
+    <Compile Include="Serialization\Attributes\AttackSpeed.cs" />
+    <Compile Include="Serialization\Attributes\CombinedStatsInfo.cs" />
+    <Compile Include="Serialization\Attributes\GeneralStatsInfo.cs" />
     <Compile Include="Serialization\Extension Methods\JsonSaveEngine.cs" />
-    <Compile Include="Serialization\General\Level.cs" />
+    <Compile Include="Serialization\Attributes\Level.cs" />
     <Compile Include="Serialization\General\RealmInfoSet.cs" />
     <Compile Include="Serialization\General\RealmInfo.cs" />
     <Compile Include="Serialization\General\ImageInfo.cs" />

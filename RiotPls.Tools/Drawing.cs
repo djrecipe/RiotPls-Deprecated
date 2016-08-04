@@ -28,5 +28,21 @@ namespace RiotPls.Tools
         }
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, Int32 wMsg, bool wParam, Int32 lParam);
+        public static void ToggleWindow(Form form, bool value)
+        {
+            bool was_visible = form.Visible;
+            form.Visible = value;
+            if (value)
+            {
+                if (form.WindowState == FormWindowState.Minimized || !form.ContainsFocus)
+                {
+                    form.WindowState = FormWindowState.Normal;
+                    form.BringToFront();
+                }
+                else if (was_visible)
+                    form.WindowState = FormWindowState.Minimized;
+            }
+            return;
+        }
     }
 }

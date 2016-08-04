@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace RiotPls.API.Serialization.Items
 {
@@ -76,6 +73,7 @@ namespace RiotPls.API.Serialization.Items
             }
             catch (Exception e)
             {
+                // TODO: 08/04/16 handle/log exception
                 return null;
             }
             List<string> group_names = rx.GetGroupNames().ToList();

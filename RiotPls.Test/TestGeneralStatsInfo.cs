@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.Champions;
-using RiotPls.API.Serialization.General;
 using RiotPls.API.Serialization.Items;
 
 namespace RiotPls.Test

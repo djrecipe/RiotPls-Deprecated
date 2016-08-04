@@ -155,7 +155,6 @@ namespace RiotPls.UI.Views
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "RiotPls";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.Load += new System.EventHandler(this.formMain_Load);
             this.toolsTop.ResumeLayout(false);
             this.toolsTop.PerformLayout();
@@ -203,10 +202,6 @@ namespace RiotPls.UI.Views
         }
         #endregion
         #region Form Events
-        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            this.model.Cleanup();
-        }
         private void formMain_Load(object sender, EventArgs e)
         {
             Tools.GeneralSettings.LoadWindowSettings(this);

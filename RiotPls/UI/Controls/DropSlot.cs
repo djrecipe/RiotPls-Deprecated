@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.Interfaces;
 using RiotPls.API.Serialization.Items;
+using RiotPls.UI.Views;
 
 namespace RiotPls.UI.Controls
 {
@@ -56,6 +58,8 @@ namespace RiotPls.UI.Controls
         #endregion
         #region Instance Properties
         private string _NullText = "";
+        private Button btnComponents;
+
         /// <summary>
         /// Displayed text when no entity is being represented
         /// </summary>
@@ -92,7 +96,6 @@ namespace RiotPls.UI.Controls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.picMain = new System.Windows.Forms.PictureBox();
             this.lblMain = new System.Windows.Forms.Label();
             this.cmenItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuitmRemoveItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,26 +108,13 @@ namespace RiotPls.UI.Controls
             this.mnuitmPricing = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuitmFullPricing = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuitmUpgradePricing = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
+            this.btnComponents = new System.Windows.Forms.Button();
+            this.picMain = new System.Windows.Forms.PictureBox();
             this.cmenItem.SuspendLayout();
             this.cmenChampion.SuspendLayout();
             this.cmenItemBuy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).BeginInit();
             this.SuspendLayout();
-            // 
-            // picMain
-            // 
-            this.picMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.picMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picMain.Location = new System.Drawing.Point(10, 10);
-            this.picMain.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
-            this.picMain.Name = "picMain";
-            this.picMain.Size = new System.Drawing.Size(60, 60);
-            this.picMain.TabIndex = 0;
-            this.picMain.TabStop = false;
-            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             // 
             // lblMain
             // 
@@ -215,7 +205,7 @@ namespace RiotPls.UI.Controls
             // 
             this.mnuitmFullPricing.CheckOnClick = true;
             this.mnuitmFullPricing.Name = "mnuitmFullPricing";
-            this.mnuitmFullPricing.Size = new System.Drawing.Size(152, 22);
+            this.mnuitmFullPricing.Size = new System.Drawing.Size(119, 22);
             this.mnuitmFullPricing.Text = "Full";
             this.mnuitmFullPricing.CheckedChanged += new System.EventHandler(this.mnuitmFullPricing_CheckedChanged);
             // 
@@ -223,23 +213,58 @@ namespace RiotPls.UI.Controls
             // 
             this.mnuitmUpgradePricing.CheckOnClick = true;
             this.mnuitmUpgradePricing.Name = "mnuitmUpgradePricing";
-            this.mnuitmUpgradePricing.Size = new System.Drawing.Size(152, 22);
+            this.mnuitmUpgradePricing.Size = new System.Drawing.Size(119, 22);
             this.mnuitmUpgradePricing.Text = "Upgrade";
             this.mnuitmUpgradePricing.CheckedChanged += new System.EventHandler(this.mnuitmUpgradePricing_CheckedChanged);
+            // 
+            // btnComponents
+            // 
+            this.btnComponents.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnComponents.BackColor = System.Drawing.Color.Transparent;
+            this.btnComponents.BackgroundImage = global::RiotPls.Properties.Resources.DropDownIcon;
+            this.btnComponents.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnComponents.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnComponents.Font = new System.Drawing.Font("Microsoft Sans Serif", 5.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnComponents.ForeColor = System.Drawing.Color.White;
+            this.btnComponents.Location = new System.Drawing.Point(53, 54);
+            this.btnComponents.Margin = new System.Windows.Forms.Padding(0);
+            this.btnComponents.Name = "btnComponents";
+            this.btnComponents.Size = new System.Drawing.Size(17, 16);
+            this.btnComponents.TabIndex = 3;
+            this.btnComponents.UseVisualStyleBackColor = false;
+            this.btnComponents.Click += new System.EventHandler(this.btnComponents_Click);
+            this.btnComponents.MouseLeave += new System.EventHandler(this.btnComponents_MouseLeave);
+            this.btnComponents.MouseHover += new System.EventHandler(this.btnComponents_MouseHover);
+            // 
+            // picMain
+            // 
+            this.picMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.picMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.picMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.picMain.Location = new System.Drawing.Point(10, 10);
+            this.picMain.Margin = new System.Windows.Forms.Padding(10, 10, 10, 0);
+            this.picMain.Name = "picMain";
+            this.picMain.Size = new System.Drawing.Size(60, 60);
+            this.picMain.TabIndex = 0;
+            this.picMain.TabStop = false;
+            this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
             // 
             // DropSlot
             // 
             this.AllowDrop = true;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.btnComponents);
             this.Controls.Add(this.lblMain);
             this.Controls.Add(this.picMain);
             this.MinimumSize = new System.Drawing.Size(80, 110);
             this.Name = "DropSlot";
             this.Size = new System.Drawing.Size(80, 110);
-            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.cmenItem.ResumeLayout(false);
             this.cmenChampion.ResumeLayout(false);
             this.cmenItemBuy.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -288,6 +313,7 @@ namespace RiotPls.UI.Controls
                     this.ContextMenuStrip = this.cmenItemBuy;
                     break;
             }
+            this.UpdateHoverButtonVisibility();
             return;
         }
         private void UpdateData()
@@ -295,6 +321,14 @@ namespace RiotPls.UI.Controls
             this.picMain.BackgroundImage = this.drop?.Image;
             this.lblMain.Text = this.drop?.Name ?? this.NullText;
             this.mnuitmLevelObtainedValue.Text = (this.drop?.LevelObtained ?? 1).ToString();
+            this.UpdateHoverButtonVisibility();
+            return;
+        }
+
+        private void UpdateHoverButtonVisibility()
+        {
+            this.btnComponents.Visible = (this.Type == DataTypes.Item || this.Type == DataTypes.ItemBuy) &&
+                                         (this.drop as ItemInfo) != null;
             return;
         }
 
@@ -308,7 +342,31 @@ namespace RiotPls.UI.Controls
                     : ItemInfo.PricingStyles.Upgrade;
             }
         }
-        #region Event Methods     
+        #region Event Methods       
+        private void btnComponents_Click(object sender, EventArgs e)
+        {
+            this.ContextMenuStrip?.Show(this, new Point(0, this.Height));
+            return;
+        }
+        private void btnComponents_MouseHover(object sender, EventArgs e)
+        {
+            // do not show over top of context menu
+            if (this.ContextMenuStrip?.Visible ?? false)
+                return;
+            // only show item components if content is an item
+            if (this.Type == DataTypes.ItemBuy || this.Type == DataTypes.Item)
+            {
+                ItemInfo item = this.drop as ItemInfo;
+                if(item != null)
+                    formItemComponents.Show(item, this.PointToScreen(new Point(0, this.Height)));
+            }
+            return;
+        }
+        private void btnComponents_MouseLeave(object sender, EventArgs e)
+        {
+            formItemComponents.HideForm();
+            return;
+        }
         #region Menu Events       
         private void mnuitmFullPricing_CheckedChanged(object sender, EventArgs e)
         {

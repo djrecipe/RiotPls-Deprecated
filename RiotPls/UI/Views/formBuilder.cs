@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using RiotPls.API.Builder;
@@ -17,7 +18,9 @@ namespace RiotPls.UI.Views
     public class formBuilder : formTemplate
     {
         #region Instance Members
+
         #region Controls
+
         private System.ComponentModel.IContainer components = null;
         private StatGrid gridMain;
         private DropSlot dropChampion;
@@ -34,13 +37,21 @@ namespace RiotPls.UI.Views
         private TabPage tabBuys;
         private BuySetCollectionView buildcolMain;
         private SplitContainer splitVertical;
+
         #endregion
+
         #endregion
+
         #region Instance Properties
+
         public formBuilderModel Model => this.model as formBuilderModel;
+
         #endregion
+
         #region Instance Methods
+
         #region Initialization Methods
+
         public formBuilder(Build build)
         {
             this.InitializeComponent();
@@ -278,6 +289,7 @@ namespace RiotPls.UI.Views
             // 
             // buildcolMain
             // 
+            this.buildcolMain.AutoScroll = true;
             this.buildcolMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.buildcolMain.BackColor = System.Drawing.Color.Transparent;
             this.buildcolMain.Build = null;
@@ -315,25 +327,38 @@ namespace RiotPls.UI.Views
             this.ResumeLayout(false);
 
         }
+
         private void InitializeDragDrop()
         {
-            this.itemDrops = new DropSlot[] { this.dropItem1, this.dropItem2, this.dropItem3,
-                this.dropItem4, this.dropItem5, this.dropItem6 };
+            this.itemDrops = new DropSlot[]
+            {
+                this.dropItem1, this.dropItem2, this.dropItem3,
+                this.dropItem4, this.dropItem5, this.dropItem6
+            };
             return;
         }
+
         #endregion
+
         #endregion
+
         #region Event Methods
+
         #region Build Events
+
         #endregion
-        #region Form Events       
+
+        #region Form Events          
         private void formStatSheet_VisibleChanged(object sender, System.EventArgs e)
         {
             this.Model.UpdateBuild();
             return;
         }
+
         #endregion
+
         #region DropSlot Events
+
         private void dropChampion_DropOccurred(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop)
         {
             ChampionInfo champ = drop as ChampionInfo;
@@ -346,19 +371,27 @@ namespace RiotPls.UI.Views
             ItemInfo item = drop as ItemInfo;
             this.Model.Build.SetItem(index, item);
         }
-        private void dropItem_LevelObtainedChanged(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop, int level)
+
+        private void dropItem_LevelObtainedChanged(DropSlot slot, API.Serialization.Interfaces.IRiotDroppable drop,
+            int level)
         {
             int index = this.itemDrops.ToList().IndexOf(slot);
             this.Model.Build.SetItemLevel(index, level);
         }
+
         #endregion
+
         #region Grid Events
+
         private void gridMain_SelectedRowChanged(int row)
         {
             this.Model.Build.SelectedRow = row;
         }
+
         #endregion
+
         #region Model Events    
+
         private void Model_BuildChanged(Build build)
         {
             if (!this.Visible)
@@ -376,6 +409,7 @@ namespace RiotPls.UI.Views
             Drawing.ResumeDrawing(this.gridMain);
             return;
         }
+
         private void Model_RowChanged(int value)
         {
             if (value < 0 || value >= this.gridMain.RowCount)
@@ -383,9 +417,13 @@ namespace RiotPls.UI.Views
             this.gridMain.SetSelectedRow(value);
             return;
         }
+
         #endregion
+
         #endregion
+
         #region Override Methods     
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -394,6 +432,7 @@ namespace RiotPls.UI.Views
             }
             base.Dispose(disposing);
         }
+
         #endregion
 
     }

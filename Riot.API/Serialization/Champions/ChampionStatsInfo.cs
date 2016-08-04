@@ -1,10 +1,13 @@
 ﻿using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Attributes;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 namespace RiotPls.API.Serialization.Champions
 {
+    /// <summary>
+    /// Stat collection for a champion
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class ChampionStatsInfo : GeneralStatsInfo
     {
@@ -279,6 +282,9 @@ namespace RiotPls.API.Serialization.Champions
                 return;
             }
         }
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         internal ChampionStatsInfo() : base()
         {
 

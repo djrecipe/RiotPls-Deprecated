@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.Interfaces;
 
 namespace RiotPls.Test

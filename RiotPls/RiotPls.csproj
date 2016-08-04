@@ -60,6 +60,7 @@
     <Compile Include="Binding\ChampionInfoBindingList.cs" />
     <Compile Include="Binding\IInfoBindingList.cs" />
     <Compile Include="Binding\ItemInfoBindingList.cs" />
+    <Compile Include="UI\BuilderFormFactory.cs" />
     <Compile Include="UI\Controls\BuySetView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +76,7 @@
     <Compile Include="UI\Controls\StatGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="UI\Models\formItemComponentsModel.cs" />
     <Compile Include="UI\Models\formMainModel.cs" />
     <Compile Include="UI\Models\formSettingsModel.cs" />
     <Compile Include="UI\Models\formMapsModel.cs" />
@@ -83,6 +85,9 @@
     <Compile Include="UI\Interfaces\IBuildModifier.cs" />
     <Compile Include="UI\Interfaces\ITemplateViewModel.cs" />
     <Compile Include="UI\Views\formChampions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Views\formItemComponents.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Views\formItems.cs">
@@ -124,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Views\formChampions.resx">
       <DependentUpon>formChampions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Views\formItemComponents.resx">
+      <DependentUpon>formItemComponents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Views\formItems.resx">
       <DependentUpon>formItems.cs</DependentUpon>
@@ -172,6 +180,7 @@
     <Content Include="Resources\BuilderIcon.png" />
     <Content Include="Resources\ChampionIcon.ico" />
     <Content Include="Resources\ChampionIcon.png" />
+    <Content Include="Resources\DropDownIcon.gif" />
     <Content Include="Resources\Gears.png" />
     <Content Include="Resources\ItemsIcon.ico" />
     <Content Include="Resources\ItemsIcon.png" />

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RiotPls.API.Serialization.Interfaces;
 
-namespace RiotPls.API.Serialization.General
+namespace RiotPls.API.Serialization.Attributes
 {
     /// <summary>
     /// Calculates various attack speed variables for given set of entities

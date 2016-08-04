@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
@@ -205,11 +206,20 @@ namespace RiotPls.UI.Controls
                 ItemInfo info = this.Build.GetItem(i);
                 if (info != null && !this.BuySet.ContainsItem(info))
                 {
+                    // add menu item seperator
+                    if (this.cmenItems.Items.Count > 0)
+                    {
+                        ToolStripSeparator seperator = new ToolStripSeparator();
+                        seperator.Tag = null;
+                        this.cmenItems.Items.Add(seperator);
+                    }
+                    // add menu items for item components
                     ToolStripItem item = new ToolStripMenuItem(info.Name);
                     item.Tag = info.Name;
+                    item.Font = new Font(item.Font, FontStyle.Bold);
                     this.cmenItems.Items.Add(item);
                     // add build item components
-                    foreach (ItemInfo component_info in Engine.Items.GetItemComponents(info.Name))
+                    foreach (ItemInfo component_info in Engine.Items.GetItemComponents(info, true).OrderBy(c => c.Name))
                     {
                         ToolStripItem component_item = new ToolStripMenuItem(component_info.Name);
                         component_item.Tag = component_info.Name;

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-using RiotPls.API.Serialization.General;
+using RiotPls.API.Serialization.Attributes;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 

@@ -39,7 +39,6 @@ namespace RiotPls.Binding
             if (interface_type == null)
             {
                 throw new NotSupportedException(string.Format("Unable to sort by {0} - {1} does not implement 'IComparable'", prop.Name, prop.PropertyType));
-                return;
             }
             this._SortPropertyCore = prop;
             this._SortDirectionCore = direction;

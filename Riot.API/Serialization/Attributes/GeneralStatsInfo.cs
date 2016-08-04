@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.Interfaces;
 
 [assembly: InternalsVisibleTo("RiotPls.Test")]
 
-namespace RiotPls.API.Serialization.General
+namespace RiotPls.API.Serialization.Attributes
 {
     /// <summary>
     /// Generic stat collection for a single game entity

@@ -1,4 +1,4 @@
-﻿namespace RiotPls.API.Serialization.General
+﻿namespace RiotPls.API.Serialization.Attributes
 {
     public enum Level : uint
     {

@@ -24,12 +24,11 @@ namespace RiotPls.UI.Models
         private formItems fItems = new formItems();
         private formMaps fMaps = new formMaps();
         private formSettings fSettings = new formSettings();
-        private List<formBuilder> fBuilders = new List<formBuilder>();
-        private Form parentWindow = null;
         #endregion
         #region Events
         public event BuildCollection.BuildCollectionChangedDelegate BuildCollectionChanged;
         #endregion
+        private BuilderFormFactory builderFactory = null;
         #endregion
         #region Instance Properties
         private BuildCollection _Builds = new BuildCollection();
@@ -44,49 +43,66 @@ namespace RiotPls.UI.Models
                 if (this.Builds != null)
                     this.Builds.BuildCollectionChanged -= this.BuildCollection_Changed;
                 this._Builds = value;
-                this.UpdateBuilds();
+                this.builderFactory.Builds = this.fChampions.Model.Builds = this.fItems.Model.Builds = this.Builds; 
                 if(this.Builds != null)
                     this.Builds.BuildCollectionChanged += this.BuildCollection_Changed;
                 return;
             }
         }
+        /// <summary>
+        /// Champions window is visible
+        /// </summary>
         public bool ChampionsVisible
         {
             get { return this.fChampions.Visible; }
             set
             {
-                this.ToggleWindow(this.fChampions, value);
+                Drawing.ToggleWindow(this.fChampions, value);
                 return;
             }
         }
+        /// <summary>
+        /// Items window is visible
+        /// </summary>
         public bool ItemsVisible
         {
             get { return this.fItems.Visible; }
             set
             {
-                this.ToggleWindow(this.fItems, value);
+                Drawing.ToggleWindow(this.fItems, value);
                 return;
             }
         }
+        /// <summary>
+        /// Maps window is visible
+        /// </summary>
         public bool MapsVisible
         {
             get { return this.fMaps.Visible; }
             set
             {
-                this.ToggleWindow(this.fMaps, value);
+                Drawing.ToggleWindow(this.fMaps, value);
                 return;
             }
         }
+        /// <summary>
+        /// Settings window is visible
+        /// </summary>
         public bool SettingsVisible
         {
             get { return this.fSettings.Visible; }
             set
             {
-                this.ToggleWindow(this.fSettings, value);
+                Drawing.ToggleWindow(this.fSettings, value);
                 return;
             }
         }
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="parent_form">Owning window</param>
         #endregion
+        #region Instance Methods
         public formMainModel(Form parent_form)
         {
             this.InitializeForms(parent_form);
@@ -94,38 +110,23 @@ namespace RiotPls.UI.Models
             this.Builds = old_build ?? new BuildCollection();
             return;
         }
-
-        public void Cleanup()
+        ~formMainModel()
         {
-            Tools.GeneralSettings.ClearOpenWindows();
-            Tools.GeneralSettings.SaveOpenWindows(this.fBuilders.Cast<Form>().ToList());
-            Tools.GeneralSettings.SaveOpenWindow(this.fChampions);
-            Tools.GeneralSettings.SaveOpenWindow(this.fItems);
-            Tools.GeneralSettings.SaveOpenWindow(this.fMaps);
-            Tools.GeneralSettings.SaveOpenWindow(this.fSettings);
-            Tools.GeneralSettings.Save();
             this.Builds.RemoveEmptyBuilds();
             this.Builds.SaveAsJson(Path.Combine(Tools.Paths.Documents, "Builds", "Autosave.builds"));
-            return;
         }
-        private void CreateBuilderWindow(Build build, bool show)
-        {
-            formBuilder fBuilder = new formBuilder(build)
-            {
-                MdiParent = this.parentWindow,
-                Name = build.Name
-            };
-            fBuilder.FormClosed += this.formBuilder_FormClosed;
-            this.fBuilders.Add(fBuilder);
-            if (show)
-                this.ToggleWindow(fBuilder, true);
-            return;
-        }
+        /// <summary>
+        /// Create a new build and associated build window
+        /// </summary>
         public void CreateNewBuild()
         {
-            this.CreateBuilderWindow(this.Builds.New(), true);
+            this.builderFactory.CreateNewBuild();
             return;
         }
+        /// <summary>
+        /// Generate a list of menu items to represent the current builds
+        /// </summary>
+        /// <returns>List of toolstrip menu items</returns>
         public List<ToolStripMenuItem> GetBuilderItems()
         {
             List<ToolStripMenuItem> menu_items = new List<ToolStripMenuItem>();
@@ -139,48 +140,28 @@ namespace RiotPls.UI.Models
         }
         private void InitializeForms(Form parent)
         {
-            this.parentWindow = parent;
             this.fChampions.MdiParent = parent;
             this.fItems.MdiParent = parent;
             this.fMaps.MdiParent = parent;
             this.fSettings.MdiParent = parent;
+            this.builderFactory = new BuilderFormFactory(parent);
             return;
         }
-
+        /// <summary>
+        /// Show forms which were visible when the previous session was terminated
+        /// </summary>
         public void InitializeFormVisibility()
         {
             this.fChampions.Visible = GeneralSettings.GetWindowWasOpen(this.fChampions);
             this.fItems.Visible = GeneralSettings.GetWindowWasOpen(this.fItems);
             this.fMaps.Visible = GeneralSettings.GetWindowWasOpen(this.fMaps);
             this.fSettings.Visible = GeneralSettings.GetWindowWasOpen(this.fSettings);
-            foreach(formBuilder form in this.fBuilders)
-                form.Visible = GeneralSettings.GetWindowWasOpen(form);
+            this.builderFactory.InitializeFormVisibility();
+            GeneralSettings.ClearOpenWindows();
             return;
         }
-        private void ToggleWindow(Form form, bool value)
-        {
-            bool was_visible = form.Visible;
-            form.Visible = value;
-            if (value)
-            {
-                if (form.WindowState == FormWindowState.Minimized || !form.ContainsFocus)
-                {
-                    form.WindowState = FormWindowState.Normal;
-                    form.BringToFront();
-                }
-                else if (was_visible)
-                    form.WindowState = FormWindowState.Minimized;
-            }
-            return;
-        }
-        public void UpdateBuilds()
-        {
-            this.fChampions.Model.Builds = this.fItems.Model.Builds = this.Builds;
-            this.fBuilders.Clear();
-            for (int i = 0; i < this.Builds.Count; i++)
-                this.CreateBuilderWindow(this.Builds[i], false);
-            return;
-        }
+        #endregion
+        #region Instance Events
         private void btnSelectBuild_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem button = sender as ToolStripMenuItem;
@@ -188,19 +169,7 @@ namespace RiotPls.UI.Models
                 return;
             ToolStripDropDownButton parent = button.OwnerItem as ToolStripDropDownButton;
             int index = parent?.DropDownItems.IndexOf(button) - 1 ?? -1;
-            if (index < 0 || index >= this.fBuilders.Count)
-                return;
-            formBuilder form = this.fBuilders[index];
-            this.ToggleWindow(form, true);
-            return;
-        }
-        private void formBuilder_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            formBuilder form = sender as formBuilder;
-            if (form == null)
-                return;
-            this.fBuilders.Remove(form);
-            this.Builds.Remove(form.Model.Build);
+            this.builderFactory.ShowBuild(index);
             return;
         }
         private void BuildCollection_Changed()
@@ -209,5 +178,6 @@ namespace RiotPls.UI.Models
                 this.BuildCollectionChanged();
             return;
         }
+        #endregion
     }
 }

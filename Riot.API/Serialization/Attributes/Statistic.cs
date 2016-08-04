@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RiotPls.API.Serialization.Attributes
+﻿namespace RiotPls.API.Serialization.Attributes
 {
     /// <summary>
     /// Attribute for tagging a property as a component of a particular statistic
