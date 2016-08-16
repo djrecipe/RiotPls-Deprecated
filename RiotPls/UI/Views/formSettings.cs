@@ -90,14 +90,15 @@ namespace RiotPls.UI.Views
             this.txtAPIKey.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAPIKey.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAPIKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.749999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAPIKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtAPIKey.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(46)))), ((int)(((byte)(46)))));
             this.txtAPIKey.Location = new System.Drawing.Point(43, 117);
             this.txtAPIKey.Margin = new System.Windows.Forms.Padding(40, 10, 40, 20);
             this.txtAPIKey.Name = "txtAPIKey";
-            this.txtAPIKey.Size = new System.Drawing.Size(298, 22);
+            this.txtAPIKey.Size = new System.Drawing.Size(298, 21);
             this.txtAPIKey.TabIndex = 4;
             this.txtAPIKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtAPIKey.MouseCaptureChanged += new System.EventHandler(this.txtAPIKey_MouseCaptureChanged);
             // 
             // groupAPI
             // 
@@ -370,6 +371,13 @@ namespace RiotPls.UI.Views
         {
         }
         #endregion
+        #region Text Events   
+        private void txtAPIKey_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            if(this.txtAPIKey.SelectionLength == 0)
+                this.txtAPIKey.SelectAll();
+        }
+        #endregion
         #endregion
         #region Override Methods
         protected override void Dispose(bool disposing)
@@ -382,5 +390,6 @@ namespace RiotPls.UI.Views
         }
 
         #endregion
+
     }
 }

@@ -325,7 +325,7 @@ namespace RiotPls.UI.Views
         {
             if (e.RowIndex < 0 || e.RowIndex >= this.gridMain.RowCount)
                 return;
-            this.Model.SelectedItem = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value.ToString();
+            this.Model.SelectedItem = this.gridMain.Rows[e.RowIndex].Cells["colName"].Value?.ToString();
             return;
         }
         private void gridMain_DataError(object sender, DataGridViewDataErrorEventArgs e)

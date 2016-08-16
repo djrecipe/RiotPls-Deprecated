@@ -12,7 +12,7 @@ namespace RiotPls.API
         private const string URL_STR = "&api_key=";
         public readonly string FilePath = null;
         public event EventHandler Loaded;
-        public string RawKey { get; private set; } = null;
+        public string RawKey { get; private set; } = "0";
 
         public APIKey(string file_path)
         {
@@ -20,16 +20,19 @@ namespace RiotPls.API
         }
         public bool Load()
         {
-            this.RawKey = "0";
             string desired_path = this.FilePath;
             if (!File.Exists(desired_path))
                 return false;
             try
             {
                 string text = File.ReadAllText(desired_path);
-                this.RawKey = this.Sanitize(text);
-                if(this.Loaded != null)
-                    this.Loaded(this, EventArgs.Empty);
+                string new_key = this.Sanitize(text);
+                if (this.RawKey != new_key)
+                {
+                    this.RawKey = new_key;
+                    if (this.Loaded != null)
+                        this.Loaded(this, EventArgs.Empty);
+                }
                 return true;
             }
             catch (Exception e)
@@ -45,8 +48,8 @@ namespace RiotPls.API
                 string clean = text.Replace("-", "").Trim();
                 if(clean.ToCharArray().Any(c => !char.IsLetterOrDigit(c)))
                     throw new ArgumentException("Only alphanumeric characters and the '-' character are allowed", "text");
-                if(clean.Length != 32)
-                    throw new ArgumentException("Must contain exactly 32 alphanumeric characters", "text");
+                //if(clean.Length != 32)
+                //    throw new ArgumentException("Must contain exactly 32 alphanumeric characters", "text");
             }
             catch (Exception e)
             {

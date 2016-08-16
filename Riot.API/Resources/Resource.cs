@@ -16,7 +16,7 @@ namespace RiotPls.API.Resources
         #region Static Members
         #region Constants
         private const string DEFAULT_CONTENT_URL = "http://ddragon.leagueoflegends.com/cdn/";
-        private const string DEFAULT_CONTENT_VERSION = "6.6.1";
+        private const string DEFAULT_CONTENT_VERSION = "6.16.2";
         protected const string DIRECTORY = "Resources";
         protected const string FILENAME_IGNORE = "Ignore.csv";
         #endregion
@@ -94,9 +94,9 @@ namespace RiotPls.API.Resources
 
         private static void Validate()
         {
-            if (!Resource.ContentURL.EndsWith("/"))
+            if (string.IsNullOrWhiteSpace(Resource.ContentURL) || !Resource.ContentURL.EndsWith("/"))
                 Resource.ContentURL += "/";
-            if (Resource.ContentVersion.Split('.').Length != 3)
+            if (string.IsNullOrWhiteSpace(Resource.ContentVersion) || Resource.ContentVersion.Split('.').Length != 3)
                 Resource.ContentVersion = Resource.DEFAULT_CONTENT_VERSION;
             return;
         }

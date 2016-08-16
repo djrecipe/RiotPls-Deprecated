@@ -22,11 +22,11 @@ namespace RiotPls.API.Serialization.General
             this.apiKey = key;
             return;
         } 
-        public T Get()
+        public T Get(out bool remote_retrieval)
         {
             this.Validate();
             JsonPayload<T> payload = new JsonPayload<T>(this.URL, this.LocalFileName, this.RootToken);
-            return payload.Get();
+            return payload.Get(out remote_retrieval);
         }
         private void Validate()
         {

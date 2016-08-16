@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RiotPls.API.Serialization.Items;
 
@@ -44,16 +45,27 @@ namespace RiotPls.API.DataManagers
 
         }
         #endregion
-        #region Override Methods
+        #region Override Methods   
         /// <summary>
-        /// Update data
+        /// Background worker data update implementation
         /// </summary>
-        public override void Update()
+        /// <returns>Data update result</returns>
+        protected override Tuple<Dictionary<string, ItemInfo>, States> DoWork()
         {
-            // champions
-            ItemInfoSet items = new ItemInfoSet(this.apiKey);
-            this.infos = items.Get();
-            return;
+            Dictionary<string, ItemInfo> item_infos = new Dictionary<string, ItemInfo>();
+            States state = States.Invalid;
+            try
+            {
+                ItemInfoSet items = new ItemInfoSet(this.apiKey);
+                bool remote_retrieval = false;
+                item_infos = items.Get(out remote_retrieval);
+                state = remote_retrieval ? States.Live : States.Cached;
+            }
+            catch (Exception e)
+            {
+                state = States.Invalid;
+            }
+            return new Tuple<Dictionary<string, ItemInfo>, States>(item_infos, state);
         }
         #endregion
     }

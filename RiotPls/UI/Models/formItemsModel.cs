@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using RiotPls.API;
 using RiotPls.API.Builder;
+using RiotPls.API.DataManagers;
 using RiotPls.API.Serialization.Items;
 using RiotPls.Binding;
 using RiotPls.Tools;
@@ -39,7 +40,6 @@ namespace RiotPls.UI.Models
         {
             this.Worker = new BackgroundWorker();
             this.Worker.DoWork += this.BackgroundWorker_DoWork;
-            this.Worker.RunWorkerCompleted += this.BackgroundWorker_RunWorkerCompleted;
             return;
         }
         public List<ToolStripMenuItem> GetBuildMenuItems()
@@ -90,7 +90,7 @@ namespace RiotPls.UI.Models
                 return;
             if (this.DataUpdateStarted != null)
                 this.DataUpdateStarted();
-            this.Worker.RunWorkerAsync();
+            this.Worker.RunWorkerAsync(Engine.Items);
             return;
         }
 
@@ -98,18 +98,21 @@ namespace RiotPls.UI.Models
         #region Instance Events    
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if(this.binding == null)                        // only instantiate once, but instantiate on worker thread to keep UI responsive
-                this.binding = new ItemInfoBindingList();
-            else                                            // update filter
-                this.binding.Update();
-            e.Result = this.binding.Binding;
+            if (this.binding == null)
+            {
+                // only instantiate once, but instantiate on worker thread to keep UI responsive
+                this.binding = new ItemInfoBindingList(e.Argument as ItemDataManager);
+                // assign event handler BEFORE calling Update()
+                this.binding.DataUpdateFinished += this.ItemInfoBindingList_DataUpdateFinished;
+            }
+            // update and wait for callback
+            this.binding.UpdateFilter();
             return;
         }
-
-        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void ItemInfoBindingList_DataUpdateFinished()
         {
             if (this.DataUpdateFinished != null)
-                this.DataUpdateFinished(this, e.Result);
+                this.DataUpdateFinished(this, this.binding.Binding);
             return;
         }
         private void itmSetAsItem_CheckedChanged(object sender, EventArgs e)

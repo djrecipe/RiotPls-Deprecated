@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using RiotPls.API.DataManagers;
@@ -55,19 +56,24 @@ namespace RiotPls.API
         #region Static Methods
         static Engine()
         {
-            Engine.Champions = new ChampionDataManager(Engine.apiKey);
-            Engine.Items = new ItemDataManager(Engine.apiKey);
-            Engine.Maps = new MapDataManager(Engine.apiKey);
-            Engine.apiKey.Loaded += Engine.APIKey_Loaded;
+            // try to load API key
+            Engine.TryLoadKey();
+            // update version info
+            Engine.UpdateRealmsInfo();
             try
             {
                 Engine.APIVersion = APISettings.APIVersion;
             }
             catch
-            { 
+            {
                 // ignored
             }
-            Engine.TryLoadKey();
+            // load data
+            Engine.Champions = new ChampionDataManager(Engine.apiKey);
+            Engine.Items = new ItemDataManager(Engine.apiKey);
+            Engine.Maps = new MapDataManager(Engine.apiKey);
+            // handle key load event (in case key is updated later)
+            Engine.apiKey.Loaded += Engine.APIKey_Loaded;
             return;
         }
 
@@ -78,8 +84,16 @@ namespace RiotPls.API
 
         private static void UpdateRealmsInfo()
         {
-            RealmInfoSet data = new RealmInfoSet(Engine.apiKey);
-            Resources.Resource.UpdateVersions(data.Get());
+            try
+            {
+                bool remote_retrieval = false;
+                RealmInfoSet data = new RealmInfoSet(Engine.apiKey);
+                Resources.Resource.UpdateVersions(data.Get(out remote_retrieval));
+            }
+            catch (Exception e)
+            {
+                // TODO 08/16/16: handle exception - this should be fatal or produce an obvious warning
+            }
             return;
         }
 
@@ -98,10 +112,10 @@ namespace RiotPls.API
         #region Static Event Methods
         private static void APIKey_Loaded(object sender, System.EventArgs e)
         {
+            Engine.UpdateRealmsInfo();
             Engine.Champions.Update();
             Engine.Items.Update();
             Engine.Maps.Update();
-            Engine.UpdateRealmsInfo();
             return;
         }
         #endregion

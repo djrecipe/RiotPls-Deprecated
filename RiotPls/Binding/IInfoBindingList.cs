@@ -45,7 +45,7 @@ namespace RiotPls.Binding
         /// <summary>
         /// Update binding to reflect data or filter changes
         /// </summary>
-        void Update();
+        void UpdateFilter();
         #endregion
     }
 }

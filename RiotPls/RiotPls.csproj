@@ -57,6 +57,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Binding\BindingListBase.cs" />
     <Compile Include="Binding\ChampionInfoBindingList.cs" />
     <Compile Include="Binding\IInfoBindingList.cs" />
     <Compile Include="Binding\ItemInfoBindingList.cs" />

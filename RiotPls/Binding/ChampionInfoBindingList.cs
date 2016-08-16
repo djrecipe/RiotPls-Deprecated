@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RiotPls.API;
+using RiotPls.API.DataManagers;
 using RiotPls.API.Serialization.Champions;
+using RiotPls.Tools;
 
 namespace RiotPls.Binding
 {
@@ -10,63 +11,21 @@ namespace RiotPls.Binding
     /// Facilitates data binding of a collection of ChampionInfo objects
     /// </summary>
     /// <seealso cref="ChampionInfo"/>
-    public class ChampionInfoBindingList : IInfoBindingList<ChampionInfo>
+    public class ChampionInfoBindingList : BindingListBase<ChampionInfo>
     {
-        #region Instance Properties
-        /// <summary>
-        /// Data to bind directly to control(s) 
-        /// </summary>
-        public SortableBindingList<ChampionInfo> Binding { get; private set; }
-        /// <summary>
-        /// Categories/columns to be used when filtering
-        /// </summary>
-        /// <seealso cref="SetFilter"/>
-        public List<string> FilterItems { get; private set; } = new List<string>();
-        /// <summary>
-        /// Search text used when filtering
-        /// </summary>
-        /// <seealso cref="SetFilter"/>
-        public string SearchText { get; private set; }
-        /// <summary>
-        /// Original data collection, without filters
-        /// </summary>
-        public SortableBindingList<ChampionInfo> Source { get; private set; }
-        #endregion
         #region Instance Methods
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ChampionInfoBindingList()
+        public ChampionInfoBindingList(ChampionDataManager data_manager) : base(data_manager)
         {
-            this.Source = new SortableBindingList<ChampionInfo>(Engine.Champions.GetList());
-            this.Update();
             return;
         }
-        /// <summary>
-        /// Retrieve a ChampionInfo that uses the specified name
-        /// </summary>
-        /// <param name="name">Identifier to search for</param>     
-        /// <returns>ChampionInfo using the specified name, if any</returns>
-        public ChampionInfo Retrieve(string name)
-        {
-            return this.Source.FirstOrDefault(i => i.Name == name);
-        }
-        /// <summary>
-        /// Set filter category(s) and search text
-        /// </summary>
-        /// <param name="items">Categories/columns to filter</param>
-        /// <param name="search_text">Search text to include in the filter</param>
-        /// <remarks>Filter is not updated until Update() is called</remarks>
-        public void SetFilter(IEnumerable<string> items, string search_text)
-        {
-            this.FilterItems = items?.ToList() ?? new List<string>();
-            this.SearchText = search_text;
-            return;
-        }
+
         /// <summary>
         /// Update binding to reflect data or filter changes
         /// </summary>
-        public void Update()
+        public override void UpdateFilter()
         {
             // always active filter
             SortableBindingList<ChampionInfo> new_binding = new SortableBindingList<ChampionInfo>(this.Source.Where(info => info != null).ToList<ChampionInfo>());
@@ -99,6 +58,7 @@ namespace RiotPls.Binding
                     break;
             }
             this.Binding = new_binding;
+            this.OnDataUpdateFinished();
             return;
         }
         #endregion

@@ -28,8 +28,9 @@ namespace RiotPls.API.Serialization.Interfaces
         /// <summary>
         /// Dynamically retrieves deserialized object data, either from the remote URL or local cache
         /// </summary>
+        /// <param name="remote_retrieval">Output variable specifying whether the data was retrieved from a remote source</param>
         /// <returns>Deserialized object data</returns>
-        T Get();
+        T Get(out bool remote_retrieval);
     }
 
 }
