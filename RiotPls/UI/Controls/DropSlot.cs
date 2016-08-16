@@ -43,6 +43,7 @@ namespace RiotPls.UI.Controls
         private ToolStripMenuItem mnuitmPricing;
         private ToolStripMenuItem mnuitmFullPricing;
         private ToolStripMenuItem mnuitmUpgradePricing;
+        private Button btnComponents;
         #endregion
         #region Events       
         /// <summary>
@@ -58,8 +59,6 @@ namespace RiotPls.UI.Controls
         #endregion
         #region Instance Properties
         private string _NullText = "";
-        private Button btnComponents;
-
         /// <summary>
         /// Displayed text when no entity is being represented
         /// </summary>
@@ -72,6 +71,10 @@ namespace RiotPls.UI.Controls
                 this.UpdateData();
             }
         }
+        /// <summary>
+        /// Drop slot is currently showing item components
+        /// </summary>
+        public bool ShowingComponents { get; private set; }
         private DataTypes _Type = DataTypes.Champion;
         /// <summary>
         /// Type of entity being represented by this control
@@ -327,8 +330,15 @@ namespace RiotPls.UI.Controls
 
         private void UpdateHoverButtonVisibility()
         {
-            this.btnComponents.Visible = (this.Type == DataTypes.Item || this.Type == DataTypes.ItemBuy) &&
-                                         (this.drop as ItemInfo) != null;
+            ItemInfo item = this.drop as ItemInfo;
+            if ((this.Type == DataTypes.Item || this.Type == DataTypes.ItemBuy) && item != null)
+            {                 
+                this.btnComponents.Visible = item.ComponentIDs.Length > 0;
+            }
+            else
+            {
+                this.btnComponents.Visible = false;
+            }
             return;
         }
 
@@ -357,14 +367,21 @@ namespace RiotPls.UI.Controls
             if (this.Type == DataTypes.ItemBuy || this.Type == DataTypes.Item)
             {
                 ItemInfo item = this.drop as ItemInfo;
-                if(item != null)
-                    formItemComponents.Show(item, this.PointToScreen(new Point(0, this.Height)));
+                if (item != null)
+                {
+
+                    formItemComponents form = new formItemComponents(item);
+                    form.Location = this.Parent.PointToScreen(new Point(this.Left, this.Bottom));
+                    this.ShowingComponents = true;
+                    form.ShowDialog(this);
+                    this.ShowingComponents = false;
+                }
             }
             return;
         }
         private void btnComponents_MouseLeave(object sender, EventArgs e)
         {
-            formItemComponents.HideForm();
+            //formItemComponents.HideForm();
             return;
         }
         #region Menu Events       

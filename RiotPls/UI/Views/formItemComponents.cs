@@ -11,69 +11,57 @@ namespace RiotPls.UI.Views
 {
     public class formItemComponents : Form
     {
-        #region Static Members
-        private static formItemComponents form = null;
-        #endregion
-        #region Static Methods
-        public static void HideForm()
-        {
-            if(formItemComponents.form != null && formItemComponents.form.Visible)
-                formItemComponents.form.Close();
-            return;
-        }
-        public static void Show(ItemInfo item, Point location)
-        {
-            formItemComponents.form = new formItemComponents(item);
-            formItemComponents.form.Location = location;
-            formItemComponents.form.Show();
-            return;
-        }
-        #endregion
         #region Instance Members
         private System.ComponentModel.IContainer components = null;
+        private Timer timerFocus;
         private formItemComponentsModel model = null;
+        private ItemInfo item = null;
         #endregion
         #region Instance Methods
-        private formItemComponents(ItemInfo item)
+        public formItemComponents(ItemInfo item_in)
         {
+            if(item_in == null)
+                throw new ArgumentNullException("item_in", "Invalid item");
+            this.item = item_in;
             this.InitializeComponent();
-            this.model = new formItemComponentsModel(item);
-            DropSlot first_slot = null;
-            Dictionary<DropSlot, List<DropSlot>> slots = this.model.GenerateDropSlots(out first_slot);
-            this.Width = this.AddSlots(slots, slots[first_slot], 10, 10);
             return;
         }
 
-        private int AddSlots(Dictionary<DropSlot, List<DropSlot>> all_slots, List<DropSlot> slots, int start_x, int start_y)
+        private Size AddSlots(List<DropSlot> slots)
         {
-            int x = start_x;
+            if(slots.Count < 1)
+                return new Size(10, 10);
+            int current_row_width = 0;
             foreach (DropSlot slot in slots)
             {
-                slot.Location = new Point(x, start_y);
-                x += slot.Width + 10;
+                slot.Location = new Point(10 + current_row_width, 10);
+                current_row_width += slot.Width;
                 this.Controls.Add(slot);
-                if (all_slots.ContainsKey(slot))
-                {
-                    this.AddSlots(all_slots, all_slots[slot], slot.Left - slot.Width/2, start_y + slot.Height + 10);
-                }
             }
-            return x;
+            return new Size(current_row_width, 10 + slots[0].Height + 10);
         }
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.timerFocus = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // timerFocus
+            // 
+            this.timerFocus.Interval = 300;
+            this.timerFocus.Tick += new System.EventHandler(this.timerFocus_Tick);
             // 
             // formItemComponents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(120, 150);
             this.ControlBox = false;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(120, 150);
             this.Name = "formItemComponents";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -87,11 +75,36 @@ namespace RiotPls.UI.Views
         #region Event Methods
         private void formItemComponents_Load(object sender, System.EventArgs e)
         {
+            this.model = new formItemComponentsModel(this.item);
+            List<DropSlot> slots = this.model.GenerateDropSlots();
+            this.Size = this.AddSlots(slots);
+            Console.WriteLine("Width: {0}", this.DisplayRectangle.Width);
+            this.Width += 20;
+            if (this.Owner is formItemComponents)
+                this.timerFocus.Start();
             return;
         }
-        private void formItemComponents_MouseLeave(object sender, System.EventArgs e)
+        private void formItemComponents_MouseLeave(object sender, EventArgs e)
         {
-            this.Close();
+            this.timerFocus.Start();
+            return;
+        }
+        private void timerFocus_Tick(object sender, EventArgs e)
+        {
+            if (this.IsDisposed)
+                return;
+            // this rect
+            Rectangle rect = this.ClientRectangle;
+            rect.Location = this.PointToScreen(rect.Location);
+            // parent rect
+            Rectangle parent_rect = Rectangle.Empty;
+            if (this.Owner is formItemComponents)
+            {
+                parent_rect = this.Owner.ClientRectangle;
+                parent_rect.Location = this.Owner.PointToScreen(parent_rect.Location);
+            }
+            if (!rect.Contains(Control.MousePosition) && !parent_rect.Contains(Control.MousePosition))
+                this.Close();
             return;
         }
         #endregion
@@ -117,5 +130,6 @@ namespace RiotPls.UI.Views
             return;
         }
         #endregion
+
     }
 }
