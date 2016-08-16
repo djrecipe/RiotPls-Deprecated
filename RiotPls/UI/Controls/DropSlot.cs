@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using RiotPls.API.Serialization.Champions;
 using RiotPls.API.Serialization.Interfaces;
@@ -43,6 +44,7 @@ namespace RiotPls.UI.Controls
         private ToolStripMenuItem mnuitmPricing;
         private ToolStripMenuItem mnuitmFullPricing;
         private ToolStripMenuItem mnuitmUpgradePricing;
+        private formItemComponents componentsForm = null;
         private Button btnComponents;
         #endregion
         #region Events       
@@ -71,10 +73,6 @@ namespace RiotPls.UI.Controls
                 this.UpdateData();
             }
         }
-        /// <summary>
-        /// Drop slot is currently showing item components
-        /// </summary>
-        public bool ShowingComponents { get; private set; }
         private DataTypes _Type = DataTypes.Champion;
         /// <summary>
         /// Type of entity being represented by this control
@@ -235,8 +233,6 @@ namespace RiotPls.UI.Controls
             this.btnComponents.Size = new System.Drawing.Size(17, 16);
             this.btnComponents.TabIndex = 3;
             this.btnComponents.UseVisualStyleBackColor = false;
-            this.btnComponents.Click += new System.EventHandler(this.btnComponents_Click);
-            this.btnComponents.MouseLeave += new System.EventHandler(this.btnComponents_MouseLeave);
             this.btnComponents.MouseHover += new System.EventHandler(this.btnComponents_MouseHover);
             // 
             // picMain
@@ -253,6 +249,7 @@ namespace RiotPls.UI.Controls
             this.picMain.TabIndex = 0;
             this.picMain.TabStop = false;
             this.picMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picMain_MouseDown);
+            this.picMain.MouseHover += new System.EventHandler(this.picMain_MouseHover);
             // 
             // DropSlot
             // 
@@ -261,9 +258,11 @@ namespace RiotPls.UI.Controls
             this.Controls.Add(this.btnComponents);
             this.Controls.Add(this.lblMain);
             this.Controls.Add(this.picMain);
+            this.DoubleBuffered = true;
             this.MinimumSize = new System.Drawing.Size(80, 110);
             this.Name = "DropSlot";
             this.Size = new System.Drawing.Size(80, 110);
+            this.LocationChanged += new System.EventHandler(this.DropSlot_LocationChanged);
             this.cmenItem.ResumeLayout(false);
             this.cmenChampion.ResumeLayout(false);
             this.cmenItemBuy.ResumeLayout(false);
@@ -302,6 +301,32 @@ namespace RiotPls.UI.Controls
             return;
         }
 
+        private void ShowComponents()
+        {
+            // do not show over top of context menu
+            if (this.ContextMenuStrip?.Visible ?? false)
+                return;
+            // only show item components if content is an item
+            if (this.Type == DataTypes.ItemBuy || this.Type == DataTypes.Item)
+            {
+                ItemInfo item = this.drop as ItemInfo;
+                if (item != null && item.ComponentIDs.Length > 0)
+                {
+                    // drop slot area
+                    Rectangle rect = this.ClientRectangle;
+                    rect.Location = this.PointToScreen(rect.Location);
+                    // show form
+                    this.componentsForm = new formItemComponents(item, rect);
+                    this.componentsForm.VisibleChanged += this.formItemComponents_VisibleChanged;
+                    this.componentsForm.FormClosing += this.formItemComponents_FormClosing;
+                    this.componentsForm.Show(this);
+                    this.componentsForm.Location = this.Parent.PointToScreen(new Point(this.Left - this.componentsForm.Width/2 + this.Width/2, this.Bottom-1));
+                }
+            }
+            return;
+        }
+
+
         private void UpdateContextMenu()
         {
             switch (this.Type)
@@ -332,7 +357,7 @@ namespace RiotPls.UI.Controls
         {
             ItemInfo item = this.drop as ItemInfo;
             if ((this.Type == DataTypes.Item || this.Type == DataTypes.ItemBuy) && item != null)
-            {                 
+            {
                 this.btnComponents.Visible = item.ComponentIDs.Length > 0;
             }
             else
@@ -342,6 +367,13 @@ namespace RiotPls.UI.Controls
             return;
         }
 
+        private void UpdateOwner()
+        {
+            formItemComponents owner = this.Parent as formItemComponents;
+            if (owner != null)
+                owner.ChildrenVisible = this.componentsForm != null && this.componentsForm.Visible;
+            return;
+        }
         private void UpdatePrice()
         {
             ItemInfo item = this.drop as ItemInfo;
@@ -352,38 +384,43 @@ namespace RiotPls.UI.Controls
                     : ItemInfo.PricingStyles.Upgrade;
             }
         }
-        #region Event Methods       
-        private void btnComponents_Click(object sender, EventArgs e)
-        {
-            this.ContextMenuStrip?.Show(this, new Point(0, this.Height));
-            return;
-        }
+        #region Event Methods   
+        #region Button Events
         private void btnComponents_MouseHover(object sender, EventArgs e)
         {
-            // do not show over top of context menu
-            if (this.ContextMenuStrip?.Visible ?? false)
-                return;
-            // only show item components if content is an item
-            if (this.Type == DataTypes.ItemBuy || this.Type == DataTypes.Item)
+            this.ShowComponents();
+            return;
+        }
+        #region DropSlot Events     
+        private void DropSlot_LocationChanged(object sender, EventArgs e)
+        {
+            if (this.componentsForm != null)
             {
-                ItemInfo item = this.drop as ItemInfo;
-                if (item != null)
-                {
-
-                    formItemComponents form = new formItemComponents(item);
-                    form.Location = this.Parent.PointToScreen(new Point(this.Left, this.Bottom));
-                    this.ShowingComponents = true;
-                    form.ShowDialog(this);
-                    this.ShowingComponents = false;
-                }
+                Rectangle rect = this.ClientRectangle;
+                rect.Location = this.PointToScreen(rect.Location);
+                this.componentsForm.ParentRectangle = rect;
             }
             return;
         }
-        private void btnComponents_MouseLeave(object sender, EventArgs e)
+        #endregion
+        #region Form Events 
+        private void formItemComponents_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //formItemComponents.HideForm();
+            this.BeginInvoke((MethodInvoker) delegate
+            {
+                this.Invalidate();
+                this.UpdateOwner();
+            });
             return;
         }
+        private void formItemComponents_VisibleChanged(object sender, EventArgs e)
+        {
+            this.Invalidate();
+            this.UpdateOwner();
+            return;
+        }
+        #endregion
+        #endregion
         #region Menu Events       
         private void mnuitmFullPricing_CheckedChanged(object sender, EventArgs e)
         {
@@ -439,11 +476,18 @@ namespace RiotPls.UI.Controls
             this.UpdatePrice();
             return;
         }
+        #endregion
+        #region PictureBox Events
         private void picMain_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left || this.drop == null)
                 return;
             this.BeginInvoke((MethodInvoker)delegate { this.DoDragDrop(this.drop.Clone() as IRiotDroppable, DragDropEffects.Copy); });
+            return;
+        }
+        private void picMain_MouseHover(object sender, EventArgs e)
+        {
+            this.ShowComponents();
             return;
         }
         #endregion
@@ -484,6 +528,18 @@ namespace RiotPls.UI.Controls
                     if (e.Data.GetDataPresent(typeof(ItemInfo)))
                         e.Effect = DragDropEffects.Copy;
                     break;
+            }
+            return;
+        }
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            if (this.componentsForm != null && this.componentsForm.Visible)
+            {
+                e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                e.Graphics.DrawLine(Pens.Blue, new Point(this.picMain.Left, this.picMain.Bottom), new Point(0, this.Height));
+                e.Graphics.DrawLine(Pens.Blue, new Point(this.picMain.Right, this.picMain.Bottom), new Point(this.Width, this.Height));
             }
             return;
         }

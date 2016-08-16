@@ -17,12 +17,17 @@ namespace RiotPls.UI.Views
         private formItemComponentsModel model = null;
         private ItemInfo item = null;
         #endregion
+        #region Instance Properties    
+        public bool ChildrenVisible { get; set; } = false;
+        public Rectangle ParentRectangle { get; set; } = Rectangle.Empty;
+        #endregion
         #region Instance Methods
-        public formItemComponents(ItemInfo item_in)
+        public formItemComponents(ItemInfo item_in, Rectangle rect)
         {
             if(item_in == null)
                 throw new ArgumentNullException("item_in", "Invalid item");
             this.item = item_in;
+            this.ParentRectangle = rect;
             this.InitializeComponent();
             return;
         }
@@ -67,7 +72,6 @@ namespace RiotPls.UI.Views
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "formItemComponents";
             this.Load += new System.EventHandler(this.formItemComponents_Load);
-            this.MouseLeave += new System.EventHandler(this.formItemComponents_MouseLeave);
             this.ResumeLayout(false);
 
         }
@@ -78,32 +82,18 @@ namespace RiotPls.UI.Views
             this.model = new formItemComponentsModel(this.item);
             List<DropSlot> slots = this.model.GenerateDropSlots();
             this.Size = this.AddSlots(slots);
-            Console.WriteLine("Width: {0}", this.DisplayRectangle.Width);
             this.Width += 20;
-            if (this.Owner is formItemComponents)
-                this.timerFocus.Start();
-            return;
-        }
-        private void formItemComponents_MouseLeave(object sender, EventArgs e)
-        {
             this.timerFocus.Start();
             return;
         }
         private void timerFocus_Tick(object sender, EventArgs e)
         {
-            if (this.IsDisposed)
+            if (this.IsDisposed || this.ChildrenVisible)
                 return;
             // this rect
             Rectangle rect = this.ClientRectangle;
             rect.Location = this.PointToScreen(rect.Location);
-            // parent rect
-            Rectangle parent_rect = Rectangle.Empty;
-            if (this.Owner is formItemComponents)
-            {
-                parent_rect = this.Owner.ClientRectangle;
-                parent_rect.Location = this.Owner.PointToScreen(parent_rect.Location);
-            }
-            if (!rect.Contains(Control.MousePosition) && !parent_rect.Contains(Control.MousePosition))
+            if (!rect.Contains(Control.MousePosition) && !this.ParentRectangle.Contains(Control.MousePosition))
                 this.Close();
             return;
         }
