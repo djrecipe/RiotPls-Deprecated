@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RiotPls.API.Serialization.Attributes;
 using RiotPls.API.Serialization.Interfaces;
+using RiotPls.Test.Items;
 
 namespace RiotPls.Test
 {

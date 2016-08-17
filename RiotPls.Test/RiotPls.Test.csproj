@@ -62,7 +62,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="PseudoItemInfo.cs" />
+    <Compile Include="Network\TestJsonPayload.cs" />
+    <Compile Include="Network\TestRiotSerializable.cs" />
+    <Compile Include="Network\TestRiotURL.cs" />
+    <Compile Include="Items\PseudoItemInfo.cs" />
     <Compile Include="PseudoChampionInfo.cs" />
     <Compile Include="Serialization\TestBuildCollectionSave.cs" />
     <Compile Include="Serialization\TestBuildSave.cs" />
@@ -71,7 +74,9 @@
     <Compile Include="Specific Stats\TestMagicPenetration.cs" />
     <Compile Include="TestAPIKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestAPISettings.cs" />
     <Compile Include="TestGeneralStatsInfo.cs" />
+    <Compile Include="Items\TestItemComponents.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Riot.API\RiotPls.API.csproj">

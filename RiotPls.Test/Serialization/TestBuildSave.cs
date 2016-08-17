@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using RiotPls.API.Builder;
 using RiotPls.API.Serialization.ExtensionMethods;
 using RiotPls.API.Serialization.Items;
+using RiotPls.Test.Items;
 
 namespace RiotPls.Test.Serialization
 {

@@ -12,10 +12,17 @@
   <xs:element name="APISettings" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="APISettings" msprop:Generator_UserDSName="APISettings">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Versions" msprop:Generator_TableClassName="VersionsDataTable" msprop:Generator_TableVarName="tableVersions" msprop:Generator_RowChangedName="VersionsRowChanged" msprop:Generator_TablePropName="Versions" msprop:Generator_RowDeletingName="VersionsRowDeleting" msprop:Generator_RowChangingName="VersionsRowChanging" msprop:Generator_RowEvHandlerName="VersionsRowChangeEventHandler" msprop:Generator_RowDeletedName="VersionsRowDeleted" msprop:Generator_RowClassName="VersionsRow" msprop:Generator_UserTableName="Versions" msprop:Generator_RowEvArgName="VersionsRowChangeEvent">
+        <xs:element name="Versions" msprop:Generator_TableClassName="VersionsDataTable" msprop:Generator_TableVarName="tableVersions" msprop:Generator_TablePropName="Versions" msprop:Generator_RowDeletingName="VersionsRowDeleting" msprop:Generator_RowChangingName="VersionsRowChanging" msprop:Generator_RowEvHandlerName="VersionsRowChangeEventHandler" msprop:Generator_RowDeletedName="VersionsRowDeleted" msprop:Generator_UserTableName="Versions" msprop:Generator_RowChangedName="VersionsRowChanged" msprop:Generator_RowEvArgName="VersionsRowChangeEvent" msprop:Generator_RowClassName="VersionsRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="APIVersion" msprop:nullValue="1.2" msprop:Generator_ColumnPropNameInRow="APIVersion" msprop:Generator_ColumnVarNameInTable="columnAPIVersion" msprop:Generator_ColumnPropNameInTable="APIVersionColumn" msprop:Generator_UserColumnName="APIVersion" type="xs:string" default="1.2" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Miscellaneous" msprop:Generator_TableClassName="MiscellaneousDataTable" msprop:Generator_TableVarName="tableMiscellaneous" msprop:Generator_TablePropName="Miscellaneous" msprop:Generator_RowDeletingName="MiscellaneousRowDeleting" msprop:Generator_RowChangingName="MiscellaneousRowChanging" msprop:Generator_RowEvHandlerName="MiscellaneousRowChangeEventHandler" msprop:Generator_RowDeletedName="MiscellaneousRowDeleted" msprop:Generator_UserTableName="Miscellaneous" msprop:Generator_RowChangedName="MiscellaneousRowChanged" msprop:Generator_RowEvArgName="MiscellaneousRowChangeEvent" msprop:Generator_RowClassName="MiscellaneousRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Region" msprop:Generator_ColumnVarNameInTable="columnRegion" msprop:Generator_ColumnPropNameInRow="Region" msprop:nullValue="0" msprop:Generator_ColumnPropNameInTable="RegionColumn" msprop:Generator_UserColumnName="Region" type="xs:int" default="0" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

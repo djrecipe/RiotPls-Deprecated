@@ -15,59 +15,32 @@ namespace RiotPls.API
 {
     public abstract class Engine
     {
-        #region Types
-        public enum Regions : int { NorthAmerica = 0 };
-        #endregion
         #region Static Members
-        #region Constants
-        private const string REGION_NA = "na";
-        #endregion
-        private static string region_string = "na";
         private static APIKey apiKey = new APIKey("key.txt");
         #endregion
         #region Static Properties
-        public static string APIVersion { get; set; } = "1.2";
-        public static string APIVersionString => string.Format("v{0}", Engine.APIVersion);
+        /// <summary>
+        /// All available champion information
+        /// </summary>
         public static ChampionDataManager Champions { get; private set; } = null;
+        /// <summary>
+        /// All available item information
+        /// </summary>
         public static ItemDataManager Items { get; private set; } = null;
+        /// <summary>
+        /// All available map information
+        /// </summary>
         public static MapDataManager Maps { get; private set; } = null;
-        private static Regions _Region = Regions.NorthAmerica;
-        public static Regions Region
-        {
-            get
-            {
-                return Engine._Region;
-            }
-            set
-            {
-                Engine._Region = value;
-                switch (Engine.Region)
-                {
-                    default:
-                    case Regions.NorthAmerica:
-                        Engine.region_string = Engine.REGION_NA;
-                        break;
-                }
-                return;
-            }
-        }
-
         #endregion
         #region Static Methods
         static Engine()
         {
+            // load user settings
+            APISettings.Load();
             // try to load API key
             Engine.TryLoadKey();
             // update version info
             Engine.UpdateRealmsInfo();
-            try
-            {
-                Engine.APIVersion = APISettings.APIVersion;
-            }
-            catch
-            {
-                // ignored
-            }
             // load data
             Engine.Champions = new ChampionDataManager(Engine.apiKey);
             Engine.Items = new ItemDataManager(Engine.apiKey);
@@ -80,6 +53,7 @@ namespace RiotPls.API
         public static void Initialize()
         {
             // invoke static constructor    
+            // TODO 08/16/16: move static constructor code into this method?
         }
 
         private static void UpdateRealmsInfo()

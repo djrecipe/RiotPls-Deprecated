@@ -7,11 +7,22 @@ using System.Threading.Tasks;
 
 namespace RiotPls.Tools
 {
+    /// <summary>
+    /// Static, commonly used paths
+    /// </summary>
     public abstract class Paths
     {
+        #region Static Members
+        /// <summary>
+        /// User application data directory for RiotPls
+        /// </summary>
         public static readonly string AppData = null;
+        /// <summary>
+        /// User documents directory for RiotPls
+        /// </summary>
         public static readonly string Documents = null;
-
+        #endregion
+        #region Static Methods
         static Paths()
         {
             Paths.AppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RiotPls");
@@ -22,9 +33,9 @@ namespace RiotPls.Tools
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
             }
-            catch
+            catch(Exception e)
             {
-                // ignored
+                // TODO 08/16/16: handle exception
             }
             try
             {
@@ -32,11 +43,12 @@ namespace RiotPls.Tools
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
             }
-            catch
+            catch (Exception e)
             {
-                // ignored
+                // TODO 08/16/16: handle exception
             }
             return;
         }
+        #endregion
     }
 }

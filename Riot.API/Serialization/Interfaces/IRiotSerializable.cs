@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RiotPls.API.Serialization.Transport;
+﻿using RiotPls.API.Serialization.Transport;
 
 namespace RiotPls.API.Serialization.Interfaces
 {

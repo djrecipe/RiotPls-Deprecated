@@ -12,7 +12,7 @@ namespace RiotPls.API.Serialization.General
     {
         public override string LocalFileName => "RealmInfo.json";
         public override string RootToken => null;
-        public override RiotURL URL => new RiotURL(this.apiKey, true, "realm?");
+        public override RiotURL URL => new RiotURL(this.apiKey, APISettings.APIVersion, true, "realm?");
 
         public RealmInfoSet(APIKey key) : base(key)
         {
