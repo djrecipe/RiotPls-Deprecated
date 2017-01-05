@@ -1,4 +1,4 @@
-RitoPls
+RiotPls
 ========
 * brkfstmnchr@gmail.com
 * League of Legends build creation utility
