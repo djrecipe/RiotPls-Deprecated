@@ -167,13 +167,17 @@ namespace RiotPls.UI.Views
         #region Model Events               
         private void Model_DataUpdateFinished(object sender, object e)
         {
-            this.picLoading.Visible = false;
+            this.picLoading.BeginInvoke(new Action(() => {
+                this.picLoading.Visible = false;
+            }));
             return;
         }
         private void Model_DataUpdateStarted()
         {
-            this.picLoading.Visible = this.ShowLoading;
-            this.picLoading.BringToFront();
+            this.picLoading.BeginInvoke(new Action(() => {
+                this.picLoading.Visible = this.ShowLoading;
+                this.picLoading.BringToFront();
+            }));
             return;
         }
         #endregion

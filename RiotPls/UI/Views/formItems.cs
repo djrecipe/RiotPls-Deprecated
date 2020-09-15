@@ -341,10 +341,12 @@ namespace RiotPls.UI.Views
         #region Model Events
         private void Model_DataUpdateFinished(object sender, object e)
         {
-            BindingList<ItemInfo> new_binding = e as BindingList<ItemInfo>;
-            if (new_binding != null)
-                this.gridMain.DataSource = new_binding;
-            this.gridMain.Focus();
+            this.gridMain.BeginInvoke(new Action(() => {
+                BindingList<ItemInfo> new_binding = e as BindingList<ItemInfo>;
+                if (new_binding != null)
+                    this.gridMain.DataSource = new_binding;
+                this.gridMain.Focus();
+            }));
             return;
         }
 

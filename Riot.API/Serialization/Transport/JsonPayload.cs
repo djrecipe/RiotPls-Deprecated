@@ -68,7 +68,7 @@ namespace RiotPls.API.Serialization.Transport
             {
                 remote_retreival = true;
             }
-            string result = string.IsNullOrWhiteSpace(this.Token) ? obj.ToString() : obj.SelectToken(this.Token).ToString();
+            string result = string.IsNullOrWhiteSpace(this.Token) ? obj?.ToString() : obj?.SelectToken(this.Token).ToString();
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
                 ObjectCreationHandling = ObjectCreationHandling.Reuse,

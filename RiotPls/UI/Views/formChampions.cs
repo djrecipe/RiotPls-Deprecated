@@ -658,10 +658,12 @@ namespace RiotPls.UI.Views
         #region Model Events
         private void Model_DataUpdateFinished(object sender, object e)
         {
-            this.gridMain.DataSource = e as SortableBindingList<ChampionInfo>;
-            this.comboFilter.DataSource = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(col => !(col is DataGridViewImageColumn)).Select(col => col.HeaderText)
-                .OrderBy(text => text).ToList<string>();
-            this.gridMain.Focus();
+            this.gridMain.BeginInvoke(new Action(() => {
+                this.gridMain.DataSource = e as SortableBindingList<ChampionInfo>;
+                this.comboFilter.DataSource = this.gridMain.Columns.Cast<DataGridViewColumn>().Where(col => !(col is DataGridViewImageColumn)).Select(col => col.HeaderText)
+                    .OrderBy(text => text).ToList<string>();
+                this.gridMain.Focus();
+            }));
             return;
         }
 

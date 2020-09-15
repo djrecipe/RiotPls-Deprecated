@@ -167,7 +167,8 @@ namespace RiotPls.UI.Views
             this.btnBuilder.DropDownItems.Clear();
             this.btnBuilder.DropDownItems.Add(this.btnCreateBuild);
             List<ToolStripMenuItem> items = this.model.GetBuilderItems();
-            this.btnBuilder.DropDownItems.AddRange(items.ToArray());
+            if(items != null && items.Count > 0)
+                this.btnBuilder.DropDownItems.AddRange(items.ToArray());
             return;
         }
         #endregion
